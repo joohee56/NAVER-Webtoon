@@ -19,4 +19,23 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings: "slnt" 0;
+}
+a {
+  text-decoration: none;
+  color: black;
+}
+@font-face {
+  font-family: AppleSDGothicNeoEB;
+  font-weight: 400;
+  src: url("@/font/AppleSDGothicNeoEB00.woff2") format("woff2");
+}
+</style>
