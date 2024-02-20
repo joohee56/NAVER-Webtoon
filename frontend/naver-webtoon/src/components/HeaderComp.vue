@@ -23,28 +23,35 @@
         <button class="login-btn">로그인</button>
       </div>
     </div> 
-    <nav class="category">
-      <router-link to="/" class="active">웹툰</router-link>
-      <router-link to="/challenge">도전만화</router-link>
-      <router-link to="/mypage/favorite">마이페이지</router-link>
-    </nav>
+    <CategoryNav></CategoryNav>
+    <DayOfWeekNav></DayOfWeekNav>
   </header>
 </template>
 
 <script>
+import CategoryNav from "./header/CategoryNav.vue";
+import DayOfWeekNav from "./header/DayOfWeekNav.vue";
+
 export default {
   data() {
     return {
       isLogin: true,
     };
   },
+  components: {
+    CategoryNav,
+    DayOfWeekNav,
+  },
 };
 </script>
 
 <style>
+header {
+  border-bottom: #d9d9d9 solid 0.5px;
+}
 .header-top {
   display: flex;
-  margin: 1rem 3rem;
+  margin: 1rem 0;
 }
 .naver-logo {
   font-family: "Archivo Black", sans-serif;
@@ -111,18 +118,5 @@ form {
   border: none;
   padding: 8px 24px;
   margin-left: 2rem;
-}
-.category {
-  display: flex;
-  margin: 0 3rem;
-}
-.category a {
-  display: block;
-  padding: 2rem 2rem;
-  border-radius: 8px;
-}
-.category .active {
-  background-color: #00dc64;
-  color: white;
 }
 </style>
