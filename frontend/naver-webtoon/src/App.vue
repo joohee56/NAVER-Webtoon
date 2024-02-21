@@ -31,8 +31,8 @@ body {
   width: 80rem;
 }
 a {
-  text-decoration: none;
   color: black;
+  text-decoration: none;
 }
 @font-face {
   font-family: AppleSDGothicNeoM;
