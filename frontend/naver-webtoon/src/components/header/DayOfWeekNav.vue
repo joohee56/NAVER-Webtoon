@@ -1,5 +1,5 @@
 <template lang="ko">
-	<nav class="dayOfWeek">
+	<nav>
 		<router-link to="/" class="active">요일전체</router-link>
 		<router-link to="/mon">월</router-link>
 		<router-link to="/tue">화</router-link>
@@ -16,19 +16,19 @@
 export default {};
 </script>
 
-<style>
-.dayOfWeek {
+<style scoped>
+nav {
   margin: 0;
   display: flex;
 }
-.dayOfWeek a {
+nav a {
   display: block;
   margin: 2rem 1rem 0;
   padding-bottom: 0.5rem;
   font-family: AppleSDGothicNeoM;
   font-size: 18px;
 }
-.dayOfWeek .active {
+nav .active {
   font-family: AppleSDGothicNeoEB;
   color: #00dc64;
   border-bottom: #00dc64 solid;

@@ -1,5 +1,5 @@
 <template lang="ko">
-  <nav class="category">
+  <nav>
     <router-link to="/" class="active">웹툰</router-link>
     <router-link to="/challenge">도전만화</router-link>
     <router-link to="/mypage/favorite">마이페이지</router-link>
@@ -10,16 +10,16 @@
 export default {};
 </script>
 
-<style>
-.category {
+<style scoped>
+nav {
   display: flex;
   margin: 0;
 }
-.category a {
+nav a {
   padding: 2rem 2rem;
   border-radius: 8px;
 }
-.category .active {
+nav .active {
   background-color: #00dc64;
   color: white;
 }

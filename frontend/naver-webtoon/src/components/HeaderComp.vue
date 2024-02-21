@@ -45,7 +45,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 header {
   border-bottom: #d9d9d9 solid 0.5px;
 }
