@@ -24,7 +24,7 @@
       <p class="user-name">이주희</p>
     </div>
     <div v-else>
-      <button class="login-btn">로그인</button>
+      <router-link to="/login" class="login-btn">로그인</router-link>
     </div>
   </div>
 </template>
@@ -33,7 +33,7 @@
 export default {
   data() {
     return {
-      isLogin: true,
+      isLogin: false,
     };
   },
 };

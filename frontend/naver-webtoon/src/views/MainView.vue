@@ -1,18 +1,18 @@
 <template lang="ko">
-  <div>
-    <WebtoonRanking></WebtoonRanking>
-    <WebtoonList></WebtoonList>
-  </div>
+	<div>
+		<WebtoonRanking></WebtoonRanking>
+		<WebtoonList></WebtoonList>
+	</div>
 </template>
 
 <script>
+import WebtoonRanking from "@/components/main/WebtoonRanking";
 import WebtoonList from "@/components/main/WebtoonList.vue";
-import WebtoonRanking from "@/components/main/WebtoonRanking.vue";
 
 export default {
   components: {
-    WebtoonList,
     WebtoonRanking,
+    WebtoonList,
   },
 };
 </script>
