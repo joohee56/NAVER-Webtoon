@@ -1,5 +1,5 @@
 <template lang="ko">
-	<div>
+	<div class="container">
 		<WebtoonRanking></WebtoonRanking>
 		<WebtoonList></WebtoonList>
 	</div>
@@ -17,4 +17,15 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.container {
+  padding: 0 1rem;
+  margin: 0 auto;
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings: "slnt" 0;
+  width: 80rem;
+}
+</style>

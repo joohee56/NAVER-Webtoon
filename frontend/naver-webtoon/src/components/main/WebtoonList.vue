@@ -145,7 +145,7 @@ ul {
   color: #ff4d56;
   border-radius: 5px;
   border: #ff4d56 solid 0.5px;
-  font-family: AppleSDGothicNeoM;
+  font-family: AppleSDGothicNeoEB;
   text-align: center;
   padding: 1px 4px;
   margin-right: 5px;

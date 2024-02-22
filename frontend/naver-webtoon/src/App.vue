@@ -12,14 +12,8 @@ export default {
 
 <style>
 body {
-  padding: 0 1rem;
-  margin: 0 auto;
-  font-family: "Inter", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
-  font-variation-settings: "slnt" 0;
-  width: 80rem;
+  margin: 0;
+  padding: 0;
 }
 a {
   color: black;
