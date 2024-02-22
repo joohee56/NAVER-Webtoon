@@ -1,12 +1,12 @@
 <template>
-  <div class="container">
+  <div class="toolbar-wrap">
     <div class="naver-logo">
       <a href="https://www.naver.com">NAVER</a>
     </div>
     <div class="webtoon-logo">
       <a href="/">웹툰</a>
     </div>
-    <div class="search-container">
+    <div class="search-wrap">
       <form>
         <input
           type="search"
@@ -23,9 +23,7 @@
       <img src="@/assets/image/profile-image.png" class="profile-image" />
       <p class="user-name">이주희</p>
     </div>
-    <div v-else>
-      <router-link to="/login" class="login-btn">로그인</router-link>
-    </div>
+    <router-link to="/login" class="login-btn" v-else>로그인</router-link>
   </div>
 </template>
 
@@ -40,7 +38,7 @@ export default {
 </script>
 
 <style scoped>
-.container {
+.toolbar-wrap {
   display: flex;
   margin: 1rem 0;
 }
@@ -59,7 +57,7 @@ export default {
   font-size: 1.3rem;
   margin: 10px 0;
 }
-.search-container {
+.search-wrap {
   margin: 0 0 0 auto;
 }
 form {
@@ -107,7 +105,8 @@ form {
   border-radius: 6px;
   color: white;
   border: none;
-  padding: 8px 24px;
   margin-left: 2rem;
+  padding: 8px 24px;
+  height: fit-content;
 }
 </style>

@@ -1,5 +1,5 @@
 <template lang="ko">
-	<div class="container">
+	<div class="ranking-wrap">
 		<div class="box-container">
 			<div style="display: flex;">
 				<p class="title">실시간 인기 웹툰</p>
@@ -115,7 +115,7 @@ export default {};
 </script>
 
 <style scoped>
-.container {
+.ranking-wrap {
   padding: 2rem 0rem;
 }
 .box-container {

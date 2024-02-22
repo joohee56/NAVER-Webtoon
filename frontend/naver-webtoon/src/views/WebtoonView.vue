@@ -1,5 +1,5 @@
 <template lang="ko">
-  <div>
+  <div class="container">
     <HeaderComp></HeaderComp>
     <router-view name="subView"></router-view>
     <FooterComp></FooterComp>
@@ -18,4 +18,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.container {
+  width: 85rem;
+  margin: 0 auto;
+}
+</style>
