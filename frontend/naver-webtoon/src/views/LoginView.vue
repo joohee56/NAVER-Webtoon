@@ -94,7 +94,7 @@
 			<ul class="find-wrap">
 				<li><a class="find-text">비밀번호 찾기</a></li>
 				<li><a class="find-text">아이디 찾기</a></li>
-				<li><a class="find-text">회원가입</a></li>
+				<li><router-link to="/join" class="find-text">회원가입</router-link></li>
 			</ul>
 		</div>
 
@@ -229,7 +229,6 @@ header {
 
 .menu-id {
   border-right: 0;
-  border-radius: 6px 0 0 0;
 }
 
 .on {
@@ -240,7 +239,7 @@ header {
 
 .menu-ones {
   border-right: 0;
-  border-radius: 0;
+  border-radius: 0 0 6px 0;
 }
 
 .menu-qr {
@@ -257,7 +256,6 @@ form {
   list-style: none;
   z-index: 3;
   position: relative;
-  margin-top: -8px;
   margin: 0;
   padding: 0;
   margin-top: -8px;
