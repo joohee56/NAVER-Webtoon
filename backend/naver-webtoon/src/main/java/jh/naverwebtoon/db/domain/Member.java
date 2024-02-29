@@ -8,11 +8,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import java.time.LocalDate;
+import jh.naverwebtoon.db.domain.enums.CountryResidence;
+import jh.naverwebtoon.db.domain.enums.Gender;
 
 @Entity
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "member_id")
     private Long id;
 
     @Column(nullable = false)
