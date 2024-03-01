@@ -1,2 +1,2 @@
 # Naver-Webtoon
-🧸 Naver 웹툰 🧸
+Naver 웹툰
