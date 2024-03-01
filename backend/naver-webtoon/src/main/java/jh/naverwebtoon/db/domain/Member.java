@@ -12,19 +12,21 @@ import jakarta.persistence.UniqueConstraint;
 import java.time.LocalDate;
 import jh.naverwebtoon.db.domain.enums.CountryResidence;
 import jh.naverwebtoon.db.domain.enums.Gender;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = "login_id"), @UniqueConstraint(columnNames = "email_address")})
-public class Member {
+@Getter
+@Setter
+public class Member extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "member_id")
     private Long id;
 
-    @Column(nullable = false)
     private String loginId;
 
-    @Column(nullable = false)
     private String password;
 
     private String emailAddress;
@@ -32,17 +34,13 @@ public class Member {
     @Column(name="member_name", nullable = false)
     private String name;
 
-    @Column(nullable = false)
     private LocalDate birthDate;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private Gender gender;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private CountryResidence countryResidence;
 
-    @Column(nullable = false)
     private String phoneNumber;
 }

@@ -17,7 +17,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @EntityListeners(value = {RoundEntityListener.class})
-public class Round {
+public class Round extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
