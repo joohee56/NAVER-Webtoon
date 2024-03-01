@@ -51,5 +51,13 @@ class RoundTest {
 
         assertEquals(1, round1.getWebtoon().getId());
         assertEquals(2, round1.getRoundNumber());
+
+        Round round2 = new Round();
+        round2.setWebtoon(webtoon1);
+        em.persist(round2);
+        em.flush();
+
+        assertEquals(2, round2.getWebtoon().getId());
+        assertEquals(1, round2.getRoundNumber());
     }
 }
