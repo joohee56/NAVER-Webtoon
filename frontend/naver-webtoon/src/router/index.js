@@ -4,6 +4,7 @@ import WebtoonView from "@/views/WebtoonView";
 import LoginView from "@/views/LoginView";
 import MainView from "@/views/MainView";
 import JoinView from "@/views/JoinView";
+import JoinSuccess from "@/views/JoinSuccess.vue";
 
 Vue.use(VueRouter);
 
@@ -11,12 +12,11 @@ const routes = [
   {
     path: "/",
     component: WebtoonView,
+    redirect: "/main",
     children: [
       {
-        path: "/",
-        components: {
-          subView: MainView,
-        },
+        path: "/main",
+        component: MainView,
       },
     ],
   },
@@ -27,6 +27,11 @@ const routes = [
   {
     path: "/join",
     component: JoinView,
+  },
+  {
+    path: "/join/success/:loginId/:name",
+    name: "joinSuccess",
+    component: JoinSuccess,
   },
 ];
 

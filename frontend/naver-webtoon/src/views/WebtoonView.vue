@@ -1,7 +1,7 @@
 <template lang="ko">
   <div class="container">
     <HeaderComp></HeaderComp>
-    <router-view name="subView"></router-view>
+    <router-view></router-view>
     <FooterComp></FooterComp>
   </div>
 </template>
