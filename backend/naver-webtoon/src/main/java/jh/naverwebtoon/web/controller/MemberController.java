@@ -8,7 +8,9 @@ import jh.naverwebtoon.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -28,7 +30,12 @@ public class MemberController {
         System.out.println("====service MemberJoinReq: =====" + memberJoinReq.getName());
         Long savedId = memberService.join(memberJoinReq);
         Member member = memberRepository.findOne(savedId);
-        return new MemberJoinRes(member.getLoginId());
+        return new MemberJoinRes(member.getLoginId(), member.getName());
+    }
+
+    @GetMapping("/duplicated/{loginId}")
+    public Boolean isDuplicatedLoginId(@PathVariable("loginId") String loginId) {
+        return memberService.duplicatedLoginId(loginId);
     }
 
 }

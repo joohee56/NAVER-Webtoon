@@ -3,9 +3,13 @@ package jh.naverwebtoon.dto.request;
 import java.time.LocalDate;
 import jh.naverwebtoon.db.domain.enums.CountryResidence;
 import jh.naverwebtoon.db.domain.enums.Gender;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode
 public class MemberJoinReq {
     private String loginId;
     private String password;

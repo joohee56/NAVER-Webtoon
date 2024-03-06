@@ -18,10 +18,16 @@ public class MemberService {
      */
     @Transactional
     public Long join(MemberJoinReq memberJoinReq) {
+        //LoginId 중복 검사
+        if(duplicatedLoginId(memberJoinReq.getLoginId())) {
+            throw new IllegalArgumentException("이미 가입된 아이디입니다.");
+        }
+
         Member member = Member.createMember(memberJoinReq);
-        System.out.println("====MemberJoinReq 출력: ==== " + memberJoinReq.getName());
-        System.out.println("====Name 출력: ==== " + member.getName());
         return memberRepository.save(member);
     }
 
+    public Boolean duplicatedLoginId(String loginId) {
+        return !memberRepository.findByLoginId(loginId).isEmpty();
+    }
 }
