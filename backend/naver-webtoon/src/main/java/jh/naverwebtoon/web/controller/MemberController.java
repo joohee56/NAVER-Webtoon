@@ -1,10 +1,15 @@
 package jh.naverwebtoon.web.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jh.naverwebtoon.db.domain.Member;
 import jh.naverwebtoon.db.repository.MemberRepository;
+import jh.naverwebtoon.dto.request.LoginReq;
 import jh.naverwebtoon.dto.request.MemberJoinReq;
+import jh.naverwebtoon.dto.response.LoginRes;
 import jh.naverwebtoon.dto.response.MemberJoinRes;
 import jh.naverwebtoon.service.MemberService;
+import jh.naverwebtoon.web.SessionConst;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -25,9 +30,8 @@ public class MemberController {
     private final MemberRepository memberRepository;
 
     @ResponseStatus(HttpStatus.OK)
-    @PostMapping(value = "", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @PostMapping(value = "/join", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public MemberJoinRes join(@ModelAttribute MemberJoinReq memberJoinReq) {
-        System.out.println("====service MemberJoinReq: =====" + memberJoinReq.getName());
         Long savedId = memberService.join(memberJoinReq);
         Member member = memberRepository.findOne(savedId);
         return new MemberJoinRes(member.getLoginId(), member.getName());
@@ -36,6 +40,14 @@ public class MemberController {
     @GetMapping("/duplicated/{loginId}")
     public Boolean isDuplicatedLoginId(@PathVariable("loginId") String loginId) {
         return memberService.duplicatedLoginId(loginId);
+    }
+
+    @PostMapping(value = "/login", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public LoginRes login(@ModelAttribute LoginReq loginReq, HttpServletRequest request) {
+        Member loginMember = memberService.login(loginReq);
+        HttpSession session = request.getSession();
+        session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember.getId());
+        return new LoginRes(loginMember.getId(), loginMember.getLoginId(), loginMember.getName());
     }
 
 }
