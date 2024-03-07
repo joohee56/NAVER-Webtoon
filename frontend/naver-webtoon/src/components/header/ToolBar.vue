@@ -23,7 +23,12 @@
       <img src="@/assets/image/profile-image.png" class="profile-image" />
       <p class="user-name">이주희</p>
     </div>
-    <router-link to="/login" class="login-btn" v-else>로그인</router-link>
+    <router-link
+      :to="{ name: 'login', params: { redirectUrl: this.$route.name } }"
+      class="login-btn"
+      v-else
+      >로그인</router-link
+    >
   </div>
 </template>
 

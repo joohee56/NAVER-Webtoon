@@ -30,7 +30,7 @@
 				</ul>
 
 				<!-- form -->
-				<form method="POST" action="">
+				<div>
 					<input type="hidden">
 					<ul class="panel-wrap">
 						<li class="panel-item" style="display: block;">
@@ -40,14 +40,14 @@
 									<!-- input id -->
 									<div class="input-row" id="id-line">
 										<i class="fa-regular fa-user icon-cell"></i>
-										<input type="text" id="id" name="id" class="input-text" placeholder="아이디" maxlength="41">
+										<input type="text" id="id" name="id" class="input-text" placeholder="아이디" maxlength="41" v-model="user.loginId">
 										<span class="btn-delete" id="id-clear" style="display: block;"><i class="fa-solid fa-circle-xmark"></i></span>
 									</div>
 
 									<!-- input pw -->
 									<div class="input-row" id="pw-line">
 										<i class="fa-solid fa-lock icon-cell"></i>
-										<input type="password" id="pw" name="pw" class="input-text" placeholder="비밀번호" maxlength="16">
+										<input type="password" id="pw" name="pw" class="input-text" placeholder="비밀번호" maxlength="16" v-model="user.password">
 										<span class="btn-delete" id="pw-clear" style="display: block;"><i class="fa-solid fa-circle-xmark"></i></span>
 									</div>
 								</div>
@@ -81,7 +81,7 @@
 
 								<!-- 로그인 버튼 -->
 								<div class="btn-login-wrap">
-									<button type="submit" class="btn-login">
+									<button type="button" class="btn-login" @click="login">
 										<span class="btn-text">로그인</span>
 									</button>
 								</div>
@@ -89,7 +89,7 @@
 							</div>
 						</li>
 					</ul>
-				</form>
+				</div>
 			</div>
 			<ul class="find-wrap">
 				<li><a class="find-text">비밀번호 찾기</a></li>
@@ -127,7 +127,33 @@
 </template>
 
 <script>
-export default {};
+import { mapActions } from "vuex";
+
+export default {
+  data() {
+    return {
+      user: {
+        loginId: "",
+        password: "",
+      },
+    };
+  },
+  created() {
+    console.log(this.$route.params.redirectUrl);
+  },
+  methods: {
+    ...mapActions("memberStore", ["SUBMIT_LOGIN"]),
+    async login() {
+      try {
+        await this.SUBMIT_LOGIN(this.user);
+        const redirectUrl = this.$route.params.redirectUrl;
+        this.$router.push({ name: redirectUrl });
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  },
+};
 </script>
 
 <style scoped>

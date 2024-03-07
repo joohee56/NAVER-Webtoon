@@ -16,16 +16,19 @@ const routes = [
     children: [
       {
         path: "/main",
+        name: "main",
         component: MainView,
       },
     ],
   },
   {
-    path: "/login",
+    path: "/login/:redirectUrl",
+    name: "login",
     component: LoginView,
   },
   {
     path: "/join",
+    name: "join",
     component: JoinView,
   },
   {

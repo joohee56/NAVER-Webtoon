@@ -5,9 +5,17 @@ const jsonApi = jsonApiInstance();
 
 async function submitJoinMember(member) {
   try {
-    return await formApi.post("/users", member);
+    return await formApi.post("/users/join", member);
   } catch (error) {
-    return error;
+    console.log(error);
+  }
+}
+
+async function submitLogin(loginInfo) {
+  try {
+    return await formApi.post("/users/login", loginInfo);
+  } catch (error) {
+    console.log(error);
   }
 }
 
@@ -15,8 +23,8 @@ async function checkDuplicatedLoginId(loginId) {
   try {
     return await jsonApi.get(`/users/duplicated/${loginId}`);
   } catch (error) {
-    return error;
+    console.log(error);
   }
 }
 
-export { submitJoinMember, checkDuplicatedLoginId };
+export { submitJoinMember, checkDuplicatedLoginId, submitLogin };

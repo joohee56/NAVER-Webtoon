@@ -12,7 +12,7 @@
 				네이버의 새로운 아이디는 <span class="loginId">{{loginId}}</span>입니다.</p>
 			</div>
 			<div class="start-btn-wrap">
-				<router-link to="/login" class="start-btn">시작하기</router-link>
+				<router-link :to="{name: 'login', params: {redirectUrl: 'main'}}" class="start-btn">시작하기</router-link>
 			</div>
 		</div>
 	</div>

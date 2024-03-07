@@ -92,7 +92,7 @@
 			</div>
 
 			<!-- submit button -->
-			<button type="button" class="btn-join" @click="onSubmit">가입하기</button>
+			<button type="button" class="btn-join" @click="joinMember">가입하기</button>
 		</div>
 	</div>
 </template>
@@ -121,10 +121,6 @@ export default {
     };
   },
   methods: {
-    onSubmit(event) {
-      event.preventDefault();
-      this.joinMember();
-    },
     async joinMember() {
       const member = {
         loginId: this.user.loginId,
@@ -176,9 +172,6 @@ export default {
       if (this.user.pw === "") {
         this.pwErrorMessage = "• 비밀번호: 필수 정보입니다.";
         this.isPassedPw = false;
-        // } else if (this.user.pw) {
-        //   this.pwErrorMessage = "• 비밀번호: 필수 정보입니다.";
-        //   this.isPassedPw = false;
       } else {
         this.pwErrorMessage = "";
         this.isPassedPw = true;
