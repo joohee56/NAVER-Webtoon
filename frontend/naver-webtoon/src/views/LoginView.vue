@@ -138,16 +138,15 @@ export default {
       },
     };
   },
-  created() {
-    console.log(this.$route.params.redirectUrl);
-  },
   methods: {
     ...mapActions("memberStore", ["SUBMIT_LOGIN"]),
     async login() {
       try {
-        await this.SUBMIT_LOGIN(this.user);
-        const redirectUrl = this.$route.params.redirectUrl;
-        this.$router.push({ name: redirectUrl });
+        const response = await this.SUBMIT_LOGIN(this.user);
+        if (response.status === 200) {
+          const redirectUrl = this.$route.params.redirectUrl;
+          this.$router.push({ name: redirectUrl });
+        }
       } catch (error) {
         console.log(error);
       }

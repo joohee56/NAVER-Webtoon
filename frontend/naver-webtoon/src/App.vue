@@ -20,24 +20,36 @@ a {
   text-decoration: none;
 }
 @font-face {
+  font-family: AppleSDGothicNeoUL;
+  src: url("@/font/AppleSDGothicNeoUL00.woff2") format("woff2");
+}
+@font-face {
+  font-family: AppleSDGothicNeoL;
+  src: url("@/font/AppleSDGothicNeoL00.woff2") format("woff2");
+}
+@font-face {
+  font-family: AppleSDGothicNeoR;
+  src: url("@/font/AppleSDGothicNeoR00.woff2") format("woff2");
+}
+@font-face {
   font-family: AppleSDGothicNeoM;
-  font-weight: 400;
   src: url("@/font/AppleSDGothicNeoM00.woff2") format("woff2");
 }
 @font-face {
+  font-family: AppleSDGothicNeoSB;
+  src: url("@/font/AppleSDGothicNeoSB00.woff2") format("woff2");
+}
+@font-face {
   font-family: AppleSDGothicNeoB;
-  font-weight: 400;
   src: url("@/font/AppleSDGothicNeoB00.woff2") format("woff2");
 }
 @font-face {
   font-family: AppleSDGothicNeoEB;
-  font-weight: 400;
   src: url("@/font/AppleSDGothicNeoEB00.woff2") format("woff2");
 }
 
 @font-face {
   font-family: AppleSDGothicNeoH;
-  font-weight: 400;
   src: url("@/font/AppleSDGothicNeoH00.woff2") format("woff2");
 }
 </style>

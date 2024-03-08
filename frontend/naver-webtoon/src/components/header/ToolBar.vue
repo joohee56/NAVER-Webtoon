@@ -19,9 +19,9 @@
         </button>
       </form>
     </div>
-    <div class="user-info" v-if="isLogin">
+    <div class="user-info" v-if="loginUser.loginId != ''">
       <img src="@/assets/image/profile-image.png" class="profile-image" />
-      <p class="user-name">이주희</p>
+      <p class="user-name">{{ loginUser.userName }}</p>
     </div>
     <router-link
       :to="{ name: 'login', params: { redirectUrl: this.$route.name } }"
@@ -33,11 +33,16 @@
 </template>
 
 <script scoped>
+import { mapState } from "vuex";
+
 export default {
   data() {
     return {
       isLogin: false,
     };
+  },
+  computed: {
+    ...mapState("memberStore", ["loginUser"]),
   },
 };
 </script>

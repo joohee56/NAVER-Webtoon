@@ -5,6 +5,7 @@ import LoginView from "@/views/LoginView";
 import MainView from "@/views/MainView";
 import JoinView from "@/views/JoinView";
 import JoinSuccess from "@/views/JoinSuccess.vue";
+import UserProfile from "@/views/UserProfile";
 
 Vue.use(VueRouter);
 
@@ -35,6 +36,11 @@ const routes = [
     path: "/join/success/:loginId/:name",
     name: "joinSuccess",
     component: JoinSuccess,
+  },
+  {
+    path: "/profile",
+    name: "UserProfile",
+    component: UserProfile,
   },
 ];
 

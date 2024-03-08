@@ -18,7 +18,10 @@ const memberStore = {
     async SUBMIT_LOGIN({ commit }, loginIinfo) {
       try {
         const response = await submitLogin(loginIinfo);
-        commit("SET_LOGIN_USER", response.data);
+        if (response.status === 200) {
+          commit("SET_LOGIN_USER", response.data);
+        }
+        return response;
       } catch (error) {
         console.log(error);
       }
