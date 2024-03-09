@@ -18,8 +18,13 @@ public class SessionExpireFilter implements Filter {
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
 
         long serverTime = System.currentTimeMillis();
+
+        Cookie cookie = new Cookie("latestAccess", String.valueOf(serverTime));
+        cookie.setPath("/");
+        httpServletResponse.addCookie(cookie);
+
         long sessionExpiryTime = serverTime + httpServletRequest.getSession().getMaxInactiveInterval()*1000;
-        Cookie cookie = new Cookie("sessionExpiry", String.valueOf(sessionExpiryTime));
+        cookie = new Cookie("sessionExpiry", String.valueOf(sessionExpiryTime));
         cookie.setPath("/");
         httpServletResponse.addCookie(cookie);
         chain.doFilter(request, response);
