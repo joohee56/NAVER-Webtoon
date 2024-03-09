@@ -45,9 +45,13 @@ public class MemberController {
     @PostMapping(value = "/login", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public LoginRes login(@ModelAttribute LoginReq loginReq, HttpServletRequest request) {
         Member loginMember = memberService.login(loginReq);
+
+        //세션 설정
         HttpSession session = request.getSession();
         session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember.getId());
-        return new LoginRes(loginMember.getId(), loginMember.getLoginId(), loginMember.getName());
+        session.setMaxInactiveInterval(60*30); //세션 유효 기간 30분
+
+        return new LoginRes(loginMember.getLoginId(), loginMember.getName());
     }
 
 }
