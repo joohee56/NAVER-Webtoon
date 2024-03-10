@@ -98,7 +98,7 @@
 </template>
 
 <script>
-import { submitJoinMember, checkDuplicatedLoginId } from "@/api/member";
+import { postJoinMember, checkDuplicatedLoginId } from "@/api/member";
 
 export default {
   data() {
@@ -134,7 +134,7 @@ export default {
       };
 
       try {
-        const response = await submitJoinMember(member);
+        const response = await postJoinMember(member);
         console.log(response);
         this.$router.push({
           name: "joinSuccess",

@@ -19,10 +19,7 @@ a {
   color: black;
   text-decoration: none;
 }
-@font-face {
-  font-family: AppleSDGothicNeoUL;
-  src: url("@/font/AppleSDGothicNeoUL00.woff2") format("woff2");
-}
+
 @font-face {
   font-family: AppleSDGothicNeoL;
   src: url("@/font/AppleSDGothicNeoL00.woff2") format("woff2");
@@ -46,10 +43,5 @@ a {
 @font-face {
   font-family: AppleSDGothicNeoEB;
   src: url("@/font/AppleSDGothicNeoEB00.woff2") format("woff2");
-}
-
-@font-face {
-  font-family: AppleSDGothicNeoH;
-  src: url("@/font/AppleSDGothicNeoH00.woff2") format("woff2");
 }
 </style>

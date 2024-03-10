@@ -19,7 +19,7 @@
         </button>
       </form>
     </div>
-    <div class="user-info" v-if="loginUser.loginId != ''">
+    <div class="user-info" v-if="loginUser.userName != ''">
       <img src="@/assets/image/profile-image.png" class="profile-image" />
       <p class="user-name">{{ loginUser.userName }}</p>
     </div>
@@ -38,7 +38,7 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
-      isLogin: false,
+      isLogin: true,
     };
   },
   computed: {

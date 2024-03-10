@@ -1,4 +1,5 @@
 import axios from "axios";
+axios.defaults.withCredentials = true; // withCredentials 전역 설정
 
 const config = {
   baseUrl: "http://localhost:8081/api/v1",
