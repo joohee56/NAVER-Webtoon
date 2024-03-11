@@ -56,6 +56,9 @@ public class MemberController {
         return new LoginRes(loginMember.getLoginId(), loginMember.getName());
     }
 
+    /**
+     * 회원 정보 조회
+     */
     @GetMapping()
     public MemberInfoRes MemberInfo(@Login Long id) {
         System.out.println("memberInfo 호출");
