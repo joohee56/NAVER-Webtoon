@@ -23,7 +23,8 @@ public class SessionExpireFilter implements Filter {
         cookie.setPath("/");
         httpServletResponse.addCookie(cookie);
 
-        long sessionExpiryTime = serverTime + httpServletRequest.getSession().getMaxInactiveInterval()*1000;
+//        long sessionExpiryTime = serverTime + httpServletRequest.getSession().getMaxInactiveInterval()*1000;
+        long sessionExpiryTime = serverTime + 30*1000;  //테스트를 위해 30초로 설정
         cookie = new Cookie("sessionExpiry", String.valueOf(sessionExpiryTime));
         cookie.setPath("/");
         httpServletResponse.addCookie(cookie);
