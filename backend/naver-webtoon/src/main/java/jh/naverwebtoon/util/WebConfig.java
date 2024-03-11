@@ -1,11 +1,14 @@
 package jh.naverwebtoon.util;
 
 import jakarta.servlet.Filter;
+import java.util.List;
+import jh.naverwebtoon.web.LoginMemberArgumentResolver;
 import jh.naverwebtoon.web.filter.SessionExpireFilter;
 import jh.naverwebtoon.web.interceptor.LoginCheckInterceptor;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -45,6 +48,14 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(new LoginCheckInterceptor())
                 .order(1)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/**/users/**", "/error");
+                .excludePathPatterns("/**/users/join", "/**/users/duplicated/*", "/**/users/login", "/error");
+    }
+
+    /**
+     * @Login ArgumentResolver 등록
+     */
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
+        resolvers.add(new LoginMemberArgumentResolver());
     }
 }

@@ -7,8 +7,10 @@ import jh.naverwebtoon.db.repository.MemberRepository;
 import jh.naverwebtoon.dto.request.LoginReq;
 import jh.naverwebtoon.dto.request.MemberJoinReq;
 import jh.naverwebtoon.dto.response.LoginRes;
+import jh.naverwebtoon.dto.response.MemberInfoRes;
 import jh.naverwebtoon.dto.response.MemberJoinRes;
 import jh.naverwebtoon.service.MemberService;
+import jh.naverwebtoon.web.Login;
 import jh.naverwebtoon.web.SessionConst;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -48,10 +50,18 @@ public class MemberController {
 
         //세션 설정
         HttpSession session = request.getSession();
-        session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember.getId());
+        session.setAttribute(SessionConst.LOGIN_MEMBER_ID, loginMember.getId());
         session.setMaxInactiveInterval(60*30); //세션 유효 기간 30분
 
         return new LoginRes(loginMember.getLoginId(), loginMember.getName());
+    }
+
+    @GetMapping()
+    public MemberInfoRes MemberInfo(@Login Long id) {
+        System.out.println("memberInfo 호출");
+        System.out.println("id = " + id);
+        Member findMember = memberRepository.findOne(id);
+        return MemberInfoRes.create(findMember);
     }
 
 }
