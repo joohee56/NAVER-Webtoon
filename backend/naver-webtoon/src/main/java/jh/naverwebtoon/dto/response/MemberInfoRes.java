@@ -18,6 +18,7 @@ public class MemberInfoRes {
     private Gender gender;
     private CountryResidence countryResidence;
     private String phoneNumber;
+    private String profileImage;
 
     public static MemberInfoRes create(Member member) {
         MemberInfoRes memberInfoRes = new MemberInfoRes();
@@ -28,6 +29,9 @@ public class MemberInfoRes {
         memberInfoRes.gender = member.getGender();
         memberInfoRes.countryResidence = member.getCountryResidence();
         memberInfoRes.phoneNumber = member.getPhoneNumber();
+        if (member.getProfileImage() != null) {
+            memberInfoRes.profileImage = member.getProfileImage().getUploadImage().getStoreFileName();
+        }
         return memberInfoRes;
     }
 }

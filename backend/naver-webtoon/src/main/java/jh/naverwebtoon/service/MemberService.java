@@ -1,19 +1,25 @@
 package jh.naverwebtoon.service;
 
+import java.io.IOException;
 import java.util.List;
 import jh.naverwebtoon.db.domain.Member;
+import jh.naverwebtoon.db.domain.ProfileImage;
+import jh.naverwebtoon.db.domain.UploadImage;
 import jh.naverwebtoon.db.repository.MemberRepository;
 import jh.naverwebtoon.dto.request.LoginReq;
 import jh.naverwebtoon.dto.request.MemberJoinReq;
+import jh.naverwebtoon.util.FileStore;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class MemberService {
     private final MemberRepository memberRepository;
+    private final FileStore fileStore;
 
     /**
      * 회원가입
@@ -43,5 +49,16 @@ public class MemberService {
         }
 
         return findMembers.get(0);
+    }
+
+    /**
+     * 프로필 이미지 변경
+     */
+    @Transactional
+    public String changeProfileImage(Long id, MultipartFile profileImage) throws IOException {
+        Member member = memberRepository.findOne(id);
+        UploadImage uploadImage = fileStore.storeFile(profileImage);
+        member.changeProfileImage(ProfileImage.createProfileImage(uploadImage));
+        return member.getProfileImage().getUploadImage().getStoreFileName();
     }
 }

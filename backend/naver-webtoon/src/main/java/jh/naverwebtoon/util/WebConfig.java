@@ -20,10 +20,10 @@ public class WebConfig implements WebMvcConfigurer {
      */
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/api/**")
+        registry.addMapping("/**")
                 .allowedOrigins("http://localhost:8080", "http://localhost:8082")
-                .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE")
-                .allowedHeaders("Authorization", "Content-Type", "x-www-form-urlencoded")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH")
+                .allowedHeaders("Authorization", "Content-Type")
                 .allowCredentials(true)
                 .maxAge(3600);  //pre-flight 리퀘스트 캐싱
     }
@@ -45,7 +45,7 @@ public class WebConfig implements WebMvcConfigurer {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LoginCheckInterceptor())
+        registry.addInterceptor(new LoginCheckInterceptor())  //로그인 인증 인터셉터
                 .order(1)
                 .addPathPatterns("/**")
                 .excludePathPatterns("/**/users/join", "/**/users/duplicated/*", "/**/users/login", "/error");

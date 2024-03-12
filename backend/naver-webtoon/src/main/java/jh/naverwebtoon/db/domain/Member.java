@@ -1,6 +1,7 @@
 package jh.naverwebtoon.db.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -50,7 +51,7 @@ public class Member extends BaseEntity {
 
     private String phoneNumber;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private ProfileImage profileImage;
 
     public static Member createMember(MemberJoinReq memberJoinReq) {
@@ -64,5 +65,9 @@ public class Member extends BaseEntity {
         member.countryResidence = memberJoinReq.getCountryResidence();
         member.phoneNumber = memberJoinReq.getPhoneNumber();
         return member;
+    }
+
+    public void changeProfileImage(ProfileImage profileImage) {
+        this.profileImage = profileImage;
     }
 }
