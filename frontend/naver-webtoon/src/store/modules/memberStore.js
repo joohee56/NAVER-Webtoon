@@ -1,30 +1,22 @@
-import { postLogin } from "@/api/member";
-
 const memberStore = {
   namespaced: true,
   state: {
     loginUser: {
       loginId: "",
       userName: "",
+      profileImage: "",
     },
   },
   mutations: {
-    SET_LOGIN_USER(state, loginUser) {
-      state.loginUser = loginUser;
+    SET_LOGIN_USER(state, res) {
+      state.loginUser.loginId = res.loginId;
+      state.loginUser.userName = res.userName;
     },
-    CLEAR_LOGIN_USER(state) {
-      state.loginUser = null;
-    },
-  },
-  actions: {
-    async SUBMIT_LOGIN({ commit }, loginIinfo) {
-      try {
-        const response = await postLogin(loginIinfo);
-        commit("SET_LOGIN_USER", response.data);
-        console.log(response.data);
-        return response;
-      } catch (error) {
-        console.log(error);
+    SET_PROFILE_IMAGE(state, profileImage) {
+      if (profileImage === null) {
+        state.loginUser.profileImage = "default-profile-image.png";
+      } else {
+        state.loginUser.profileImage = profileImage;
       }
     },
   },

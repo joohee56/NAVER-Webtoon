@@ -4,23 +4,30 @@
 			<div class="side-bar">
 
 				<div class="header-logo">
-					<a href="https://www.naver.com">N</a>
+          <router-link to="/">N</router-link>
 					<span class="title">네이버ID</span>
 				</div>
 
 				<div class="user-info">
 					<div class="profile-image">
-						<img src="@/assets/image/jjanggu-profile-image.png">
+            <div :class={hidden:!isHidden}>
+              <img :src="require(`@/assets/image/${loginUser.profileImage}`)">
+            </div>
+            <div class="preview" :class={hidden:isHidden}>
+              <img :src="previewProfileImage">
+            </div>
 					</div>
 					<div class="user-name">
 						{{loginUser.userName}}
 					</div>
 					<div class="user-email">
-						doohui96@naver.com
+						{{loginUserEtc.emailAddress}}
 					</div>
 					<div class="profile-image-btn-wrap">
-						<button type="button"><span>사진변경</span></button>
-						<button type="button"><span>삭제</span></button>
+						<input type="file" id="profile-image" @change="changeProfileImage" ref="image" hidden/>
+            <label for="profile-image">사진 변경</label>
+            <label @click="deleteProfileImage">삭제</label>
+            <label id="submit-btn" @click="submitProfileImage" :class={hidden:isHidden}>적용</label>
 					</div>
 				</div>
 
@@ -51,14 +58,68 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { getUserInfo, postProfileImage } from "@/api/member";
+import { mapMutations, mapState } from "vuex";
 
 export default {
+  data() {
+    return {
+      loginUserEtc: {
+        password: "",
+        emailAddress: "",
+        birthDate: "",
+        gender: "",
+        countryResidence: "",
+        phoneNumber: "",
+      },
+      uploadProfileImage: null,
+      previewProfileImage: null,
+      isHidden: true,
+    };
+  },
   computed: {
     ...mapState("memberStore", ["loginUser"]),
   },
-  created() {
-    console.log(this.loginUser.id);
+  watch: {
+    previewProfileImage: function (val) {
+      console.log(val);
+      this.isHidden = val !== null ? false : true;
+    },
+  },
+  async mounted() {
+    try {
+      const response = await getUserInfo();
+      this.loginUserEtc = response.data;
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  methods: {
+    ...mapMutations("memberStore", ["SET_PROFILE_IMAGE"]),
+    changeProfileImage() {
+      console.log("change event 발생");
+      this.uploadProfileImage = this.$refs.image.files[0];
+      this.previewProfileImage = URL.createObjectURL(this.uploadProfileImage);
+    },
+    async submitProfileImage() {
+      console.log("submit event 발생");
+
+      const formData = new FormData();
+      formData.append("profileImage", this.uploadProfileImage);
+
+      try {
+        const response = await postProfileImage(formData);
+        this.SET_PROFILE_IMAGE(response.data);
+        console.log(response.data);
+        this.previewProfileImage = null;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    deleteProfileImage() {
+      console.log("delete image");
+    },
   },
 };
 </script>
@@ -117,6 +178,10 @@ export default {
 .user-info {
   text-align: center;
 }
+.profile-image {
+  display: flex;
+  justify-content: center;
+}
 .profile-image img {
   width: 120px;
   height: 120px;
@@ -131,7 +196,11 @@ export default {
 .user-email {
   color: gray;
 }
-.profile-image-btn-wrap button {
+.profile-image-btn-wrap {
+  margin-top: 15px;
+}
+
+.profile-image-btn-wrap label {
   margin: 10px 5px;
   padding: 6px 10px;
   border-radius: 7px;
@@ -140,6 +209,16 @@ export default {
   border: solid gray 0.5px;
   background-color: #f9fbfc;
   color: gray;
+}
+.hidden {
+  display: none;
+}
+
+#submit-btn {
+  background-color: #03c75a;
+  color: white;
+  border: #03c75a solid 0.5px;
+  font-family: AppleSDGothicNeoM;
 }
 
 .menu-footer-wrap {

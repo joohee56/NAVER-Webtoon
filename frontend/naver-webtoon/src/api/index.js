@@ -25,4 +25,14 @@ function formApiInstance() {
   return instance;
 }
 
-export { jsonApiInstance, formApiInstance };
+function fileApiInstance() {
+  const instance = axios.create({
+    baseURL: config.baseUrl,
+    headers: {
+      "content-type": "multipart/from-data",
+    },
+  });
+  return instance;
+}
+
+export { jsonApiInstance, formApiInstance, fileApiInstance };

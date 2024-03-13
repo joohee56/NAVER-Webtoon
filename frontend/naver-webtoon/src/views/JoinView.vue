@@ -3,7 +3,7 @@
 		<!-- header -->
 		<div class="naver-logo">
 			<div class="naver-logo-inner">
-				<a href="https://www.naver.com">NAVER</a>
+        <router-link to="/">NAVER</router-link>
 			</div>
 		</div>
 

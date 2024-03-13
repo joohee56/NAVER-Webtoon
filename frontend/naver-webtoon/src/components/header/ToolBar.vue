@@ -20,8 +20,14 @@
       </form>
     </div>
     <div class="user-info" v-if="loginUser.userName != ''">
-      <img src="@/assets/image/profile-image.png" class="profile-image" />
-      <p class="user-name">{{ loginUser.userName }}</p>
+      <router-link :to="{ name: 'userProfile' }"
+        ><img
+          :src="require(`@/assets/image/${this.profileImage}`)"
+          class="profile-image"
+      /></router-link>
+      <router-link :to="{ name: 'userProfile' }"
+        ><p class="user-name">{{ loginUser.userName }}</p></router-link
+      >
     </div>
     <router-link
       :to="{ name: 'login', params: { redirectUrl: this.$route.name } }"
@@ -38,7 +44,7 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
-      isLogin: true,
+      profileImage: this.$store.state.memberStore.loginUser.profileImage,
     };
   },
   computed: {
@@ -109,6 +115,7 @@ form {
   width: 3rem;
   height: 3rem;
   margin-left: 2rem;
+  border-radius: 50%;
 }
 .login-btn {
   background-color: #03c75a;

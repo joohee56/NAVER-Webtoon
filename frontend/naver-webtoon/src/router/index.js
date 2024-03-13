@@ -6,12 +6,23 @@ import MainView from "@/views/MainView";
 import JoinView from "@/views/JoinView";
 import JoinSuccess from "@/views/JoinSuccess.vue";
 import UserProfile from "@/views/UserProfile";
+import Cookies from "js-cookie";
 
 Vue.use(VueRouter);
+
+const checkLogin = (to, from, next) => {
+  const loginUser = JSON.parse(Cookies.get("loginUser"));
+  if (loginUser === null) {
+    next({ name: "login", params: { redirectUrl: "main" } });
+  } else {
+    next();
+  }
+};
 
 const routes = [
   {
     path: "/",
+    name: "home",
     component: WebtoonView,
     redirect: "/main",
     children: [
@@ -39,7 +50,8 @@ const routes = [
   },
   {
     path: "/profile",
-    name: "UserProfile",
+    name: "userProfile",
+    beforeEnter: checkLogin,
     component: UserProfile,
   },
 ];

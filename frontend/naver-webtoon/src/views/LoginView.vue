@@ -2,7 +2,7 @@
 	<div class="container">
 		<header>
 				<div class="header-inner">
-					<a href="https://www.naver.com" class="naver-logo">NAVER</a>
+          <router-link to="/" class="naver-logo">NAVER</router-link>
 					<div class="lang">
 						<select class="select-language">
 							<option value="ko_KR">한국어</option> <!--slot...?-->
@@ -127,7 +127,8 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { postLogin } from "@/api/member";
+import { mapMutations } from "vuex";
 
 export default {
   data() {
@@ -139,11 +140,13 @@ export default {
     };
   },
   methods: {
-    ...mapActions("memberStore", ["SUBMIT_LOGIN"]),
+    ...mapMutations("memberStore", ["SET_LOGIN_USER", "SET_PROFILE_IMAGE"]),
     async login() {
       try {
-        const response = await this.SUBMIT_LOGIN(this.user);
+        const response = await postLogin(this.user);
         if (response.status === 200) {
+          this.SET_LOGIN_USER(response.data);
+          this.SET_PROFILE_IMAGE(response.data.profileImage);
           const redirectUrl = this.$route.params.redirectUrl;
           this.$router.push({ name: redirectUrl });
         }
