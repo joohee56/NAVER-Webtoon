@@ -22,7 +22,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins("http://localhost:8080", "http://localhost:8082")
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
                 .allowedHeaders("Authorization", "Content-Type")
                 .allowCredentials(true)
                 .maxAge(3600);  //pre-flight 리퀘스트 캐싱
@@ -48,7 +48,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(new LoginCheckInterceptor())  //로그인 인증 인터셉터
                 .order(1)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/**/users/join", "/**/users/duplicated/*", "/**/users/login", "/error");
+                .excludePathPatterns("/**/users/join", "/**/users/duplicated/*", "/**/users/login", "/error", "/swagger-ui/*");
     }
 
     /**

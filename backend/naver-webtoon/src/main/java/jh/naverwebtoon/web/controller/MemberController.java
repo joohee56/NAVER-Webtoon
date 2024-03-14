@@ -5,11 +5,12 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import jh.naverwebtoon.db.domain.Member;
 import jh.naverwebtoon.db.repository.MemberRepository;
+import jh.naverwebtoon.dto.request.EditMemberReq;
+import jh.naverwebtoon.dto.request.JoinMemberReq;
 import jh.naverwebtoon.dto.request.LoginReq;
-import jh.naverwebtoon.dto.request.MemberJoinReq;
+import jh.naverwebtoon.dto.response.JoinMemberRes;
 import jh.naverwebtoon.dto.response.LoginRes;
 import jh.naverwebtoon.dto.response.MemberInfoRes;
-import jh.naverwebtoon.dto.response.MemberJoinRes;
 import jh.naverwebtoon.service.MemberService;
 import jh.naverwebtoon.util.FileStore;
 import jh.naverwebtoon.web.Login;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -41,10 +43,10 @@ public class MemberController {
      */
     @ResponseStatus(HttpStatus.OK)
     @PostMapping(value = "/join", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public MemberJoinRes join(@ModelAttribute MemberJoinReq memberJoinReq) {
-        Long savedId = memberService.join(memberJoinReq);
+    public JoinMemberRes join(@ModelAttribute JoinMemberReq joinMemberReq) {
+        Long savedId = memberService.join(joinMemberReq);
         Member member = memberRepository.findOne(savedId);
-        return new MemberJoinRes(member.getLoginId(), member.getName());
+        return new JoinMemberRes(member.getLoginId(), member.getName());
     }
 
     /**
@@ -88,5 +90,14 @@ public class MemberController {
     public String changeProfileImage(@Login Long id, @RequestPart(value="profileImage") MultipartFile profileImage) throws IOException {
         String storeFileName = memberService.changeProfileImage(id, profileImage);
         return storeFileName;
+    }
+
+    /**
+     * 사용자 정보 변경
+     */
+    @PostMapping("/edit")
+    public MemberInfoRes editMember(@Login Long id, @RequestBody EditMemberReq editMemberReq) {
+        Member editMember = memberService.editMemberInfo(id, editMemberReq);
+        return MemberInfoRes.create(editMember);
     }
 }

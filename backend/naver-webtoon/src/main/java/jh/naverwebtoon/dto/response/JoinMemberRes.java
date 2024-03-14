@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class MemberJoinRes {
+public class JoinMemberRes {
     private String loginId;
     private String name;
 }

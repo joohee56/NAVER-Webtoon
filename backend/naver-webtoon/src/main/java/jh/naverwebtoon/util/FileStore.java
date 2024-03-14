@@ -29,6 +29,14 @@ public class FileStore {
         return new UploadImage(originalFileName, storeFileName);
     }
 
+    /**
+     * 파일 삭제
+     */
+    public void deleteFile(String storeFileName) {
+        File deleteFile = new File(getFullPath(storeFileName));
+        deleteFile.delete();
+    }
+
     //저장할 고유 이름 생성
     private String createStoreFileName(String originalFileName) {
         String ext = extractExt(originalFileName); //확장자 추출

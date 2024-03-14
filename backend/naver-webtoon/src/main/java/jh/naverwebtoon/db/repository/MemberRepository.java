@@ -5,9 +5,11 @@ import jakarta.persistence.PersistenceContext;
 import java.time.LocalDate;
 import java.util.List;
 import jh.naverwebtoon.db.domain.Member;
+import jh.naverwebtoon.db.domain.ProfileImage;
+import jh.naverwebtoon.db.domain.UploadImage;
 import jh.naverwebtoon.db.domain.enums.CountryResidence;
 import jh.naverwebtoon.db.domain.enums.Gender;
-import jh.naverwebtoon.dto.request.MemberJoinReq;
+import jh.naverwebtoon.dto.request.JoinMemberReq;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Repository;
@@ -21,16 +23,18 @@ public class MemberRepository {
     @EventListener(ApplicationReadyEvent.class)
     @Transactional
     public void initMember() {
-        MemberJoinReq memberJoinReq = new MemberJoinReq();
-        memberJoinReq.setLoginId("joohee56");
-        memberJoinReq.setPassword("1234");
-        memberJoinReq.setEmailAddress("joohee@naver.com");
-        memberJoinReq.setName("이주희");
-        memberJoinReq.setBirthDate(LocalDate.of(1999, 9, 19));
-        memberJoinReq.setGender(Gender.FEMALE);
-        memberJoinReq.setCountryResidence(CountryResidence.LOCAL);
-        memberJoinReq.setPhoneNumber("010-1234-5678");
-        Member member = Member.createMember(memberJoinReq);
+        JoinMemberReq joinMemberReq = new JoinMemberReq();
+        joinMemberReq.setLoginId("joohee56");
+        joinMemberReq.setPassword("1234");
+        joinMemberReq.setEmailAddress("joohee@naver.com");
+        joinMemberReq.setName("이주희");
+        joinMemberReq.setBirthDate(LocalDate.of(1999, 9, 19));
+        joinMemberReq.setGender(Gender.FEMALE);
+        joinMemberReq.setCountryResidence(CountryResidence.LOCAL);
+        joinMemberReq.setPhoneNumber("010-1234-5678");
+        Member member = Member.createMember(joinMemberReq);
+        ProfileImage profileImage = ProfileImage.createProfileImage(new UploadImage("수달.jpeg", "ae738f79-ec30-40c9-ace9-c369ccf076c2.jpeg"));
+        member.changeProfileImage(profileImage);
         em.persist(member);
     }
 

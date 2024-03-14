@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @EqualsAndHashCode
-public class MemberJoinReq {
+public class JoinMemberReq {
     private String loginId;
     private String password;
     private String emailAddress;

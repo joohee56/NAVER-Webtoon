@@ -6,8 +6,10 @@ import jh.naverwebtoon.db.domain.Member;
 import jh.naverwebtoon.db.domain.ProfileImage;
 import jh.naverwebtoon.db.domain.UploadImage;
 import jh.naverwebtoon.db.repository.MemberRepository;
+import jh.naverwebtoon.db.repository.ProfileImageRepository;
+import jh.naverwebtoon.dto.request.EditMemberReq;
 import jh.naverwebtoon.dto.request.LoginReq;
-import jh.naverwebtoon.dto.request.MemberJoinReq;
+import jh.naverwebtoon.dto.request.JoinMemberReq;
 import jh.naverwebtoon.util.FileStore;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,19 +21,20 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 public class MemberService {
     private final MemberRepository memberRepository;
+    private final ProfileImageRepository profileImageRepository;
     private final FileStore fileStore;
 
     /**
      * 회원가입
      */
     @Transactional
-    public Long join(MemberJoinReq memberJoinReq) {
+    public Long join(JoinMemberReq joinMemberReq) {
         //LoginId 중복 검사
-        if(duplicatedLoginId(memberJoinReq.getLoginId())) {
+        if(duplicatedLoginId(joinMemberReq.getLoginId())) {
             throw new IllegalArgumentException("이미 가입된 아이디입니다.");
         }
 
-        Member member = Member.createMember(memberJoinReq);
+        Member member = Member.createMember(joinMemberReq);
         return memberRepository.save(member);
     }
 
@@ -57,8 +60,22 @@ public class MemberService {
     @Transactional
     public String changeProfileImage(Long id, MultipartFile profileImage) throws IOException {
         Member member = memberRepository.findOne(id);
+        if (member.getProfileImage() != null) {
+            String storeFileName = member.getProfileImage().getUploadImage().getStoreFileName();
+            fileStore.deleteFile(storeFileName);  //기존의 프로필 이미지 삭제
+        }
         UploadImage uploadImage = fileStore.storeFile(profileImage);
         member.changeProfileImage(ProfileImage.createProfileImage(uploadImage));
         return member.getProfileImage().getUploadImage().getStoreFileName();
+    }
+
+    /**
+     * 사용자 정보 수정
+     */
+    @Transactional
+    public Member editMemberInfo(Long id, EditMemberReq editMemberReq) {
+        Member findMember = memberRepository.findOne(id);
+        findMember.edit(editMemberReq);
+        return findMember;
     }
 }

@@ -16,7 +16,8 @@ import jakarta.persistence.UniqueConstraint;
 import java.time.LocalDate;
 import jh.naverwebtoon.db.domain.enums.CountryResidence;
 import jh.naverwebtoon.db.domain.enums.Gender;
-import jh.naverwebtoon.dto.request.MemberJoinReq;
+import jh.naverwebtoon.dto.request.EditMemberReq;
+import jh.naverwebtoon.dto.request.JoinMemberReq;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -54,20 +55,46 @@ public class Member extends BaseEntity {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private ProfileImage profileImage;
 
-    public static Member createMember(MemberJoinReq memberJoinReq) {
+    public static Member createMember(JoinMemberReq joinMemberReq) {
         Member member = new Member();
-        member.loginId = memberJoinReq.getLoginId();
-        member.password = memberJoinReq.getPassword();
-        member.emailAddress = memberJoinReq.getEmailAddress();
-        member.name = memberJoinReq.getName();
-        member.birthDate = memberJoinReq.getBirthDate();
-        member.gender = memberJoinReq.getGender();
-        member.countryResidence = memberJoinReq.getCountryResidence();
-        member.phoneNumber = memberJoinReq.getPhoneNumber();
+        member.loginId = joinMemberReq.getLoginId();
+        member.password = joinMemberReq.getPassword();
+        member.emailAddress = joinMemberReq.getEmailAddress();
+        member.name = joinMemberReq.getName();
+        member.birthDate = joinMemberReq.getBirthDate();
+        member.gender = joinMemberReq.getGender();
+        member.countryResidence = joinMemberReq.getCountryResidence();
+        member.phoneNumber = joinMemberReq.getPhoneNumber();
         return member;
     }
 
     public void changeProfileImage(ProfileImage profileImage) {
         this.profileImage = profileImage;
     }
+
+    public void edit(EditMemberReq editMemberReq) {
+        if (editMemberReq.getUserName() != null) {
+            this.name = editMemberReq.getUserName();
+        }
+        if (editMemberReq.getPassword() != null) {
+            this.password = editMemberReq.getPassword();
+        }
+        if (editMemberReq.getEmailAddress() != null) {
+            this.emailAddress = editMemberReq.getEmailAddress();
+        }
+        if (editMemberReq.getBirthDate() != null) {
+            this.birthDate = editMemberReq.getBirthDate();
+        }
+        if (editMemberReq.getGender() != null) {
+            this.gender = editMemberReq.getGender();
+        }
+        if (editMemberReq.getCountryResidence() != null) {
+            this.countryResidence = editMemberReq.getCountryResidence();
+        }
+        if (editMemberReq.getPhoneNumber() != null) {
+            this.phoneNumber = editMemberReq.getPhoneNumber();
+        }
+    }
+
+
 }
