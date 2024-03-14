@@ -59,6 +59,15 @@ async function putUserInfo(userInfo) {
   }
 }
 
+async function postLogout() {
+  try {
+    const response = await jsonApi.post("/users/logout");
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export {
   postJoinMember,
   checkDuplicatedLoginId,
@@ -66,4 +75,5 @@ export {
   getUserInfo,
   postProfileImage,
   putUserInfo,
+  postLogout,
 };

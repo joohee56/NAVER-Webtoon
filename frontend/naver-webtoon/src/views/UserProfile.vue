@@ -42,7 +42,7 @@
 
 					<footer>
 						<div>
-							<span>로그아웃</span> | <span>고객센터</span> 
+							<button @click="logout">로그아웃</button> | <button>고객센터</button> 
 						</div>
 						<div class="footer-logo">
 							<span>NAVER</span>
@@ -103,12 +103,12 @@
           </ul>
         </div>
         <div class="profile-detail-btn">
-          <div>
-            <button @click="editUserInfo" :class="{hidden:!isInfoHidden}">수정</button>
+          <div :class="{hidden:!isInfoHidden}">
+            <button @click="editUserInfo">수정</button>
           </div>
-          <div>
-            <button :class="{hidden:isInfoHidden}" @click="submitEditUser">완료</button>
-            <button :class="{hidden:isInfoHidden}" @click="cancelEditUser" id="cancel-edit-user-btn">취소</button>
+          <div :class="{hidden:isInfoHidden}">
+            <button @click="submitEditUser">완료</button>
+            <button @click="cancelEditUser" id="cancel-edit-user-btn">취소</button>
           </div>
         </div>
 			</div>
@@ -118,8 +118,14 @@
 </template>
 
 <script>
-import { getUserInfo, postProfileImage, putUserInfo } from "@/api/member";
+import {
+  getUserInfo,
+  postProfileImage,
+  putUserInfo,
+  postLogout,
+} from "@/api/member";
 import { mapMutations, mapState } from "vuex";
+import Cookies from "js-cookie";
 
 export default {
   data() {
@@ -137,7 +143,7 @@ export default {
       uploadProfileImage: null,
       previewProfileImage: null,
       isProfileImageHidden: true,
-      isInfoHidden: false,
+      isInfoHidden: true,
     };
   },
   computed: {
@@ -205,6 +211,19 @@ export default {
       console.log("cancel click");
       this.userInfo = { ...this.originUser };
       this.isInfoHidden = true;
+    },
+    async logout() {
+      console.log("logtout click");
+      try {
+        const response = await postLogout();
+        if (response.status === 200) {
+          Cookies.remove("loginUser");
+          location.href = "http://localhost:8080/main";
+        }
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 };
@@ -333,6 +352,13 @@ footer {
   color: #b2b2b2;
   text-align: center;
   margin-top: 39px;
+}
+footer button {
+  border: none;
+  background-color: white;
+  color: #b2b2b2;
+  font-size: 13px;
+  font-weight: 600;
 }
 
 .footer-logo {
