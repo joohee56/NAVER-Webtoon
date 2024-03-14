@@ -10,10 +10,10 @@
 
 				<div class="user-info">
 					<div class="profile-image">
-            <div :class={hidden:!isHidden}>
+            <div :class={hidden:!isProfileImageHidden}>
               <img :src="require(`@/assets/image/${loginUser.profileImage}`)">
             </div>
-            <div :class={hidden:isHidden}>
+            <div :class={hidden:isProfileImageHidden}>
               <img :src="previewProfileImage">
             </div>
 					</div>
@@ -27,7 +27,7 @@
 						<input type="file" id="profile-image" @change="changeProfileImage" ref="image" hidden/>
             <label for="profile-image">사진 변경</label>
             <label @click="deleteProfileImage">삭제</label>
-            <label id="submit-btn" @click="submitProfileImage" :class={hidden:isHidden}>적용</label>
+            <label id="submit-btn" @click="submitProfileImage" :class={hidden:isProfileImageHidden}>적용</label>
 					</div>
 				</div>
 
@@ -108,7 +108,7 @@
           </div>
           <div>
             <button :class="{hidden:isInfoHidden}" @click="submitEditUser">완료</button>
-            <button :class="{hidden:isInfoHidden}">취소</button>
+            <button :class="{hidden:isInfoHidden}" @click="cancelEditUser" id="cancel-edit-user-btn">취소</button>
           </div>
         </div>
 			</div>
@@ -136,8 +136,8 @@ export default {
       originUser: {},
       uploadProfileImage: null,
       previewProfileImage: null,
-      isHidden: true,
-      isInfoHidden: true,
+      isProfileImageHidden: true,
+      isInfoHidden: false,
     };
   },
   computed: {
@@ -146,7 +146,7 @@ export default {
   watch: {
     previewProfileImage: function (val) {
       console.log(val);
-      this.isHidden = val !== null ? false : true;
+      this.isProfileImageHidden = val !== null ? false : true;
     },
   },
   async mounted() {
@@ -187,13 +187,13 @@ export default {
     editUserInfo() {
       console.log("change click");
       this.isInfoHidden = false;
-      this.originUser = { ...this.userInfo };
     },
     async submitEditUser() {
       console.log("submit edit user");
       try {
         const response = await putUserInfo(this.userInfo);
         this.userInfo = response.data;
+        this.originUser = { ...this.userInfo };
         this.SET_USER_NAME(response.data.userName);
         this.isInfoHidden = true;
         console.log(response.data);
@@ -201,9 +201,10 @@ export default {
         console.log(error);
       }
     },
-    cancelEditUserInfo() {
+    cancelEditUser() {
       console.log("cancel click");
       this.userInfo = { ...this.originUser };
+      this.isInfoHidden = true;
     },
   },
 };
@@ -387,20 +388,24 @@ h4 {
   border: solid 1px #e3e9ed;
 }
 .profile-detail-btn {
-  margin: 30px 0px;
+  margin: 40px 0px;
 }
 .profile-detail-btn div {
   text-align: center;
 }
 .profile-detail-btn button {
   border: none;
-  padding: 10px 80px;
+  padding: 13px 90px;
   background-color: #03c75a;
   color: white;
   font-family: AppleSDGothicNeoM;
   border-radius: 7px;
   font-size: 1rem;
   box-shadow: 1px 1px 10px 0 rgba(72, 75, 108, 0.08);
+}
+#cancel-edit-user-btn {
+  margin-left: 20px;
+  background-color: #d2d8dc;
 }
 .hidden {
   display: none;

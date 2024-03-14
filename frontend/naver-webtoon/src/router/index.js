@@ -11,8 +11,8 @@ import Cookies from "js-cookie";
 Vue.use(VueRouter);
 
 const checkLogin = (to, from, next) => {
-  const loginUser = JSON.parse(Cookies.get("loginUser"));
-  if (loginUser === null) {
+  const loginUser = Cookies.get("loginUser");
+  if (loginUser === undefined) {
     next({ name: "login", params: { redirectUrl: "main" } });
   } else {
     next();

@@ -20,7 +20,7 @@ const memberStore = {
       }
     },
     SET_USER_NAME(state, userName) {
-      state.userName = userName;
+      state.loginUser.userName = userName;
     },
   },
 };
