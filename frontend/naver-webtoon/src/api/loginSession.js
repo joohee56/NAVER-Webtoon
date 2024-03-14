@@ -25,7 +25,7 @@ const checkSessionExpired = function () {
   let isExpired = localTime > sessionExpiry ? true : false;
   if (isExpired === true) {
     Cookies.remove("loginUser");
-    location.reload(true);
+    location.href = "http://localhost:8080/login/main";
     return;
   } else {
     setTimeout(checkSessionExpired, 10 * 1000); //10초에 한번씩 타이머 설정

@@ -13,7 +13,7 @@
             <div :class={hidden:!isHidden}>
               <img :src="require(`@/assets/image/${loginUser.profileImage}`)">
             </div>
-            <div class="preview" :class={hidden:isHidden}>
+            <div :class={hidden:isHidden}>
               <img :src="previewProfileImage">
             </div>
 					</div>
@@ -21,7 +21,7 @@
 						{{loginUser.userName}}
 					</div>
 					<div class="user-email">
-						{{loginUserEtc.emailAddress}}
+						{{originUser.emailAddress}}
 					</div>
 					<div class="profile-image-btn-wrap">
 						<input type="file" id="profile-image" @change="changeProfileImage" ref="image" hidden/>
@@ -50,21 +50,82 @@
 					</footer>
 				</div>
 			</div>
+
 			<div class="main-content">
-				왜안되지
+        <div class="account-box">
+          <div class="title">          
+            <h4>내프로필</h4>
+          </div>
+          <ul class="account-row">
+            <li>
+              <i class="fa-regular fa-user"></i>
+              <input type="text" :placeholder="userInfo.userName" :class="{hidden: isInfoHidden}" v-model="userInfo.userName">
+              <span :class="{hidden: !isInfoHidden}">
+                {{userInfo.userName}}
+              </span>
+            </li>
+            <li>
+              <i class="fa-solid fa-lock"></i>
+              <input type="password" :placeholder="userInfo.password" :class="{hidden: isInfoHidden}" v-model="userInfo.password">
+              <span :class="{hidden: !isInfoHidden}">
+              {{userInfo.password}}
+              </span>
+            </li>
+            <li>
+              <i class="fa-regular fa-envelope"></i>
+              <input type="email" :placeholder="userInfo.emailAddress" :class="{hidden: isInfoHidden}" v-model="userInfo.emailAddress">
+              <span :class="{hidden: !isInfoHidden}">
+              {{userInfo.emailAddress}}
+              </span>
+            </li>
+            <li>
+              <i class="fa-solid fa-cake-candles"></i>
+              <input type="text" :placeholder="userInfo.birthDate" :class="{hidden: isInfoHidden}" v-model="userInfo.birthDate">
+              <span :class="{hidden: !isInfoHidden}">
+              {{userInfo.birthDate}}
+              </span>
+            </li>
+            <li>
+              <i class="fa-solid fa-venus-mars"></i>
+              {{userInfo.gender}}
+            </li>
+            <li>
+              <i class="fa-solid fa-earth-asia"></i>
+              {{userInfo.countryResidence}}
+            </li>
+            <li>
+              <i class="fa-solid fa-mobile-screen"></i>
+              <input type="tel" :placeholder="userInfo.phoneNumber" :class="{hidden: isInfoHidden}" v-model="userInfo.phoneNumber">
+              <span :class="{hidden: !isInfoHidden}">
+              {{userInfo.phoneNumber}}
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div class="profile-detail-btn">
+          <div>
+            <button @click="editUserInfo" :class="{hidden:!isInfoHidden}">수정</button>
+          </div>
+          <div>
+            <button :class="{hidden:isInfoHidden}" @click="submitEditUser">완료</button>
+            <button :class="{hidden:isInfoHidden}">취소</button>
+          </div>
+        </div>
 			</div>
+
 		</div>
 	</div>
 </template>
 
 <script>
-import { getUserInfo, postProfileImage } from "@/api/member";
+import { getUserInfo, postProfileImage, putUserInfo } from "@/api/member";
 import { mapMutations, mapState } from "vuex";
 
 export default {
   data() {
     return {
-      loginUserEtc: {
+      userInfo: {
+        userName: "",
         password: "",
         emailAddress: "",
         birthDate: "",
@@ -72,9 +133,11 @@ export default {
         countryResidence: "",
         phoneNumber: "",
       },
+      originUser: {},
       uploadProfileImage: null,
       previewProfileImage: null,
       isHidden: true,
+      isInfoHidden: true,
     };
   },
   computed: {
@@ -89,14 +152,15 @@ export default {
   async mounted() {
     try {
       const response = await getUserInfo();
-      this.loginUserEtc = response.data;
+      this.userInfo = response.data;
+      this.originUser = { ...this.userInfo };
       console.log(response);
     } catch (error) {
       console.log(error);
     }
   },
   methods: {
-    ...mapMutations("memberStore", ["SET_PROFILE_IMAGE"]),
+    ...mapMutations("memberStore", ["SET_PROFILE_IMAGE", "SET_USER_NAME"]),
     changeProfileImage() {
       console.log("change event 발생");
       this.uploadProfileImage = this.$refs.image.files[0];
@@ -119,6 +183,27 @@ export default {
     },
     deleteProfileImage() {
       console.log("delete image");
+    },
+    editUserInfo() {
+      console.log("change click");
+      this.isInfoHidden = false;
+      this.originUser = { ...this.userInfo };
+    },
+    async submitEditUser() {
+      console.log("submit edit user");
+      try {
+        const response = await putUserInfo(this.userInfo);
+        this.userInfo = response.data;
+        this.SET_USER_NAME(response.data.userName);
+        this.isInfoHidden = true;
+        console.log(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    cancelEditUserInfo() {
+      console.log("cancel click");
+      this.userInfo = { ...this.originUser };
     },
   },
 };
@@ -258,6 +343,66 @@ footer {
 }
 
 /* main-content */
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+h4 {
+  margin: 0px;
+}
 .main-content {
+  margin: 0 auto;
+  width: 694px;
+  padding: 70px;
+}
+.account-box .title {
+  color: white;
+  padding: 13px 15px;
+  border-radius: 12px 12px 0 0;
+  background-image: linear-gradient(98deg, #03c75a, #49c6dd);
+}
+.account-row {
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  box-shadow: 1px 1px 10px 0 rgba(72, 75, 108, 0.08);
+  border: solid 1px #e3e9ed;
+  background-color: #fff;
+  box-sizing: border-box;
+  padding: 0px 18px 10px;
+}
+.account-row li {
+  padding: 10px 5px;
+}
+.account-row li:not(:last-child) {
+  border-bottom: #e3e9ed solid 0.5px;
+}
+.account-row li i {
+  color: #b2b2b2;
+  margin-right: 10px;
+}
+.account-row input {
+  padding: 10px;
+  border-radius: 4px;
+  border: solid 1px #e3e9ed;
+}
+.profile-detail-btn {
+  margin: 30px 0px;
+}
+.profile-detail-btn div {
+  text-align: center;
+}
+.profile-detail-btn button {
+  border: none;
+  padding: 10px 80px;
+  background-color: #03c75a;
+  color: white;
+  font-family: AppleSDGothicNeoM;
+  border-radius: 7px;
+  font-size: 1rem;
+  box-shadow: 1px 1px 10px 0 rgba(72, 75, 108, 0.08);
+}
+.hidden {
+  display: none;
 }
 </style>

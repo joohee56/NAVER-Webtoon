@@ -50,10 +50,20 @@ async function postProfileImage(formData) {
   }
 }
 
+async function putUserInfo(userInfo) {
+  try {
+    const response = await jsonApi.post("/users/edit", userInfo);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export {
   postJoinMember,
   checkDuplicatedLoginId,
   postLogin,
   getUserInfo,
   postProfileImage,
+  putUserInfo,
 };

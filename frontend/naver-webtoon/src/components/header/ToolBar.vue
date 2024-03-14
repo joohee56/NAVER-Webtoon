@@ -22,7 +22,7 @@
     <div class="user-info" v-if="loginUser.userName != ''">
       <router-link :to="{ name: 'userProfile' }"
         ><img
-          :src="require(`@/assets/image/${this.profileImage}`)"
+          :src="require(`@/assets/image/${loginUser.profileImage}`)"
           class="profile-image"
       /></router-link>
       <router-link :to="{ name: 'userProfile' }"
@@ -42,11 +42,6 @@
 import { mapState } from "vuex";
 
 export default {
-  data() {
-    return {
-      profileImage: this.$store.state.memberStore.loginUser.profileImage,
-    };
-  },
   computed: {
     ...mapState("memberStore", ["loginUser"]),
   },

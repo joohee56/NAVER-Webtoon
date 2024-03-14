@@ -36,8 +36,6 @@ export default {
 <style scoped>
 .container {
   height: 100vh;
-  /* align-items: center; */
-  /* display: flex; */
   padding-top: 70px;
 }
 
