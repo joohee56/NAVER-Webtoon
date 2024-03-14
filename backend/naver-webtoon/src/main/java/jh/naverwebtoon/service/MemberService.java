@@ -42,6 +42,9 @@ public class MemberService {
         return !memberRepository.findByLoginId(loginId).isEmpty();
     }
 
+    /**
+     * 로그인
+     */
     public Member login(LoginReq loginReq) {
         List<Member> findMembers = memberRepository.findByLoginId(loginReq.getLoginId());
         if (findMembers.isEmpty()) {

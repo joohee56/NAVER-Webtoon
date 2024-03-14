@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -73,6 +74,15 @@ public class MemberController {
     }
 
     /**
+     * 로그아웃
+     */
+    @PostMapping("/logout")
+    public void logout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        session.invalidate();
+    }
+
+    /**
      * 회원 정보 조회
      */
     @GetMapping()
@@ -95,7 +105,7 @@ public class MemberController {
     /**
      * 사용자 정보 변경
      */
-    @PostMapping("/edit")
+    @PutMapping("/edit")
     public MemberInfoRes editMember(@Login Long id, @RequestBody EditMemberReq editMemberReq) {
         Member editMember = memberService.editMemberInfo(id, editMemberReq);
         return MemberInfoRes.create(editMember);
