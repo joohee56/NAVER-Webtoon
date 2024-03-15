@@ -1,5 +1,5 @@
 <template lang="ko">
-  <div class="container">
+  <div id="container">
 		<div class="content-wrap">
 			<div class="logo">
 				<router-link :to="{name: `creatorDashboard`}" class="n">N</router-link>
@@ -32,9 +32,13 @@ export default {
 </script>
 
 <style scoped>
-.container {
-  border-bottom: 0.5px solid #dadada;
+#container {
+  background-color: white;
+  border-bottom: 0.5px solid #ebebeb;
   height: 4rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
 .content-wrap {

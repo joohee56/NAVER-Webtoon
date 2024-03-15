@@ -1,5 +1,5 @@
 <template lang="ko">
-	<div>
+	<div class="container">
 		<ToolBar></ToolBar>
 		<div class="main-content">
 			<NavBar></NavBar>
@@ -21,8 +21,11 @@ export default {
 </script>
 
 <style scoped>
-.main-content {
-  width: 1595px;
+.container {
   background-color: #f9fbfc;
+}
+
+.main-content {
+  display: flex;
 }
 </style>
