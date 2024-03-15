@@ -23,12 +23,12 @@ nav {
 }
 nav a {
   display: block;
-  margin: 2rem 1rem 0;
+  margin: 3rem 1rem 0;
   padding-bottom: 0.5rem;
   font-family: AppleSDGothicNeoM;
   font-size: 18px;
 }
-nav .active {
+.router-link-active {
   font-family: AppleSDGothicNeoEB;
   color: #00dc64;
   border-bottom: #00dc64 solid;

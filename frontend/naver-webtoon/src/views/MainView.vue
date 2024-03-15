@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import WebtoonRanking from "@/components/main/WebtoonRanking";
-import WebtoonList from "@/components/main/WebtoonList.vue";
+import WebtoonRanking from "@/components/webtoon/main/WebtoonRanking";
+import WebtoonList from "@/components/webtoon/main/WebtoonList.vue";
 
 export default {
   components: {

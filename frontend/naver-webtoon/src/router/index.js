@@ -1,12 +1,16 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import Cookies from "js-cookie";
+
 import WebtoonView from "@/views/WebtoonView";
 import LoginView from "@/views/LoginView";
 import MainView from "@/views/MainView";
 import JoinView from "@/views/JoinView";
 import JoinSuccess from "@/views/JoinSuccess.vue";
 import UserProfile from "@/views/UserProfile";
-import Cookies from "js-cookie";
+import CreatorView from "@/views/CreatorView";
+import ChallengeView from "@/views/ChallengeView.vue";
+import ManageWebtoon from "@/components/creator/main/ManageWebtoon";
 
 Vue.use(VueRouter);
 
@@ -31,6 +35,11 @@ const routes = [
         name: "main",
         component: MainView,
       },
+      {
+        path: "/challenge",
+        name: "challenge",
+        component: ChallengeView,
+      },
     ],
   },
   {
@@ -53,6 +62,20 @@ const routes = [
     name: "userProfile",
     beforeEnter: checkLogin,
     component: UserProfile,
+  },
+  {
+    path: "/creators/dashboard",
+    name: "creatorDashboard",
+    beforeEnter: checkLogin,
+    component: CreatorView,
+    redirect: "/creators/manage",
+    children: [
+      {
+        path: "/creators/manage",
+        name: "manage",
+        component: ManageWebtoon,
+      },
+    ],
   },
 ];
 

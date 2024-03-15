@@ -20,14 +20,15 @@
       </form>
     </div>
     <div class="user-info" v-if="loginUser.userName != ''">
-      <router-link :to="{ name: 'userProfile' }"
-        ><img
+      <router-link :to="{ name: 'userProfile' }">
+        <img
           :src="require(`@/assets/image/${loginUser.profileImage}`)"
           class="profile-image"
-      /></router-link>
-      <router-link :to="{ name: 'userProfile' }"
-        ><p class="user-name">{{ loginUser.userName }}</p></router-link
-      >
+        />
+      </router-link>
+      <router-link :to="{ name: 'userProfile' }">
+        <p class="user-name">{{ loginUser.userName }}</p>
+      </router-link>
     </div>
     <router-link
       :to="{ name: 'login', params: { redirectUrl: this.$route.name } }"
