@@ -22,7 +22,7 @@ export default {
 
 <style scoped>
 .container {
-  background-color: #f9fbfc;
+  background-color: #f6f6f6;
 }
 
 .main-content {

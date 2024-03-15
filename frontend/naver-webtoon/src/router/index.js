@@ -13,6 +13,9 @@ import ChallengeView from "@/views/ChallengeView.vue";
 import ManageWebtoon from "@/components/creator/main/ManageWebtoon";
 import ManageComment from "@/components/creator/main/ManageComment";
 import ManageAlarm from "@/components/creator/main/ManageAlarm";
+import CreateNewWebtoon from "@/components/creator/main/CreateNewWebtoon";
+import CreateNewRound from "@/components/creator/main/CreateNewRound";
+
 Vue.use(VueRouter);
 
 const checkLogin = (to, from, next) => {
@@ -85,6 +88,16 @@ const routes = [
         path: "/creators/alarm",
         name: "manageAlarm",
         component: ManageAlarm,
+      },
+      {
+        path: "/creators/manage/new/webtoon",
+        name: "createNewWebtoon",
+        component: CreateNewWebtoon,
+      },
+      {
+        path: "/creators/manage/new/round",
+        name: "createNewRound",
+        component: CreateNewRound,
       },
     ],
   },
