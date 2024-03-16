@@ -36,6 +36,7 @@ vueini
 					</div>
 				</div>
 			</div>
+			
 			<router-link :to="{name: 'createNewWebtoon'}">
 				<div class="create-new-webtoon-btn">
 					<div>

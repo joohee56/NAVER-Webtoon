@@ -88,6 +88,9 @@ export default {
   border-radius: 4px;
   padding: 13px 20px;
   font-size: 14px;
+  align-items: center;
+  line-height: 14px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
 }
 .create-btn a:not(:last-child) {
   margin-right: 10px;
