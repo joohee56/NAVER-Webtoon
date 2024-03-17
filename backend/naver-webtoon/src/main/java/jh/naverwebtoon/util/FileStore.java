@@ -37,7 +37,9 @@ public class FileStore {
         deleteFile.delete();
     }
 
-    //저장할 고유 이름 생성
+    /**
+     * 저장할 고유 이름 생성
+     */
     private String createStoreFileName(String originalFileName) {
         String ext = extractExt(originalFileName); //확장자 추출
         String uuid = UUID.randomUUID().toString();  //고유한 이름

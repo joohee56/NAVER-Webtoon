@@ -6,10 +6,9 @@ import jh.naverwebtoon.db.domain.Member;
 import jh.naverwebtoon.db.domain.ProfileImage;
 import jh.naverwebtoon.db.domain.UploadImage;
 import jh.naverwebtoon.db.repository.MemberRepository;
-import jh.naverwebtoon.db.repository.ProfileImageRepository;
 import jh.naverwebtoon.dto.request.EditMemberReq;
-import jh.naverwebtoon.dto.request.LoginReq;
 import jh.naverwebtoon.dto.request.JoinMemberReq;
+import jh.naverwebtoon.dto.request.LoginReq;
 import jh.naverwebtoon.util.FileStore;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,7 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 public class MemberService {
     private final MemberRepository memberRepository;
-    private final ProfileImageRepository profileImageRepository;
     private final FileStore fileStore;
 
     /**

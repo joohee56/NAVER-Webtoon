@@ -16,11 +16,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ProfileImage {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "profile_image_id")
     private Long id;
 
     @Embedded
-    @AttributeOverride(name="uploadFileName", column = @Column(name = "Profile_Upload_File_Name"))
-    @AttributeOverride(name = "storeFileName", column = @Column(name = "Profile_Store_File_Name"))
+    @AttributeOverride(name="uploadFileName", column = @Column(name = "profile_upload_file_name"))
+    @AttributeOverride(name = "storeFileName", column = @Column(name = "profile_store_file_name"))
     private UploadImage uploadImage;
 
     public static ProfileImage createProfileImage(UploadImage uploadImage) {

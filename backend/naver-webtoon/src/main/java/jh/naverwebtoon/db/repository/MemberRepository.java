@@ -33,7 +33,7 @@ public class MemberRepository {
         joinMemberReq.setCountryResidence(CountryResidence.LOCAL);
         joinMemberReq.setPhoneNumber("010-1234-5678");
         Member member = Member.createMember(joinMemberReq);
-        ProfileImage profileImage = ProfileImage.createProfileImage(new UploadImage("수달.jpeg", "ae738f79-ec30-40c9-ace9-c369ccf076c2.jpeg"));
+        ProfileImage profileImage = ProfileImage.createProfileImage(new UploadImage("jjanggu-profile-image.png", "jjanggu-profile-image.png"));
         member.changeProfileImage(profileImage);
         em.persist(member);
     }
