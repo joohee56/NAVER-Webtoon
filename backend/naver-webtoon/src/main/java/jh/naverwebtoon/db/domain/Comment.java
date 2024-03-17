@@ -12,7 +12,6 @@ import jakarta.persistence.ManyToOne;
 @Entity
 public class Comment extends BaseEntity {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "comment_id")
     private Long id;
 
     @Column(name = "comment_content", length = 1500)

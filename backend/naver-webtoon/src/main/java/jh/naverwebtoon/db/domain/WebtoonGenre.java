@@ -1,6 +1,5 @@
 package jh.naverwebtoon.db.domain;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -16,7 +15,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class WebtoonGenre {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "webtoon_genre_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

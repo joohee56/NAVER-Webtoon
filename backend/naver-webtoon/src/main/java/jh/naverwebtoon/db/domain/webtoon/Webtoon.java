@@ -34,7 +34,6 @@ public class Webtoon extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "webtoon_id")
     private Long id;
 
     @Column(name = "webtoon_name", nullable = false)

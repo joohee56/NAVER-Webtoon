@@ -14,9 +14,8 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ProfileImage {
+public class ProfileImage extends BaseEntity {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "profile_image_id")
     private Long id;
 
     @Embedded

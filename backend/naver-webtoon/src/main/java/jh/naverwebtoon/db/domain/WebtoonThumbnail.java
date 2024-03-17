@@ -14,9 +14,8 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class WebtoonThumbnail {
+public class WebtoonThumbnail extends BaseEntity {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "webtoon_thumbnail_id")
     private Long id;
 
     @Embedded

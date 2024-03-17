@@ -3,6 +3,7 @@ package jh.naverwebtoon.service;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import jh.naverwebtoon.db.domain.Genre;
 import jh.naverwebtoon.db.domain.Member;
 import jh.naverwebtoon.db.domain.UploadImage;
@@ -14,6 +15,7 @@ import jh.naverwebtoon.db.repository.GenreRepository;
 import jh.naverwebtoon.db.repository.MemberRepository;
 import jh.naverwebtoon.db.repository.WebtoonRepository;
 import jh.naverwebtoon.dto.request.CreateWebtoonReq;
+import jh.naverwebtoon.dto.response.FindWebtoonsByMemberRes;
 import jh.naverwebtoon.util.FileStore;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -48,5 +50,13 @@ public class WebtoonService {
         Webtoon webtoon = Webtoon.createWebtoon(member, createWebtoonReq, webtoonGenres, webtoonThumbnail);
         Long webtoonId = webtoonRepository.save(webtoon);
         return webtoonRepository.findByOne(webtoonId);
+    }
+
+    public List<FindWebtoonsByMemberRes> findAllByMember(Long memberId) {
+        Member member = memberRepository.findOne(memberId);
+        List<Webtoon> webtoons = webtoonRepository.findAllByMember(member);
+        return webtoons.stream()
+                .map(w -> FindWebtoonsByMemberRes.create(w))
+                .collect(Collectors.toList());
     }
 }

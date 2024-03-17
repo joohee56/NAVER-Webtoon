@@ -21,7 +21,6 @@ public class Round extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "round_id")
     private Long id;
 
     @ManyToOne

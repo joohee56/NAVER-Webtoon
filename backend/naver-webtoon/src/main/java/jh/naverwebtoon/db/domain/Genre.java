@@ -1,6 +1,5 @@
 package jh.naverwebtoon.db.domain;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -12,7 +11,6 @@ import jh.naverwebtoon.db.domain.enums.GenreEnum;
 @Entity
 public class Genre {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "genre_id ")
     private Long id;
 
     @Enumerated(EnumType.STRING)
