@@ -1,7 +1,8 @@
-import { fileApiInstance } from "@/api/index";
+import { fileApiInstance, jsonApiInstance } from "@/api/index";
 import { startSessionCheck } from "./loginSession";
 
 const fileApi = fileApiInstance();
+const jsonApi = jsonApiInstance();
 
 async function postCreateWebtoon(webtoon) {
   try {
@@ -13,4 +14,14 @@ async function postCreateWebtoon(webtoon) {
   }
 }
 
-export { postCreateWebtoon };
+async function getWebtoonAllByMember() {
+  try {
+    const response = await jsonApi.get("/webtoon");
+    startSessionCheck();
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export { postCreateWebtoon, getWebtoonAllByMember };

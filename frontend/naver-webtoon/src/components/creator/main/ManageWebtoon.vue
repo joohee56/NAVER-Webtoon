@@ -3,13 +3,14 @@ vueini
 	<div class="manage-webtoon-container">
 		<div class="subject">작품 관리</div>
 		<div class="content-wrap">
-			<div class="webtoon-list">
-				<div>
-					<img src="@/assets/image/webtoon-cover-sample-2.png" class="cover-image">
+
+      <div v-for="webtoon in webtoons" class="webtoon-list">
+        <div>
+					<img :src="require(`@/assets/image/${webtoon.posterStoreName}`)" class="cover-image">
 				</div>
 				<div class="webtoon-info">
 					<div>
-						<span class="title">테스트</span>
+						<span class="title">{{webtoon.webtoonName}}</span>
 						<a link="#" class="edit-webtoon-btn">작품 정보 수정 ></a>
 					</div>
 					<div class="description">
@@ -35,8 +36,8 @@ vueini
 						<a link="#">회차 관리</a>
 					</div>
 				</div>
-			</div>
-			
+      </div>
+
 			<router-link :to="{name: 'createNewWebtoon'}">
 				<div class="create-new-webtoon-btn">
 					<div>
@@ -53,9 +54,27 @@ vueini
 </template>
 
 <script>
+import { getWebtoonAllByMember } from "@/api/webtoon";
+
 export default {
+  data() {
+    return {
+      webtoons: [],
+    };
+  },
   mounted() {
     console.log("mounted");
+    this.fetchWebtoon();
+  },
+  methods: {
+    async fetchWebtoon() {
+      try {
+        const response = await getWebtoonAllByMember();
+        this.webtoons = response.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
 };
 </script>
