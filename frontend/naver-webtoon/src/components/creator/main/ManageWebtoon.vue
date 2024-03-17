@@ -53,7 +53,11 @@ vueini
 </template>
 
 <script>
-export default {};
+export default {
+  mounted() {
+    console.log("mounted");
+  },
+};
 </script>
 
 <style scoped>

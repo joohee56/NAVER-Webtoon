@@ -7,8 +7,8 @@
 			</div>
 			<router-link :to="{name: `main`}" class="webtoon-link">| 웹툰</router-link>
 			<div class="create-btn">
-				<router-link :to="{name: `creatorDashboard`}"><i class="fa-solid fa-file-circle-plus"></i> 신규 회차 등록</router-link>
-				<router-link :to="{name: `creatorDashboard`}"><i class="fa-regular fa-pen-to-square"></i> 신규 작품 등록</router-link>
+				<router-link :to="{name: `createNewRound`}"><i class="fa-solid fa-file-circle-plus"></i> 신규 회차 등록</router-link>
+				<router-link :to="{name: `createNewWebtoon`}"><i class="fa-regular fa-pen-to-square"></i> 신규 작품 등록</router-link>
 			</div>
 			<div>
 				<router-link :to="{ name: 'userProfile' }">

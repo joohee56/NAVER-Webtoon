@@ -18,29 +18,29 @@
 			<ul>
 				<li class="item-row">
 					<p>작품명</p>
-					<input type="text" placeholder="작품명을 입력해 주세요.">
+					<input type="text" placeholder="작품명을 입력해 주세요." v-model="webtoon.name">
 				</li>
 				<li class="item-row">
 					<p>형식</p>
 					<div class="type">
-						<label><input type="radio"/>에피소드</label>
-						<label><input type="radio">옴니버스</label>
-						<label><input type="radio">스토리</label>
+						<label><input type="radio" value="EPISODE" v-model="webtoon.webtoonType">에피소드</label>
+						<label><input type="radio" value="OMNIBUS" v-model="webtoon.webtoonType"/>옴니버스</label>
+						<label><input type="radio" value="STORY" v-model="webtoon.webtoonType"/>스토리</label>
 					</div>
 				</li>
 				<li class="item-row">
 					<p>장르</p>
 					<div class="genre">
-						<label><input type="checkbox">로맨스</label>
-						<label><input type="checkbox">판타지</label>
-						<label><input type="checkbox">액션</label>
-						<label><input type="checkbox">일상</label>
-						<label><input type="checkbox">스릴러</label>
-						<label><input type="checkbox">개그</label>
-						<label><input type="checkbox">무협/사극</label>
-						<label><input type="checkbox">드라마</label>
-						<label><input type="checkbox">감성</label>
-						<label><input type="checkbox">스포츠</label>
+						<label><input type="checkbox" value="ROMANCE" v-model="webtoon.genres">로맨스</label>
+						<label><input type="checkbox" value="FANTASY" v-model="webtoon.genres">판타지</label>
+						<label><input type="checkbox" value="ACTION" v-model="webtoon.genres">액션</label>
+						<label><input type="checkbox" value="DAILY_LIFE" v-model="webtoon.genres">일상</label>
+						<label><input type="checkbox" value="THRILLER" v-model="webtoon.genres">스릴러</label>
+						<label><input type="checkbox" value="COMEDY" v-model="webtoon.genres">개그</label>
+						<label><input type="checkbox" value="MARTIAL_ARTS_AND_HISTORICAL" v-model="webtoon.genres">무협/사극</label>
+						<label><input type="checkbox" value="DRAMA" v-model="webtoon.genres">드라마</label>
+						<label><input type="checkbox" value="EMOTION" v-model="webtoon.genres">감성</label>
+						<label><input type="checkbox" value="SPORTS" v-model="webtoon.genres">스포츠</label>
 					</div>
 				</li>
 				<li class="item-row">
@@ -60,7 +60,7 @@
 				<li class="item-row">
 					<p>작품 한 줄 요약</p>
 					<div>
-						<input type="text" placeholder="작품을 한 줄로 소개해 주세요.">
+						<input type="text" placeholder="작품을 한 줄로 소개해 주세요." v-model="webtoon.oneLineSummary">
 						<ul class="sub-description">
 							<li>
 								작품 소개가 필요한 곳에서 노출될 수 있습니다. 
@@ -71,7 +71,7 @@
 				<li class="item-row">
 					<p>줄거리</p>
 					<div>
-						<textarea placeholder="작품의 줄거리를 작성해 주세요."></textarea>
+						<textarea placeholder="작품의 줄거리를 작성해 주세요." v-model="webtoon.summary"></textarea>
 						<ul class="sub-description">
 							<li>
 								등록된 줄거리는 작품 폼에서 노출됩니다. 
@@ -93,18 +93,18 @@
 							<div class="representative-img-row">
 								<div>포스터형</div>
 								<div class="img-input poster">
-									<div class="img-wrap" :class={blind:!isProfileSelect1}>
-										<label for="webtoon-img1">
-											<img src="@/assets/image/webtoon-cover-sample.png">
+									<div class="img-wrap" :class={blind:!isPosterSelect}>
+										<label for="poster">
+											<img :src="previewPoster">
 										</label>
 										<label class="delete-img">
 											<i class="fa-regular fa-trash-can"></i>
 										</label>
 									</div>
-									<div :class={blind:isProfileSelect1}>
+									<div :class={blind:isPosterSelect}>
 										<em>480 x 623</em>
-										<label class="image-select-btn" for="webtoon-img1">파일 선택</label>
-										<input type="file" id="webtoon-img1" ref="webtoon-img1" accept=".jpg, .jpeg" @change="selectWebtoonImage1" hidden>
+										<label class="image-select-btn" for="poster">파일 선택</label>
+										<input type="file" id="poster" ref="poster" accept=".jpg, .jpeg" @change="selectPosterImg" hidden>
 									</div>
 								</div>
 							</div>
@@ -112,18 +112,18 @@
 							<div class="representative-img-row">
 								<div>가로형</div>
 								<div class="img-input horizontality">
-									<div class="img-wrap" :class={blind:!isProfileSelect2}>
-										<label for="webtoon-img2">
-											<img src="@/assets/image/webtoon-cover-sample.png">
+									<div class="img-wrap" :class={blind:!isHorizontalSelect}>
+										<label for="horizontal">
+											<img :src="previewHorizontal">
 										</label>
 										<label class="delete-img">
 											<i class="fa-regular fa-trash-can"></i>
 										</label>
 									</div>
-									<div :class={blind:isProfileSelect2}>
+									<div :class={blind:isHorizontalSelect}>
 										<em>480 x 623</em>
-										<label class="image-select-btn" for="webtoon-img2">파일 선택</label>
-										<input type="file" id="webtoon-img2" ref="webtoon-img2" @change="selectWebtoonImage1" hidden>
+										<label class="image-select-btn" for="horizontal">파일 선택</label>
+										<input type="file" id="horizontal" ref="horizontal" @change="selectHorizontalImg" hidden>
 									</div> 
 								</div>
 							</div>
@@ -143,19 +143,76 @@
 
 		<div class="btn-wrap">
 			<button class="cancel">취소</button>
-			<button class="submit">등록</button>
+			<button class="submit" @click="createWebtoon">등록</button>
 			<button class="submit">등록 후 1화 올리기</button>
 		</div>
 	</div>
 </template>
 
 <script>
+import { postCreateWebtoon } from "@/api/webtoon";
+
 export default {
   data() {
     return {
-      isProfileSelect1: false,
-      isProfileSelect2: false,
+      webtoon: {
+        name: "",
+        webtoonType: "",
+        tags: [],
+        genres: [],
+        oneLineSummary: "",
+        summary: "",
+        posterImage: null,
+        horizontalImage: null,
+      },
+      isPosterSelect: false,
+      isHorizontalSelect: false,
+      previewPoster: null,
+      previewHorizontal: null,
     };
+  },
+  watch: {
+    previewPoster: function (val) {
+      this.isPosterSelect = val != null ? true : false;
+    },
+    previewHorizontal: function (val) {
+      this.isHorizontalSelect = val != null ? true : false;
+    },
+  },
+  methods: {
+    async createWebtoon() {
+      console.log(this.webtoon);
+
+      const formData = new FormData();
+      for (const key in this.webtoon) {
+        formData.append(key, this.webtoon[key]);
+      }
+
+      try {
+        const response = await postCreateWebtoon(formData);
+        console.log(response.data);
+        if (response.status === 200) {
+          alert(
+            "작품 등록이 완료되었습니다. 신규 회차 등록 시, 도전만화에 노출됩니다."
+          );
+          this.$router.push({ name: "manage" });
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    selectPosterImg() {
+      console.log("img changed");
+      this.webtoon.posterImage = this.$refs.poster.files[0];
+      this.previewPoster = URL.createObjectURL(this.webtoon.posterImage);
+    },
+    selectHorizontalImg() {
+      console.log("img changed");
+      this.webtoon.horizontalImage = this.$refs.horizontal.files[0];
+      this.previewHorizontal = URL.createObjectURL(
+        this.webtoon.horizontalImage
+      );
+    },
   },
 };
 </script>
