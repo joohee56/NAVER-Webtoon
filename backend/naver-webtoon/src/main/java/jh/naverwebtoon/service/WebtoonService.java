@@ -1,15 +1,12 @@
 package jh.naverwebtoon.service;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import jh.naverwebtoon.db.domain.Genre;
 import jh.naverwebtoon.db.domain.Member;
 import jh.naverwebtoon.db.domain.UploadImage;
-import jh.naverwebtoon.db.domain.WebtoonGenre;
 import jh.naverwebtoon.db.domain.WebtoonThumbnail;
-import jh.naverwebtoon.db.domain.enums.GenreEnum;
 import jh.naverwebtoon.db.domain.webtoon.Webtoon;
 import jh.naverwebtoon.db.repository.GenreRepository;
 import jh.naverwebtoon.db.repository.MemberRepository;
@@ -31,25 +28,19 @@ public class WebtoonService {
     private final FileStore fileStore;
 
     @Transactional
-    public Webtoon createWebtoon(Long id, CreateWebtoonReq createWebtoonReq) throws IOException {
-        Member member = memberRepository.findOne(id);
-        List<Genre> genres = new ArrayList<>();
-        for (GenreEnum genreEnum : createWebtoonReq.getGenres()) {
-            genres.add(genreRepository.findByGenreEnum(genreEnum));
-        }
-
-        List<WebtoonGenre> webtoonGenres = new ArrayList<>();
-        for (Genre genre : genres) {
-            webtoonGenres.add(WebtoonGenre.create(genre));
-        }
+    public Webtoon createWebtoon(Long memberId, CreateWebtoonReq createWebtoonReq) throws IOException {
+        Member member = memberRepository.findOne(memberId);
+        List<Genre> genres = createWebtoonReq.getGenres().stream()
+                .map(genreEnum -> genreRepository.findByGenreEnum(genreEnum))
+                .collect(Collectors.toList());
 
         UploadImage posterImage = fileStore.storeFile(createWebtoonReq.getPosterImage());
         UploadImage horizontalImage = fileStore.storeFile(createWebtoonReq.getHorizontalImage());
         WebtoonThumbnail webtoonThumbnail = WebtoonThumbnail.create(posterImage, horizontalImage);
 
-        Webtoon webtoon = Webtoon.createWebtoon(member, createWebtoonReq, webtoonGenres, webtoonThumbnail);
+        Webtoon webtoon = Webtoon.create(member, createWebtoonReq, genres, webtoonThumbnail);
         Long webtoonId = webtoonRepository.save(webtoon);
-        return webtoonRepository.findByOne(webtoonId);
+        return webtoonRepository.findOne(webtoonId);
     }
 
     public List<FindWebtoonsByMemberRes> findAllByMember(Long memberId) {

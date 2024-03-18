@@ -2,6 +2,7 @@ package jh.naverwebtoon.db.domain.webtoon;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -17,19 +18,25 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import jh.naverwebtoon.db.domain.BaseEntity;
+import jh.naverwebtoon.db.domain.Genre;
 import jh.naverwebtoon.db.domain.Member;
 import jh.naverwebtoon.db.domain.Tag;
 import jh.naverwebtoon.db.domain.WebtoonGenre;
 import jh.naverwebtoon.db.domain.WebtoonThumbnail;
 import jh.naverwebtoon.db.domain.enums.WebtoonType;
 import jh.naverwebtoon.dto.request.CreateWebtoonReq;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Getter @Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@DiscriminatorColumn(name = "serial")
 public class Webtoon extends BaseEntity {
 
     @Id
@@ -75,21 +82,48 @@ public class Webtoon extends BaseEntity {
         webtoonGenre.setWebtoon(this);
     }
 
-    public static Webtoon createWebtoon(Member member, CreateWebtoonReq createWebtoonReq, List<WebtoonGenre> webtoonGenres, WebtoonThumbnail webtoonThumbnail) {
+    protected Webtoon(Member member, CreateWebtoonReq createWebtoonReq, List<Genre> genres, WebtoonThumbnail webtoonThumbnail) {
+        this.name = createWebtoonReq.getName();
+        this.webtoonType = createWebtoonReq.getWebtoonType();
+
+        for (String tagName : createWebtoonReq.getTags()) {
+            this.addTag(Tag.create(tagName));
+        }
+
+        List<WebtoonGenre> webtoonGenres = genres.stream()
+                .map(genre -> WebtoonGenre.create(genre))
+                .collect(Collectors.toList());
+        for (WebtoonGenre webtoonGenre : webtoonGenres) {
+            this.addGenre(webtoonGenre);
+        }
+
+        this.oneLineSummary = createWebtoonReq.getOneLineSummary();
+        this.summary = createWebtoonReq.getSummary();
+        this.ageLimit = 0;
+        this.member = member;
+        this.webtoonThumbnail = webtoonThumbnail;
+    }
+
+    public static Webtoon create(Member member, CreateWebtoonReq createWebtoonReq, List<Genre> genres, WebtoonThumbnail webtoonThumbnail) {
         Webtoon webtoon = new Webtoon();
         webtoon.name = createWebtoonReq.getName();
         webtoon.webtoonType = createWebtoonReq.getWebtoonType();
+
         for (String tagName : createWebtoonReq.getTags()) {
             webtoon.addTag(Tag.create(tagName));
         }
+
+        List<WebtoonGenre> webtoonGenres = genres.stream()
+                .map(genre -> WebtoonGenre.create(genre))
+                .collect(Collectors.toList());
         for (WebtoonGenre webtoonGenre : webtoonGenres) {
             webtoon.addGenre(webtoonGenre);
         }
+
         webtoon.oneLineSummary = createWebtoonReq.getOneLineSummary();
         webtoon.summary = createWebtoonReq.getSummary();
         webtoon.member = member;
         webtoon.webtoonThumbnail = webtoonThumbnail;
         return webtoon;
     }
-
 }

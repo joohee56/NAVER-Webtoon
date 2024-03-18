@@ -3,10 +3,12 @@ package jh.naverwebtoon.dto.request;
 import java.util.List;
 import jh.naverwebtoon.db.domain.enums.GenreEnum;
 import jh.naverwebtoon.db.domain.enums.WebtoonType;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
 @Data
+@AllArgsConstructor
 public class CreateWebtoonReq {
     private String name;
     private WebtoonType webtoonType;

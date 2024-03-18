@@ -22,18 +22,26 @@ public class MemberRepository {
 
     @EventListener(ApplicationReadyEvent.class)
     @Transactional
-    public void initMember() {
+    public void init() {
+        initMember("joohee56", "1234", "joohee@naver.com", "이주희", LocalDate.of(1999, 9, 19), Gender.FEMALE, CountryResidence.LOCAL, "010-1234-5678", "jjanggu-profile-image.png" );
+        initMember("author1", "1234", "author1@naver.com", "정이나", LocalDate.of(1999, 9, 19), Gender.FEMALE, CountryResidence.LOCAL, "010-1234-5678", "작가_프로필_1.png" );
+        initMember("author2", "1234", "author2@naver.com", "홍덕", LocalDate.of(1999, 9, 19), Gender.FEMALE, CountryResidence.LOCAL, "010-1234-5678", null);
+        initMember("author3", "1234", "author3@naver.com", "모랑지", LocalDate.of(1999, 9, 19), Gender.FEMALE, CountryResidence.LOCAL, "010-1234-5678", "작가_프로필_2.png");
+    }
+
+    public void initMember(String loginId, String password, String emailAddress, String name, LocalDate birthDate, Gender gender, CountryResidence countryResidence, String phoneNumber, String storeFileName) {
         JoinMemberReq joinMemberReq = new JoinMemberReq();
-        joinMemberReq.setLoginId("joohee56");
-        joinMemberReq.setPassword("1234");
-        joinMemberReq.setEmailAddress("joohee@naver.com");
-        joinMemberReq.setName("이주희");
-        joinMemberReq.setBirthDate(LocalDate.of(1999, 9, 19));
-        joinMemberReq.setGender(Gender.FEMALE);
-        joinMemberReq.setCountryResidence(CountryResidence.LOCAL);
-        joinMemberReq.setPhoneNumber("010-1234-5678");
+        joinMemberReq.setLoginId(loginId);
+        joinMemberReq.setPassword(password);
+        joinMemberReq.setEmailAddress(emailAddress);
+        joinMemberReq.setName(name);
+        joinMemberReq.setBirthDate(birthDate);
+        joinMemberReq.setGender(gender);
+        joinMemberReq.setCountryResidence(countryResidence);
+        joinMemberReq.setPhoneNumber(phoneNumber);
         Member member = Member.createMember(joinMemberReq);
-        ProfileImage profileImage = ProfileImage.createProfileImage(new UploadImage("jjanggu-profile-image.png", "jjanggu-profile-image.png"));
+
+        ProfileImage profileImage = ProfileImage.createProfileImage(new UploadImage(storeFileName, storeFileName));
         member.changeProfileImage(profileImage);
         em.persist(member);
     }
