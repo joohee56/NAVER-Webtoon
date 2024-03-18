@@ -6,10 +6,15 @@ import jakarta.persistence.Enumerated;
 import java.time.DayOfWeek;
 
 @Entity
-public class OfficialSerialWebtoon extends Webtoon {
+public class OfficialWebtoon extends Webtoon {
 
     @Enumerated(EnumType.STRING)
     private DayOfWeek dayOfWeek;
 
     private boolean isComplete;
+
+    public static OfficialWebtoon create() {
+        OfficialWebtoon officialWebtoon = new OfficialWebtoon();
+
+    }
 }

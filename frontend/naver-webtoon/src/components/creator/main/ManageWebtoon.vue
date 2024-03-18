@@ -14,7 +14,7 @@ vueini
 						<a link="#" class="edit-webtoon-btn">작품 정보 수정 ></a>
 					</div>
 					<div class="description">
-						<div class="domain">도전만화 | </div>
+						<div class="domain">{{webtoon.serialType | serialType}} | </div>
 						<div class="date">최신 회차 공개일 2021.09.20</div>
 					</div>
 					<div id="statistics">
@@ -74,6 +74,11 @@ export default {
       } catch (error) {
         console.log(error);
       }
+    },
+  },
+  filters: {
+    serialType(value) {
+      return value === "official" ? "웹툰" : "도전만화";
     },
   },
 };

@@ -27,7 +27,7 @@ const checkSessionExpired = function () {
   if (isExpired === true) {
     Cookies.remove("loginUser");
     location.href = "http://localhost:8080/login/main";
-    alert("유효시간이 초과되었습니다. 다시 시도해주세요.");
+    // alert("유효시간이 초과되었습니다. 다시 시도해주세요.");
   } else {
     setTimeout(checkSessionExpired, 10 * 1000); //10초에 한번씩 타이머 설정
   }
