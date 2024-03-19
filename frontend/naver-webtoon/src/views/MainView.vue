@@ -25,6 +25,6 @@ export default {
   font-weight: 400;
   font-style: normal;
   font-variation-settings: "slnt" 0;
-  width: 83rem;
+  width: 85rem;
 }
 </style>

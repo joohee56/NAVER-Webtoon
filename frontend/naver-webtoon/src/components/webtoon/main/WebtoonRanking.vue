@@ -116,7 +116,7 @@ export default {};
 
 <style scoped>
 .ranking-wrap {
-  padding: 2rem 0rem;
+  padding: 3rem 0rem;
 }
 .box-container {
   background-color: #fbfbfb;

@@ -1,5 +1,5 @@
 <template lang="ko">
-	<div>
+	<div class="container">
 		<div class="subject-container">
 			<p class="title">요일별 전체 웹툰</p>
 			<div class="filter">
@@ -109,13 +109,16 @@ export default {
 </script>
 
 <style scoped>
+.container {
+  margin: 10px 0;
+}
 .subject-container {
   display: flex;
 }
 .title {
   margin: 0;
-  font-family: AppleSDGothicNeoB;
-  font-size: 1.3rem;
+  font-family: AppleSDGothicNeoSB;
+  font-size: 1.4rem;
 }
 .filter {
   margin-left: 1rem;
@@ -140,6 +143,6 @@ export default {
 .webtoon-container {
   border: #d9d9d9 solid 0.5px;
   display: flex;
-  width: 1330px;
+  width: 100%;
 }
 </style>

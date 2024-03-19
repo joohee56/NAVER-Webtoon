@@ -22,8 +22,6 @@ export default {
 <style scoped>
 .container {
   display: flex;
-  border-bottom: 0.5px solid #dadada;
-  border-top: 0.5px solid #dadada;
   align-items: center;
   overflow: hidden;
 }

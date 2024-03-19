@@ -15,6 +15,7 @@ import ManageComment from "@/components/creator/main/ManageComment";
 import ManageAlarm from "@/components/creator/main/ManageAlarm";
 import CreateNewWebtoon from "@/components/creator/main/CreateNewWebtoon";
 import CreateNewRound from "@/components/creator/main/CreateNewRound";
+import WebtoonDetail from "@/views/WebtoonDetail";
 
 Vue.use(VueRouter);
 
@@ -43,6 +44,11 @@ const routes = [
         path: "/challenge",
         name: "challenge",
         component: ChallengeView,
+      },
+      {
+        path: "/webtoon/detail/:webtoonId",
+        name: "webtoonDetail",
+        component: WebtoonDetail,
       },
     ],
   },

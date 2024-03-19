@@ -1,8 +1,16 @@
 <template lang="ko">
   <header>
-    <ToolBar></ToolBar>
-    <CategoryNav></CategoryNav>
-    <DayOfWeekNav></DayOfWeekNav>
+    <div class="tool-bar">
+      <ToolBar></ToolBar>
+    </div>
+    <div class="line">
+      <div class="category-nav">
+        <CategoryNav></CategoryNav>
+      </div>
+    </div>
+    <div class="day-of-week-nav">
+      <DayOfWeekNav></DayOfWeekNav>
+    </div>
   </header>
 </template>
 
@@ -21,7 +29,21 @@ export default {
 </script>
 
 <style scoped>
-header {
+.line {
+  width: 100%;
+  border-bottom: 0.5px solid #dadada;
+  border-top: 0.5px solid #dadada;
+}
+header,
+.line {
   border-bottom: #d9d9d9 solid 0.5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.tool-bar,
+.category-nav,
+.day-of-week-nav {
+  width: 85rem;
 }
 </style>
