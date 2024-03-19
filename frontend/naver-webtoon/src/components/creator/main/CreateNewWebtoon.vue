@@ -252,9 +252,6 @@ p {
 .input-form {
   padding: 40px 30px;
 }
-.item-box li {
-  display: flex;
-}
 .item-box p {
   font-family: AppleSDGothicNeoSB;
   font-size: 17px;
@@ -286,6 +283,10 @@ i {
   font-size: 13px;
   line-height: 18px;
   margin-top: 8px;
+}
+.sub-description li {
+  list-style: inside;
+  line-height: 19px;
 }
 .item-row .type,
 .item-row .genre {

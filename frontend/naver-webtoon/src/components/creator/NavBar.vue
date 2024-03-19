@@ -33,7 +33,7 @@ export default {};
 #container {
   padding-left: calc((100% - 1140px) / 2);
   background-color: white;
-  height: 100vh;
+  height: inherit;
   width: 10rem;
   border-right: 0.5px solid #ebebeb;
 }
