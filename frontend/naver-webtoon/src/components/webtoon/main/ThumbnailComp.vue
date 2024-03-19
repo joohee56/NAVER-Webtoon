@@ -19,25 +19,10 @@
 
 <script>
 export default {
-  data() {
-    return {
-      dayOfWeeks: [
-        "SUNDAY",
-        "MONDAY",
-        "TUESDAY",
-        "WEDNESDAY",
-        "THUSDAY",
-        "FRIDAY",
-        "SATURDAY",
-      ],
-    };
-  },
-  props: ["dayOfWeekHeader", "webtoons"],
+  props: ["dayOfWeekHeader", "webtoons", "dayOfWeek"],
   computed: {
     isToday() {
-      return (
-        this.dayOfWeeks[new Date().getDay()] === this.webtoons[0].dayOfWeek
-      );
+      return new Date().getDay() === this.dayOfWeek;
     },
   },
 };

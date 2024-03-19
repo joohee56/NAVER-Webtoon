@@ -25,13 +25,13 @@
 		</div>
 
 		<div class="webtoon-container">
-			<ThumbnailComp v-bind:dayOfWeekHeader="dayOfWeekHeaders[0]" :webtoons="webtoons.monday"></ThumbnailComp>
-			<ThumbnailComp v-bind:dayOfWeekHeader="dayOfWeekHeaders[1]" :webtoons="webtoons.tuesday"></ThumbnailComp>
-			<ThumbnailComp v-bind:dayOfWeekHeader="dayOfWeekHeaders[2]" :webtoons="webtoons.wednesday"></ThumbnailComp>
-			<ThumbnailComp v-bind:dayOfWeekHeader="dayOfWeekHeaders[3]" :webtoons="webtoons.thursday"></ThumbnailComp>
-			<ThumbnailComp v-bind:dayOfWeekHeader="dayOfWeekHeaders[4]" :webtoons="webtoons.friday"></ThumbnailComp>
-			<ThumbnailComp v-bind:dayOfWeekHeader="dayOfWeekHeaders[5]" :webtoons="webtoons.saturday"></ThumbnailComp>
-			<ThumbnailComp v-bind:dayOfWeekHeader="dayOfWeekHeaders[6]" :webtoons="webtoons.sunday"></ThumbnailComp>
+			<ThumbnailComp v-bind:dayOfWeekHeader="dayOfWeekHeaders[0]" :webtoons="webtoons.monday" :dayOfWeek="1"></ThumbnailComp>
+			<ThumbnailComp v-bind:dayOfWeekHeader="dayOfWeekHeaders[1]" :webtoons="webtoons.tuesday" :dayOfWeek="2"></ThumbnailComp>
+			<ThumbnailComp v-bind:dayOfWeekHeader="dayOfWeekHeaders[2]" :webtoons="webtoons.wednesday" :dayOfWeek="3"></ThumbnailComp>
+			<ThumbnailComp v-bind:dayOfWeekHeader="dayOfWeekHeaders[3]" :webtoons="webtoons.thursday" :dayOfWeek="4"></ThumbnailComp>
+			<ThumbnailComp v-bind:dayOfWeekHeader="dayOfWeekHeaders[4]" :webtoons="webtoons.friday" :dayOfWeek="5"></ThumbnailComp>
+			<ThumbnailComp v-bind:dayOfWeekHeader="dayOfWeekHeaders[5]" :webtoons="webtoons.saturday" :dayOfWeek="6"></ThumbnailComp>
+			<ThumbnailComp v-bind:dayOfWeekHeader="dayOfWeekHeaders[6]" :webtoons="webtoons.sunday" :dayOfWeek="7"></ThumbnailComp>
 		</div>
 	</div>
 </template>
