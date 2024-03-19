@@ -13,6 +13,7 @@ import jh.naverwebtoon.db.repository.GenreRepository;
 import jh.naverwebtoon.db.repository.MemberRepository;
 import jh.naverwebtoon.db.repository.OfficialWebtoonRepository;
 import jh.naverwebtoon.dto.request.CreateWebtoonReq;
+import jh.naverwebtoon.dto.response.FindOfficialWebtoonsRes;
 import jh.naverwebtoon.util.FileStore;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -40,5 +41,12 @@ public class OfficialWebtoonService {
 
         OfficialWebtoon officialWebtoon = new OfficialWebtoon(member, createWebtoonReq, genres, webtoonThumbnail, dayOfWeek);
         officialWebtoonRepository.save(officialWebtoon);
+    }
+
+    public List<FindOfficialWebtoonsRes> findAllOfficialWebtoon() {
+        List<OfficialWebtoon> webtoons = officialWebtoonRepository.findAll();
+        return webtoons.stream()
+                .map(officialWebtoon -> FindOfficialWebtoonsRes.create(officialWebtoon))
+                .collect(Collectors.toList());
     }
 }

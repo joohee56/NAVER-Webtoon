@@ -3,6 +3,7 @@ package jh.naverwebtoon.db.domain.webtoon;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -37,6 +38,7 @@ import lombok.Setter;
 @Getter @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DiscriminatorColumn(name = "serial")
+@DiscriminatorValue("challenge")
 public class Webtoon extends BaseEntity {
 
     @Id

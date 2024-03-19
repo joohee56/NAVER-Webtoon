@@ -32,4 +32,5 @@ public class WebtoonController {
     public List<FindWebtoonsByMemberRes> findAllByMember(@Login Long id) {
         return webtoonService.findAllByMember(id);
     }
+
 }

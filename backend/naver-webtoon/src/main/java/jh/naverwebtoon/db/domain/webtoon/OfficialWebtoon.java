@@ -11,9 +11,11 @@ import jh.naverwebtoon.db.domain.Member;
 import jh.naverwebtoon.db.domain.WebtoonThumbnail;
 import jh.naverwebtoon.dto.request.CreateWebtoonReq;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DiscriminatorValue("official")
 public class OfficialWebtoon extends Webtoon {

@@ -7,8 +7,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jh.naverwebtoon.db.domain.enums.GenreEnum;
+import lombok.Getter;
 
 @Entity
+@Getter
 public class Genre {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
