@@ -1,5 +1,5 @@
 <template lang="ko">
-	<div class="week-day-item-wrap">
+	<div class="week-day-item-wrap":class="{today:isToday}">
 		<h3 class="week-day-header"> {{dayOfWeekHeader}} </h3>
 		<ul class="webtoon-list-wrap">
 			<li class="webtoon-item" v-for="webtoon in webtoons">
@@ -19,7 +19,27 @@
 
 <script>
 export default {
+  data() {
+    return {
+      dayOfWeeks: [
+        "SUNDAY",
+        "MONDAY",
+        "TUESDAY",
+        "WEDNESDAY",
+        "THUSDAY",
+        "FRIDAY",
+        "SATURDAY",
+      ],
+    };
+  },
   props: ["dayOfWeekHeader", "webtoons"],
+  computed: {
+    isToday() {
+      return (
+        this.dayOfWeeks[new Date().getDay()] === this.webtoons[0].dayOfWeek
+      );
+    },
+  },
 };
 </script>
 
@@ -38,7 +58,10 @@ export default {
   display: flex;
   align-items: center;
   padding-top: 5px;
+  width: 100%;
+  justify-content: center;
 }
+
 .webtoon-list-wrap {
   list-style: none;
   padding: 10px 0 23px;
@@ -70,5 +93,14 @@ export default {
 }
 .webtoon-name {
   font-size: 15px;
+}
+
+/* today */
+.today {
+  background-color: #b2eece;
+}
+.today .week-day-header {
+  color: white;
+  background-color: #00dc64;
 }
 </style>

@@ -142,12 +142,4 @@ export default {
   display: flex;
   width: 1330px;
 }
-
-.today {
-  background-color: #b2eece;
-}
-.today .dayOfWeek {
-  color: white;
-  background-color: #00dc64;
-}
 </style>
