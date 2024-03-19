@@ -18,7 +18,7 @@ const setTimeOffsetBetweenServerAndClient = function () {
 
 //세션 만료 체크
 const checkSessionExpired = function () {
-  console.log("cehck session expired");
+  console.log("check Session");
   const sessionExpiry = Math.abs(Cookies.get("sessionExpiry"));
   let timeOffSet = Math.abs(Cookies.get("clientTimeOffset"));
   let localTime = new Date().getTime() - timeOffSet;

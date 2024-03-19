@@ -1,13 +1,14 @@
 <template lang="ko">
 	<div>
-		<div class="title-container">
+		<div class="subject-container">
 			<p class="title">요일별 전체 웹툰</p>
 			<div class="filter">
-				<button class="active">인기순</button> • 
-				<button>업데이트순</button> •
+				<button class="active">인기순</button> · 
+				<button>업데이트순</button> ·
 				<button>조회순</button>
 			</div>
 		</div>
+
 		<div class="genre">
 			<form>
 				<label><input type="checkbox">전체</label>
@@ -22,143 +23,131 @@
 				<label><input type="checkbox">소설원작</label>
 			</form>
 		</div>
+
 		<div class="webtoon-container">
-			<ul class="today"> 
-				<div class="dayOfWeek"> 월요웹툰 </div>
-				<li>
-					<img src="@/assets/image/webtoon-cover-sample-2.png">
-					<div>
-						<span class="up">UP</span>
-						<span class="webtoon-name">바른 연애 길잡이</span>
-					</div>
-				</li> 
-				<li>
-					<img src="@/assets/image/webtoon-cover-sample-2.png">
-					<span class="webtoon-name">바른 연애 길잡이</span>
-				</li> 
-				<li>
-					<img src="@/assets/image/webtoon-cover-sample-2.png">
-					<span>바른 연애 길잡이</span>
-				</li> 
-				<li>
-					<img src="@/assets/image/webtoon-cover-sample-2.png">
-					<span>바른 연애 길잡이</span>
-				</li> 
-			</ul>
-			<ul> 
-				<div class="dayOfWeek"> 화요웹툰 </div>
-				<li>
-					<img src="@/assets/image/webtoon-cover-sample-2.png">
-					<span>바른 연애 길잡이</span>
-				</li> 
-			</ul>
-			<ul> 
-				<div class="dayOfWeek"> 수요웹툰 </div>
-				<li>
-					<img src="@/assets/image/webtoon-cover-sample-2.png">
-					<span>바른 연애 길잡이</span>
-				</li> 
-			</ul>
-			<ul> 
-				<div class="dayOfWeek"> 목요웹툰 </div>
-				<li>
-					<img src="@/assets/image/webtoon-cover-sample-2.png">
-					<span>바른 연애 길잡이</span>
-				</li> 
-			</ul>
-			<ul> 
-				<div class="dayOfWeek"> 금요웹툰 </div>
-				<li>
-					<img src="@/assets/image/webtoon-cover-sample-2.png">
-					<span>바른 연애 길잡이</span>
-				</li> 
-			</ul>
-			<ul> 
-				<div class="dayOfWeek"> 토요웹툰 </div>
-				<li>
-					<img src="@/assets/image/webtoon-cover-sample-2.png">
-					<span>바른 연애 길잡이</span>
-				</li> 
-			</ul>
-			<ul> 
-				<div class="dayOfWeek"> 일요웹툰 </div>
-				<li>
-					<img src="@/assets/image/webtoon-cover-sample-2.png">
-					<span>바른 연애 길잡이</span>
-				</li> 
-			</ul>
+			<ThumbnailComp v-bind:dayOfWeekHeader="dayOfWeekHeaders[0]" :webtoons="webtoons.monday"></ThumbnailComp>
+			<ThumbnailComp v-bind:dayOfWeekHeader="dayOfWeekHeaders[1]" :webtoons="webtoons.tuesday"></ThumbnailComp>
+			<ThumbnailComp v-bind:dayOfWeekHeader="dayOfWeekHeaders[2]" :webtoons="webtoons.wednesday"></ThumbnailComp>
+			<ThumbnailComp v-bind:dayOfWeekHeader="dayOfWeekHeaders[3]" :webtoons="webtoons.thursday"></ThumbnailComp>
+			<ThumbnailComp v-bind:dayOfWeekHeader="dayOfWeekHeaders[4]" :webtoons="webtoons.friday"></ThumbnailComp>
+			<ThumbnailComp v-bind:dayOfWeekHeader="dayOfWeekHeaders[5]" :webtoons="webtoons.saturday"></ThumbnailComp>
+			<ThumbnailComp v-bind:dayOfWeekHeader="dayOfWeekHeaders[6]" :webtoons="webtoons.sunday"></ThumbnailComp>
 		</div>
 	</div>
 </template>
 
 <script>
-export default {};
+import { getOfficialWebtoonAll } from "@/api/webtoon";
+import ThumbnailComp from "./ThumbnailComp.vue";
+
+export default {
+  data() {
+    return {
+      webtoons: {
+        monday: [],
+        tuesday: [],
+        wednesday: [],
+        thursday: [],
+        friday: [],
+        saturday: [],
+        sunday: [],
+      },
+
+      dayOfWeekHeaders: [
+        "월요웹툰",
+        "화요웹툰",
+        "수요웹툰",
+        "목요웹툰",
+        "금요웹툰",
+        "토요웹툰",
+        "일요웹툰",
+      ],
+    };
+  },
+  components: {
+    ThumbnailComp,
+  },
+  mounted() {
+    this.fetchOfficialWebtoons();
+  },
+  methods: {
+    async fetchOfficialWebtoons() {
+      try {
+        const response = await getOfficialWebtoonAll();
+        for (const webtoon of response.data) {
+          switch (webtoon.dayOfWeek) {
+            case "MONDAY":
+              this.webtoons.monday.push(webtoon);
+              break;
+            case "TUESDAY":
+              this.webtoons.tuesday.push(webtoon);
+              break;
+            case "WEDNESDAY":
+              this.webtoons.wednesday.push(webtoon);
+              break;
+            case "THURSDAY":
+              this.webtoons.thursday.push(webtoon);
+              break;
+            case "FRIDAY":
+              this.webtoons.friday.push(webtoon);
+              break;
+            case "SATURDAY":
+              this.webtoons.saturday.push(webtoon);
+              break;
+            case "SUNDAY":
+              this.webtoons.sunday.push(webtoon);
+              break;
+          }
+        }
+        console.log(this.webtoons);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  },
+};
 </script>
 
 <style scoped>
-.title-container {
+.subject-container {
   display: flex;
 }
 .title {
   margin: 0;
-  font-family: AppleSDGothicNeoEB;
+  font-family: AppleSDGothicNeoB;
   font-size: 1.3rem;
 }
-button {
+.filter {
+  margin-left: 1rem;
+}
+.filter button {
   background: none;
   border: none;
   padding: 0;
   font-size: 13;
   font-family: AppleSDGothicNeoEB;
 }
-.filter {
-  margin-left: 1rem;
-}
 .active {
   color: #00dc64;
 }
-.today {
-  background-color: #b2eece;
-}
-.today > div {
-  color: white;
-  background-color: #00dc64;
-}
 .genre {
   float: right;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
   font-family: AppleSDGothicNeoM;
 }
 
+/* webtoons */
 .webtoon-container {
   border: #d9d9d9 solid 0.5px;
   display: flex;
-  width: fit-content;
-}
-ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  font-family: AppleSDGothicNeoM;
-}
-.webtoon-container .up {
-  color: #ff4d56;
-  border-radius: 5px;
-  border: #ff4d56 solid 0.5px;
-  font-family: AppleSDGothicNeoEB;
-  text-align: center;
-  padding: 1px 4px;
-  margin-right: 5px;
-  font-size: 15px;
-}
-.webtoon-container .dayOfWeek {
-  font-family: AppleSDGothicNeoEB;
-  font-size: 1rem;
-  text-align: center;
-  padding: 15px 0px;
+  width: 1330px;
 }
 
-ul > li {
-  padding: 10px 22px;
+.today {
+  background-color: #b2eece;
+}
+.today .dayOfWeek {
+  color: white;
+  background-color: #00dc64;
 }
 </style>

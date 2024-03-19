@@ -24,4 +24,14 @@ async function getWebtoonAllByMember() {
   }
 }
 
-export { postCreateWebtoon, getWebtoonAllByMember };
+async function getOfficialWebtoonAll() {
+  try {
+    const response = await jsonApi.get("/webtoon/official");
+    startSessionCheck();
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export { postCreateWebtoon, getWebtoonAllByMember, getOfficialWebtoonAll };

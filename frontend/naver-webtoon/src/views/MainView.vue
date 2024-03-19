@@ -19,13 +19,12 @@ export default {
 
 <style scoped>
 .container {
-  padding: 0 1rem;
   margin: 0 auto;
   font-family: "Inter", sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
   font-variation-settings: "slnt" 0;
-  width: 80rem;
+  width: 83rem;
 }
 </style>
