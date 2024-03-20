@@ -23,14 +23,14 @@ nav {
 }
 nav a {
   display: block;
-  margin: 3rem 1rem 0;
+  margin: 20px 30px 0 0;
   padding-bottom: 0.5rem;
-  font-family: AppleSDGothicNeoM;
+  font-family: AppleSDGothicNeoSB;
   font-size: 18px;
 }
 .router-link-active {
-  font-family: AppleSDGothicNeoEB;
+  font-family: AppleSDGothicNeoB;
   color: #00dc64;
-  border-bottom: #00dc64 solid;
+  border-bottom: #00dc64 solid 1.5px;
 }
 </style>

@@ -1,9 +1,11 @@
 <template lang="ko">
   <div class="container">
     <nav>
-      <router-link :to="{name: 'main'}">웹툰</router-link>
-      <router-link :to="{name: 'challenge'}">도전만화</router-link>
-      <router-link to="/mypage/favorite">마이페이지</router-link>
+      <button v-for="(categoryHeader, index) in categoryHeaders" @click="handleLinkClick(index)" :class="{active:isActive[index]}">{{categoryHeader}}</button>
+
+      <!-- <router-link :to="{name: 'main'}" @click="handleLinkClick">웹툰</router-link>
+      <router-link :to="{name: 'challenge'}" @click="handleLinkClick">도전만화</router-link>
+      <router-link to="/mypage/favorite" @click="handleLinkClick">마이페이지</router-link> -->
     </nav>
     <router-link :to="{name: 'creatorDashboard'}" class="creator-btn">CREATOR'S</router-link>
   </div>  
@@ -11,9 +13,19 @@
 
 <script>
 export default {
-  computed: {
-    isActive() {
-      return location.href === this.$route.path;
+  data() {
+    return {
+      isActive: [true, false, false],
+      categoryHeaders: ["웹툰", "도전만화", "마이페이지"],
+      routerNames: ["main", "challenge", "mypage"],
+    };
+  },
+
+  methods: {
+    handleLinkClick(index) {
+      this.isActive = [false, false, false];
+      this.isActive[index] = true;
+      this.$router.push({ name: this.routerNames[index] });
     },
   },
 };
@@ -26,19 +38,29 @@ export default {
   overflow: hidden;
 }
 
-nav {
+/* nav {
   margin: 0;
   font-family: AppleSDGothicNeoSB;
   font-size: 20px;
 }
 
 nav a {
-  padding: 1.5rem 2rem;
+  padding: 20px 20px;
   box-sizing: border-box;
   display: inline-block;
+} */
+
+nav button {
+  padding: 20px 20px;
+  box-sizing: border-box;
+  display: inline-block;
+  border: none;
+  background-color: white;
+  font-size: 19px;
+  font-family: AppleSDGothicNeoSB;
 }
 
-.router-link-active {
+.active {
   background-color: #00dc64;
   color: white;
 }
