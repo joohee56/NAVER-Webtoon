@@ -13,6 +13,7 @@ import jh.naverwebtoon.db.repository.GenreRepository;
 import jh.naverwebtoon.db.repository.MemberRepository;
 import jh.naverwebtoon.db.repository.OfficialWebtoonRepository;
 import jh.naverwebtoon.dto.request.CreateWebtoonReq;
+import jh.naverwebtoon.dto.response.FindOfficialWebtoonDetailRes;
 import jh.naverwebtoon.dto.response.FindOfficialWebtoonsRes;
 import jh.naverwebtoon.util.FileStore;
 import lombok.RequiredArgsConstructor;
@@ -48,5 +49,11 @@ public class OfficialWebtoonService {
         return webtoons.stream()
                 .map(officialWebtoon -> FindOfficialWebtoonsRes.create(officialWebtoon))
                 .collect(Collectors.toList());
+    }
+
+    public FindOfficialWebtoonDetailRes findOfficialWebtoonDetail(Long webtoonId) {
+        OfficialWebtoon officialWebtoon = officialWebtoonRepository.findOneByIdWithMemberAndThumbnail(
+                webtoonId);
+        return FindOfficialWebtoonDetailRes.create(officialWebtoon);
     }
 }

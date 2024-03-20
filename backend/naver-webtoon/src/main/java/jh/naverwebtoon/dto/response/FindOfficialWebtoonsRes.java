@@ -12,7 +12,6 @@ public class FindOfficialWebtoonsRes {
     private Long webtoonId;
     private String webtoonName;
     private List<GenreEnum> genres;
-    private int ageLimit;
     private String memberName;
     private String posterStoreFileName;
     private DayOfWeek dayOfWeek;
@@ -25,7 +24,6 @@ public class FindOfficialWebtoonsRes {
         findOfficialWebtoonsRes.genres = officialWebtoon.getGenres().stream()
                 .map(webtoonGenre -> webtoonGenre.getGenre().getGenreEnum())
                 .collect(Collectors.toList());
-        findOfficialWebtoonsRes.ageLimit = officialWebtoon.getAgeLimit();
         findOfficialWebtoonsRes.memberName = officialWebtoon.getMember().getName();
         findOfficialWebtoonsRes.posterStoreFileName = officialWebtoon.getWebtoonThumbnail().getPosterImage()
                 .getStoreFileName();

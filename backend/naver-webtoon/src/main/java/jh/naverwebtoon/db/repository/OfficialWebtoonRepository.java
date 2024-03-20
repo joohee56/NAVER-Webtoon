@@ -135,4 +135,14 @@ public class OfficialWebtoonRepository {
                         + " join fetch ow.webtoonThumbnail wt", OfficialWebtoon.class)
                 .getResultList();
     }
+
+    public OfficialWebtoon findOneByIdWithMemberAndThumbnail(Long webtoonId) {
+        return em.createQuery("select distinct ow from OfficialWebtoon ow"
+                        + " join fetch ow.member m "
+                        + " join fetch m.profileImage"
+                        + " join fetch ow.webtoonThumbnail wt"
+                        + " where ow.id = :webtoonId", OfficialWebtoon.class)
+                .setParameter("webtoonId", webtoonId )
+                .getSingleResult();
+    }
 }
