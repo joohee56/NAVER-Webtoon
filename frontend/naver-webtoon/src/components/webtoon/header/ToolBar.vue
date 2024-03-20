@@ -58,7 +58,7 @@ export default {
   font-family: "Archivo Black", sans-serif;
   font-weight: 400;
   font-style: normal;
-  font-size: 1rem;
+  font-size: 1.5rem;
   margin: 17px 10px;
 }
 .webtoon-logo {
@@ -66,7 +66,7 @@ export default {
   font-optical-sizing: auto;
   font-weight: 800;
   font-style: normal;
-  font-size: 1.3rem;
+  font-size: 1.8rem;
   margin: 10px 0;
 }
 .search-wrap {

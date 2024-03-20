@@ -1,14 +1,26 @@
 <template lang="ko">
-	<div>
+	<div class="container">
+    <WebtoonInfo></WebtoonInfo>
+    <RoundList></RoundList>
 	</div>
 </template>
 
 <script>
+import WebtoonInfo from "@/components/webtoon/detail/WebtoonInfo.vue";
+import RoundList from "@/components/webtoon/detail/RoundList.vue";
+
 export default {
-  created() {
-    console.log(this.$route.params.webtoonId);
+  components: {
+    WebtoonInfo,
+    RoundList,
   },
+  created() {},
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.container {
+  width: 85rem;
+  margin: 0 auto;
+}
+</style>

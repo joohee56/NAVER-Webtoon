@@ -21,12 +21,9 @@ export default {
 </script>
 
 <style scoped>
-router-view,
 footer {
   width: 85rem;
   margin: 0 auto;
-}
-footer {
   margin-top: 40px;
 }
 </style>
