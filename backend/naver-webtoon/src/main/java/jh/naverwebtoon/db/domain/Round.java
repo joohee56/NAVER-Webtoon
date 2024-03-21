@@ -1,5 +1,6 @@
 package jh.naverwebtoon.db.domain;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
@@ -9,14 +10,16 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import java.util.ArrayList;
+import java.util.List;
 import jh.naverwebtoon.db.domain.webtoon.Webtoon;
 import jh.naverwebtoon.util.RoundEntityListener;
 import lombok.Getter;
-import lombok.Setter;
 
 @Entity
 @Getter
-@Setter
 @EntityListeners(value = {RoundEntityListener.class})
 public class Round extends BaseEntity {
 
@@ -28,10 +31,28 @@ public class Round extends BaseEntity {
     @JoinColumn(name="webtoon_id")
     private Webtoon webtoon;
 
-    private Long roundNumber;
+    private Long roundNumber;   //persist 전 자동 생성
 
     private String roundTitle;
 
     @Column(length = 300)
     private String authorNote;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private RoundThumbnail roundThumbnail;
+
+    @OneToMany(mappedBy = "round", cascade = CascadeType.ALL)
+    private List<Manuscript> manuscripts = new ArrayList<>();
+
+    public void setRoundNumber(Long roundNumber) {
+        this.roundNumber = roundNumber;
+    }
+
+    /**
+     * 연관관계 메서드
+     */
+    public void addManuscript(Manuscript manuscript) {
+        this.manuscripts.add(manuscript);
+        manuscript.setRound(this);
+    }
 }
