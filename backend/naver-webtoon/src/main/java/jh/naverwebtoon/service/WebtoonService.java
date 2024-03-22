@@ -45,9 +45,11 @@ public class WebtoonService {
 
     public List<FindWebtoonsByMemberRes> findAllByMember(Long memberId) {
         Member member = memberRepository.findOne(memberId);
-        List<Webtoon> webtoons = webtoonRepository.findAllByMember(member);
+        List<Webtoon> webtoons = webtoonRepository.findAllByMemberWithThumbnail(member);
         return webtoons.stream()
                 .map(w -> FindWebtoonsByMemberRes.create(w))
                 .collect(Collectors.toList());
     }
+
+
 }

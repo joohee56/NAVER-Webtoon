@@ -13,8 +13,6 @@ import org.springframework.stereotype.Repository;
 public class WebtoonRepository {
     @PersistenceContext
     private EntityManager em;
-    private final MemberRepository memberRepository;
-    private final GenreRepository genreRepository;
 
     public Long save(Webtoon webtoon) {
         em.persist(webtoon);
@@ -25,10 +23,17 @@ public class WebtoonRepository {
         return em.find(Webtoon.class, id);
     }
 
-    public List<Webtoon> findAllByMember(Member member) {
+    public List<Webtoon> findAllByMemberWithThumbnail(Member member) {
         return em.createQuery("select distinct w from Webtoon w"
                         + " join fetch w.webtoonThumbnail wt"
                         + " where w.member = :member", Webtoon.class)
+                .setParameter("member", member)
+                .getResultList();
+    }
+
+    public List<Webtoon> findAllByMember(Member member) {
+        return em.createQuery("select w from Webtoon w"
+                + " where w.member=:member", Webtoon.class)
                 .setParameter("member", member)
                 .getResultList();
     }

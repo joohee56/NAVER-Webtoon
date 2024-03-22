@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 import jh.naverwebtoon.db.domain.BaseEntity;
 import jh.naverwebtoon.db.domain.Genre;
 import jh.naverwebtoon.db.domain.Member;
+import jh.naverwebtoon.db.domain.Round;
 import jh.naverwebtoon.db.domain.Tag;
 import jh.naverwebtoon.db.domain.WebtoonGenre;
 import jh.naverwebtoon.db.domain.WebtoonThumbnail;
@@ -71,6 +72,9 @@ public class Webtoon extends BaseEntity {
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private WebtoonThumbnail webtoonThumbnail;
+
+    @OneToMany(mappedBy = "webtoon")
+    private List<Round> rounds = new ArrayList<>();
 
     /**
      * 연관관계 메서드

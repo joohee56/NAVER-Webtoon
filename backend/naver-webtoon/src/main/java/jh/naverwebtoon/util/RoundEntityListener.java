@@ -9,9 +9,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class RoundEntityListener {
-    @Autowired
-    private RoundRepository roundRepository;
-
     /**
      * 회차 persist 전 호출
      */
@@ -23,7 +20,7 @@ public class RoundEntityListener {
     }
 
     private Long generateNextRoundNumber(Webtoon webtoon) {
-//        RoundRepository roundRepository = BeanUtils.getBean(RoundRepository.class);
+        RoundRepository roundRepository = BeanUtils.getBean(RoundRepository.class);
         Long maxRoundNumber = roundRepository.findMaxRoundNumberByWebtoonId(webtoon.getId());
         return maxRoundNumber != null ? maxRoundNumber + 1 : 1;
     }

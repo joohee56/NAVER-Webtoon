@@ -7,16 +7,15 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class RoundThumbnail {
+public class MergeManuscript {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     @Embedded
-    private UploadImage thumbnail;
+    private UploadImage file;
 
-    public static RoundThumbnail create(UploadImage thumbnail) {
-        RoundThumbnail roundThumbnail = new RoundThumbnail();
-        roundThumbnail.thumbnail = thumbnail;
-        return roundThumbnail;
+    public static MergeManuscript create(UploadImage file) {
+        MergeManuscript mergeManuscript = new MergeManuscript();
+        mergeManuscript.file = file;
+        return mergeManuscript;
     }
 }

@@ -24,4 +24,9 @@ public class Manuscript {
     public void setRound(Round round) {
         this.round = round;
     }
+    public static Manuscript create(UploadImage file) {
+        Manuscript manuscript = new Manuscript();
+        manuscript.file = file;
+        return manuscript;
+    }
 }
