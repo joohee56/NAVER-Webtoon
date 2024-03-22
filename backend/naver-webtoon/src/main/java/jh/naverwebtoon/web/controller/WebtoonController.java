@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import jh.naverwebtoon.db.domain.webtoon.Webtoon;
 import jh.naverwebtoon.dto.request.CreateWebtoonReq;
+import jh.naverwebtoon.dto.response.FindCreateRoundInfoRes;
 import jh.naverwebtoon.dto.response.FindWebtoonsByMemberRes;
 import jh.naverwebtoon.service.WebtoonService;
 import jh.naverwebtoon.web.Login;
@@ -33,4 +34,8 @@ public class WebtoonController {
         return webtoonService.findAllByMember(id);
     }
 
+    @GetMapping("/createRound")
+    public List<FindCreateRoundInfoRes> findCreateRoundInfo(@Login Long id) {
+        return webtoonService.findCreateRoundInfo(id);
+    }
 }

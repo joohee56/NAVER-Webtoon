@@ -1,6 +1,7 @@
 package jh.naverwebtoon.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import jh.naverwebtoon.db.domain.Genre;
@@ -10,8 +11,10 @@ import jh.naverwebtoon.db.domain.WebtoonThumbnail;
 import jh.naverwebtoon.db.domain.webtoon.Webtoon;
 import jh.naverwebtoon.db.repository.GenreRepository;
 import jh.naverwebtoon.db.repository.MemberRepository;
+import jh.naverwebtoon.db.repository.RoundRepository;
 import jh.naverwebtoon.db.repository.WebtoonRepository;
 import jh.naverwebtoon.dto.request.CreateWebtoonReq;
+import jh.naverwebtoon.dto.response.FindCreateRoundInfoRes;
 import jh.naverwebtoon.dto.response.FindWebtoonsByMemberRes;
 import jh.naverwebtoon.util.FileStore;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +28,7 @@ public class WebtoonService {
     private final WebtoonRepository webtoonRepository;
     private final MemberRepository memberRepository;
     private final GenreRepository genreRepository;
+    private final RoundRepository roundRepository;
     private final FileStore fileStore;
 
     @Transactional
@@ -51,5 +55,14 @@ public class WebtoonService {
                 .collect(Collectors.toList());
     }
 
+    public List<FindCreateRoundInfoRes> findCreateRoundInfo(Long memberId) {
+        Member member = memberRepository.findOne(memberId);
+        List<FindCreateRoundInfoRes> res = new ArrayList<>();
+        List<Object[]> webtoons = webtoonRepository.findAllByMemberWithMaxRoundNumber(member);
+        for (Object[] webtoon : webtoons) {
+            res.add(FindCreateRoundInfoRes.create((Long) webtoon[0], (String) webtoon[1], webtoon[2]));
+        }
+        return res;
+    }
 
 }

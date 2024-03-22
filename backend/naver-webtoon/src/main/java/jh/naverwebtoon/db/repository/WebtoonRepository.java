@@ -37,4 +37,11 @@ public class WebtoonRepository {
                 .setParameter("member", member)
                 .getResultList();
     }
+
+    public List<Object[]> findAllByMemberWithMaxRoundNumber(Member member) {
+        return em.createQuery(
+                        "select distinct w.id, w.name, (select max(r.roundNumber) from Round r where r.webtoon = w) from Webtoon w cross join Round r where w.member = :member")
+                .setParameter("member", member)
+                .getResultList();
+    }
 }
