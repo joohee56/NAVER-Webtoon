@@ -44,9 +44,20 @@ async function getOfficialWebtoonDetail(webtoonId) {
   }
 }
 
+async function getCreateRoundInfo() {
+  try {
+    const response = await jsonApi.get("/webtoon/createRound");
+    startSessionCheck();
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export {
   postCreateWebtoon,
   getWebtoonAllByMember,
   getOfficialWebtoonAll,
   getOfficialWebtoonDetail,
+  getCreateRoundInfo,
 };

@@ -8,14 +8,14 @@
 			<ul>
 				<li class="item-row">
 					<p>작품명</p>
-					<select class="webtoon-name-select">
-						<option value="test" selected>테스트2</option>
+					<select class="webtoon-name-select" @change="changeWebtoon()" v-model="selectedWebtoonIndex">
+						<option v-for="(webtoon, index) in webtoons" :value="index">{{webtoon.webtoonName}}</option>
 					</select>
 				</li>
 				<li class="item-row">
 					<p>회차 번호</p>
 					<div>
-						<input type="text" disabled placeholder="1">
+						<div class="round-number">{{roundNumber}}</div>
 						<div class="desription">
 							<ul>
 								<li>회차 번호는 순차적으로 자동 지정되기 때문에 임의로 설정이 불가능합니다.</li>
@@ -26,7 +26,7 @@
 				<li class="item-row">
 					<p>회차명</p>
 					<div>
-						<input type="text" placeholder="회차명을 입력해 주세요.">
+						<input type="text" placeholder="회차명을 입력해 주세요." size="35">
 					</div>				
 				</li>
 			</ul>
@@ -34,39 +34,78 @@
 
 		<div class="item-box">
 			<ul>
+
 				<li class="item-row">
 					<p>대표 이미지</p>
 					<div>
 						<div class="img-item-row">
-							<div>회차 대표 이미지</div>
-							<div>
-								202 x 120
-								<label>파일 선택</label>
+							<div class="sub-title">회차 대표 이미지</div>
+
+							<div class="img-input thumbnail">
+								<!-- 이미지 선택 -->
+								<div :class={blind:!isThumbnailSelect} class="img-wrap">
+									<label for="thumbnail" class="thumbnail-img-label">
+										<img :src="thumbnailPreview">
+									</label>
+									<label class="delete-img-btn">
+										<i class="fa-regular fa-trash-can"></i>
+									</label>
+								</div>
+								<!-- 이미지 미선택 -->
+								<div :class={blind:isThumbnailSelect}>
+									<em>202 x 120</em>
+									<label for="thumbnail" class="file-select-btn">파일 선택</label>
+									<input type="file" id="thumbnail" ref="thumbnail" @change="changeThumbnail" hidden>
+								</div>
 							</div>
-						</div>
-						<div class="img-item-row">
-							<div>SNS 공유용</div>
-							<div>
-								600 x 315
-								<label>파일 선택</label>
-							</div>
+
 						</div>
 					</div>
 				</li>
 
 				<li class="item-row">
 					<p>원고 등록</p>
-					<div>
+					<div class="manuscript-item-wrap">
+						
 						<div class="manuscript-item-row">
-							<div>파일 목록</div>
+							<div class="sub-title">파일 목록</div>
+							<div class="file-list">
+								<button v-for="file in manuscripts" @click="showPreview(file)">{{file.name}}</button>
+							</div>
+							<div>
+								<button>수정</button>
+								<button>삭제</button>
+								<label for="manuscript">원고 업로드</label>
+								<input type="file" id="manuscript" @change="uploadManuscipt" ref="manuscipt" multiple hidden>
+							</div>
+							<div class="desription">
+								<ul>
+									<li>가로 사이즈는 690px만 가능합니다.</li>
+									<li>파일 1개 용량 5MB, 총 용량 50MB이하로 제한 / jpg, gif 파일만 업로드 가능</li>
+								</ul>
+							</div>
+						</div>
+
+						<div class="manuscript-item-row">
+							<div class="sub-title">미리보기</div>
+							<div class="preview-img">
+								<img :src="filePreview">
+							</div>
+							<div class="preview-img">
+								<img :src="mergeImagePreview">
+							</div>
+							<div>
+								<button @click="mergeImages">전체 미리보기</button>
+							</div>
 						</div>
 					</div>
+
 				</li>
 
 				<li class="item-row">
 					<p>작가의 말</p>
 					<div>
-						<input type="text" placeholder="작가의 말을 입력해 주세요.">
+						<input type="text" placeholder="작가의 말을 입력해 주세요." size=100>
 					</div>
 				</li>
 			</ul>
@@ -86,14 +125,123 @@
 
 		<div class="btn-wrap">
 			<button class="cancel">취소</button>
-			<button class="submit">등록</button>
+			<button class="submit" @click="submit">등록</button>
 		</div>
 
 	</div>
 </template>
 
 <script>
-export default {};
+import { getCreateRoundInfo } from "@/api/webtoon";
+export default {
+  data() {
+    return {
+      round: {
+        webtoonId: "",
+        manuscript: "",
+      },
+      webtoons: [],
+      selectedWebtoonIndex: "0",
+      roundNumber: "",
+      isThumbnailSelect: false,
+      thumbnailPreview: "",
+      thumbnail: "",
+      manuscripts: [],
+      filePreview: "",
+      mergeImagePreview: "",
+    };
+  },
+  mounted() {
+    this.fetchWebtoonInfo();
+  },
+  watch: {
+    thumbnail: function (val) {
+      this.isThumbnailSelect = val != null ? true : false;
+    },
+  },
+  methods: {
+    async fetchWebtoonInfo() {
+      try {
+        const response = await getCreateRoundInfo();
+        console.log(response.data);
+        this.webtoons = response.data;
+        this.roundNumber = this.webtoons[0].roundNumber;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    changeWebtoon() {
+      this.roundNumber = this.webtoons[this.selectedWebtoonIndex].roundNumber;
+    },
+    submit() {
+      this.changeManuscriptPreviewToFile();
+      console.log(this.round.manuscript);
+    },
+    changeThumbnail() {
+      console.log("대표 이미지 변경");
+      this.thumbnail = this.$refs.thumbnail.files[0];
+      this.thumbnailPreview = URL.createObjectURL(this.thumbnail);
+    },
+    uploadManuscipt() {
+      for (const file of this.$refs.manuscipt.files) {
+        this.manuscripts.push(file);
+      }
+      this.mergeImages();
+    },
+    showPreview(file) {
+      this.filePreview = URL.createObjectURL(file);
+    },
+    changeManuscriptPreviewToFile() {
+      var blobBin = atob(this.mergeImagePreview.split(",")[1]); // base64 데이터 디코딩
+      var array = [];
+      for (var i = 0; i < blobBin.length; i++) {
+        array.push(blobBin.charCodeAt(i));
+      }
+      var file = new Blob([new Uint8Array(array)], { type: "image/jpeg" }); // Blob 생성
+      this.round.manuscript = file;
+    },
+    async mergeImages() {
+      let images = [];
+      let height = 0; //canvas height
+
+      for (const file of this.manuscripts) {
+        //읽기
+        var reader = new FileReader();
+        var tempImage = new Image(); //drawImage 메서드에 넣기 위해 이미지 객체화
+
+        await new Promise(function (resolve) {
+          reader.readAsDataURL(file); //DataUrl 타입으로 읽기
+          setTimeout(() => resolve(), 1000);
+        }).then(function () {
+          tempImage.src = reader.result;
+          images.push(tempImage);
+          height += tempImage.height; //이미지 크기만큼 canvas height 증가
+        });
+      }
+
+      var canvas = document.createElement("canvas");
+      if (canvas.getContext) {
+        //canvas가 가능한 브라우저일 경우
+        //캔버스 크기 설정
+        canvas.width = 690; //가로 690px 고정
+        canvas.height = height; //위에서 계산한 이미지들의 총 높이
+        var context = canvas.getContext("2d");
+        var offsetY = 0; //이미지 시작 y축 위치
+
+        for (const image of images) {
+          context.drawImage(image, 0, offsetY);
+          offsetY += image.height;
+        }
+
+        // 썸네일 이미지 보여주기
+        const dataURI = canvas.toDataURL("image/jpeg");
+        this.mergeImagePreview = dataURI;
+      } else {
+        alert("지원하지 않는 브라우저입니다.");
+      }
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -105,13 +253,14 @@ export default {};
   font-family: AppleSDGothicNeoSB;
   font-size: 1.3rem;
 }
+/* 박스 */
 .item-box {
   background-color: white;
   border: 1px solid #ebebeb;
   border-radius: 5px;
   margin-top: 10px;
   font-family: AppleSDGothicNeoR;
-  padding: 30px 30px;
+  padding: 20px 30px;
 }
 ul {
   padding: 0;
@@ -121,30 +270,46 @@ ul {
 .item-box .item-row {
   display: grid;
   grid-template-columns: 2fr 8fr;
+  align-items: center;
 }
+
+/* 각 항목별 제목 */
 .item-row p {
   font-family: AppleSDGothicNeoSB;
   font-size: 17px;
 }
+.item-box .item-row:not(:last-child) {
+  margin-bottom: 10px;
+}
+
+/* 작품명 */
 .item-row .webtoon-name-select {
   border: 1px solid #ebebeb;
-  padding-left: 10px;
   border-radius: 4px;
+  padding: 15px 10px;
+  width: 350px;
 }
-.item-box .item-row:not(:last-child) {
-  margin-bottom: 20px;
+
+/* 회차 번호 */
+.round-number {
+  border: 1px solid #ebebeb;
+  display: inline-block;
+  padding: 10px 35px;
 }
+
 .item-row input[type="text"] {
-  padding: 15px 15px;
+  padding: 13px 15px;
   border: 1px solid #ebebeb;
   border-radius: 3px;
 }
 .item-row input::placeholder {
+  font-size: 12px;
   color: #c5c3c3;
 }
 .item-row :disabled {
   background-color: white;
 }
+
 .item-row .desription {
   color: #b1b1b1;
   font-size: 13px;
@@ -152,6 +317,117 @@ ul {
   margin-top: 8px;
 }
 
+/* 대표이미지 */
+.sub-title {
+  color: #898787;
+  font-size: 15px;
+}
+.blind {
+  display: none;
+}
+.img-input {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #f6f6f6;
+  border: 1px dashed #e0e0e0;
+  border-radius: 3px;
+  box-sizing: border-box;
+}
+.img-input:hover {
+  border: 1px dashed #00dc64;
+}
+.thumbnail {
+  aspect-ratio: 202 / 120;
+  width: 202px;
+  /* height: calc(100% - 26px); */
+  margin-top: 6px;
+}
+.img-wrap {
+  width: 100%;
+  height: 100%;
+}
+.thumbnail-img-label {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.img-input img {
+  cursor: pointer;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+.delete-img-btn {
+  position: absolute;
+  z-index: 1000;
+  right: 0;
+  bottom: 0;
+  cursor: pointer;
+  width: 26px;
+  height: 26px;
+  background-color: rgba(0, 0, 0, 0.324);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.delete-img-btn i {
+  color: white;
+  font-size: 15px;
+  margin: 0;
+}
+
+.img-input em {
+  font-size: 14px;
+  line-height: 20px;
+  color: #999;
+  display: block;
+}
+.file-select-btn {
+  margin-top: 10px;
+  width: 67px;
+  border: 1px solid #e0e0e0;
+  border-radius: 3px;
+  background-color: #fff;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 26px;
+  color: #999;
+  text-align: center;
+  cursor: pointer;
+  padding: 5px;
+}
+
+/* 원고 등록 */
+.manuscript-item-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 15px;
+}
+.file-list {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border: 1px solid #e0e0e0;
+}
+.preview-img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border: 1px solid #e0e0e0;
+  background-image: linear-gradient(45deg, #efefef 25%, transparent 25%),
+    linear-gradient(-45deg, #efefef 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #efefef 75%),
+    linear-gradient(-45deg, transparent 75%, #efefef 75%);
+  overflow: auto;
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0;
+}
+.preview-img img {
+  width: 100%;
+  vertical-align: top;
+}
 /* button */
 .btn-wrap {
   margin-top: 10px;

@@ -93,6 +93,7 @@
 							<div class="representative-img-row">
 								<div>포스터형</div>
 								<div class="img-input poster">
+                  <!-- 이미지 선택 -->
 									<div class="img-wrap" :class={blind:!isPosterSelect}>
 										<label for="poster">
 											<img :src="previewPoster">
@@ -101,6 +102,7 @@
 											<i class="fa-regular fa-trash-can"></i>
 										</label>
 									</div>
+                  <!-- 이미지 미선택  -->
 									<div :class={blind:isPosterSelect}>
 										<em>480 x 623</em>
 										<label class="image-select-btn" for="poster">파일 선택</label>
