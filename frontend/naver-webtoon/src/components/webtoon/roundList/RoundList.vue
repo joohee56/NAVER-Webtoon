@@ -12,7 +12,7 @@
 		<!-- 회차 -->
 		<div class="round-wrap">
 			<div class="round-list-item" v-for="round in rounds">
-				<router-link to="#">
+				<router-link :to="{name: 'roundDetail', params: {roundId : `${round.roundId}`}}">
 					<img class="thumbnail" :src="require(`@/assets/image/${round.thumbnail}`)">
 					<div class="detail-wrap">
 						<div class="webtoon-title">{{round.roundNumber}}화. {{round.title}}</div>
@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { getRoundsWithPaging } from "@/api/Round";
+import { getRoundsWithPaging } from "@/api/round";
 
 export default {
   data() {
@@ -149,3 +149,4 @@ export default {
 
 /* 페이지 */
 </style>
+@/api/round

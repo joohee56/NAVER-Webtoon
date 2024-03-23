@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import WebtoonInfo from "@/components/webtoon/detail/WebtoonInfo.vue";
-import RoundList from "@/components/webtoon/detail/RoundList.vue";
+import WebtoonInfo from "@/components/webtoon/roundList/WebtoonInfo.vue";
+import RoundList from "@/components/webtoon/roundList/RoundList.vue";
 
 export default {
   components: {

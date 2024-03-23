@@ -15,7 +15,8 @@ import ManageComment from "@/components/creator/main/ManageComment";
 import ManageAlarm from "@/components/creator/main/ManageAlarm";
 import CreateNewWebtoon from "@/components/creator/main/CreateNewWebtoon";
 import CreateNewRound from "@/components/creator/main/CreateNewRound";
-import WebtoonDetail from "@/views/WebtoonDetail";
+import RoundList from "@/views/RoundList";
+import RoundDetail from "@/views/RoundDetail";
 
 Vue.use(VueRouter);
 
@@ -46,9 +47,14 @@ const routes = [
         component: ChallengeView,
       },
       {
-        path: "/webtoon/detail/:webtoonId",
-        name: "webtoonDetail",
-        component: WebtoonDetail,
+        path: "/webtoon/:webtoonId",
+        name: "roundList",
+        component: RoundList,
+      },
+      {
+        path: "/webtoon/rounds/:roundId",
+        name: "roundDetail",
+        component: RoundDetail,
       },
     ],
   },

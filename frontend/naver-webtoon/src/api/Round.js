@@ -15,4 +15,14 @@ async function getRoundsWithPaging(webtoonId, offset, limit, isDesc) {
   }
 }
 
-export { getRoundsWithPaging };
+async function getRoundDetail(roundId) {
+  try {
+    const response = await jsonApi.get(`/rounds/${roundId}`);
+    startSessionCheck();
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export { getRoundsWithPaging, getRoundDetail };

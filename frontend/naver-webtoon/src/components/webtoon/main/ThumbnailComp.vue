@@ -3,12 +3,12 @@
 		<h3 class="week-day-header"> {{dayOfWeekHeader}} </h3>
 		<ul class="webtoon-list-wrap">
 			<li class="webtoon-item" v-for="webtoon in webtoons">
-				<router-link :to="{name: 'webtoonDetail', params: {webtoonId:`${webtoon.webtoonId}`}}">
+				<router-link :to="{name: 'roundList', params: {webtoonId:`${webtoon.webtoonId}`}}">
 					<img :src="require(`@/assets/image/${webtoon.posterStoreFileName}`)">
 				</router-link>
 				<div>
 					<!-- <span class="up">UP</span> -->
-					<router-link :to="{name: 'webtoonDetail', params: {webtoonId:`${webtoon.webtoonId}`}}">
+					<router-link :to="{name: 'roundList', params: {webtoonId:`${webtoon.webtoonId}`}}">
 						<span class="webtoon-name">{{webtoon.webtoonName}}</span>
 					</router-link>
 				</div>
