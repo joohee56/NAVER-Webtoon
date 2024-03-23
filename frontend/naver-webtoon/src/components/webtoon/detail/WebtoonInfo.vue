@@ -12,7 +12,7 @@
 					<span>· 글/그림 | 토요웹툰 · {{webtoonInfo.ageLimit}}세 이용가</span>
 				</div>
 				<div class="summary">
-					<div>"{{webtoonInfo.oneLineSummary}}"</div>
+					<div>{{webtoonInfo.oneLineSummary}}</div>
 					<div v-html="webtoonInfo.summary"></div>
 				</div>
 			</div>
