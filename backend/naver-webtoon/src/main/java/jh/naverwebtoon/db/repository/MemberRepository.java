@@ -25,7 +25,7 @@ public class MemberRepository {
     public void init() {
         initMember("joohee56", "1234", "joohee@naver.com", "이주희", LocalDate.of(1999, 9, 19), Gender.FEMALE, CountryResidence.LOCAL, "010-1234-5678", "jjanggu-profile-image.png" );
         initMember("author1", "1234", "author1@naver.com", "정이나", LocalDate.of(1999, 9, 19), Gender.FEMALE, CountryResidence.LOCAL, "010-1234-5678", "작가_프로필_1.png" );
-        initMember("author2", "1234", "author2@naver.com", "홍덕", LocalDate.of(1999, 9, 19), Gender.FEMALE, CountryResidence.LOCAL, "010-1234-5678", null);
+        initMember("author2", "1234", "author2@naver.com", "홍덕", LocalDate.of(1999, 9, 19), Gender.FEMALE, CountryResidence.LOCAL, "010-1234-5678", "default-profile-image.png");
         initMember("author3", "1234", "author3@naver.com", "모랑지", LocalDate.of(1999, 9, 19), Gender.FEMALE, CountryResidence.LOCAL, "010-1234-5678", "작가_프로필_2.png");
         initMember("challenger1", "1234", "challenger1@naver.com", "딱지 간호사", LocalDate.of(1999, 9, 19), Gender.FEMALE, CountryResidence.LOCAL, "010-1234-5678", "도전만화_프로필_1.png");
     }

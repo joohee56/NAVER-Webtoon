@@ -41,7 +41,7 @@ public class RoundRepository {
         manuscripts.add(Manuscript.create(new UploadImage("원고3.jpg", "원고3.jpg")));
         MergeManuscript mergeManuscript = MergeManuscript.create(new UploadImage("세레나_원고.png", "세레나_원고.png"));
         CreateRoundReq roundReq = new CreateRoundReq();
-        roundReq.setRoundTitle("두 개의 그림(2)");
+        roundReq.setRoundTitle("두 개의 그림 (1)");
         roundReq.setAuthorNote("수정본이 재업로드되었습니다.");
 
         Round round = Round.create(roundReq, webtoon, roundThumbnail, manuscripts, mergeManuscript);
@@ -56,11 +56,34 @@ public class RoundRepository {
         manuscripts.add(Manuscript.create(new UploadImage("원고3.jpg", "원고3.jpg")));
         MergeManuscript mergeManuscript = MergeManuscript.create(new UploadImage("세레나_원고.png", "세레나_원고.png"));
         CreateRoundReq roundReq = new CreateRoundReq();
-        roundReq.setRoundTitle("두 개의 그림(1)");
+        roundReq.setRoundTitle("두 개의 그림 (2)");
         roundReq.setAuthorNote("");
 
         Round round = Round.create(roundReq, webtoon, roundThumbnail, manuscripts, mergeManuscript);
         em.persist(round);
+    }
+
+    public List<Round> findAllByWebtoonWithPaging(Long webtoonId, int offset, int limit, boolean isDesc) {
+        String sql = "select r from Round r"
+                + " join fetch r.roundThumbnail th"
+                + " where r.webtoon.id = :webtoonId";
+        if (isDesc) {
+            sql += " order by r.roundNumber desc";
+        } else {
+            sql += " order by r.roundNumber asc";
+        }
+
+        return em.createQuery(sql, Round.class)
+                .setParameter("webtoonId", webtoonId)
+                .setFirstResult(offset)
+                .setMaxResults(limit)
+                .getResultList();
+    }
+
+    public Long findTotalCountByWebtoon(Long webtoonId) {
+        return em.createQuery("select count(r) from Round r where r.webtoon.id = :webtoonId", Long.class)
+                .setParameter("webtoonId", webtoonId)
+                .getSingleResult();
     }
 
     public Long findMaxRoundNumberByWebtoonId(Long webtoonId) {

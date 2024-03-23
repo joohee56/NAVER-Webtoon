@@ -1,8 +1,11 @@
 package jh.naverwebtoon.service;
 
-import jh.naverwebtoon.db.repository.MemberRepository;
+import java.util.List;
+import java.util.stream.Collectors;
+import jh.naverwebtoon.db.domain.Round;
 import jh.naverwebtoon.db.repository.RoundRepository;
-import jh.naverwebtoon.db.repository.WebtoonRepository;
+import jh.naverwebtoon.dto.response.FindRoundsByWebtoon;
+import jh.naverwebtoon.dto.response.RoundListDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,11 +15,16 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class RoundService {
     private final RoundRepository roundRepository;
-    private final WebtoonRepository webtoonRepository;
-    private final MemberRepository memberRepository;
 
-//    public List<FindCreateRoundInfoRes> findCreateRoundInfo(Long memberId) {
-//        Member member = memberRepository.findOne(memberId);
-//        return webtoonRepository.findAllByMemberWithRoundNumber(member);
-//    }
+    public FindRoundsByWebtoon findRoundsByWebtoonWithPaing(Long webtoonId, int offset, int limit, boolean isDesc) {
+        List<Round> rounds = roundRepository.findAllByWebtoonWithPaging(webtoonId, offset, limit, isDesc);
+        Long totalRoundCount = roundRepository.findTotalCountByWebtoon(webtoonId);
+
+        List<RoundListDto> roundDtos = rounds.stream().map(round -> RoundListDto.create(round))
+                .collect(Collectors.toList());
+        int pageCount = (int) Math.ceil((double)totalRoundCount / limit);
+
+        return new FindRoundsByWebtoon(roundDtos,pageCount, totalRoundCount);
+    }
+
 }
