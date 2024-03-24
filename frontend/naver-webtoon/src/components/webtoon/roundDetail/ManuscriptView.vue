@@ -24,6 +24,24 @@
 
 		<!-- 원고 -->
 		<img id="manuscript" class="manuscript" :src="require(`@/assets/image/${roundDetail.mergeManuscript}`)">
+	
+	<!-- 목차 -->
+	<div>
+
+	</div>
+
+	<!-- 작가의 말 -->
+	<div>
+		<div class="author-profile">	
+			<img class="author-profile-image" :src="require(`@/assets/image/${roundDetail.authorProfileImage}`)">
+			<span>{{roundDetail.authorName}}</span>
+			<span style="color: #999">· 글/그림</span>
+		</div>
+		<div class="author-note">
+			{{roundDetail.authorNote}}
+		</div>
+	</div>
+
 	</div>
 </template>
 
@@ -37,6 +55,7 @@ export default {
   },
   mounted() {
     this.fetchRoundDetail();
+    this.menubarScoll();
   },
   methods: {
     async fetchRoundDetail() {
@@ -48,23 +67,29 @@ export default {
         console.log(error);
       }
     },
+    menubarScoll() {
+      // 메뉴바 트랜지션
+      const menubar = this.document.getElementById("menubar");
+      const manuscript = this.document.getElementById("manuscript");
+
+      window.addEventListener("scroll", transition);
+
+      const transition = function () {
+        if (manuscript !== null) {
+          if (this.window.scrollY >= manuscript.offsetTop) {
+            menubar.style.transition = "opacity 0.5s ease";
+            menubar.style.opacity = 0;
+          } else {
+            menubar.style.transition = "opacity 0.5s ease";
+            menubar.style.opacity = 1;
+          }
+        } else {
+          window.removeEventListener("scroll", transition);
+        }
+      };
+    },
   },
 };
-
-// 메뉴바 트랜지션
-window.addEventListener("scroll", function () {
-  const menubar = this.document.getElementById("menubar");
-  const manuscript = this.document.getElementById("manuscript");
-
-  if (this.window.scrollY >= manuscript.offsetTop) {
-    menubar.style.transition = "opacity 0.5s ease";
-    menubar.style.opacity = 0;
-  } else {
-    menubar.style.transition = "opacity 0.5s ease";
-    menubar.style.opacity = 1;
-  }
-  console.log(window.scrollY);
-});
 </script>
 
 <style scoped>
@@ -110,5 +135,26 @@ window.addEventListener("scroll", function () {
 .manuscript {
   display: block;
   width: 690px;
+}
+
+/* 작가의 말 */
+.author-profile {
+  display: flex;
+  direction: column;
+  align-items: center;
+  font-family: AppleSDGothicNeoSB;
+  font-size: 18px;
+}
+.author-profile > * {
+  margin-right: 5px;
+}
+.author-profile-image {
+  width: 40px;
+}
+.author-note {
+  padding: 18px 5px;
+  font-family: AppleSDGothicNeoSB;
+  font-size: 17px;
+  border-bottom: 1px solid #efefef;
 }
 </style>
