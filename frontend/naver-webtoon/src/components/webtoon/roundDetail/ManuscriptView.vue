@@ -24,9 +24,9 @@
 		</div>
 
 		<!-- 원고 -->
-		<!-- <div id="manuscript" class="manusript-wrap">
+		<div id="manuscript" class="manusript-wrap">
 			<img class="manuscript" :src="require(`@/assets/image/${roundDetail.mergeManuscript}`)">
-		</div> -->
+		</div>
 
 	<!-- 목록 -->
 	<div class="round-list">
@@ -83,6 +83,10 @@ export default {
   watch: {
     "$route.params.roundId": function () {
       location.reload();
+      window.scrollTo({
+        top: 0,
+        left: 0,
+      });
     },
     previewRangeStart() {
       this.previewRounds = [];
