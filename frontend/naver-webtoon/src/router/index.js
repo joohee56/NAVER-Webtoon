@@ -52,7 +52,7 @@ const routes = [
         component: RoundList,
       },
       {
-        path: "/webtoon/rounds/:roundId",
+        path: "/webtoon/:webtoonId/rounds/:roundId",
         name: "roundDetail",
         component: RoundDetail,
       },

@@ -384,7 +384,7 @@ form {
 .btn-login {
   display: block;
   width: 100%;
-  background-color: #03c75a;
+  background-color: #00dc64;
   border: solid 1px rgba(0, 0, 0, 0.15);
   color: white;
   padding: 13px 0;

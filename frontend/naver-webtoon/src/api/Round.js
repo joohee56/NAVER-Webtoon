@@ -15,9 +15,9 @@ async function getRoundsWithPaging(webtoonId, offset, limit, isDesc) {
   }
 }
 
-async function getRoundDetail(roundId) {
+async function getRounds(webtoonId) {
   try {
-    const response = await jsonApi.get(`/rounds/${roundId}`);
+    const response = await jsonApi.get(`/rounds/${webtoonId}`);
     startSessionCheck();
     return response;
   } catch (error) {
@@ -25,4 +25,14 @@ async function getRoundDetail(roundId) {
   }
 }
 
-export { getRoundsWithPaging, getRoundDetail };
+async function getRoundDetail(roundId) {
+  try {
+    const response = await jsonApi.get(`/rounds/round/${roundId}`);
+    startSessionCheck();
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export { getRoundsWithPaging, getRoundDetail, getRounds };

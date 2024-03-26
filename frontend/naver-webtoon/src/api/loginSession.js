@@ -2,7 +2,6 @@ import Cookies from "js-cookie";
 
 //세션 체크 로직 시작
 const startSessionCheck = function () {
-  console.log("startSessioncheck()");
   setTimeOffsetBetweenServerAndClient();
   checkSessionExpired();
 };
@@ -18,7 +17,6 @@ const setTimeOffsetBetweenServerAndClient = function () {
 
 //세션 만료 체크
 const checkSessionExpired = function () {
-  console.log("check Session");
   const sessionExpiry = Math.abs(Cookies.get("sessionExpiry"));
   let timeOffSet = Math.abs(Cookies.get("clientTimeOffset"));
   let localTime = new Date().getTime() - timeOffSet;
