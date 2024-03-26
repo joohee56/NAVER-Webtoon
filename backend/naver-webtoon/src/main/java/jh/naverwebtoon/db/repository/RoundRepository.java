@@ -4,7 +4,6 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
-import jh.naverwebtoon.db.domain.Manuscript;
 import jh.naverwebtoon.db.domain.MergeManuscript;
 import jh.naverwebtoon.db.domain.Round;
 import jh.naverwebtoon.db.domain.RoundThumbnail;
@@ -28,38 +27,26 @@ public class RoundRepository {
     @EventListener(ApplicationReadyEvent.class)
     @Transactional
     public void init() {
-        init1();
-        init2();
+        initRound(Long.valueOf(2), "세레나_1화_썸네일.png", "세레나_1화_원고.png", "세레니티의 소녀", ".");
+        initRound(Long.valueOf(2), "세레나_2화_썸네일.png", "세레나_2화_원고.png", "두 주인",".");
+        initRound(Long.valueOf(2), "세레나_3화_썸네일.png", "세레나_3화_원고.png", "이안사",".");
+        initRound(Long.valueOf(2), "세레나_4화_썸네일.png", "세레나_4화_원고.png", "늙은 경영자와 어린 소녀",".");
+        initRound(Long.valueOf(2), "세레나_5화_썸네일.png", "세레나_5화_원고.png", "유리 화원(1)",".");
+        initRound(Long.valueOf(2), "세레나_6화_썸네일.png", "세레나_6화_원고.png", "유리 화원(2)",".");
+        initRound(Long.valueOf(2), "세레나_7화_썸네일.png", "세레나_7화_원고.png", "유리 화원(3)",".");
+        initRound(Long.valueOf(2), "세레나_8화_썸네일.png", "세레나_8화_원고.png", "나쁜 놈","이제부터 본 이야기 시작!");
+        initRound(Long.valueOf(2), "세레나_9화_썸네일.png", "세레나_9화_원고.png", "이거 완전 공주님이네", "작중 '마리안느 드생'의 그림은 5화에서 살짝 등장했었답니다:)");
     }
 
-    public void init1() {
-        Webtoon webtoon = webtoonRepository.findOne(Long.valueOf(2));
-        RoundThumbnail roundThumbnail = RoundThumbnail.create(new UploadImage("세레나_회차_썸네일.png","세레나_회차_썸네일.png"));
-        List<Manuscript> manuscripts = new ArrayList<>();
-        manuscripts.add(Manuscript.create(new UploadImage("원고1.jpg", "원고1.jpg")));
-        manuscripts.add(Manuscript.create(new UploadImage("원고2.jpg", "원고2.jpg")));
-        manuscripts.add(Manuscript.create(new UploadImage("원고3.jpg", "원고3.jpg")));
-        MergeManuscript mergeManuscript = MergeManuscript.create(new UploadImage("세레나_원고.png", "세레나_원고.png"));
+    public void initRound(Long webtoonId, String thumbnail, String manuscript, String title, String authorNote) {
+        Webtoon webtoon = webtoonRepository.findOne(webtoonId);
+        RoundThumbnail roundThumbnail = RoundThumbnail.create(new UploadImage(thumbnail,thumbnail));
+        MergeManuscript mergeManuscript = MergeManuscript.create(new UploadImage(manuscript, manuscript));
         CreateRoundReq roundReq = new CreateRoundReq();
-        roundReq.setRoundTitle("두 개의 그림 (1)");
-        roundReq.setAuthorNote("수정본이 재업로드되었습니다.");
+        roundReq.setRoundTitle(title);
+        roundReq.setAuthorNote(authorNote);
 
-        Round round = Round.create(roundReq, webtoon, roundThumbnail, manuscripts, mergeManuscript);
-        em.persist(round);
-    }
-    public void init2() {
-        Webtoon webtoon = webtoonRepository.findOne(Long.valueOf(2));
-        RoundThumbnail roundThumbnail = RoundThumbnail.create(new UploadImage("세레나_회차_썸네일.png","세레나_회차_썸네일.png"));
-        List<Manuscript> manuscripts = new ArrayList<>();
-        manuscripts.add(Manuscript.create(new UploadImage("원고1.jpg", "원고1.jpg")));
-        manuscripts.add(Manuscript.create(new UploadImage("원고2.jpg", "원고2.jpg")));
-        manuscripts.add(Manuscript.create(new UploadImage("원고3.jpg", "원고3.jpg")));
-        MergeManuscript mergeManuscript = MergeManuscript.create(new UploadImage("세레나_원고.png", "세레나_원고.png"));
-        CreateRoundReq roundReq = new CreateRoundReq();
-        roundReq.setRoundTitle("두 개의 그림 (2)");
-        roundReq.setAuthorNote("");
-
-        Round round = Round.create(roundReq, webtoon, roundThumbnail, manuscripts, mergeManuscript);
+        Round round = Round.create(roundReq, webtoon, roundThumbnail, new ArrayList<>(), mergeManuscript);
         em.persist(round);
     }
 
@@ -80,6 +67,17 @@ public class RoundRepository {
                 .getResultList();
     }
 
+    public List<Round> findAllByWebtoon(Long webtoonId) {
+        return em.createQuery("select r from Round r"
+                + " join fetch r.roundThumbnail th"
+                + " where r.webtoon.id = :webtoonId")
+                .setParameter("webtoonId",webtoonId)
+                .getResultList();
+    }
+
+    /**
+     * 웹툰에 해당하는 전체 회차 갯수 조회
+     */
     public Long findTotalCountByWebtoon(Long webtoonId) {
         return em.createQuery("select count(r) from Round r where r.webtoon.id = :webtoonId", Long.class)
                 .setParameter("webtoonId", webtoonId)
@@ -89,6 +87,17 @@ public class RoundRepository {
     public Long findMaxRoundNumberByWebtoonId(Long webtoonId) {
         return em.createQuery("select max(r.roundNumber) from Round r where r.webtoon.id = :webtoonId", Long.class)
                 .setParameter("webtoonId", webtoonId)
+                .getSingleResult();
+    }
+
+    public Round findOneDetail(Long id) {
+        return em.createQuery("select r from Round r"
+                + " join fetch r.webtoon w"
+                + " join fetch w.member m"
+                + " join fetch m.profileImage"
+                + " join fetch r.mergeManuscript"
+                + " where r.id=:id", Round.class)
+                .setParameter("id", id)
                 .getSingleResult();
     }
 

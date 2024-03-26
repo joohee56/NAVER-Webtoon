@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class FindRoundsByWebtoon {
+public class FindRoundsByWebtoonWithPaging {
     private List<RoundListDto> rounds;
     private int pageCount;
     private Long totalRoundCount;
