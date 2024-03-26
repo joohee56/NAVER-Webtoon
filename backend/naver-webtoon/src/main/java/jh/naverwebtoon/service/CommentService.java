@@ -19,6 +19,7 @@ public class CommentService {
     private final MemberRepository memberRepository;
     private final RoundRepository roundRepository;
 
+    @Transactional
     public Long save(Long memberId, CreateCommentReq createCommentReq) {
         Member member = memberRepository.findOne(memberId);
         Round round = roundRepository.findOne(createCommentReq.getRoundId());
