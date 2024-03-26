@@ -50,6 +50,10 @@ public class RoundRepository {
         em.persist(round);
     }
 
+    public Round findOne(Long roundId) {
+        return em.find(Round.class, roundId);
+    }
+
     public List<Round> findAllByWebtoonWithPaging(Long webtoonId, int offset, int limit, boolean isDesc) {
         String sql = "select r from Round r"
                 + " join fetch r.roundThumbnail th"
