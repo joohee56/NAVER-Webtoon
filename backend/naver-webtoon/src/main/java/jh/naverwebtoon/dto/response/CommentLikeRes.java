@@ -6,6 +6,6 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class CommentLikeRes {
-    private Long likeCnt;
-    private Boolean isUserLike;
+    private Long likeTotalCnt;
+    private Long isUserLike;
 }

@@ -32,7 +32,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/v1/users")
+@RequestMapping("/api/v1/users")
 public class MemberController {
 
     private final MemberService memberService;

@@ -34,9 +34,21 @@ public class CommentDislikeRepository {
     }
 
     public Long findTotalCountByCommentId(Long commentId) {
-        return em.createQuery("select count(cl) from CommentDislike cd"
+        return em.createQuery("select count(cd) from CommentDislike cd"
                         + " where cd.comment.id = :commentId", Long.class)
                 .setParameter("commentId", commentId)
+                .getSingleResult();
+    }
+
+    /**
+     * 로그인한 유저가 해당 댓글에 누른 싫어요 갯수 조회
+     */
+    public Long findOneByCommentAndMember(Long memberId, Long commentId) {
+        return em.createQuery("select count(cd) from CommentDislike cd"
+                        + " where cd.comment.id = :commentId "
+                        + " and cd.member.id =:memberId", Long.class)
+                .setParameter("commentId", commentId)
+                .setParameter("memberId", memberId)
                 .getSingleResult();
     }
 }

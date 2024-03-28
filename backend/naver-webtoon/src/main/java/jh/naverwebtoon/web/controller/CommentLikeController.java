@@ -4,9 +4,9 @@ import jh.naverwebtoon.dto.response.CommentLikeRes;
 import jh.naverwebtoon.service.CommentLikeService;
 import jh.naverwebtoon.web.Login;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class CommentLikeController {
     private final CommentLikeService commentLikeService;
 
-    @PostMapping("/{commentId}")
-    public CommentLikeRes createCommentLike(@Login Long memberId, @PathVariable("commentId") Long commentId) {
+    @PostMapping()
+    public CommentLikeRes createCommentLike(@Login Long memberId, @RequestParam("commentId") Long commentId) {
         return commentLikeService.save(memberId, commentId);
     }
 }

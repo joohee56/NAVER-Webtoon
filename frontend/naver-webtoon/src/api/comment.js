@@ -25,4 +25,33 @@ async function getCommentsWithLogin(roundId, offset, limit) {
   }
 }
 
-export { postComment, getCommentsWithLogin };
+async function postCommentLike(commentId) {
+  try {
+    const response = await jsonApi.post("/comment/like", null, {
+      params: { commentId: commentId },
+    });
+    startSessionCheck();
+    return response;
+  } catch (error) {
+    alert(error);
+    console.log(error);
+  }
+}
+
+async function postCommentDislike(commentId) {
+  try {
+    const response = await jsonApi.post(`/comment/dislike/${commentId}`, null);
+    startSessionCheck();
+    return response;
+  } catch (error) {
+    alert(error.response.data.message);
+    console.log(error);
+  }
+}
+
+export {
+  postComment,
+  getCommentsWithLogin,
+  postCommentLike,
+  postCommentDislike,
+};

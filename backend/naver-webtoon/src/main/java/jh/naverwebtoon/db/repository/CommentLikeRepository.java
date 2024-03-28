@@ -39,4 +39,16 @@ public class CommentLikeRepository {
                 .setParameter("commentId", commentId)
                 .getSingleResult();
     }
+
+    /**
+     * 로그인한 유저가 해당 댓글에 누른 좋아요 갯수 조회
+     */
+    public Long findOneByCommentAndMember(Long memberId, Long commentId) {
+        return em.createQuery("select count(cl) from CommentLike cl"
+                + " where cl.comment.id = :commentId "
+                + " and cl.member.id =:memberId", Long.class)
+                .setParameter("commentId", commentId)
+                .setParameter("memberId", memberId)
+                .getSingleResult();
+    }
 }

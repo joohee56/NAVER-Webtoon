@@ -34,7 +34,7 @@ public class CommentLikeService {
         }
 
         Long totalCnt = commentLikeRepository.findTotalCountByCommentId(commentId);
-        Boolean isUserLike = commentLikeRepository.findOne(memberId, commentId).isEmpty() ? false : true;
+        Long isUserLike = commentLikeRepository.findOneByCommentAndMember(memberId, commentId);
         return new CommentLikeRes(totalCnt, isUserLike);
     }
 }

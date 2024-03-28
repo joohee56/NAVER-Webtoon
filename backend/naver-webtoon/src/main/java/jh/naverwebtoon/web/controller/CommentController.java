@@ -25,7 +25,8 @@ public class CommentController {
     }
 
     @GetMapping("/{roundId}/{offset}/{limit}")
-    public List<FindCommentsWithLoginRes> findCommentsWithPagingAndLogin(@Login Long loginId, @PathVariable("roundId") Long roundId, @PathVariable("offset") int offset, @PathVariable("limit") int limit) {
-        return commentService.findAllWithPagingAndLogin(loginId, roundId, offset, limit);
+    public List<FindCommentsWithLoginRes> findCommentsWithPagingAndLogin(@Login Long memberId, @PathVariable("roundId") Long roundId, @PathVariable("offset") int offset, @PathVariable("limit") int limit) {
+        return commentService.findAllWithPagingAndLogin(memberId, roundId, offset, limit);
     }
+
 }

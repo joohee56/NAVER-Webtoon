@@ -19,8 +19,8 @@
 		</div>
 
 		<!-- 댓글 -->
-		<div class="comment-wrap"> 
-			<div v-for="comment in comments" class="comment-item">
+		<div class="comment-list-wrap"> 
+			<div class="comment-item" v-for="(comment, index) in comments">
 				<div class="user-info">
 					<div class="user-id">{{comment.userName}}({{comment.userId}})</div>
 					<div class="update-date">{{comment.updateAt}}</div>
@@ -28,8 +28,8 @@
 				<div class="content">{{comment.content}}</div>
 				<div class="btn-wrap">
 					<button>답글</button>
-					<button class="btn-like"><i class="fa-regular fa-thumbs-up"></i> {{comment.likeTotalCnt}}</button>
-					<button><i class="fa-regular fa-thumbs-down"></i> {{comment.dislikeTotalCnt}}</button>
+					<button class="btn-like" :class="{isUserLikeActive:comment.isUserLike}" @click="clickCommentLike(comment.commentId, index)"><i class="fa-regular fa-thumbs-up"></i> {{comment.likeTotalCnt}}</button>
+					<button :class="{isUserDislikeActive:comment.isUserDislike}" @click="clickCommentDislike(comment.commentId, index)"><i class="fa-regular fa-thumbs-down" ></i> {{comment.dislikeTotalCnt}}</button>
 				</div>
 			</div>
 		</div>
@@ -38,7 +38,12 @@
 </template>
 
 <script>
-import { postComment, getCommentsWithLogin } from "@/api/comment";
+import {
+  postComment,
+  getCommentsWithLogin,
+  postCommentLike,
+  postCommentDislike,
+} from "@/api/comment";
 import { mapState } from "vuex";
 
 export default {
@@ -77,6 +82,26 @@ export default {
         const response = await postComment(comment);
         location.reload();
         console.log(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async clickCommentLike(commentId, index) {
+      try {
+        const response = await postCommentLike(commentId);
+        console.log(response.data);
+        this.comments[index].isUserLike = response.data.isUserLike;
+        this.comments[index].likeTotalCnt = response.data.likeTotalCnt;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async clickCommentDislike(commentId, index) {
+      try {
+        const response = await postCommentDislike(commentId);
+        console.log(response.data);
+        this.comments[index].isUserDislike = response.data.isUserDislike;
+        this.comments[index].dislikeTotalCnt = response.data.dislikeTotalCnt;
       } catch (error) {
         console.log(error);
       }
@@ -139,8 +164,8 @@ export default {
   margin-top: 10px;
 }
 
-/* 댓글 */
-.comment-wrap {
+/* 댓글 리스트  */
+.comment-list-wrap {
   border: 1px solid #efefef;
   border-radius: 10px;
   margin-top: 70px;
@@ -153,7 +178,7 @@ export default {
   display: grid;
   row-gap: 5px;
 }
-.comment-wrap > :nth-child(-n + 4) .content::before {
+.comment-list-wrap > :nth-child(-n + 4) .content::before {
   content: "BEST";
   background-color: #ff4d56;
   color: white;
@@ -162,37 +187,45 @@ export default {
   padding: 4px 9px 2px;
   border-radius: 8px;
 }
-.comment-wrap .content {
+.comment-list-wrap .content {
   line-height: 28px;
   margin-right: 10px;
 }
-.comment-item .user-info {
+.comment-list-wrap .user-info {
   display: flex;
-  direction: column;
-  align-items: end;
 }
-.comment-item .user-id {
+.comment-list-wrap .user-id {
   font-family: AppleSDGothicNeoB;
   font-size: 17px;
 }
-.comment-item .update-date {
+.comment-list-wrap .update-date {
   color: #989898;
   margin-left: 10px;
   font-size: 15px;
+  line-height: 25px;
 }
-.comment-item .btn-wrap {
+.comment-list-wrap .btn-wrap {
   display: flex;
   margin-top: 10px;
 }
-.comment-item button {
+.btn-wrap > * {
   background: none;
   border: 1px solid #d8d8d8;
   padding: 3px 10px;
   color: #989898;
   font-size: 15px;
+  cursor: pointer;
 }
 .btn-like {
   margin-left: auto;
   margin-right: 10px;
+}
+.isUserLikeActive {
+  border: 1px solid #ff5151;
+  color: #ff5151;
+}
+.isUserDislikeActive {
+  border: 1px solid #385da3;
+  color: #385da3;
 }
 </style>

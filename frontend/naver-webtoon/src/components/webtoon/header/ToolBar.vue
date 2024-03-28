@@ -1,7 +1,7 @@
 <template>
   <div class="toolbar-wrap">
     <div class="naver-logo">
-      <a href="https://www.naver.com">NAVER</a>
+      <a href="/">NAVER</a>
     </div>
     <div class="webtoon-logo">
       <a href="/">웹툰</a>
