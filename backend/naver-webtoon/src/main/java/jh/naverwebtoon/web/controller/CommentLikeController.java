@@ -1,2 +1,22 @@
-package jh.naverwebtoon.web.controller;public class CommentLikeController {
+package jh.naverwebtoon.web.controller;
+
+import jh.naverwebtoon.dto.response.CommentLikeRes;
+import jh.naverwebtoon.service.CommentLikeService;
+import jh.naverwebtoon.web.Login;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/api/v1/comment/like")
+@RequiredArgsConstructor
+public class CommentLikeController {
+    private final CommentLikeService commentLikeService;
+
+    @PostMapping("/{commentId}")
+    public CommentLikeRes createCommentLike(@Login Long memberId, @PathVariable("commentId") Long commentId) {
+        return commentLikeService.save(memberId, commentId);
+    }
 }

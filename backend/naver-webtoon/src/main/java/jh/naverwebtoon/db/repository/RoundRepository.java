@@ -5,10 +5,7 @@ import jakarta.persistence.PersistenceContext;
 import java.util.List;
 import jh.naverwebtoon.db.domain.Round;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @RequiredArgsConstructor
@@ -55,6 +52,9 @@ public class RoundRepository {
                 .getSingleResult();
     }
 
+    /**
+     * 웹툰의 다음 회차 조회
+     */
     public Long findMaxRoundNumberByWebtoonId(Long webtoonId) {
         return em.createQuery("select max(r.roundNumber) from Round r where r.webtoon.id = :webtoonId", Long.class)
                 .setParameter("webtoonId", webtoonId)

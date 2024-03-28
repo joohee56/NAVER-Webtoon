@@ -25,4 +25,5 @@ public class MemberRepository {
                 .setParameter("loginId", loginId)
                 .getResultList();
     }
+
 }

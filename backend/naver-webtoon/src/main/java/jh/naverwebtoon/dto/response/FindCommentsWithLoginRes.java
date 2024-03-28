@@ -7,30 +7,15 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class FindCommentsByRoundRes {
+public class FindCommentsWithLoginRes {
     private Long commentId;
     private String content;
-    private String loginId;
-    private String memberName;
+    private String userId;
+    private String userName;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
-    private LocalDateTime updatedAt;
+    private LocalDateTime updateAt;
     private Long likeTotalCnt;
     private Long isUserLike;
-    private Long disLikeTotalCnt;
+    private Long dislikeTotalCnt;
     private Long isUserDislike;
-
-    @Override
-    public String toString() {
-        return "FindCommentsByRoundRes{" +
-                "commentId=" + commentId +
-                ", content='" + content + '\'' +
-                ", loginId='" + loginId + '\'' +
-                ", memberName='" + memberName + '\'' +
-                ", updatedAt=" + updatedAt +
-                ", likeTotalCnt=" + likeTotalCnt +
-                ", isUserLike=" + isUserLike +
-                ", disLikeTotalCnt=" + disLikeTotalCnt +
-                ", isUserDislike=" + isUserDislike +
-                '}';
-    }
 }

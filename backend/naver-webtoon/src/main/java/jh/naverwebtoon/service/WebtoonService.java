@@ -48,17 +48,15 @@ public class WebtoonService {
     }
 
     public List<FindWebtoonsByMemberRes> findAllByMember(Long memberId) {
-        Member member = memberRepository.findOne(memberId);
-        List<Webtoon> webtoons = webtoonRepository.findAllByMemberWithThumbnail(member);
+        List<Webtoon> webtoons = webtoonRepository.findAllByMemberWithThumbnail(memberId);
         return webtoons.stream()
                 .map(w -> FindWebtoonsByMemberRes.create(w))
                 .collect(Collectors.toList());
     }
 
     public List<FindCreateRoundInfoRes> findCreateRoundInfo(Long memberId) {
-        Member member = memberRepository.findOne(memberId);
         List<FindCreateRoundInfoRes> res = new ArrayList<>();
-        List<Object[]> webtoons = webtoonRepository.findAllByMemberWithMaxRoundNumber(member);
+        List<Object[]> webtoons = webtoonRepository.findAllByMemberWithMaxRoundNumber(memberId);
         for (Object[] webtoon : webtoons) {
             res.add(FindCreateRoundInfoRes.create((Long) webtoon[0], (String) webtoon[1], webtoon[2]));
         }

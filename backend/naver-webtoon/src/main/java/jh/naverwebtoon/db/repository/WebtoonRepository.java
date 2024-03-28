@@ -3,7 +3,6 @@ package jh.naverwebtoon.db.repository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import java.util.List;
-import jh.naverwebtoon.db.domain.Member;
 import jh.naverwebtoon.db.domain.webtoon.Webtoon;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -23,25 +22,21 @@ public class WebtoonRepository {
         return em.find(Webtoon.class, id);
     }
 
-    public List<Webtoon> findAllByMemberWithThumbnail(Member member) {
+    public List<Webtoon> findAllByMemberWithThumbnail(Long memberId) {
         return em.createQuery("select distinct w from Webtoon w"
                         + " join fetch w.webtoonThumbnail wt"
-                        + " where w.member = :member", Webtoon.class)
-                .setParameter("member", member)
+                        + " where w.member.id = :memberId", Webtoon.class)
+                .setParameter("memberId", memberId)
                 .getResultList();
     }
 
-    public List<Webtoon> findAllByMember(Member member) {
-        return em.createQuery("select w from Webtoon w"
-                + " where w.member=:member", Webtoon.class)
-                .setParameter("member", member)
-                .getResultList();
-    }
-
-    public List<Object[]> findAllByMemberWithMaxRoundNumber(Member member) {
+    public List<Object[]> findAllByMemberWithMaxRoundNumber(Long memberId) {
         return em.createQuery(
-                        "select distinct w.id, w.name, (select max(r.roundNumber) from Round r where r.webtoon = w) from Webtoon w cross join Round r where w.member = :member")
-                .setParameter("member", member)
+                        "select distinct w.id, w.name, (select max(r.roundNumber) from Round r where r.webtoon = w)"
+                                + " from Webtoon w"
+                                + " cross join Round r"
+                                + " where w.member.id = :memberId")
+                .setParameter("memberId", memberId)
                 .getResultList();
     }
 }

@@ -1,5 +1,6 @@
 package jh.naverwebtoon.service;
 
+import java.util.List;
 import jh.naverwebtoon.db.domain.Comment;
 import jh.naverwebtoon.db.domain.Member;
 import jh.naverwebtoon.db.domain.Round;
@@ -7,6 +8,7 @@ import jh.naverwebtoon.db.repository.CommentRepository;
 import jh.naverwebtoon.db.repository.MemberRepository;
 import jh.naverwebtoon.db.repository.RoundRepository;
 import jh.naverwebtoon.dto.request.CreateCommentReq;
+import jh.naverwebtoon.dto.response.FindCommentsWithLoginRes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,5 +27,9 @@ public class CommentService {
         Round round = roundRepository.findOne(createCommentReq.getRoundId());
         Comment comment = Comment.create(member, round, createCommentReq.getContent());
         return commentRepository.save(comment);
+    }
+
+    public List<FindCommentsWithLoginRes> findAllWithPagingAndLogin(Long memberId, Long roundId, int offset, int limit) {
+        return commentRepository.findAllByRoundIdWithPagingAndLogin(memberId, roundId, offset, limit);
     }
 }

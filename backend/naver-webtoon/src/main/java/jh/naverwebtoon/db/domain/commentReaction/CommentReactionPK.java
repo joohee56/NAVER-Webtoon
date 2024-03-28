@@ -1,7 +1,9 @@
-package jh.naverwebtoon.db.domain;
+package jh.naverwebtoon.db.domain.commentReaction;
 
 import jakarta.persistence.Embeddable;
 import java.io.Serializable;
+import jh.naverwebtoon.db.domain.Comment;
+import jh.naverwebtoon.db.domain.Member;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

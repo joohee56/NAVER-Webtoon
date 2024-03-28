@@ -17,12 +17,15 @@ import jh.naverwebtoon.db.domain.Round;
 import jh.naverwebtoon.db.domain.RoundThumbnail;
 import jh.naverwebtoon.db.domain.UploadImage;
 import jh.naverwebtoon.db.domain.WebtoonThumbnail;
+import jh.naverwebtoon.db.domain.commentReaction.CommentDislike;
+import jh.naverwebtoon.db.domain.commentReaction.CommentLike;
 import jh.naverwebtoon.db.domain.enums.CountryResidence;
 import jh.naverwebtoon.db.domain.enums.Gender;
 import jh.naverwebtoon.db.domain.enums.GenreEnum;
 import jh.naverwebtoon.db.domain.enums.WebtoonType;
 import jh.naverwebtoon.db.domain.webtoon.OfficialWebtoon;
 import jh.naverwebtoon.db.domain.webtoon.Webtoon;
+import jh.naverwebtoon.db.repository.CommentRepository;
 import jh.naverwebtoon.db.repository.GenreRepository;
 import jh.naverwebtoon.db.repository.MemberRepository;
 import jh.naverwebtoon.db.repository.RoundRepository;
@@ -46,7 +49,7 @@ public class DataLoader implements ApplicationRunner {
     private final RoundRepository roundRepository;
     private final GenreRepository genreRepository;
     private final WebtoonRepository webtoonRepository;
-
+    private final CommentRepository commentRepository;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
@@ -146,9 +149,13 @@ public class DataLoader implements ApplicationRunner {
         initComment(Long.valueOf(5), Long.valueOf(9), "와 보통 저런 상황 오면 공주님 안기하지 않나 냅다 의자를 걍 번쩍 들어버려서 개놀랬네");
         initComment(Long.valueOf(1), Long.valueOf(9), "다음화..!!!");
         initComment(Long.valueOf(3), Long.valueOf(9), "드라마로 제작되면 좋겠다");
+
+//        좋아요
+        initCommentLike(Long.valueOf(1), Long.valueOf(2));
+
+//        싫어요
+        initCommentDislike(Long.valueOf(3), Long.valueOf(1));
     }
-
-
 
     public void initMember(String loginId, String password, String emailAddress, String name, LocalDate birthDate, Gender gender, CountryResidence countryResidence, String phoneNumber, String storeFileName) {
         JoinMemberReq joinMemberReq = new JoinMemberReq();
@@ -214,5 +221,19 @@ public class DataLoader implements ApplicationRunner {
         Round round = roundRepository.findOne(roundId);
         Comment comment = Comment.create(member, round, content);
         em.persist(comment);
+    }
+
+    public void initCommentLike(Long memberId, Long commentId) {
+        Member member = memberRepository.findOne(memberId);
+        Comment comment = commentRepository.findOne(commentId);
+        CommentLike commentLike = CommentLike.create(member, comment);
+        em.persist(commentLike);
+    }
+
+    public void initCommentDislike(Long memberId, Long commentId) {
+        Member member = memberRepository.findOne(memberId);
+        Comment comment = commentRepository.findOne(commentId);
+        CommentDislike commentDislike = CommentDislike.create(member, comment);
+        em.persist(commentDislike);
     }
 }

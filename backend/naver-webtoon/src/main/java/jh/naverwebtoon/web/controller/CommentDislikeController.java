@@ -1,2 +1,22 @@
-package jh.naverwebtoon.web.controller;public class CommentDislikeController {
+package jh.naverwebtoon.web.controller;
+
+import jh.naverwebtoon.dto.response.CommentDislikeRes;
+import jh.naverwebtoon.service.CommentDislikeService;
+import jh.naverwebtoon.web.Login;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/api/v1/comment/dislike")
+@RequiredArgsConstructor
+public class CommentDislikeController {
+    private final CommentDislikeService commentDislikeService;
+
+    @PostMapping("/{commentId}")
+    public CommentDislikeRes createCommentDislike(@Login Long memberId, @PathVariable("commentId") Long commentId) {
+        return commentDislikeService.save(memberId, commentId);
+    }
 }

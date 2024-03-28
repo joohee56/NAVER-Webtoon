@@ -1,2 +1,4 @@
-package jh.naverwebtoon.dto.response;public class FindCommentsRes {
+package jh.naverwebtoon.dto.response;
+
+public class FindCommentsRes {
 }
