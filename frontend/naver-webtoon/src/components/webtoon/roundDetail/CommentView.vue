@@ -27,9 +27,9 @@
 				</div>
 				<div class="content">{{comment.content}}</div>
 				<div class="btn-wrap">
-					<button>답글 {{comment.nestedCommentCnt}}</button>
-					<button class="btn-like">좋아요 {{comment.likeCnt}}</button>
-					<button>싫어요 {{comment.notLikeCnt}}</button>
+					<button>답글</button>
+					<button class="btn-like"><i class="fa-regular fa-thumbs-up"></i> {{comment.likeTotalCnt}}</button>
+					<button><i class="fa-regular fa-thumbs-down"></i> {{comment.dislikeTotalCnt}}</button>
 				</div>
 			</div>
 		</div>
@@ -38,89 +38,44 @@
 </template>
 
 <script>
-import { postComment } from "@/api/comment";
+import { postComment, getCommentsWithLogin } from "@/api/comment";
 import { mapState } from "vuex";
 
 export default {
   data() {
     return {
       content: "",
-      comments: [
-        {
-          commentId: 1,
-          userName: "핑",
-          userId: "yuji****",
-          updateAt: "2023-12-01 23:14",
-          content: "아이저가 세레나 공주님으로 부르는거 좋다..",
-          nestedCommentCnt: 6,
-          likeCnt: 14285,
-          notLikeCnt: 28,
-        },
-        {
-          commentId: 2,
-          userName: "핑",
-          userId: "yuji****",
-          updateAt: "2023-12-01 23:14",
-          content: "드라마로 제작되면 좋겠다",
-          nestedCommentCnt: 6,
-          likeCnt: 14285,
-          notLikeCnt: 28,
-        },
-        {
-          commentId: 3,
-          userName: "hyeon",
-          userId: "nany****",
-          updateAt: "2023-12-01 23:14",
-          content: "너무 재밌어요 작가님 ㅜㅜ",
-          nestedCommentCnt: 6,
-          likeCnt: 14285,
-          notLikeCnt: 28,
-        },
-        {
-          commentId: 4,
-          userName: "aas",
-          userId: "aaso****",
-          updateAt: "2023-12-01 23:14",
-          content: "다음화...!!!",
-          nestedCommentCnt: 6,
-          likeCnt: 14285,
-          notLikeCnt: 28,
-        },
-        {
-          commentId: 5,
-          userName: "aas",
-          userId: "aaso****",
-          updateAt: "2023-12-01 23:14",
-          content: "너무 재밌당",
-          nestedCommentCnt: 6,
-          likeCnt: 14285,
-          notLikeCnt: 28,
-        },
-        {
-          commentId: 6,
-          userName: "aas",
-          userId: "aaso****",
-          updateAt: "2023-12-01 23:14",
-          content: "짱이햐",
-          nestedCommentCnt: 6,
-          likeCnt: 14285,
-          notLikeCnt: 28,
-        },
-      ],
+      comments: [],
+      limit: 6,
     };
   },
   computed: {
     ...mapState("memberStore", ["loginUser"]),
   },
+  mounted() {
+    this.fetchCommentsWithLogin();
+  },
   methods: {
+    async fetchCommentsWithLogin() {
+      try {
+        const response = await getCommentsWithLogin(
+          this.$route.params.roundId,
+          0,
+          this.limit
+        );
+        this.comments = response.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
     async saveComment() {
       const comment = {
         roundId: this.$route.params.roundId,
         content: this.content,
       };
-
       try {
         const response = await postComment(comment);
+        location.reload();
         console.log(response.data);
       } catch (error) {
         console.log(error);
@@ -196,7 +151,7 @@ export default {
 .comment-item {
   padding: 25px 20px 25px;
   display: grid;
-  row-gap: 12px;
+  row-gap: 5px;
 }
 .comment-wrap > :nth-child(-n + 4) .content::before {
   content: "BEST";
@@ -206,6 +161,10 @@ export default {
   margin-right: 10px;
   padding: 4px 9px 2px;
   border-radius: 8px;
+}
+.comment-wrap .content {
+  line-height: 28px;
+  margin-right: 10px;
 }
 .comment-item .user-info {
   display: flex;
@@ -227,8 +186,13 @@ export default {
 }
 .comment-item button {
   background: none;
+  border: 1px solid #d8d8d8;
+  padding: 3px 10px;
+  color: #989898;
+  font-size: 15px;
 }
 .btn-like {
   margin-left: auto;
+  margin-right: 10px;
 }
 </style>

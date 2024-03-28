@@ -13,4 +13,16 @@ async function postComment(comment) {
   }
 }
 
-export { postComment };
+async function getCommentsWithLogin(roundId, offset, limit) {
+  try {
+    const response = await jsonApi.get(
+      `/comments/${roundId}/${offset}/${limit}`
+    );
+    startSessionCheck();
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export { postComment, getCommentsWithLogin };
