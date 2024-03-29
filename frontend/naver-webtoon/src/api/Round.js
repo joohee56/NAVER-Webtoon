@@ -1,7 +1,8 @@
-import { jsonApiInstance } from "@/api/index";
+import { jsonApiInstance, fileApiInstance } from "@/api/index";
 import { startSessionCheck } from "./loginSession";
 
 const jsonApi = jsonApiInstance();
+const fileApi = fileApiInstance();
 
 async function getRoundsWithPaging(webtoonId, offset, limit, isDesc) {
   try {
@@ -35,4 +36,13 @@ async function getRoundDetail(roundId) {
   }
 }
 
-export { getRoundsWithPaging, getRoundDetail, getRounds };
+async function postRound(formData) {
+  try {
+    const response = await fileApi.post("/rounds", formData);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export { getRoundsWithPaging, getRoundDetail, getRounds, postRound };

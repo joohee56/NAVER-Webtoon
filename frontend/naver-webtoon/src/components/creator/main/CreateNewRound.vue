@@ -1,14 +1,14 @@
 <template lang="ko">
 	<div class="container">
+
 		<div class="subject">
 			신규 회차 등록
 		</div>
-
 		<div class="item-box">
 			<ul>
 				<li class="item-row">
 					<p>작품명</p>
-					<select class="webtoon-name-select" @change="changeWebtoon()" v-model="selectedWebtoonIndex">
+					<select class="webtoon-name-select" @change="changeWebtoon" v-model="selectedWebtoonIndex">
 						<option v-for="(webtoon, index) in webtoons" :value="index">{{webtoon.webtoonName}}</option>
 					</select>
 				</li>
@@ -26,7 +26,7 @@
 				<li class="item-row">
 					<p>회차명</p>
 					<div>
-						<input type="text" placeholder="회차명을 입력해 주세요." size="35">
+						<input type="text" placeholder="회차명을 입력해 주세요." size="35" v-model="round.roundTitle">
 					</div>				
 				</li>
 			</ul>
@@ -67,15 +67,16 @@
 					<p>원고 등록</p>
 					<div class="manuscript-item-wrap">
 						
+            <!-- 파일목록 -->
 						<div class="manuscript-item-row">
 							<div class="sub-title">파일 목록</div>
 							<div class="file-list">
-								<button v-for="file in manuscripts" @click="showPreview(file)">{{file.name}}</button>
+								<button v-for="file in round.manuscripts" @click="showPreview(file)">{{file.name}}</button>
 							</div>
-							<div>
+							<div class="file-list-btn">
 								<button>수정</button>
 								<button>삭제</button>
-								<label for="manuscript">원고 업로드</label>
+								<label for="manuscript" class="upload-file-btn">원고 업로드</label>
 								<input type="file" id="manuscript" @change="uploadManuscipt" ref="manuscipt" multiple hidden>
 							</div>
 							<div class="desription">
@@ -86,6 +87,7 @@
 							</div>
 						</div>
 
+            <!-- 미리보기 -->
 						<div class="manuscript-item-row">
 							<div class="sub-title">미리보기</div>
 							<div class="preview-img">
@@ -94,9 +96,7 @@
 							<div class="preview-img">
 								<img :src="mergeImagePreview">
 							</div>
-							<div>
-								<button @click="mergeImages">전체 미리보기</button>
-							</div>
+              <button class="mergeFile-priview-btn">전체 미리보기</button>
 						</div>
 					</div>
 
@@ -105,7 +105,7 @@
 				<li class="item-row">
 					<p>작가의 말</p>
 					<div>
-						<input type="text" placeholder="작가의 말을 입력해 주세요." size=100>
+						<input type="text" placeholder="작가의 말을 입력해 주세요." size=100 v-model="round.authorNote">
 					</div>
 				</li>
 			</ul>
@@ -122,43 +122,82 @@
 				</li>
 			</ul>
 		</div>
-
+    
 		<div class="btn-wrap">
 			<button class="cancel">취소</button>
 			<button class="submit" @click="submit">등록</button>
 		</div>
+
+    <!-- 이미지 업로드 진행 중 모달 -->
+    <UploadProgress :show="showUploadProgress" @close="showUploadProgress = false">
+      <template #header>
+        <div class="icon">
+          <i class="fa-solid fa-spinner"></i>
+        </div>
+      </template>
+      <template #body>
+        <div>이미지 업로드 중입니다.</div>
+      </template>
+    </UploadProgress>
+
+    <!-- 이미지 업로드 완료 모달 -->
+    <UploadDone :show="showUploadDone" @close="showUploadDone = false">
+      <template #header>
+          <i class="upload-done-icon fa-solid fa-circle-check"></i>
+          <div class="upload-done-message">
+            <div>이미지 업로드 완료되었습니다.</div>
+            <div>미리보기를 통해 원고를 확인하세요.</div>
+          </div>
+      </template>
+      <template #body>
+        <!-- eslint-disable-next-line-->
+        <button class="close-modal-btn" @click="showUploadDone=false">닫기</button>
+      </template>
+    </UploadDone>
 
 	</div>
 </template>
 
 <script>
 import { getCreateRoundInfo } from "@/api/webtoon";
+import { postRound } from "@/api/round";
+import UploadProgress from "../modal/UploadProgress.vue";
+import UploadDone from "../modal/UploadDone.vue";
+
 export default {
   data() {
     return {
       round: {
-        webtoonId: "",
-        manuscript: "",
+        roundTitle: "",
+        thumbnail: "",
+        manuscripts: [],
+        mergeManuscript: "",
+        authorNote: "",
       },
-      webtoons: [],
+      webtoons: [], //roundNumber, webtoonId, webtoonName
       selectedWebtoonIndex: "0",
       roundNumber: "",
-      isThumbnailSelect: false,
       thumbnailPreview: "",
-      thumbnail: "",
-      manuscripts: [],
+      isThumbnailSelect: false,
       filePreview: "",
       mergeImagePreview: "",
+      showUploadProgress: false,
+      showUploadDone: false,
     };
+  },
+  components: {
+    UploadProgress,
+    UploadDone
   },
   mounted() {
     this.fetchWebtoonInfo();
   },
   watch: {
-    thumbnail: function (val) {
+    thumbnailPreview: function (val) {
       this.isThumbnailSelect = val != null ? true : false;
     },
   },
+
   methods: {
     async fetchWebtoonInfo() {
       try {
@@ -173,23 +212,89 @@ export default {
     changeWebtoon() {
       this.roundNumber = this.webtoons[this.selectedWebtoonIndex].roundNumber;
     },
-    submit() {
-      this.changeManuscriptPreviewToFile();
-      console.log(this.round.manuscript);
-    },
     changeThumbnail() {
       console.log("대표 이미지 변경");
-      this.thumbnail = this.$refs.thumbnail.files[0];
-      this.thumbnailPreview = URL.createObjectURL(this.thumbnail);
+      this.round.thumbnail = this.$refs.thumbnail.files[0];
+      this.thumbnailPreview = URL.createObjectURL(this.round.thumbnail);
     },
-    uploadManuscipt() {
+    async uploadManuscipt() {
+      this.showUploadProgress = true;
       for (const file of this.$refs.manuscipt.files) {
-        this.manuscripts.push(file);
+        this.round.manuscripts.push(file);
       }
-      this.mergeImages();
+      await this.mergeImages();
+      this.showUploadProgress = false;
+      this.showUploadDone = true;
+    },
+    async mergeImages() {
+      let images = []; //file을 image로 변환
+      let height = 0; //canvas height
+
+      for (const file of this.round.manuscripts) {
+        //읽기
+        var reader = new FileReader();
+        var tempImage = new Image(); //drawImage 메서드에 넣기 위해 이미지 객체화
+
+        await new Promise(function (resolve) {
+          reader.readAsDataURL(file); //DataUrl 타입으로 읽기
+          resolve();
+        });
+        
+        tempImage.src = reader.result;
+        alert(tempImage.src);
+        images.push(tempImage);
+        height += tempImage.height; //이미지 크기만큼 canvas height 증가
+      }
+
+      var canvas = document.createElement("canvas");
+      //canvas가 가능한 브라우저일 경우
+      if (canvas.getContext) {
+        //캔버스 크기 설정
+        canvas.width = 690; //가로 690px 고정
+        canvas.height = height; //위에서 계산한 이미지들의 총 높이
+        var context = canvas.getContext("2d");
+        var offsetY = 0; //이미지 시작 y축 위치
+
+        new Promise((resolve) => {
+          for (const image of images) {
+            context.drawImage(image, 0, offsetY);
+            offsetY += image.height;
+          }
+
+          // 합쳐진 이미지 보여주기
+          const dataURI = canvas.toDataURL("image/jpeg");
+          this.mergeImagePreview = dataURI;
+          resolve();
+        });
+      } else {
+        alert("지원하지 않는 브라우저입니다.");
+      }
     },
     showPreview(file) {
       this.filePreview = URL.createObjectURL(file);
+    },
+    async submit() {
+      this.changeManuscriptPreviewToFile();
+      console.log(this.round.mergeManuscript);
+      var formData = new FormData();
+      formData.append(
+        "webtoonId",
+        this.webtoons[this.selectedWebtoonIndex].webtoonId
+      );
+      formData.append("roundTitle", this.round.roundTitle);
+      formData.append("thumbnail", this.round.thumbnail);
+      for (const file of this.round.manuscripts) {
+        formData.append("manuscripts", file);
+      }
+      formData.append("mergeManuscript", this.round.mergeManuscript);
+      formData.append("authorNote", this.round.authorNote);
+
+      try {
+        const response = await postRound(formData);
+        console.log(response.data);
+      } catch (error) {
+        console.log(error);
+      }
     },
     changeManuscriptPreviewToFile() {
       var blobBin = atob(this.mergeImagePreview.split(",")[1]); // base64 데이터 디코딩
@@ -197,48 +302,9 @@ export default {
       for (var i = 0; i < blobBin.length; i++) {
         array.push(blobBin.charCodeAt(i));
       }
-      var file = new Blob([new Uint8Array(array)], { type: "image/jpeg" }); // Blob 생성
-      this.round.manuscript = file;
-    },
-    async mergeImages() {
-      let images = [];
-      let height = 0; //canvas height
-
-      for (const file of this.manuscripts) {
-        //읽기
-        var reader = new FileReader();
-        var tempImage = new Image(); //drawImage 메서드에 넣기 위해 이미지 객체화
-
-        await new Promise(function (resolve) {
-          reader.readAsDataURL(file); //DataUrl 타입으로 읽기
-          setTimeout(() => resolve(), 1000);
-        }).then(function () {
-          tempImage.src = reader.result;
-          images.push(tempImage);
-          height += tempImage.height; //이미지 크기만큼 canvas height 증가
-        });
-      }
-
-      var canvas = document.createElement("canvas");
-      if (canvas.getContext) {
-        //canvas가 가능한 브라우저일 경우
-        //캔버스 크기 설정
-        canvas.width = 690; //가로 690px 고정
-        canvas.height = height; //위에서 계산한 이미지들의 총 높이
-        var context = canvas.getContext("2d");
-        var offsetY = 0; //이미지 시작 y축 위치
-
-        for (const image of images) {
-          context.drawImage(image, 0, offsetY);
-          offsetY += image.height;
-        }
-
-        // 썸네일 이미지 보여주기
-        const dataURI = canvas.toDataURL("image/jpeg");
-        this.mergeImagePreview = dataURI;
-      } else {
-        alert("지원하지 않는 브라우저입니다.");
-      }
+      var myBlob = new Blob([new Uint8Array(array)], { type: "image/jpeg" }); // Blob 생성
+      //BLolb -> file로 변경
+      this.round.mergeManuscript = new File([myBlob], "manuscript_test.jpeg");
     },
   },
 };
@@ -412,6 +478,60 @@ ul {
   aspect-ratio: 1 / 1;
   border: 1px solid #e0e0e0;
 }
+.file-list button {
+  background: white;
+  display: block;
+  font-family: "AppleSDGothicNeoSB";
+  font-size: 15px;
+  color: #7f7f7f;
+  padding: 7px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  padding-left: 5px;
+}
+.file-list button:focus {
+  background-color: rgba(0, 220, 100, 0.2);
+}
+.file-list button:first-child {
+  margin-top: 10px;
+}
+.file-list-btn {
+  margin-top: 10px;
+  display: flex;
+}
+.file-list-btn button {
+  background-color: #f6f6f6;
+  border: #ebebeb 1px solid;
+  font-family: AppleSDGothicNeoSB;
+  font-size: 15px;
+  padding: 0px 20px;
+  border-radius: 5px;
+  margin-right: 8px;
+}
+.upload-file-btn {
+  font-family: AppleSDGothicNeoSB;
+  font-size: 15px;
+  padding: 10px 30px;
+  border-radius: 6px;
+  color: white;
+  background-color: #00dc64;
+  border: none;
+  margin-left: auto;
+}
+.mergeFile-priview-btn {
+  font-family: AppleSDGothicNeoSB;
+  font-size: 15px;
+  padding: 10px 30px;
+  border-radius: 6px;
+  color: white;
+  background-color: #00dc64;
+  border: none;
+  margin-top: 10px;
+  margin-left: auto;
+  display: block;
+}
+
 .preview-img {
   width: 100%;
   aspect-ratio: 1 / 1;
@@ -449,5 +569,27 @@ ul {
 .btn-wrap .submit {
   color: white;
   background-color: #00dc64;
+}
+
+/* 이미지 업로드 완료 모달 */
+.upload-done-icon {
+  color: #00dc64;
+  font-size: 45px;
+}
+.upload-done-message {
+  font-family: "AppleSDGothicNeoSB";
+  font-size: 20px;
+  margin-top: 13px;
+}
+.close-modal-btn {
+  background-color: #f6f6f6;
+  border: 1px solid #ebebeb;
+  padding: 13px 27px;
+  line-height: 20px;
+  box-sizing: border-box;
+  cursor: pointer;
+  border-radius: 5px;
+  font-family: "AppleSDGothicNeoM";
+  font-size: 17px;
 }
 </style>

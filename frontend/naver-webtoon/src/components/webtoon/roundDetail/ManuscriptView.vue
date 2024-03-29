@@ -255,6 +255,7 @@ export default {
   width: 100%;
   border: 1px solid #efefef;
   border-radius: 4px;
+  aspect-ratio: 540 / 340;
 }
 .round-title {
   margin: 0;
