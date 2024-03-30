@@ -24,41 +24,60 @@
 		</div>
 
 		<!-- 원고 -->
-		<div id="manuscript" class="manusript-wrap">
+		<!-- <div id="manuscript" class="manusript-wrap">
 			<img class="manuscript" :src="require(`@/assets/image/${roundDetail.mergeManuscript}`)">
-		</div>
+		</div> -->
 
-	<!-- 목록 -->
-	<div class="round-list">
-		<button @click="lessRange" :disabled="isPreviewLeftBtnDisabled"><i class="fa-solid fa-angle-left"></i></button>
-			<div class="preview-round-wrap">
-				<div v-for="round in previewRounds" class="preview-round-item">
-					<router-link :to="{name: 'roundDetail', params: {weboonId: `${roundDetail.weboonId}`, roundId: `${round.roundId}`}}" :class={active:isNowRound(round.roundNumber)}>
-						<img class="round-thumbnail" :src="require(`@/assets/image/${round.thumbnail}`)">
-						<p class="round-title overflow-hidden">{{round.roundNumber}}화. {{round.title}}</p>
-					</router-link>
-				</div>
-			</div>
-		<button class="right-btn" @click="rightRange" :disabled="isPreviewRightBtnDisabled"><i class="fa-solid fa-angle-right"></i></button>
-	</div>
+    <!-- 좋아요 -->
+    <div class="reaction-btn-wrap">
+      <div>
+        <div class="icon circle-check"><i class="fa-solid fa-circle-check"></i></div>
+        <div class="title">관심웹툰</div>
+        <div class="count">13,941</div>
+      </div>
+      <div @click="clickRoundLike">
+        <div class="icon" style="color: #ff5151;" v-if="this.roundLike.isUserLike">
+          <i class="fa-solid fa-heart"></i>
+        </div>
+        <div class="icon" v-else >
+          <i class="fa-regular fa-heart"></i>
+        </div>
+        <div class="title">좋아요</div>
+        <div class="count">{{this.roundLike.totalLikeCnt}}</div>
+      </div>
+    </div>
 
-	<!-- 작가의 말 -->
-	<div class="author-note-wrap">
-		<div class="author-profile">	
-			<img class="author-profile-image" :src="require(`@/assets/image/${roundDetail.authorProfileImage}`)">
-			<span>{{roundDetail.authorName}}</span>
-			<span style="color: #999">· 글/그림</span>
-		</div>
-		<div class="author-note">
-			{{roundDetail.authorNote}}
-		</div>
-	</div>
+    <!-- 목록 -->
+    <div class="round-list">
+      <button @click="lessRange" :disabled="isPreviewLeftBtnDisabled"><i class="fa-solid fa-angle-left"></i></button>
+        <div class="preview-round-wrap">
+          <div v-for="round in previewRounds" class="preview-round-item">
+            <router-link :to="{name: 'roundDetail', params: {weboonId: `${roundDetail.weboonId}`, roundId: `${round.roundId}`}}" :class={active:isNowRound(round.roundNumber)}>
+              <img class="round-thumbnail" :src="require(`@/assets/image/${round.thumbnail}`)">
+              <p class="round-title overflow-hidden">{{round.roundNumber}}화. {{round.title}}</p>
+            </router-link>
+          </div>
+        </div>
+      <button class="right-btn" @click="rightRange" :disabled="isPreviewRightBtnDisabled"><i class="fa-solid fa-angle-right"></i></button>
+    </div>
+
+    <!-- 작가의 말 -->
+    <div class="author-note-wrap">
+      <div class="author-profile">	
+        <img class="author-profile-image" :src="require(`@/assets/image/${roundDetail.authorProfileImage}`)">
+        <span>{{roundDetail.authorName}}</span>
+        <span style="color: #999">· 글/그림</span>
+      </div>
+      <div class="author-note">
+        {{roundDetail.authorNote}}
+      </div>
+    </div>
 
 	</div>
 </template>
 
 <script>
-import { getRoundDetail, getRounds } from "@/api/round";
+import { getRoundDetail, getRounds, postRoundLike } from "@/api/round";
 
 export default {
   data() {
@@ -72,6 +91,10 @@ export default {
         authorProfileImage: "default-thumbnail.png",
         authorName: "",
         authorNote: "",
+      },
+      roundLike: {
+        totalLikeCnt: "",
+        isUserLike: "",
       },
       rounds: [],
       previewRounds: [],
@@ -155,6 +178,14 @@ export default {
         this.previewRangeStart + 7
       );
     },
+    async clickRoundLike() {
+      try {
+        const response = await postRoundLike(this.$route.params.roundId);
+        this.roundLike = response.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
     // menubarScoll() {
     //   // 메뉴바 트랜지션
     //   const menubar = this.document.getElementById("menubar");
@@ -227,7 +258,6 @@ export default {
 /* 원고 */
 .manusript-wrap {
   width: 100%;
-  border-bottom: 1px solid #efefef;
   justify-content: center;
   display: flex;
 }
@@ -235,6 +265,35 @@ export default {
   width: 690px;
 }
 
+/* 좋아요 */
+.reaction-btn-wrap {
+  display: table;
+  border-collapse: collapse;
+  margin-top: 150px;
+  margin-bottom: 150px;
+  text-align: center;
+}
+.reaction-btn-wrap > div {
+  background-color: white;
+  display: table-cell;
+  border: 1px solid #efefef;
+  padding: 22px 65px;
+  cursor: pointer;
+}
+.reaction-btn-wrap .icon {
+  font-size: 25px;
+}
+.reaction-btn-wrap .circle-check i {
+  color: #00dc64;
+}
+.reaction-btn-wrap .title {
+  font-family: AppleSDGothicNeoM;
+  font-size: 18px;
+  margin-top: 8px;
+}
+.reaction-btn-wrap .count {
+  color: #999;
+}
 /* 목록 */
 .round-list {
   border: 1px solid #efefef;

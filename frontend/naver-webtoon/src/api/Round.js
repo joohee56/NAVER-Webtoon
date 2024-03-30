@@ -39,10 +39,31 @@ async function getRoundDetail(roundId) {
 async function postRound(formData) {
   try {
     const response = await fileApi.post("/rounds", formData);
+    startSessionCheck();
     return response;
   } catch (error) {
     console.log(error);
   }
 }
 
-export { getRoundsWithPaging, getRoundDetail, getRounds, postRound };
+async function postRoundLike(roundId) {
+  try {
+    const response = await jsonApi.post("/round/like", null, {
+      params: {
+        roundId: roundId,
+      },
+    });
+    startSessionCheck();
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export {
+  getRoundsWithPaging,
+  getRoundDetail,
+  getRounds,
+  postRound,
+  postRoundLike,
+};
