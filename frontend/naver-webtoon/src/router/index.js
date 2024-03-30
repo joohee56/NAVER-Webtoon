@@ -102,7 +102,7 @@ const routes = [
         component: ManageAlarm,
       },
       {
-        path: "/creators/round/:webtoonId",
+        path: "/creators/manage/round/:webtoonId",
         name: "manageRound",
         component: ManageRound,
       },

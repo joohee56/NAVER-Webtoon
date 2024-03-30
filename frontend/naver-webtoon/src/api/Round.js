@@ -7,7 +7,7 @@ const fileApi = fileApiInstance();
 async function getRoundsWithPaging(webtoonId, offset, limit, isDesc) {
   try {
     const response = await jsonApi.get(
-      `/rounds/${webtoonId}/${offset}/${limit}/${isDesc}`
+      `/rounds/list/${webtoonId}/${offset}/${limit}/${isDesc}`
     );
     startSessionCheck();
     return response;
@@ -18,7 +18,7 @@ async function getRoundsWithPaging(webtoonId, offset, limit, isDesc) {
 
 async function getRounds(webtoonId) {
   try {
-    const response = await jsonApi.get(`/rounds/${webtoonId}`);
+    const response = await jsonApi.get(`/rounds/list/${webtoonId}`);
     startSessionCheck();
     return response;
   } catch (error) {
@@ -60,10 +60,21 @@ async function postRoundLike(roundId) {
   }
 }
 
+async function getManageRound(webtoonId) {
+  try {
+    const response = await jsonApi.get(`/rounds/manage/round/${webtoonId}`);
+    startSessionCheck();
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export {
   getRoundsWithPaging,
   getRoundDetail,
   getRounds,
   postRound,
   postRoundLike,
+  getManageRound,
 };

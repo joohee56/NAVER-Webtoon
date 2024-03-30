@@ -24,9 +24,9 @@
 		</div>
 
 		<!-- 원고 -->
-		<!-- <div id="manuscript" class="manusript-wrap">
+		<div id="manuscript" class="manusript-wrap">
 			<img class="manuscript" :src="require(`@/assets/image/${roundDetail.mergeManuscript}`)">
-		</div> -->
+		</div>
 
     <!-- 좋아요 -->
     <div class="reaction-btn-wrap">
@@ -36,14 +36,14 @@
         <div class="count">13,941</div>
       </div>
       <div @click="clickRoundLike">
-        <div class="icon" style="color: #ff5151;" v-if="this.roundLike.isUserLike">
+        <div class="icon" style="color: #ff5151;" v-if="this.roundDetail.isUserLike">
           <i class="fa-solid fa-heart"></i>
         </div>
         <div class="icon" v-else >
           <i class="fa-regular fa-heart"></i>
         </div>
         <div class="title">좋아요</div>
-        <div class="count">{{this.roundLike.totalLikeCnt}}</div>
+        <div class="count">{{this.roundDetail.totalLikeCnt}}</div>
       </div>
     </div>
 
@@ -91,8 +91,6 @@ export default {
         authorProfileImage: "default-thumbnail.png",
         authorName: "",
         authorNote: "",
-      },
-      roundLike: {
         totalLikeCnt: "",
         isUserLike: "",
       },
@@ -181,7 +179,8 @@ export default {
     async clickRoundLike() {
       try {
         const response = await postRoundLike(this.$route.params.roundId);
-        this.roundLike = response.data;
+        this.roundDetail.totalLikeCnt = response.data.totalLikeCnt;
+        this.roundDetail.isUserLike = response.data.isUserLike;
       } catch (error) {
         console.log(error);
       }
