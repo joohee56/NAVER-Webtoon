@@ -1,13 +1,18 @@
 package jh.naverwebtoon.web.controller;
 
 import java.util.List;
+import jh.naverwebtoon.dto.request.CreateRoundReq;
 import jh.naverwebtoon.dto.response.FindRoundDetailRes;
 import jh.naverwebtoon.dto.response.FindRoundsByWebtoon;
 import jh.naverwebtoon.dto.response.FindRoundsByWebtoonWithPaging;
 import jh.naverwebtoon.service.RoundService;
+import jh.naverwebtoon.web.Login;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,5 +41,13 @@ public class RoundController {
     @GetMapping("/round/{roundId}")
     public FindRoundDetailRes getRoundDetail(@PathVariable("roundId") Long roundId) {
         return roundService.findOneDetail(roundId);
+    }
+
+    /**
+     * 회차 등록
+     */
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public Long saveRond(@Login Long memberId, @ModelAttribute CreateRoundReq createRoundReq) {
+       return roundService.save(memberId, createRoundReq);
     }
 }

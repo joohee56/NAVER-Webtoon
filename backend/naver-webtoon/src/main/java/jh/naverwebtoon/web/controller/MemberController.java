@@ -2,7 +2,6 @@ package jh.naverwebtoon.web.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import java.io.IOException;
 import jh.naverwebtoon.db.domain.Member;
 import jh.naverwebtoon.db.repository.MemberRepository;
 import jh.naverwebtoon.dto.request.EditMemberReq;
@@ -12,7 +11,6 @@ import jh.naverwebtoon.dto.response.JoinMemberRes;
 import jh.naverwebtoon.dto.response.LoginRes;
 import jh.naverwebtoon.dto.response.MemberInfoRes;
 import jh.naverwebtoon.service.MemberService;
-import jh.naverwebtoon.util.FileStore;
 import jh.naverwebtoon.web.Login;
 import jh.naverwebtoon.web.SessionConst;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +35,6 @@ public class MemberController {
 
     private final MemberService memberService;
     private final MemberRepository memberRepository;
-    private final FileStore fileStore;
 
     /**
      * 회원가입
@@ -97,7 +94,7 @@ public class MemberController {
      * 프로필 이미지 변경
      */
     @PostMapping(value = "/profileImage", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public String changeProfileImage(@Login Long id, @RequestPart(value="profileImage") MultipartFile profileImage) throws IOException {
+    public String changeProfileImage(@Login Long id, @RequestPart(value="profileImage") MultipartFile profileImage) {
         String storeFileName = memberService.changeProfileImage(id, profileImage);
         return storeFileName;
     }

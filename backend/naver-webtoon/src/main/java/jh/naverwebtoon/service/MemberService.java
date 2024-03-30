@@ -1,6 +1,5 @@
 package jh.naverwebtoon.service;
 
-import java.io.IOException;
 import java.util.List;
 import jh.naverwebtoon.db.domain.Member;
 import jh.naverwebtoon.db.domain.ProfileImage;
@@ -59,7 +58,7 @@ public class MemberService {
      * 프로필 이미지 변경
      */
     @Transactional
-    public String changeProfileImage(Long id, MultipartFile profileImage) throws IOException {
+    public String changeProfileImage(Long id, MultipartFile profileImage) {
         Member member = memberRepository.findOne(id);
         if (member.getProfileImage() != null) {
             String storeFileName = member.getProfileImage().getUploadImage().getStoreFileName();

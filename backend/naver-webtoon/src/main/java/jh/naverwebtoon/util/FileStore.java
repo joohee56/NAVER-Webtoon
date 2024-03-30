@@ -18,14 +18,18 @@ public class FileStore {
         return fileDir + fileName;
     }
 
-    public UploadImage storeFile(MultipartFile multipartFile) throws IOException {
+    public UploadImage storeFile(MultipartFile multipartFile) {
         if (multipartFile.isEmpty()) {
             return null;
         }
 
         String originalFileName = multipartFile.getOriginalFilename();
         String storeFileName = createStoreFileName(originalFileName);
-        multipartFile.transferTo(new File(getFullPath(storeFileName))); //이미지 경로 폴더에 저장
+        try {
+            multipartFile.transferTo(new File(getFullPath(storeFileName))); //이미지 경로 폴더에 저장
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         return new UploadImage(originalFileName, storeFileName);
     }
 

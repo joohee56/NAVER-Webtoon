@@ -10,9 +10,13 @@ import org.springframework.stereotype.Repository;
 @Repository
 @RequiredArgsConstructor
 public class RoundRepository {
-
     @PersistenceContext
     private EntityManager em;
+
+    public Long save(Round round) {
+        em.persist(round);
+        return round.getId();
+    }
 
     public Round findOne(Long roundId) {
         return em.find(Round.class, roundId);
@@ -61,6 +65,9 @@ public class RoundRepository {
                 .getSingleResult();
     }
 
+    /**
+     * 웹툰 디테일 정보 조회
+     */
     public Round findOneDetail(Long id) {
         return em.createQuery("select r from Round r"
                 + " join fetch r.webtoon w"
@@ -70,6 +77,13 @@ public class RoundRepository {
                 + " where r.id=:id", Round.class)
                 .setParameter("id", id)
                 .getSingleResult();
+    }
+
+    /**
+     * 웹툰에 해당하는 전체 회차 리스트 조회 + 댓글 갯수
+     */
+    public void findAllByWebtoonWithCommentCount(Long webtoonId) {
+
     }
 
 }
