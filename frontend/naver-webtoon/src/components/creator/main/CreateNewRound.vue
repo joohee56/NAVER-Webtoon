@@ -73,7 +73,7 @@
 							<div class="file-list">
 								<button v-for="(file, index) in round.manuscripts" @click="fileClick(file, index)" :class="{fileSelected:isFileSelected(index)}">{{file.name}}</button>
 							</div>
-              <div class="">
+              <div class="file-move-btn-wrap">
                 <button><i class="fa-solid fa-arrow-up-short-wide" @click="moveToTheTop"></i></button>
                 <button><i class="fa-solid fa-caret-up" @click="moveToOneTop"></i></button>
                 <button><i class="fa-solid fa-caret-down" @click="moveToOneBottom"></i></button>
@@ -558,8 +558,26 @@ ul {
 }
 .file-list {
   width: 100%;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 1 / 0.89;
   border: 1px solid #e0e0e0;
+  box-sizing: border-box;
+}
+.file-move-btn-wrap {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  height: 40px;
+  border-left: 1px solid #e0e0e0;
+  border-right: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+  box-sizing: border-box;
+}
+.file-move-btn-wrap button {
+  background-color: #f6f6f6;
+  color: #999;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
 }
 .file-list button {
   background: white;
