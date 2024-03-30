@@ -71,8 +71,14 @@
 						<div class="manuscript-item-row">
 							<div class="sub-title">파일 목록</div>
 							<div class="file-list">
-								<button v-for="file in round.manuscripts" @click="showPreview(file)">{{file.name}}</button>
+								<button v-for="(file, index) in round.manuscripts" @click="fileClick(file, index)" :class="{fileSelected:isFileSelected(index)}">{{file.name}}</button>
 							</div>
+              <div class="">
+                <button><i class="fa-solid fa-arrow-up-short-wide" @click="moveToTheTop"></i></button>
+                <button><i class="fa-solid fa-caret-up" @click="moveToOneTop"></i></button>
+                <button><i class="fa-solid fa-caret-down" @click="moveToOneBottom"></i></button>
+                <button><i class="fa-solid fa-arrow-down-short-wide" @click="moveToTheBottom"></i></button>
+              </div>
 							<div class="file-list-btn">
 								<button>수정</button>
 								<button>삭제</button>
@@ -93,10 +99,10 @@
 							<div class="preview-img">
 								<img :src="filePreview">
 							</div>
-							<div class="preview-img">
+							<div class="preview-img" hidden>
 								<img :src="mergeImagePreview">
 							</div>
-              <button class="mergeFile-priview-btn">전체 미리보기</button>
+              <button class="mergeFile-priview-btn" @click="showMergeManuscript">전체 미리보기</button>
 						</div>
 					</div>
 
@@ -180,9 +186,11 @@ export default {
       thumbnailPreview: "",
       isThumbnailSelect: false,
       filePreview: "",
+      selectedFileIndex: "",
       mergeImagePreview: "",
       showUploadProgress: false,
       showUploadDone: false,
+      height: 0,
     };
   },
   components: {
@@ -197,7 +205,6 @@ export default {
       this.isThumbnailSelect = val != null ? true : false;
     },
   },
-
   methods: {
     async fetchWebtoonInfo() {
       try {
@@ -217,65 +224,137 @@ export default {
       this.round.thumbnail = this.$refs.thumbnail.files[0];
       this.thumbnailPreview = URL.createObjectURL(this.round.thumbnail);
     },
-    async uploadManuscipt() {
-      this.showUploadProgress = true;
-      for (const file of this.$refs.manuscipt.files) {
-        this.round.manuscripts.push(file);
-      }
-      await this.mergeImages();
-      this.showUploadProgress = false;
-      this.showUploadDone = true;
+    fileClick(file, index) {
+      this.showPreview(file);
+      this.selectedFileIndex = index;
     },
-    async mergeImages() {
-      let images = []; //file을 image로 변환
-      let height = 0; //canvas height
-
-      for (const file of this.round.manuscripts) {
-        //읽기
-        var reader = new FileReader();
-        var tempImage = new Image(); //drawImage 메서드에 넣기 위해 이미지 객체화
-
-        await new Promise(function (resolve) {
-          reader.readAsDataURL(file); //DataUrl 타입으로 읽기
-          resolve();
-        });
-        
-        tempImage.src = reader.result;
-        alert(tempImage.src);
-        images.push(tempImage);
-        height += tempImage.height; //이미지 크기만큼 canvas height 증가
-      }
-
-      var canvas = document.createElement("canvas");
-      //canvas가 가능한 브라우저일 경우
-      if (canvas.getContext) {
-        //캔버스 크기 설정
-        canvas.width = 690; //가로 690px 고정
-        canvas.height = height; //위에서 계산한 이미지들의 총 높이
-        var context = canvas.getContext("2d");
-        var offsetY = 0; //이미지 시작 y축 위치
-
-        new Promise((resolve) => {
-          for (const image of images) {
-            context.drawImage(image, 0, offsetY);
-            offsetY += image.height;
-          }
-
-          // 합쳐진 이미지 보여주기
-          const dataURI = canvas.toDataURL("image/jpeg");
-          this.mergeImagePreview = dataURI;
-          resolve();
-        });
-      } else {
-        alert("지원하지 않는 브라우저입니다.");
-      }
+    isFileSelected(index) {
+      return index === this.selectedFileIndex;
     },
     showPreview(file) {
       this.filePreview = URL.createObjectURL(file);
     },
+    moveToTheTop() {
+      if(this.selectedFileIndex !== "") {
+        const backup = [...this.round.manuscripts];
+        this.round.manuscripts = [];
+        this.round.manuscripts[0] = backup[this.selectedFileIndex];
+        for(let i = 0; i<backup.length; i++) {
+          if(i===this.selectedFileIndex) {
+            continue;
+          }
+          this.round.manuscripts.push(backup[i]);
+        }
+        this.selectedFileIndex = 0;
+      }
+    }, 
+    moveToTheBottom() {
+      if(this.selectedFileIndex !== "") {
+        const backup = [...this.round.manuscripts];
+        this.round.manuscripts = [];
+        for(let i = 0; i<backup.length; i++) {
+          if(i===this.selectedFileIndex) {
+            continue;
+          }
+          this.round.manuscripts.push(backup[i]);
+        }
+        this.round.manuscripts[backup.length-1] = backup[this.selectedFileIndex];
+        this.selectedFileIndex = backup.length-1;
+      }
+    },
+    moveToOneTop() {
+      if(this.selectedFileIndex !== "") {
+        const backup = [...this.round.manuscripts];
+        const target = Math.max(0, this.selectedFileIndex-1);
+        this.round.manuscripts[target] = backup[this.selectedFileIndex];
+        this.round.manuscripts[this.selectedFileIndex] = backup[target];
+
+        this.selectedFileIndex = target;
+      }
+    },
+    moveToOneBottom() {
+      if(this.selectedFileIndex !== "") {
+        const backup = [...this.round.manuscripts];
+        const target = Math.min(backup.length-1, this.selectedFileIndex+1);
+        this.round.manuscripts[target] = backup[this.selectedFileIndex];
+        this.round.manuscripts[this.selectedFileIndex] = backup[target];
+
+        this.selectedFileIndex = target;
+      }
+    },
+    async uploadManuscipt() {
+      if(this.$refs.manuscipt.files != null) {
+        this.showUploadProgressModal();
+        for (const file of this.$refs.manuscipt.files) {
+          this.round.manuscripts.push(file);
+        }
+        this.showUploadDoneModal();
+      }
+    },
+    async showMergeManuscript() {
+      await this.mergeImages();
+      var imageWin = new Image();        
+      imageWin = window.open("", "", "width=700px");   
+      imageWin.document.write("<html><body>");         
+      imageWin.document.write("<img style='display: block; width: 500px; margin: 30px auto;' src='" + this.mergeImagePreview + "'>");         
+      imageWin.document.write("</body><html>");         
+      imageWin.document.title = "전체 미리보기";
+    },
+    showUploadProgressModal() {
+      this.showUploadProgress = true;
+    },
+    showUploadDoneModal() {
+      this.showUploadProgress = false;
+      this.showUploadDone = true;
+    },
+    async calculateHeight() {
+      this.height = 0;
+      for(const file of this.round.manuscripts) {
+        const image = await this.changeToImage(file);
+        this.height += image.height;
+      }
+    },
+    async mergeImages() {
+      var canvas = document.createElement("canvas");
+      canvas.width = 690; //가로 690px 고정
+      await this.calculateHeight();
+      canvas.height = this.height;
+
+      var context = canvas.getContext("2d");
+      context.globalCompositeOperation = "source-over";
+      var offsetY = 0; //이미지 시작 y축 위치
+
+      for(const file of this.round.manuscripts) {
+        const image = await this.changeToImage(file);
+        context.drawImage(image, 0, offsetY);
+        offsetY += image.height
+      }
+
+      // 합쳐진 이미지 보여주기
+      const dataURI = canvas.toDataURL("image/jpeg");
+      this.mergeImagePreview = dataURI;
+    },
+    async changeToImage(file) {
+      //읽기
+      var reader = new FileReader();
+      await new Promise((resolve) => {
+        reader.readAsDataURL(file); //DataUrl 타입으로 읽기
+        reader.addEventListener('load', ()=>{
+          resolve();
+        });
+      });
+      var tempImage = new Image(); //drawImage 메서드에 넣기 위해 이미지 객체화
+      tempImage.src = reader.result;
+      return tempImage;
+    },
     async submit() {
+      this.showUploadProgressModal();
+      if(this.mergeImagePreview === "") {
+        await this.mergeImages();
+      }
+      this.showUploadDoneModal();
+
       this.changeManuscriptPreviewToFile();
-      console.log(this.round.mergeManuscript);
       var formData = new FormData();
       formData.append(
         "webtoonId",
@@ -292,6 +371,9 @@ export default {
       try {
         const response = await postRound(formData);
         console.log(response.data);
+        if(response.status === 200) {
+          this.$router.push({name: 'manageRound', params: {webtoonId: this.webtoons[this.selectedWebtoonIndex].webtoonId}});
+        }
       } catch (error) {
         console.log(error);
       }
@@ -304,7 +386,8 @@ export default {
       }
       var myBlob = new Blob([new Uint8Array(array)], { type: "image/jpeg" }); // Blob 생성
       //BLolb -> file로 변경
-      this.round.mergeManuscript = new File([myBlob], "manuscript_test.jpeg");
+      const manuscriptFileName = this.webtoons[this.selectedWebtoonIndex].webtoonName + "_" + this.roundNumber + "화_원고" + ".jpeg";
+      this.round.mergeManuscript = new File([myBlob], manuscriptFileName);
     },
   },
 };
@@ -490,9 +573,11 @@ ul {
   text-align: left;
   padding-left: 5px;
 }
-.file-list button:focus {
+/* .file-list button:focus { */
+.file-list .fileSelected {
   background-color: rgba(0, 220, 100, 0.2);
 }
+
 .file-list button:first-child {
   margin-top: 10px;
 }

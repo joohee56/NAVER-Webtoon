@@ -13,11 +13,11 @@ import ChallengeView from "@/views/ChallengeView.vue";
 import ManageWebtoon from "@/components/creator/main/ManageWebtoon";
 import ManageComment from "@/components/creator/main/ManageComment";
 import ManageAlarm from "@/components/creator/main/ManageAlarm";
+import ManageRound from "@/components/creator/main/ManageRound";
 import CreateNewWebtoon from "@/components/creator/main/CreateNewWebtoon";
 import CreateNewRound from "@/components/creator/main/CreateNewRound";
 import RoundList from "@/views/RoundList";
 import RoundDetail from "@/views/RoundDetail";
-
 Vue.use(VueRouter);
 
 const checkLogin = (to, from, next) => {
@@ -100,6 +100,11 @@ const routes = [
         path: "/creators/alarm",
         name: "manageAlarm",
         component: ManageAlarm,
+      },
+      {
+        path: "/creators/round/:webtoonId",
+        name: "manageRound",
+        component: ManageRound,
       },
       {
         path: "/creators/manage/new/webtoon",
