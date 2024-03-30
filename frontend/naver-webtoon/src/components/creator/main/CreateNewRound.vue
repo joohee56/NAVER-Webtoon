@@ -131,7 +131,7 @@
     
 		<div class="btn-wrap">
 			<button class="cancel">취소</button>
-			<button class="submit" @click="submit">등록</button>
+			<button class="submit" @click="showUploadRoundModal=true">등록</button>
 		</div>
 
     <!-- 이미지 업로드 진행 중 모달 -->
@@ -161,6 +161,50 @@
       </template>
     </UploadDone>
 
+    <!-- 회차 업로드 모달 -->
+    <UploadRoundModal :show="showUploadRoundModal" @close="showUploadRoundModal = false">
+      <template #header>
+        <div v-if="isCheckCreateRound">
+          <div>회차를 등록하시겠습니까?</div>
+        </div>
+        <!-- eslint-disable-next-line-->
+        <div v-else-if="isUploadingRound">
+          <div>원고 등록 중입니다.</div>
+          <div>잠시만 기다려 주세요.</div>
+        </div>
+        <div v-else-if="isUploadingError">
+          <div>업로드 중 오류가 발생했습니다.</div>
+        </div>
+        <div v-else-if="isUploadDone">
+          <div>회차 업로드에 성공하였습니다.</div>
+        </div>
+      </template>
+      <template #body>
+        <!-- eslint-disable-next-line-->
+        <div v-if="isCheckCreateRound">
+          <div class="modal-btn">
+            <button @click="showUploadRoundModal = false">취소</button>
+            <button class="submit" @click="submit">확인</button>
+          </div>
+        </div>
+        <!-- eslint-disable-next-line-->
+        <div v-else-if="isUploadingRound">
+          <div class="uploading-modal-description">원고의 세로 길이에 따라 최대 5분까지 소요될 수 있습니다.</div>
+        </div>
+        <div v-else-if="isUploadingError">
+          <div class="modal-btn">
+            <button class="error" @click="resetCreateModalStatus">닫기</button>
+          </div>
+        </div>
+        <!-- eslint-disable-next-line-->
+        <div v-else-if="isUploadDone">
+          <div class="modal-btn">
+            <button class="submit" @click="moveToManageRoundView">확인</button>
+          </div>
+        </div>
+      </template>
+    </UploadRoundModal>
+
 	</div>
 </template>
 
@@ -169,6 +213,7 @@ import { getCreateRoundInfo } from "@/api/webtoon";
 import { postRound } from "@/api/round";
 import UploadProgress from "../modal/UploadProgress.vue";
 import UploadDone from "../modal/UploadDone.vue";
+import UploadRoundModal from "../modal/UploadRoundModal.vue";
 
 export default {
   data() {
@@ -191,11 +236,17 @@ export default {
       showUploadProgress: false,
       showUploadDone: false,
       height: 0,
+      showUploadRoundModal: false,
+      isCheckCreateRound: true,
+      isUploadingRound: false,
+      isUploadingError: false,
+      isUploadDone: false,
     };
   },
   components: {
     UploadProgress,
-    UploadDone
+    UploadDone,
+    UploadRoundModal
   },
   mounted() {
     this.fetchWebtoonInfo();
@@ -348,11 +399,12 @@ export default {
       return tempImage;
     },
     async submit() {
-      this.showUploadProgressModal();
+      this.isCheckCreateRound = false;
+      this.isUploadingRound = true;
+
       if(this.mergeImagePreview === "") {
         await this.mergeImages();
       }
-      this.showUploadDoneModal();
 
       this.changeManuscriptPreviewToFile();
       var formData = new FormData();
@@ -372,11 +424,23 @@ export default {
         const response = await postRound(formData);
         console.log(response.data);
         if(response.status === 200) {
-          this.$router.push({name: 'manageRound', params: {webtoonId: this.webtoons[this.selectedWebtoonIndex].webtoonId}});
+          this.isUploadingRound = false;
+          this.isUploadDone = true;
         }
       } catch (error) {
+        this.isUploadingRound = false;
+        this.isUploadingError = true;
         console.log(error);
       }
+    },
+    resetCreateModalStatus() {
+      this.showUploadRoundModal=false;
+      this.isCheckCreateRound=true;
+      this.isUploadingError=false;
+    },
+    moveToManageRoundView() {
+      this.showUploadRoundModal = false;
+      this.$router.push({name: 'manageRound', params: {webtoonId: this.webtoons[this.selectedWebtoonIndex].webtoonId}});
     },
     changeManuscriptPreviewToFile() {
       var blobBin = atob(this.mergeImagePreview.split(",")[1]); // base64 데이터 디코딩
@@ -694,5 +758,28 @@ ul {
   border-radius: 5px;
   font-family: "AppleSDGothicNeoM";
   font-size: 17px;
+}
+
+/* 회차 업로드 모달 */
+.modal-btn button {
+  font-family: AppleSDGothicNeoM;
+  border-radius: 4px;
+  padding: 13px 30px 10px;
+  font-size: 16px;
+  align-items: center;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  margin-left: 8px;
+}
+.modal-btn .submit {
+  color: white;
+  background-color: #00dc64;
+}
+.modal-btn .error {
+  border-color: #ff5151;
+  background-color: #ff51519a;
+}
+.uploading-modal-description {
+  color: #c9c9c9;
+  margin-bottom: 20px;
 }
 </style>
