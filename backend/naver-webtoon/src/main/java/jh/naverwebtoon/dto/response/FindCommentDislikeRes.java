@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class CommentDislikeRes {
+public class FindCommentDislikeRes {
     private Long dislikeTotalCnt;
     private Long isUserDislike;
 }

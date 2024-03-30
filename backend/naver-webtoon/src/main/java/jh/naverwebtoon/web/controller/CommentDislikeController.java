@@ -1,6 +1,6 @@
 package jh.naverwebtoon.web.controller;
 
-import jh.naverwebtoon.dto.response.CommentDislikeRes;
+import jh.naverwebtoon.dto.response.FindCommentDislikeRes;
 import jh.naverwebtoon.service.CommentDislikeService;
 import jh.naverwebtoon.web.Login;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,7 @@ public class CommentDislikeController {
     private final CommentDislikeService commentDislikeService;
 
     @PostMapping("/{commentId}")
-    public CommentDislikeRes createCommentDislike(@Login Long memberId, @PathVariable("commentId") Long commentId) {
+    public FindCommentDislikeRes createCommentDislike(@Login Long memberId, @PathVariable("commentId") Long commentId) {
         return commentDislikeService.save(memberId, commentId);
     }
 }

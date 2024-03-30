@@ -48,7 +48,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(new LoginCheckInterceptor())  //로그인 인증 인터셉터
                 .order(1)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/**/users/join", "/**/users/duplicated/*", "/**/users/login", "/error", "/**/official/**", "/**/rounds/**", "/swagger-resources/**", "/swagger-ui/**", "/v3/api-docs");
+                .excludePathPatterns("/**/users/join", "/**/users/duplicated/*", "/**/users/login", "/error", "/**/official/**", "/**/rounds/list/**", "/**/rounds/round/**", "/swagger-resources/**", "/swagger-ui/**", "/v3/api-docs");
     }
 
     /**

@@ -4,6 +4,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import java.util.List;
 import jh.naverwebtoon.db.domain.Round;
+import jh.naverwebtoon.dto.response.FindRoundsManageRes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -68,22 +69,29 @@ public class RoundRepository {
     /**
      * 웹툰 디테일 정보 조회
      */
-    public Round findOneDetail(Long id) {
+    public Round findOneDetail(Long roundId) {
         return em.createQuery("select r from Round r"
                 + " join fetch r.webtoon w"
                 + " join fetch w.member m"
                 + " join fetch m.profileImage"
                 + " join fetch r.mergeManuscript"
-                + " where r.id=:id", Round.class)
-                .setParameter("id", id)
+                + " where r.id=:roundId", Round.class)
+                .setParameter("roundId", roundId)
                 .getSingleResult();
     }
 
     /**
-     * 웹툰에 해당하는 전체 회차 리스트 조회 + 댓글 갯수
+     * 웹툰 회차 관리 정보 조회 (웹툰 정보, 회차 리스트, 댓글 갯수, 좋아요 갯수)
      */
-    public void findAllByWebtoonWithCommentCount(Long webtoonId) {
-
+    public List<FindRoundsManageRes> findAllByWebtoonWithManage(Long webtoonId) {
+        return em.createQuery("select new jh.naverwebtoon.dto.response.FindRoundsManageRes(r.id, r.roundNumber, r.roundThumbnail.thumbnail.storeFileName, r.roundTitle, r.createdAt, r.updatedAt,"
+                + " (select count(rl) from RoundLike rl where rl.round = r),"
+                + " (select count(c) from Comment c where c.round = r))"
+                + " from Round r"
+                + " where r.webtoon.id = :webtoonId"
+                + " order by r.roundNumber desc", FindRoundsManageRes.class)
+                .setParameter("webtoonId", webtoonId)
+                .getResultList();
     }
 
 }

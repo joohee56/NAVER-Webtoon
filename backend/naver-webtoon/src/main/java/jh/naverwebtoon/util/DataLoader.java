@@ -14,6 +14,7 @@ import jh.naverwebtoon.db.domain.Member;
 import jh.naverwebtoon.db.domain.MergeManuscript;
 import jh.naverwebtoon.db.domain.ProfileImage;
 import jh.naverwebtoon.db.domain.Round;
+import jh.naverwebtoon.db.domain.RoundLike;
 import jh.naverwebtoon.db.domain.RoundThumbnail;
 import jh.naverwebtoon.db.domain.UploadImage;
 import jh.naverwebtoon.db.domain.WebtoonThumbnail;
@@ -142,6 +143,9 @@ public class DataLoader implements ApplicationRunner {
         initRound(Long.valueOf(2), "세레나_8화_썸네일.png", "세레나_8화_원고.png", "나쁜 놈","이제부터 본 이야기 시작!");
         initRound(Long.valueOf(2), "세레나_9화_썸네일.png", "세레나_9화_원고.png", "이거 완전 공주님이네", "작중 '마리안느 드생'의 그림은 5화에서 살짝 등장했었답니다:)");
 
+//        RoundLike
+        initRoundLike(Long.valueOf(1), Long.valueOf(9));
+
 //        Comment
         initComment(Long.valueOf(1), Long.valueOf(9), "근데 솔직히 세레나가 쓸데없는 자존심부리는건 맞지 않음? 경영권 상속이 원래 세레나한테 가야하는게 맞지만 세레나는 능력이 없고 오히려 사고만 쳤다는데 아이저가 저만큼 키우고 이제 가르쳐 주겠다는데 세레나는 진짜 너무 생각없이 행동함" );
         initComment(Long.valueOf(3), Long.valueOf(9), "..저정도면 남주가 세레니티 더 아끼는거 같은데");
@@ -214,6 +218,13 @@ public class DataLoader implements ApplicationRunner {
 
         Round round = Round.create(roundReq, webtoon, roundThumbnail, new ArrayList<>(), mergeManuscript);
         em.persist(round);
+    }
+
+    public void initRoundLike(Long memberId, Long roundId) {
+        Member member = memberRepository.findOne(memberId);
+        Round round = roundRepository.findOne(roundId);
+        RoundLike roundLike = RoundLike.create(member, round);
+        em.persist(roundLike);
     }
 
     public void initComment(Long memberId, Long roundId, String content) {

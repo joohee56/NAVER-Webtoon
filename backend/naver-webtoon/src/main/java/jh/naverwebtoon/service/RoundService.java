@@ -7,12 +7,15 @@ import jh.naverwebtoon.db.domain.MergeManuscript;
 import jh.naverwebtoon.db.domain.Round;
 import jh.naverwebtoon.db.domain.RoundThumbnail;
 import jh.naverwebtoon.db.domain.webtoon.Webtoon;
+import jh.naverwebtoon.db.repository.RoundLikeRepository;
 import jh.naverwebtoon.db.repository.RoundRepository;
 import jh.naverwebtoon.db.repository.WebtoonRepository;
 import jh.naverwebtoon.dto.request.CreateRoundReq;
 import jh.naverwebtoon.dto.response.FindRoundDetailRes;
+import jh.naverwebtoon.dto.response.FindRoundManageInfoRes;
 import jh.naverwebtoon.dto.response.FindRoundsByWebtoon;
 import jh.naverwebtoon.dto.response.FindRoundsByWebtoonWithPaging;
+import jh.naverwebtoon.dto.response.FindRoundsManageRes;
 import jh.naverwebtoon.dto.response.RoundListDto;
 import jh.naverwebtoon.util.FileStore;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class RoundService {
     private final RoundRepository roundRepository;
+    private final RoundLikeRepository roundLikeRepository;
     private final WebtoonRepository webtoonRepository;
     private final FileStore fileStore;
 
@@ -53,8 +57,14 @@ public class RoundService {
     /**
      * 회차 디테일 조회
      */
-    public FindRoundDetailRes findOneDetail(Long roundId) {
-        return FindRoundDetailRes.create(roundRepository.findOneDetail(roundId));
+    public FindRoundDetailRes findOneDetail(Long memberId, Long roundId) {
+        Round round = roundRepository.findOne(roundId);
+        Long totalLikeCnt = roundLikeRepository.findTotalCountByRoundId(roundId);
+        Long isUserLike = Long.valueOf(0);
+        if (memberId != null) {
+            isUserLike = roundLikeRepository.findCountByMemberAndRound(memberId, roundId);
+        }
+        return FindRoundDetailRes.create(roundRepository.findOneDetail(roundId), totalLikeCnt, isUserLike);
     }
 
     /**
@@ -72,5 +82,14 @@ public class RoundService {
         MergeManuscript mergeManuscript = MergeManuscript.create(fileStore.storeFile(createRoundReq.getMergeManuscript()));
         Round round = Round.create(createRoundReq, webtoon, roundThumbnail, manuscripts, mergeManuscript);
         return roundRepository.save(round);
+    }
+
+    /**
+     * 회차 관리 페이지 조회
+     */
+    public FindRoundManageInfoRes findRoundManageInfo(Long webtoonId) {
+        Webtoon webtoon = webtoonRepository.findOneWithThumbnail(webtoonId);
+        List<FindRoundsManageRes> rounds = roundRepository.findAllByWebtoonWithManage(webtoonId);
+        return FindRoundManageInfoRes.create(webtoon, rounds);
     }
 }

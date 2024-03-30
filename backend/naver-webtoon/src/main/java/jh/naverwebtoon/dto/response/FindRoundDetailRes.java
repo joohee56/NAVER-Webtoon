@@ -13,8 +13,10 @@ public class FindRoundDetailRes {
     private String authorNote;
     private String authorProfileImage;
     private String authorName;
+    private Long totalLikeCnt;
+    private Long isUserLike;
 
-    public static FindRoundDetailRes create(Round round) {
+    public static FindRoundDetailRes create(Round round, Long totalLikeCnt, Long isUserLike) {
         FindRoundDetailRes findRoundDetailRes = new FindRoundDetailRes();
         findRoundDetailRes.webtoonId = round.getWebtoon().getId();
         findRoundDetailRes.webtoonName = round.getWebtoon().getName();
@@ -24,6 +26,8 @@ public class FindRoundDetailRes {
         findRoundDetailRes.authorNote = round.getAuthorNote();
         findRoundDetailRes.authorProfileImage = round.getWebtoon().getMember().getProfileImage().getUploadImage().getStoreFileName();
         findRoundDetailRes.authorName = round.getWebtoon().getMember().getName();
+        findRoundDetailRes.totalLikeCnt = totalLikeCnt;
+        findRoundDetailRes.isUserLike = isUserLike;
         return findRoundDetailRes;
     }
 }

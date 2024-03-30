@@ -5,7 +5,7 @@ import jh.naverwebtoon.db.repository.CommentDislikeRepository;
 import jh.naverwebtoon.db.repository.CommentLikeRepository;
 import jh.naverwebtoon.db.repository.CommentRepository;
 import jh.naverwebtoon.db.repository.MemberRepository;
-import jh.naverwebtoon.dto.response.CommentDislikeRes;
+import jh.naverwebtoon.dto.response.FindCommentDislikeRes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +20,7 @@ public class CommentDislikeService {
     private final CommentRepository commentRepository;
 
     @Transactional
-    public CommentDislikeRes save(Long memberId, Long commentId) {
+    public FindCommentDislikeRes save(Long memberId, Long commentId) {
         if (!commentLikeRepository.findOne(memberId, commentId).isEmpty()) {
             throw new IllegalStateException("'좋아요'한 댓글입니다. 취소 후 수정해주세요.");
         }
@@ -35,6 +35,6 @@ public class CommentDislikeService {
 
         Long totalCnt = commentDislikeRepository.findTotalCountByCommentId(commentId);
         Long isUserDislike = commentDislikeRepository.findOneByCommentAndMember(memberId, commentId);
-        return new CommentDislikeRes(totalCnt, isUserDislike);
+        return new FindCommentDislikeRes(totalCnt, isUserDislike);
     }
 }

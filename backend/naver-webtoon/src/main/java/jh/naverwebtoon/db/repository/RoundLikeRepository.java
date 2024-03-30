@@ -37,6 +37,5 @@ public class RoundLikeRepository {
                 .setParameter("roundId", roundId)
                 .setParameter("memberId", memberId)
                 .executeUpdate();
-
     }
 }

@@ -1,6 +1,6 @@
 package jh.naverwebtoon.web.controller;
 
-import jh.naverwebtoon.dto.response.CommentLikeRes;
+import jh.naverwebtoon.dto.response.FindCommentLikeRes;
 import jh.naverwebtoon.service.CommentLikeService;
 import jh.naverwebtoon.web.Login;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,7 @@ public class CommentLikeController {
     private final CommentLikeService commentLikeService;
 
     @PostMapping()
-    public CommentLikeRes createCommentLike(@Login Long memberId, @RequestParam("commentId") Long commentId) {
+    public FindCommentLikeRes createCommentLike(@Login Long memberId, @RequestParam("commentId") Long commentId) {
         return commentLikeService.save(memberId, commentId);
     }
 }
