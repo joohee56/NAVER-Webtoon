@@ -1,4 +1,3 @@
-vueini
 <template lang="ko">
 	<div class="manage-webtoon-container">
 		<div class="subject">작품 관리</div>

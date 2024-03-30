@@ -23,8 +23,8 @@ export default {
 <style scoped>
 .container {
   background-color: #f6f6f6;
+  height: 100vh;
 }
-
 .main-content {
   display: flex;
 }
