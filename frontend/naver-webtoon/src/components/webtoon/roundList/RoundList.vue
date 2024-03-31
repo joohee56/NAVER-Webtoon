@@ -17,7 +17,7 @@
 					<div class="detail-wrap">
 						<div class="webtoon-title">{{round.roundNumber}}화. {{round.title}}</div>
 						<div class="etc">
-							<div><i class="fa-solid fa-heart"></i>&nbsp; 100만</div>
+							<div><i class="fa-solid fa-heart"></i> {{round.totalLikeCount}}</div>
 							<div> {{round.createdAt}}</div>
 						</div>
 					</div>
@@ -41,7 +41,7 @@ import { getRoundsWithPaging } from "@/api/round";
 export default {
   data() {
     return {
-      rounds: [],
+      rounds: [], //roundId, roundNumber, thumbnail, title, createdAt, totalLikeCount
       pageCount: "",
       totalRoundCount: "",
       limit: 15,
