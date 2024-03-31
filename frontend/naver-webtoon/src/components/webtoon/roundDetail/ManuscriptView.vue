@@ -7,20 +7,20 @@
 			<router-link :to="{name: 'roundList', params: {webtoonId : `${this.$route.params.webtoonId}`}}">{{roundDetail.webtoonName}}</router-link>
 			<span class="separator"></span>
 			<span>{{roundDetail.roundNumber}}화. {{roundDetail.roundTitle}}</span>
-			<router-link to="" class="before-round">
+			<span @click="moveBeforeRound" class="before-round">
 				<i class="fa-solid fa-caret-left"></i>
 				<span> 이전화</span>
-			</router-link>
+      </span>
 			<span class="separator"></span>
 			<router-link :to="{name: 'roundList', params: {webtoonId : `${this.$route.params.webtoonId}`}}">
 				<i class="fa-solid fa-list-ul"></i>
 				<span> 목록</span>
 			</router-link>
 			<span class="separator"></span>
-			<router-link to="">
+			<span @click="moveNextRound" class="next-round">
+				<span>다음화 </span>
 				<i class="fa-solid fa-caret-right"></i>
-				<span> 다음화</span>
-			</router-link>
+			</span>
 		</div>
 
 		<!-- 원고 -->
@@ -185,6 +185,32 @@ export default {
         console.log(error);
       }
     },
+    moveBeforeRound() {
+      if (this.roundDetail.roundNumber === 1) {
+        alert("첫화입니다.");
+      } else {
+        this.$router.push({
+          name: "roundDetail",
+          params: {
+            webtoonId: this.roundDetail.webtoonId,
+            roundId: this.$route.params.roundId - 1,
+          },
+        });
+      }
+    },
+    moveNextRound() {
+      if (this.roundDetail.roundNumber === this.rounds.length) {
+        alert("마지막화입니다.");
+      } else {
+        this.$router.push({
+          name: "roundDetail",
+          params: {
+            webtoonId: this.roundDetail.webtoonId,
+            roundId: parseInt(this.$route.params.roundId, 10) + 1,
+          },
+        });
+      }
+    },
     // menubarScoll() {
     //   // 메뉴바 트랜지션
     //   const menubar = this.document.getElementById("menubar");
@@ -252,6 +278,10 @@ export default {
 }
 .before-round {
   margin-left: auto;
+  cursor: pointer;
+}
+.next-round {
+  cursor: pointer;
 }
 
 /* 원고 */

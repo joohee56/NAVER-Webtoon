@@ -36,7 +36,7 @@
 						<div><router-link :to="{name: 'roundDetail', params: {webtoonId: webtoon.webtoonId, roundId: round.roundId}}">{{round.roundTitle}}</router-link></div>
 						<div>{{round.createdAt}}</div>
 						<div>{{round.updatedAt}}</div>
-						<div>X</div>
+						<div>0</div>
 						<div>{{round.totalLikeCount}}</div>
 						<div>{{round.totalCommentCount}}</div>
 						<div><router-link to="#" class="update-btn">수정</router-link></div>
