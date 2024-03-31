@@ -55,7 +55,6 @@ public class RoundService {
      * 회차 디테일 조회
      */
     public FindRoundDetailRes findOneDetail(Long memberId, Long roundId) {
-        Round round = roundRepository.findOne(roundId);
         Long totalLikeCnt = roundLikeRepository.findTotalCountByRoundId(roundId);
         Long isUserLike = Long.valueOf(0);
         if (memberId != null) {

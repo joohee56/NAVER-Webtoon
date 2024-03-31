@@ -4,6 +4,7 @@ import java.util.List;
 import jh.naverwebtoon.dto.request.CreateCommentReq;
 import jh.naverwebtoon.dto.response.FindCommentsWithLoginRes;
 import jh.naverwebtoon.service.CommentService;
+import jh.naverwebtoon.web.Auth;
 import jh.naverwebtoon.web.Login;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CommentController {
     private final CommentService commentService;
 
+    @Auth
     @PostMapping()
     public Long createComment(@Login Long memberId, @RequestBody CreateCommentReq createCommentReq) {
         return commentService.save(memberId, createCommentReq);

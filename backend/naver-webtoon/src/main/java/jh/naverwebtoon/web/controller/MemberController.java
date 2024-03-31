@@ -11,6 +11,7 @@ import jh.naverwebtoon.dto.response.JoinMemberRes;
 import jh.naverwebtoon.dto.response.LoginRes;
 import jh.naverwebtoon.dto.response.MemberInfoRes;
 import jh.naverwebtoon.service.MemberService;
+import jh.naverwebtoon.web.Auth;
 import jh.naverwebtoon.web.Login;
 import jh.naverwebtoon.web.SessionConst;
 import lombok.RequiredArgsConstructor;
@@ -82,6 +83,7 @@ public class MemberController {
     /**
      * 회원 정보 조회
      */
+    @Auth
     @GetMapping()
     public MemberInfoRes MemberInfo(@Login Long id) {
         System.out.println("memberInfo 호출");
@@ -93,6 +95,7 @@ public class MemberController {
     /**
      * 프로필 이미지 변경
      */
+    @Auth
     @PostMapping(value = "/profileImage", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public String changeProfileImage(@Login Long id, @RequestPart(value="profileImage") MultipartFile profileImage) {
         String storeFileName = memberService.changeProfileImage(id, profileImage);
@@ -102,6 +105,7 @@ public class MemberController {
     /**
      * 사용자 정보 변경
      */
+    @Auth
     @PutMapping("/edit")
     public MemberInfoRes editMember(@Login Long id, @RequestBody EditMemberReq editMemberReq) {
         Member editMember = memberService.editMemberInfo(id, editMemberReq);
