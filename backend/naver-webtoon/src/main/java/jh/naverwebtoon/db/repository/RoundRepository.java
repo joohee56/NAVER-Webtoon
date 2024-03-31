@@ -5,6 +5,7 @@ import jakarta.persistence.PersistenceContext;
 import java.util.List;
 import jh.naverwebtoon.db.domain.Round;
 import jh.naverwebtoon.dto.response.FindRoundsManageRes;
+import jh.naverwebtoon.dto.response.RoundListDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -23,9 +24,10 @@ public class RoundRepository {
         return em.find(Round.class, roundId);
     }
 
-    public List<Round> findAllByWebtoonWithPaging(Long webtoonId, int offset, int limit, boolean isDesc) {
-        String sql = "select r from Round r"
-                + " join fetch r.roundThumbnail th"
+    public List<RoundListDto> findAllByWebtoonWithPaging(Long webtoonId, int offset, int limit, boolean isDesc) {
+        String sql = "select new jh.naverwebtoon.dto.response.RoundListDto(r.id, r.roundThumbnail.thumbnail.storeFileName, r.roundNumber, r.roundTitle, r.createdAt,"
+                + " (select count(rl) from RoundLike rl where rl.round=r))"
+                + " from Round r"
                 + " where r.webtoon.id = :webtoonId";
         if (isDesc) {
             sql += " order by r.roundNumber desc";
@@ -33,7 +35,7 @@ public class RoundRepository {
             sql += " order by r.roundNumber asc";
         }
 
-        return em.createQuery(sql, Round.class)
+        return em.createQuery(sql, RoundListDto.class)
                 .setParameter("webtoonId", webtoonId)
                 .setFirstResult(offset)
                 .setMaxResults(limit)

@@ -35,14 +35,11 @@ public class RoundService {
      * 웹툰에 해당하는 회차 리스트 조회 (페이징)
      */
     public FindRoundsByWebtoonWithPaging findRoundsByWebtoonWithPaing(Long webtoonId, int offset, int limit, boolean isDesc) {
-        List<Round> rounds = roundRepository.findAllByWebtoonWithPaging(webtoonId, offset, limit, isDesc);
+        List<RoundListDto> rounds = roundRepository.findAllByWebtoonWithPaging(webtoonId, offset, limit, isDesc);
         Long totalRoundCount = roundRepository.findTotalCountByWebtoon(webtoonId);  //총 회차 갯수
-
-        List<RoundListDto> roundDtos = rounds.stream().map(round -> RoundListDto.create(round))
-                .collect(Collectors.toList());
         int pageCount = (int) Math.ceil((double)totalRoundCount / limit);  //총 페이지 갯수
 
-        return new FindRoundsByWebtoonWithPaging(roundDtos,pageCount, totalRoundCount);
+        return new FindRoundsByWebtoonWithPaging(rounds,pageCount, totalRoundCount);
     }
 
     /**
