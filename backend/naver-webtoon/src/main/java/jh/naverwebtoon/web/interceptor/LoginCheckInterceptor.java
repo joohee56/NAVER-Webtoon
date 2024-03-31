@@ -24,7 +24,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
             return true;
         }
         HandlerMethod method = (HandlerMethod) handler;
-        //메소드 퀀한 체크
+        //메소드 권한 체크
         Auth auth = method.getMethodAnnotation(Auth.class);
         if (auth == null) {
             log.info("인증이 필요없는 요청이므로 인증 체크 패스");

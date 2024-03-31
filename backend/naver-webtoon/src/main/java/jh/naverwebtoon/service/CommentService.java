@@ -8,7 +8,7 @@ import jh.naverwebtoon.db.repository.CommentRepository;
 import jh.naverwebtoon.db.repository.MemberRepository;
 import jh.naverwebtoon.db.repository.RoundRepository;
 import jh.naverwebtoon.dto.request.CreateCommentReq;
-import jh.naverwebtoon.dto.response.FindCommentsWithLoginRes;
+import jh.naverwebtoon.dto.response.FindComments;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,7 +29,7 @@ public class CommentService {
         return commentRepository.save(comment);
     }
 
-    public List<FindCommentsWithLoginRes> findAllWithPagingAndLogin(Long memberId, Long roundId, int offset, int limit) {
-        return commentRepository.findAllByRoundIdWithPagingAndLogin(memberId, roundId, offset, limit);
+    public List<FindComments> findAllWithPaging(Long memberId, Long roundId, int offset, int limit) {
+        return commentRepository.findAllByRoundIdWithPaging(memberId, roundId, offset, limit);
     }
 }
