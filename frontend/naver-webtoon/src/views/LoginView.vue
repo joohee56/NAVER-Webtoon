@@ -148,7 +148,7 @@ export default {
           this.SET_LOGIN_USER(response.data);
           this.SET_PROFILE_IMAGE(response.data.profileImage);
           const redirectUrl = this.$route.params.redirectUrl;
-          this.$router.push({ name: redirectUrl });
+          this.$router.push(redirectUrl);
         }
       } catch (error) {
         console.log(error);

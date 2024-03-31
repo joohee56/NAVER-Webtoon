@@ -5,13 +5,17 @@
 		<div>
 			<div class="title">의견쓰기 1,385</div>
 			<div class="comment-input-box">
-				<div class="loginUser-info">
+				<div class="loginUser-info" v-if="loginUser.loginId">
 					<img
           :src="require(`@/assets/image/${loginUser.profileImage}`)"
           class="profile-image" />
 				<div class="login-user-name">{{loginUser.userName}}</div>
 				</div>
-				<textarea v-model="content" placeholder="주제와 무관한 댓글이나 스포일러, 악풀은 경고조치 없이 삭제되며 징계 대상이 될 수 있습니다."></textarea>
+				<textarea v-model="content" placeholder="주제와 무관한 댓글이나 스포일러, 악풀은 경고조치 없이 삭제되며 징계 대상이 될 수 있습니다." v-if="loginUser.loginId" class="editable-textarea"></textarea>
+        <div @click="moveToLogin" class="uneditable-textarea" v-else>
+          <textarea ></textarea>
+          <label>댓글을 작성하려면 <router-link :to="{ name: 'login', params: { redirectUrl: this.$route.path } }">로그인</router-link> 해주세요.</label>
+        </div>
 			</div>
 			<div>
 				<button class="submit-btn" @click="saveComment">등록</button>
@@ -50,7 +54,7 @@ export default {
   data() {
     return {
       content: "",
-      comments: [],
+      comments: [], //commentId, userId, userName, content, updateAt, likeTotalCnt, isUserLike, dislikeTotalCnt, isUserDislike
       limit: 6,
     };
   },
@@ -68,6 +72,7 @@ export default {
           0,
           this.limit
         );
+        console.log(response);
         this.comments = response.data;
       } catch (error) {
         console.log(error);
@@ -106,6 +111,13 @@ export default {
         console.log(error);
       }
     },
+    moveToLogin() {
+      alert("로그인을 하신 후 이용해 주시기 바랍니다.");
+      this.$router.push({
+        name: "login",
+        params: { redirectUrl: this.$route.path },
+      });
+    },
   },
 };
 </script>
@@ -124,7 +136,7 @@ export default {
   border: 1px solid #efefef;
   border-radius: 7px;
   width: 97%;
-  padding: 20px 20px;
+  padding: 10px 10px;
 }
 .loginUser-info {
   display: flex;
@@ -140,7 +152,7 @@ export default {
   margin-left: 7px;
   font-family: AppleSDGothicNeoSB;
 }
-.comment-input-box textarea {
+.comment-input-box .editable-textarea {
   width: 98%;
   height: 70px;
   resize: none;
@@ -148,6 +160,32 @@ export default {
   padding: 10px;
   border: none;
   font-size: 15px;
+}
+.uneditable-textarea {
+  position: relative;
+  padding: 0 15px;
+}
+.uneditable-textarea textarea {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+.uneditable-textarea label {
+  overflow: hidden;
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  bottom: 0;
+  left: 15px;
+  z-index: 10;
+  border: none;
+  font-size: 13px;
+  color: #a1a1a1;
+  line-height: 1.5;
+  cursor: pointer;
+}
+.uneditable-textarea a:hover {
+  text-decoration: underline;
 }
 .comment-input-box textarea::placeholder {
   font-family: AppleSDGothicNeoM;

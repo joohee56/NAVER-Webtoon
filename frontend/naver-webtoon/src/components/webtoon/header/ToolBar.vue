@@ -31,7 +31,7 @@
       </router-link>
     </div>
     <router-link
-      :to="{ name: 'login', params: { redirectUrl: this.$route.name } }"
+      :to="{ name: 'login', params: { redirectUrl: this.$route.path } }"
       class="login-btn"
       v-else
       >로그인</router-link
