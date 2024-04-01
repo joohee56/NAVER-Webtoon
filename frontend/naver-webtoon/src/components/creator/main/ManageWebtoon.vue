@@ -17,17 +17,20 @@
 						<div class="date">최신 회차 공개일 2021.09.20</div>
 					</div>
 					<div id="statistics">
+            <!-- 조회수 -->
 						<div class="item">
 							<i class="fa-regular fa-eye"></i>
-							<div>15</div>
+							<div>0</div>
 						</div>
+            <!-- 관심 독자수 -->
 						<div class="item">
 							<i class="fa-solid fa-user-group"></i>
 							<div>0</div>
 						</div>
+            <!-- 총 댓글 갯수 -->
 						<div class="item">
 							<i class="fa-regular fa-comment-dots"></i>
-							<div>0</div>
+							<div>{{webtoon.totalCommentCount}}</div>
 						</div>
 					</div>
 					<div class="btn">
@@ -58,7 +61,7 @@ import { getWebtoonAllByMember } from "@/api/webtoon";
 export default {
   data() {
     return {
-      webtoons: [],
+      webtoons: [], //webtoonId, webtoonName, serialType, posterStoreName, totalCommentCount
     };
   },
   mounted() {
@@ -70,6 +73,7 @@ export default {
       try {
         const response = await getWebtoonAllByMember();
         this.webtoons = response.data;
+        console.log(response.data);
       } catch (error) {
         console.log(error);
       }
@@ -119,7 +123,7 @@ export default {
 }
 
 .webtoon-info {
-  padding-left: 10px;
+  padding-left: 15px;
   width: 100%;
   height: 100%;
   position: relative;

@@ -23,9 +23,9 @@
 				<li class="item-row">
 					<p>형식</p>
 					<div class="type">
-						<label><input type="radio" value="EPISODE" v-model="webtoon.webtoonType">에피소드</label>
-						<label><input type="radio" value="OMNIBUS" v-model="webtoon.webtoonType"/>옴니버스</label>
-						<label><input type="radio" value="STORY" v-model="webtoon.webtoonType"/>스토리</label>
+						<label><input type="radio" value="EPISODE" v-model="webtoon.webtoonCategory">에피소드</label>
+						<label><input type="radio" value="OMNIBUS" v-model="webtoon.webtoonCategory"/>옴니버스</label>
+						<label><input type="radio" value="STORY" v-model="webtoon.webtoonCategory"/>스토리</label>
 					</div>
 				</li>
 				<li class="item-row">
@@ -159,7 +159,7 @@ export default {
     return {
       webtoon: {
         name: "",
-        webtoonType: "",
+        webtoonCategory: "",
         tags: [],
         genres: [],
         oneLineSummary: "",
@@ -183,8 +183,6 @@ export default {
   },
   methods: {
     async createWebtoon() {
-      console.log(this.webtoon);
-
       const formData = new FormData();
       for (const key in this.webtoon) {
         formData.append(key, this.webtoon[key]);

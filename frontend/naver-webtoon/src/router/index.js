@@ -23,7 +23,10 @@ Vue.use(VueRouter);
 const checkLogin = (to, from, next) => {
   const loginUser = Cookies.get("loginUser");
   if (loginUser === undefined) {
-    next({ name: "login", params: { redirectUrl: "main" } });
+    next({
+      name: "login",
+      params: { redirectUrl: from.path },
+    });
   } else {
     next();
   }
