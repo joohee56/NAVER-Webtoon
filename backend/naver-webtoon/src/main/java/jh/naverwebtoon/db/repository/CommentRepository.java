@@ -27,11 +27,11 @@ public class CommentRepository {
         return em.createQuery("select new jh.naverwebtoon.dto.response.FindComments(c.id, c.content, c.member.loginId, c.member.name, c.updatedAt,"
                         + " (select count(cl) from CommentLike cl where cl.comment = c) as likeTotalCnt,"
                         + " (select count(cl) from CommentLike cl where cl.comment = c and cl.member.id =:memberId),"
-                        + " (select count(cd) from CommentDislike cd where cd.comment = c),"
+                        + " (select count(cd) from CommentDislike cd where cd.comment = c) as dislikeTotalCnt,"
                         + " (select count(cd) from CommentDislike cd where cd.comment = c and cd.member.id =:memberId))"
                         + " from Comment c"
                         + " where c.round.id=:roundId"
-                        + " order by likeTotalCnt desc, c.updatedAt desc", FindComments.class)
+                        + " order by likeTotalCnt desc, c.updatedAt desc, dislikeTotalCnt asc", FindComments.class)
                 .setParameter("roundId", roundId)
                 .setParameter("memberId", memberId)
                 .setFirstResult(offset)

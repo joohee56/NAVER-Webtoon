@@ -18,4 +18,13 @@ class CommentRepositoryTest {
             System.out.println(comment.toString());
         }
     }
+
+    @Test
+    void start_limit_변경_테스트() {
+        List<FindComments> comments = commentRepository.findAllByRoundIdWithPaging(null, Long.valueOf(9),
+                6, 1);
+        for (FindComments comment : comments) {
+            System.out.println(comment.toString());
+        }
+    }
 }

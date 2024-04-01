@@ -13,7 +13,7 @@ async function postComment(comment) {
   }
 }
 
-async function getCommentsWithLogin(roundId, offset, limit) {
+async function getComments(roundId, offset, limit) {
   try {
     const response = await jsonApi.get(
       `/comments/${roundId}/${offset}/${limit}`
@@ -49,9 +49,4 @@ async function postCommentDislike(commentId) {
   }
 }
 
-export {
-  postComment,
-  getCommentsWithLogin,
-  postCommentLike,
-  postCommentDislike,
-};
+export { postComment, getComments, postCommentLike, postCommentDislike };

@@ -123,9 +123,9 @@ export default {
       this.setPreviewBtnDisable();
     },
   },
-  mounted() {
-    this.fetchRoundDetail();
-    this.fetchRounds();
+  async mounted() {
+    await this.fetchRoundDetail();
+    await this.fetchRounds();
   },
   methods: {
     setPreviewBtnDisable() {

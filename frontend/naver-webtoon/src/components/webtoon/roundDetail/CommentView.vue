@@ -29,7 +29,7 @@
 					<div class="user-id">{{comment.userName}}({{comment.userId}})</div>
 					<div class="update-date">{{comment.updateAt}}</div>
 				</div>
-				<div class="content">{{comment.content}}</div>
+				<div class="content" :class="{bestComment:isBestComment(index)}">{{comment.content}}</div>
 				<div class="btn-wrap">
 					<button>답글</button>
 					<button class="btn-like" :class="{isUserLikeActive:comment.isUserLike}" @click="clickCommentLike(comment.commentId, index)"><i class="fa-regular fa-thumbs-up"></i> {{comment.likeTotalCnt}}</button>
@@ -37,14 +37,14 @@
 				</div>
 			</div>
 		</div>
-		<button>더보기</button>
+		<button @click="moreComments" class="more-comment-btn">더보기 <i class="fa-solid fa-chevron-down"></i></button>
 	</div>
 </template>
 
 <script>
 import {
   postComment,
-  getCommentsWithLogin,
+  getComments,
   postCommentLike,
   postCommentDislike,
 } from "@/api/comment";
@@ -55,6 +55,7 @@ export default {
     return {
       content: "",
       comments: [], //commentId, userId, userName, content, updateAt, likeTotalCnt, isUserLike, dislikeTotalCnt, isUserDislike
+      startIndex: 0,
       limit: 6,
     };
   },
@@ -62,14 +63,14 @@ export default {
     ...mapState("memberStore", ["loginUser"]),
   },
   mounted() {
-    this.fetchCommentsWithLogin();
+    this.fetchComments();
   },
   methods: {
-    async fetchCommentsWithLogin() {
+    async fetchComments() {
       try {
-        const response = await getCommentsWithLogin(
+        const response = await getComments(
           this.$route.params.roundId,
-          0,
+          this.startIndex,
           this.limit
         );
         console.log(response);
@@ -77,6 +78,9 @@ export default {
       } catch (error) {
         console.log(error);
       }
+    },
+    isBestComment(index) {
+      return index < 4 && this.comments[index].likeTotalCnt > 0;
     },
     async saveComment() {
       const comment = {
@@ -117,6 +121,27 @@ export default {
         name: "login",
         params: { redirectUrl: this.$route.path },
       });
+    },
+    async moreComments() {
+      const nextStartIndex = this.startIndex + this.limit;
+      try {
+        const response = await getComments(
+          this.$route.params.roundId,
+          nextStartIndex,
+          this.limit
+        );
+        console.log(response);
+        if (response.data.length > 0) {
+          for (const comment of response.data) {
+            this.comments.push(comment);
+          }
+          this.startIndex = nextStartIndex;
+        } else {
+          alert("더 이상 조회할 댓글이 없습니다.");
+        }
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 };
@@ -199,14 +224,16 @@ export default {
   padding: 10px 25px;
   border-radius: 29px;
   font-size: 17px;
-  margin-top: 10px;
+  margin-top: 15px;
+  margin-right: 20px;
 }
 
 /* 댓글 리스트  */
 .comment-list-wrap {
   border: 1px solid #efefef;
   border-radius: 10px;
-  margin-top: 70px;
+  margin-top: 90px;
+  width: 98%;
 }
 .comment-item:not(:last-child) {
   border-bottom: 1px solid #efefef;
@@ -216,7 +243,8 @@ export default {
   display: grid;
   row-gap: 5px;
 }
-.comment-list-wrap > :nth-child(-n + 4) .content::before {
+/* .comment-list-wrap > :nth-child(-n + 4) .content::before { */
+.comment-list-wrap .bestComment::before {
   content: "BEST";
   background-color: #ff4d56;
   color: white;
@@ -265,5 +293,12 @@ export default {
 .isUserDislikeActive {
   border: 1px solid #385da3;
   color: #385da3;
+}
+.more-comment-btn {
+  display: block;
+  margin: 30px auto 150px;
+  background-color: white;
+  border: none;
+  color: #999;
 }
 </style>

@@ -154,7 +154,11 @@ public class DataLoader implements ApplicationRunner {
         initComment(Long.valueOf(4), Long.valueOf(9), "남주 말 다 맞다고 본다~~");
         initComment(Long.valueOf(5), Long.valueOf(9), "와 보통 저런 상황 오면 공주님 안기하지 않나 냅다 의자를 걍 번쩍 들어버려서 개놀랬네");
         initComment(Long.valueOf(1), Long.valueOf(9), "다음화..!!!");
-        initComment(Long.valueOf(3), Long.valueOf(9), "드라마로 제작되면 좋겠다");
+        initComment(Long.valueOf(3), Long.valueOf(9), "네 지금 알려주세요!!");
+        initComment(Long.valueOf(4), Long.valueOf(9), "ㄱㅇㅇ");
+        initComment(Long.valueOf(5), Long.valueOf(9), "다음화를 위해 나 처음으로 쿠키 구웠다...");
+        initComment(Long.valueOf(1), Long.valueOf(9), "작가님 처음에 도입부 그림 너무 예뻐요!");
+        initComment(Long.valueOf(3), Long.valueOf(9), "왜 여기서 끊기는 거야.. 오븐 불켜라");
 
 //        좋아요
         initCommentLike(Long.valueOf(1), Long.valueOf(2));
