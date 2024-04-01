@@ -9,6 +9,7 @@ import java.util.List;
 import jh.naverwebtoon.db.domain.Genre;
 import jh.naverwebtoon.db.domain.Member;
 import jh.naverwebtoon.db.domain.WebtoonThumbnail;
+import jh.naverwebtoon.db.domain.enums.WebtoonType;
 import jh.naverwebtoon.dto.request.CreateWebtoonReq;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -27,7 +28,7 @@ public class OfficialWebtoon extends Webtoon {
 
     public OfficialWebtoon(Member member, CreateWebtoonReq createWebtoonReq, List<Genre> genres,
                            WebtoonThumbnail webtoonThumbnail, DayOfWeek dayOfWeek) {
-        super(member, createWebtoonReq, genres, webtoonThumbnail);
+        super(member, createWebtoonReq, genres, webtoonThumbnail, WebtoonType.OFFICIAL);
         this.dayOfWeek = dayOfWeek;
     }
 }

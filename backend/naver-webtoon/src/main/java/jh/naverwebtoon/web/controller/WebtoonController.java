@@ -1,6 +1,5 @@
 package jh.naverwebtoon.web.controller;
 
-import java.io.IOException;
 import java.util.List;
 import jh.naverwebtoon.db.domain.webtoon.Webtoon;
 import jh.naverwebtoon.dto.request.CreateWebtoonReq;
@@ -23,10 +22,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class WebtoonController {
     private final WebtoonService webtoonService;
 
+    /**
+     *  웹툰 등록
+     */
     @Auth
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public Long createWebtoon(@Login Long id, @ModelAttribute CreateWebtoonReq createWebtoonReq)
-            throws IOException {
+    public Long createWebtoon(@Login Long id, @ModelAttribute CreateWebtoonReq createWebtoonReq) {
         Webtoon webtoon = webtoonService.createWebtoon(id, createWebtoonReq);
         return webtoon.getId();
     }

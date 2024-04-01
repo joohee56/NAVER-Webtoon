@@ -1,5 +1,5 @@
 package jh.naverwebtoon.db.domain.enums;
 
-public enum WebtoonType {
+public enum WebtoonCategory {
     EPISODE, OMNIBUS, STORY
 }

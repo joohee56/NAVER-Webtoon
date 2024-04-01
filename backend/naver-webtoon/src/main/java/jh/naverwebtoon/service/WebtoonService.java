@@ -1,6 +1,5 @@
 package jh.naverwebtoon.service;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,7 +10,6 @@ import jh.naverwebtoon.db.domain.WebtoonThumbnail;
 import jh.naverwebtoon.db.domain.webtoon.Webtoon;
 import jh.naverwebtoon.db.repository.GenreRepository;
 import jh.naverwebtoon.db.repository.MemberRepository;
-import jh.naverwebtoon.db.repository.RoundRepository;
 import jh.naverwebtoon.db.repository.WebtoonRepository;
 import jh.naverwebtoon.dto.request.CreateWebtoonReq;
 import jh.naverwebtoon.dto.response.FindCreateRoundInfoRes;
@@ -28,11 +26,10 @@ public class WebtoonService {
     private final WebtoonRepository webtoonRepository;
     private final MemberRepository memberRepository;
     private final GenreRepository genreRepository;
-    private final RoundRepository roundRepository;
     private final FileStore fileStore;
 
     @Transactional
-    public Webtoon createWebtoon(Long memberId, CreateWebtoonReq createWebtoonReq) throws IOException {
+    public Webtoon createWebtoon(Long memberId, CreateWebtoonReq createWebtoonReq) {
         Member member = memberRepository.findOne(memberId);
         List<Genre> genres = createWebtoonReq.getGenres().stream()
                 .map(genreEnum -> genreRepository.findByGenreEnum(genreEnum))
@@ -48,10 +45,7 @@ public class WebtoonService {
     }
 
     public List<FindWebtoonsByMemberRes> findAllByMember(Long memberId) {
-        List<Webtoon> webtoons = webtoonRepository.findAllByMemberWithThumbnail(memberId);
-        return webtoons.stream()
-                .map(w -> FindWebtoonsByMemberRes.create(w))
-                .collect(Collectors.toList());
+        return webtoonRepository.findAllByMemberWithThumbnail(memberId);
     }
 
     public List<FindCreateRoundInfoRes> findCreateRoundInfo(Long memberId) {

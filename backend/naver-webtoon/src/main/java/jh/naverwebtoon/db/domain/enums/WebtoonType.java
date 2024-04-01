@@ -1,2 +1,5 @@
-package jh.naverwebtoon.db.domain.enums;public enum WebtoonType {
+package jh.naverwebtoon.db.domain.enums;
+
+public enum WebtoonType {
+    OFFICIAL, CHALLENGE
 }

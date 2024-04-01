@@ -3,6 +3,7 @@ package jh.naverwebtoon.db.domain.webtoon;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
+import jakarta.persistence.DiscriminatorType;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -27,6 +28,7 @@ import jh.naverwebtoon.db.domain.Round;
 import jh.naverwebtoon.db.domain.Tag;
 import jh.naverwebtoon.db.domain.WebtoonGenre;
 import jh.naverwebtoon.db.domain.WebtoonThumbnail;
+import jh.naverwebtoon.db.domain.enums.WebtoonCategory;
 import jh.naverwebtoon.db.domain.enums.WebtoonType;
 import jh.naverwebtoon.dto.request.CreateWebtoonReq;
 import lombok.AccessLevel;
@@ -38,7 +40,7 @@ import lombok.Setter;
 @Inheritance(strategy = InheritanceType.JOINED)
 @Getter @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@DiscriminatorColumn(name = "serial")
+@DiscriminatorColumn(name = "serial", discriminatorType = DiscriminatorType.STRING)
 @DiscriminatorValue("challenge")
 public class Webtoon extends BaseEntity {
 
@@ -50,7 +52,7 @@ public class Webtoon extends BaseEntity {
     private String name;
 
     @Enumerated(EnumType.STRING)
-    private WebtoonType webtoonType;
+    private WebtoonCategory webtoonCategory;
 
     @OneToMany(mappedBy = "webtoon",cascade = CascadeType.ALL)
     private List<Tag> tags = new ArrayList<>();
@@ -65,6 +67,8 @@ public class Webtoon extends BaseEntity {
     private String summary;
 
     private int ageLimit;
+
+    private WebtoonType webtoonType;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
@@ -88,9 +92,9 @@ public class Webtoon extends BaseEntity {
         webtoonGenre.setWebtoon(this);
     }
 
-    protected Webtoon(Member member, CreateWebtoonReq createWebtoonReq, List<Genre> genres, WebtoonThumbnail webtoonThumbnail) {
+    protected Webtoon(Member member, CreateWebtoonReq createWebtoonReq, List<Genre> genres, WebtoonThumbnail webtoonThumbnail, WebtoonType webtoonType) {
         this.name = createWebtoonReq.getName();
-        this.webtoonType = createWebtoonReq.getWebtoonType();
+        this.webtoonCategory = createWebtoonReq.getWebtoonCategory();
 
         for (String tagName : createWebtoonReq.getTags()) {
             this.addTag(Tag.create(tagName));
@@ -106,6 +110,7 @@ public class Webtoon extends BaseEntity {
         this.oneLineSummary = createWebtoonReq.getOneLineSummary();
         this.summary = createWebtoonReq.getSummary();
         this.ageLimit = 0;
+        this.webtoonType = webtoonType;
         this.member = member;
         this.webtoonThumbnail = webtoonThumbnail;
     }
@@ -113,7 +118,7 @@ public class Webtoon extends BaseEntity {
     public static Webtoon create(Member member, CreateWebtoonReq createWebtoonReq, List<Genre> genres, WebtoonThumbnail webtoonThumbnail) {
         Webtoon webtoon = new Webtoon();
         webtoon.name = createWebtoonReq.getName();
-        webtoon.webtoonType = createWebtoonReq.getWebtoonType();
+        webtoon.webtoonCategory = createWebtoonReq.getWebtoonCategory();
 
         for (String tagName : createWebtoonReq.getTags()) {
             webtoon.addTag(Tag.create(tagName));
@@ -128,6 +133,7 @@ public class Webtoon extends BaseEntity {
 
         webtoon.oneLineSummary = createWebtoonReq.getOneLineSummary();
         webtoon.summary = createWebtoonReq.getSummary();
+        webtoon.webtoonType = WebtoonType.CHALLENGE;
         webtoon.member = member;
         webtoon.webtoonThumbnail = webtoonThumbnail;
         return webtoon;
