@@ -27,8 +27,7 @@
 
 		<!-- 페이지 -->
 		<div class="paginate-wrap">
-			<button>
-			</button>
+			<button v-for="n in pageCount" @click="changePage(n)">{{n}}</button>
 		</div>
 
 	</div>
@@ -44,7 +43,7 @@ export default {
       rounds: [], //roundId, roundNumber, thumbnail, title, createdAt, totalLikeCount
       pageCount: "",
       totalRoundCount: "",
-      limit: 15,
+      limit: 10,
       selectDesc: true,
     };
   },
@@ -74,6 +73,9 @@ export default {
         this.fetchRounds(0, isDesc);
         this.selectDesc = !this.selectDesc;
       }
+    },
+    changePage(n) {
+      this.fetchRounds((n - 1) * 10, this.selectDesc);
     },
   },
 };

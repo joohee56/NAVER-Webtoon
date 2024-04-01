@@ -1,5 +1,4 @@
 import { fileApiInstance, jsonApiInstance } from "@/api/index";
-import { startSessionCheck } from "./loginSession";
 
 const fileApi = fileApiInstance();
 const jsonApi = jsonApiInstance();
@@ -7,7 +6,6 @@ const jsonApi = jsonApiInstance();
 async function postCreateWebtoon(webtoon) {
   try {
     const response = await fileApi.post("/webtoon", webtoon);
-    startSessionCheck();
     return response;
   } catch (error) {
     console.log(error);
@@ -17,7 +15,6 @@ async function postCreateWebtoon(webtoon) {
 async function getWebtoonAllByMember() {
   try {
     const response = await jsonApi.get("/webtoon");
-    startSessionCheck();
     return response;
   } catch (error) {
     console.log(error);
@@ -27,7 +24,6 @@ async function getWebtoonAllByMember() {
 async function getOfficialWebtoonAll() {
   try {
     const response = await jsonApi.get("/webtoon/official");
-    startSessionCheck();
     return response;
   } catch (error) {
     console.log(error);
@@ -37,7 +33,6 @@ async function getOfficialWebtoonAll() {
 async function getOfficialWebtoonDetail(webtoonId) {
   try {
     const response = await jsonApi.get(`/webtoon/official/${webtoonId}`);
-    startSessionCheck();
     return response;
   } catch (error) {
     console.log(error);
@@ -47,7 +42,6 @@ async function getOfficialWebtoonDetail(webtoonId) {
 async function getCreateRoundInfo() {
   try {
     const response = await jsonApi.get("/webtoon/createRound");
-    startSessionCheck();
     return response;
   } catch (error) {
     console.log(error);

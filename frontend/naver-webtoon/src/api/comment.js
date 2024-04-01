@@ -1,12 +1,10 @@
 import { jsonApiInstance } from "@/api/index";
-import { startSessionCheck } from "./loginSession";
 
 const jsonApi = jsonApiInstance();
 
 async function postComment(comment) {
   try {
     const response = await jsonApi.post("/comments", comment);
-    startSessionCheck();
     return response;
   } catch (error) {
     console.log(error);
@@ -18,7 +16,6 @@ async function getComments(roundId, offset, limit) {
     const response = await jsonApi.get(
       `/comments/${roundId}/${offset}/${limit}`
     );
-    startSessionCheck();
     return response;
   } catch (error) {
     console.log(error);
@@ -30,7 +27,6 @@ async function postCommentLike(commentId) {
     const response = await jsonApi.post("/comment/like", null, {
       params: { commentId: commentId },
     });
-    startSessionCheck();
     return response;
   } catch (error) {
     alert(error.response.data.message);
@@ -41,7 +37,6 @@ async function postCommentLike(commentId) {
 async function postCommentDislike(commentId) {
   try {
     const response = await jsonApi.post(`/comment/dislike/${commentId}`, null);
-    startSessionCheck();
     return response;
   } catch (error) {
     alert(error.response.data.message);

@@ -16,7 +16,9 @@ async function postJoinMember(member) {
 async function postLogin(loginInfo) {
   try {
     const response = await formApi.post("/users/login", loginInfo);
-    startSessionCheck();
+    if (response.status === 200) {
+      startSessionCheck();
+    }
     return response;
   } catch (error) {
     console.log(error);
@@ -34,7 +36,6 @@ async function checkDuplicatedLoginId(loginId) {
 async function getUserInfo() {
   try {
     const response = await jsonApi.get("/users");
-    startSessionCheck();
     return response;
   } catch (error) {
     console.log(error);
