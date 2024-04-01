@@ -140,7 +140,31 @@ public class DataLoader implements ApplicationRunner {
         initRound(Long.valueOf(2), "세레나_6화_썸네일.png", "세레나_6화_원고.png", "유리 화원(2)",".");
         initRound(Long.valueOf(2), "세레나_7화_썸네일.png", "세레나_7화_원고.png", "유리 화원(3)",".");
         initRound(Long.valueOf(2), "세레나_8화_썸네일.png", "세레나_8화_원고.png", "나쁜 놈","이제부터 본 이야기 시작!");
+        initRound(Long.valueOf(2), "세레나_9화_썸네일.png", "세레나_9화_원고.png", "키스해 주세요", ".");
         initRound(Long.valueOf(2), "세레나_9화_썸네일.png", "세레나_9화_원고.png", "이거 완전 공주님이네", "작중 '마리안느 드생'의 그림은 5화에서 살짝 등장했었답니다:)");
+
+        initRound(Long.valueOf(2), "세레나_9화_썸네일.png", "세레나_9화_원고.png", "버려진 새끼 고양이", ".");
+        initRound(Long.valueOf(2), "세레나_9화_썸네일.png", "세레나_9화_원고.png", "별관", ".");
+        initRound(Long.valueOf(2), "세레나_9화_썸네일.png", "세레나_9화_원고.png", "배신할 타이밍", ".");
+        initRound(Long.valueOf(2), "세레나_9화_썸네일.png", "세레나_9화_원고.png", "호텔", ".");
+        initRound(Long.valueOf(2), "세레나_9화_썸네일.png", "세레나_9화_원고.png", "각자의 계획", ".");
+        initRound(Long.valueOf(2), "세레나_9화_썸네일.png", "세레나_9화_원고.png", "오늘 못 참겠어", ".");
+        initRound(Long.valueOf(2), "세레나_9화_썸네일.png", "세레나_9화_원고.png", "너와 나의 진짜 관계", ".");
+        initRound(Long.valueOf(2), "세레나_9화_썸네일.png", "세레나_9화_원고.png", "사랑을 논할 사이", ".");
+        initRound(Long.valueOf(2), "세레나_9화_썸네일.png", "세레나_9화_원고.png", "둘이서만 잠시", ".");
+        initRound(Long.valueOf(2), "세레나_9화_썸네일.png", "세레나_9화_원고.png", "너 그거 못 마셔", ".");
+
+        initRound(Long.valueOf(2), "세레나_9화_썸네일.png", "세레나_9화_원고.png", "익사하는 밤", ".");
+        initRound(Long.valueOf(2), "세레나_9화_썸네일.png", "세레나_9화_원고.png", "시인의 유작(1)", ".");
+        initRound(Long.valueOf(2), "세레나_9화_썸네일.png", "세레나_9화_원고.png", "시인의 유작(2)", ".");
+        initRound(Long.valueOf(2), "세레나_9화_썸네일.png", "세레나_9화_원고.png", "초록빛 술", ".");
+        initRound(Long.valueOf(2), "세레나_9화_썸네일.png", "세레나_9화_원고.png", "호수와 바다", ".");
+        initRound(Long.valueOf(2), "세레나_9화_썸네일.png", "세레나_9화_원고.png", "예쁘지 않은 것도, 있는데", ".");
+        initRound(Long.valueOf(2), "세레나_9화_썸네일.png", "세레나_9화_원고.png", "단추가 13개", ".");
+        initRound(Long.valueOf(2), "세레나_9화_썸네일.png", "세레나_9화_원고.png", "벽 짚고 똑바로 서", ".");
+        initRound(Long.valueOf(2), "세레나_9화_썸네일.png", "세레나_9화_원고.png", "예쁜 복숭아", ".");
+        initRound(Long.valueOf(2), "세레나_9화_썸네일.png", "세레나_9화_원고.png", "이건, 예정에 없던 건데", ".");
+
 
 //        RoundLike
         initRoundLike(Long.valueOf(3), Long.valueOf(9));
