@@ -3,9 +3,12 @@
 		<div class="subject">작품 관리</div>
 		<div class="content-wrap">
 
-      <div v-for="webtoon in webtoons" class="webtoon-list">
-        <div>
+      <div v-for="(webtoon, index) in webtoons" class="webtoon-list">
+        <div class="thumbnail-wrap" @mouseover="mouseoverOnThumbnail(index)" @mouseleave="mouseleaveOnThumbnail(index)">
 					<img :src="require(`@/assets/image/${webtoon.posterStoreName}`)" class="cover-image">
+          <div class="cover-image-wrap" :class="{isBlind:!webtoon.showLinkToWebtoon}">
+          </div>
+          <router-link :to="{name: 'roundList', params: {webtoonId: webtoon.webtoonId}}" class="link-to-webtoon-detail" :class="{isBlind:!webtoon.showLinkToWebtoon}">웹툰에서 보기 ↗</router-link>
 				</div>
 				<div class="webtoon-info">
 					<div>
@@ -61,22 +64,36 @@ import { getWebtoonAllByMember } from "@/api/webtoon";
 export default {
   data() {
     return {
-      webtoons: [], //webtoonId, webtoonName, serialType, posterStoreName, totalCommentCount
+      webtoons: [], //webtoonId, webtoonName, serialType, posterStoreName, totalCommentCount, showLinkToWebtoon
+      showLinkToWebtoon: [],
+      test: true,
     };
   },
   mounted() {
-    console.log("mounted");
     this.fetchWebtoon();
   },
   methods: {
     async fetchWebtoon() {
       try {
         const response = await getWebtoonAllByMember();
-        this.webtoons = response.data;
         console.log(response.data);
+        this.setWebtoons(response.data);
       } catch (error) {
         console.log(error);
       }
+    },
+    setWebtoons(responseData) {
+      for (let i = 0; i < responseData.length; i++) {
+        const webtoon = { ...responseData[i] };
+        webtoon.showLinkToWebtoon = false;
+        this.webtoons.push(webtoon);
+      }
+    },
+    mouseoverOnThumbnail(index) {
+      this.webtoons[index].showLinkToWebtoon = true;
+    },
+    mouseleaveOnThumbnail(index) {
+      this.webtoons[index].showLinkToWebtoon = false;
     },
   },
   filters: {
@@ -114,9 +131,40 @@ export default {
   max-height: 214px;
 }
 
+.thumbnail-wrap {
+  position: relative;
+}
+.cover-image-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4));
+  border-radius: 4px;
+}
+.thumbnail-wrap .link-to-webtoon-detail {
+  z-index: 99;
+  position: absolute;
+  cursor: pointer;
+  right: 15px;
+  bottom: 20px;
+  left: 15px;
+  color: white;
+  font-size: 15px;
+  border: 1px solid white;
+  background: rgba(0, 0, 0, 0.601);
+  font-family: AppleSDGothicNeoR;
+  text-align: center;
+  padding: 6px 3px 3px;
+}
+.isBlind {
+  display: none;
+}
 .cover-image {
   width: 135px;
-  height: 174px;
+  height: 100%;
   border-radius: 5px;
   border: 0.5px solid #ebebeb;
   object-fit: cover;
