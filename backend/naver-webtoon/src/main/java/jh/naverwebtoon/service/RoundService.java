@@ -37,7 +37,8 @@ public class RoundService {
     public FindRoundsByWebtoonWithPaging findRoundsByWebtoonWithPaing(Long webtoonId, int offset, int limit, boolean isDesc) {
         List<RoundListDto> rounds = roundRepository.findAllByWebtoonWithPaging(webtoonId, offset, limit, isDesc);
         Long totalRoundCount = roundRepository.findTotalCountByWebtoon(webtoonId);  //총 회차 갯수
-        int pageCount = (int) Math.ceil((double)totalRoundCount / limit);  //총 페이지 갯수
+
+        int pageCount = totalRoundCount==0 ? 1 : (int) Math.ceil((double)totalRoundCount / limit);  //총 페이지 갯수
 
         return new FindRoundsByWebtoonWithPaging(rounds,pageCount, totalRoundCount);
     }
