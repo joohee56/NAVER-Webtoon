@@ -357,9 +357,6 @@ export default {
   padding: 0 20px;
   cursor: pointer;
 }
-.round-list button :disabled {
-  color: #c4c4c4;
-}
 .round-list .right-btn {
   margin-left: auto;
 }

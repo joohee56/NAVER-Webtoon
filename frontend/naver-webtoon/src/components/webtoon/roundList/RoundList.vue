@@ -26,9 +26,11 @@
 		</div>
 
 		<!-- 페이지 -->
-		<div class="paginate-wrap">
-			<button v-for="n in pageCount" @click="changePage(n)">{{n}}</button>
-		</div>
+		<div class="paging-btn-wrap">
+      <button :disabled="isBeforePageBtnDisabled" @click="clickBeforePage"><i class="fa-solid fa-angle-left before-page-btn"></i></button>
+			<button v-for="(page, index) in pages" @click="changePage(page.n, index)" class="page-btn" :class="{active:page.isNowPage}">{{page.n}}</button>
+      <button :disabled="isNextPageBtnDisabled" @click="clickNextPage"><i class="fa-solid fa-angle-right next-page-btn"></i></button>
+    </div>
 
 	</div>
 
@@ -41,14 +43,42 @@ export default {
   data() {
     return {
       rounds: [], //roundId, roundNumber, thumbnail, title, createdAt, totalLikeCount
-      pageCount: "",
       totalRoundCount: "",
-      limit: 10,
+      roundLimit: 10,
       selectDesc: true,
+      pages: [],
+      nowPageIndex: 0,
+      startPage: "",
+      totalPageCount: "",
+      pageLimit: 5,
+      isBeforePageBtnDisabled: false,
+      isNextPageBtnDisabled: false,
     };
   },
-  mounted() {
-    this.fetchRounds(0, true);
+  watch: {
+    startPage() {
+      this.pages = [];
+      const end = Math.min(
+        this.totalPageCount + 1,
+        this.startPage + this.pageLimit
+      );
+      for (let i = this.startPage; i < end; i++) {
+        this.pages.push({ n: i, isNowPage: false });
+      }
+      this.nowPageIndex = 0;
+      this.pages[0].isNowPage = true;
+
+      this.setPageBtnDisabled();
+    },
+
+    nowPageIndex(val, oldVal) {
+      this.pages[oldVal].isNowPage = false;
+      this.pages[val].isNowPage = true;
+    },
+  },
+  async mounted() {
+    await this.fetchRounds(0, true);
+    this.startPage = 1;
   },
   methods: {
     async fetchRounds(offset, isDesc) {
@@ -57,12 +87,12 @@ export default {
         const response = await getRoundsWithPaging(
           this.$route.params.webtoonId,
           offset,
-          this.limit,
+          this.roundLimit,
           isDesc
         );
         console.log(response.data);
         this.rounds = response.data.rounds;
-        this.pageCount = response.data.pageCount;
+        this.totalPageCount = response.data.pageCount;
         this.totalRoundCount = response.data.totalRoundCount;
       } catch (error) {
         console.log(error);
@@ -74,8 +104,33 @@ export default {
         this.selectDesc = !this.selectDesc;
       }
     },
-    changePage(n) {
+    changePage(n, index) {
       this.fetchRounds((n - 1) * 10, this.selectDesc);
+      this.nowPageIndex = index;
+    },
+    clickBeforePage() {
+      this.startPage = Math.max(1, this.startPage - this.pageLimit);
+      this.changePage(this.startPage, 0);
+    },
+    clickNextPage() {
+      this.startPage = Math.min(
+        this.totalPageCount + 1,
+        this.startPage + this.pageLimit
+      );
+      this.changePage(this.startPage, 0);
+    },
+    setPageBtnDisabled() {
+      if (this.startPage === 1) {
+        this.isBeforePageBtnDisabled = true;
+      } else {
+        this.isBeforePageBtnDisabled = false;
+      }
+
+      if (this.startPage + this.pageLimit > this.totalPageCount) {
+        this.isNextPageBtnDisabled = true;
+      } else {
+        this.isNextPageBtnDisabled = false;
+      }
     },
   },
 };
@@ -85,6 +140,7 @@ export default {
 .container {
   font-family: AppleSDGothicNeoM;
   color: #666;
+  height: 1200px;
 }
 .header {
   display: flex;
@@ -148,6 +204,26 @@ export default {
   font-size: 12px;
 }
 
-/* 페이지 */
+/* 페이징 */
+.paging-btn-wrap {
+  text-align: center;
+  margin-top: 30px;
+}
+.paging-btn-wrap > * {
+  margin-right: 20px;
+}
+.paging-btn-wrap button {
+  background-color: white;
+  border: none;
+  font-size: 17px;
+  font-family: AppleSDGothicNeoB;
+  cursor: pointer;
+}
+.paging-btn-wrap .active {
+  color: #00dc64;
+}
+.before-page-btn,
+.next-page-btn {
+  cursor: pointer;
+}
 </style>
-@/api/round

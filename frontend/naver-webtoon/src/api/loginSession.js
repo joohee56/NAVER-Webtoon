@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 //세션 체크 로직 시작
 const startSessionCheck = function () {
   setTimeOffsetBetweenServerAndClient();
-  setInterval(checkSessionExpired, 100); //10초마다 체크
+  setInterval(checkSessionExpired, 10 * 1000); //10초마다 체크
 };
 
 //서버와 클라이언트의 시간차 계산 후 쿠키 생성
@@ -17,7 +17,6 @@ const setTimeOffsetBetweenServerAndClient = function () {
 
 //세션 만료 체크
 const checkSessionExpired = function () {
-  console.log("CheckSessionExpired");
   const sessionExpiry = Math.abs(Cookies.get("sessionExpiry"));
   let timeOffSet = Math.abs(Cookies.get("clientTimeOffset"));
   let localTime = new Date().getTime() - timeOffSet;
