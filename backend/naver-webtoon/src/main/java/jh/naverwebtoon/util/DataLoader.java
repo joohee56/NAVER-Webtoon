@@ -356,9 +356,13 @@ public class DataLoader implements ApplicationRunner {
 
 
 //        RoundLike
-        for(int i=18; i<=27; i++) {
+        for(int i=18; i<=25; i++) {
             initRoundLike(Long.valueOf(i), Long.valueOf(63));  //세레나
         }
+        for(int i=26; i<=27; i++) {
+            initRoundLike(Long.valueOf(i), Long.valueOf(62));  //세레나
+        }
+        initRoundLike(Long.valueOf(1), Long.valueOf(1));
 
         for(int i=18; i<=25; i++) {
             initRoundLike(Long.valueOf(i), Long.valueOf(79));  //신의탑
