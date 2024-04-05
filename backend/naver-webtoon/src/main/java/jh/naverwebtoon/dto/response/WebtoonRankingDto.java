@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import jh.naverwebtoon.db.domain.Genre;
+import jh.naverwebtoon.db.domain.WebtoonGenre;
 import jh.naverwebtoon.db.domain.WebtoonRanking;
 import jh.naverwebtoon.db.domain.enums.RankingStatus;
 import lombok.Data;
@@ -17,20 +18,6 @@ public class WebtoonRankingDto {
     private Long totalLikeCount;
     private String rankingStatus;
     private int ranking;
-
-    public static WebtoonRankingDto create(WebtoonRanking webtoonRanking) {
-        WebtoonRankingDto res = new WebtoonRankingDto();
-        res.webtoonId = webtoonRanking.getWebtoon().getId();
-        res.webtoonName = webtoonRanking.getWebtoon().getName();
-        res.thumbnail = webtoonRanking.getWebtoon().getWebtoonThumbnail().getPosterImage().getStoreFileName();
-        res.genres = webtoonRanking.getWebtoon().getGenres().stream()
-                .map(webtoonGenre -> webtoonGenre.getGenre().getGenreEnum().getTitle())
-                .collect(Collectors.toList());
-        res.totalLikeCount = webtoonRanking.getTotalLikeCount();
-        res.rankingStatus = webtoonRanking.getStatus().getName();
-        res.ranking = webtoonRanking.getRanking().ordinal()+1;
-        return res;
-    }
 
     public static WebtoonRankingDto create(FindNewRanking findNewRanking, RankingStatus rankingStatus, List<Genre> genres, int ranking) {
         WebtoonRankingDto res = new WebtoonRankingDto();
@@ -46,16 +33,17 @@ public class WebtoonRankingDto {
         return res;
     }
 
-    @Override
-    public String toString() {
-        return "WebtoonRankingDto{" +
-                "webtoonId=" + webtoonId +
-                ", webtoonName='" + webtoonName + '\'' +
-                ", thumbnail='" + thumbnail + '\'' +
-                ", genres=" + genres.toString() +
-                ", totalLikeCount=" + totalLikeCount +
-                ", rankingStatus='" + rankingStatus + '\'' +
-                ", ranking=" + ranking +
-                '}';
+    public static WebtoonRankingDto create(WebtoonRanking webtoonRanking) {
+        WebtoonRankingDto res = new WebtoonRankingDto();
+        res.webtoonId = webtoonRanking.getWebtoon().getId();
+        res.webtoonName = webtoonRanking.getWebtoon().getName();
+        res.thumbnail = webtoonRanking.getWebtoon().getWebtoonThumbnail().getPosterImage().getStoreFileName();
+        for (WebtoonGenre webtoonGenre : webtoonRanking.getWebtoon().getGenres()) {
+            res.genres.add(webtoonGenre.getGenre().getGenreEnum().getTitle());
+        }
+        res.totalLikeCount = webtoonRanking.getTotalLikeCount();
+        res.rankingStatus = webtoonRanking.getStatus().getName();
+        res.ranking = webtoonRanking.getRanking().ordinal();
+        return res;
     }
 }

@@ -1,7 +1,6 @@
 package jh.naverwebtoon.web.controller;
 
-import java.util.List;
-import jh.naverwebtoon.dto.response.WebtoonRankingDto;
+import jh.naverwebtoon.dto.response.FindWebtoonRankingsRes;
 import jh.naverwebtoon.service.WebtoonRankingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +14,7 @@ public class WebtoonRankingController {
     private final WebtoonRankingService webtoonRankingService;
 
     @GetMapping()
-    public List<WebtoonRankingDto> findWebtoonRanking() {
-        return webtoonRankingService.findRanking();
+    public FindWebtoonRankingsRes findWebtoonRanking() {
+        return FindWebtoonRankingsRes.create(webtoonRankingService.findRanking());
     }
 }

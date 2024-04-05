@@ -4,6 +4,7 @@ import jakarta.persistence.EntityManager;
 import java.util.List;
 import jh.naverwebtoon.db.domain.WebtoonRanking;
 import jh.naverwebtoon.dto.response.FindNewRanking;
+import jh.naverwebtoon.dto.response.WebtoonRankingDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -32,10 +33,8 @@ public class WebtoonRankingRepository {
     public List<WebtoonRanking> findLatestOne() {
         return em.createQuery("select distinct wr from WebtoonRanking wr"
                 + " join fetch wr.webtoon w"
-                + " join fetch w.webtoonThumbnail"
-                + " join fetch w.genres g"
-                + " join fetch g.genre"
-                + " order by wr.createdAt desc, wr.ranking asc"
+                + " join fetch w.webtoonThumbnail wt"
+                + " order by wr.createdAt desc"
                 + " limit 5", WebtoonRanking.class)
                 .getResultList();
     }

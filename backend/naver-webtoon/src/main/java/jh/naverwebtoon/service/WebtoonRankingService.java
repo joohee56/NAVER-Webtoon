@@ -1,6 +1,7 @@
 package jh.naverwebtoon.service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import jh.naverwebtoon.db.domain.Genre;
@@ -29,7 +30,10 @@ public class WebtoonRankingService {
      * 가장 최근 웹툰 랭킹 조회
      */
     public List<WebtoonRankingDto> findRanking() {
-        return webtoonRankingRepository.findLatestOne().stream()
+        List<WebtoonRanking> webtoonRankings = webtoonRankingRepository.findLatestOne();
+        //웹툰 순위가 높은 순서대로 정렬
+        webtoonRankings.sort(Comparator.comparingInt(w -> w.getRanking().ordinal()));
+        return webtoonRankings.stream()
                 .map(webtoonRanking -> WebtoonRankingDto.create(webtoonRanking))
                 .collect(Collectors.toList());
     }

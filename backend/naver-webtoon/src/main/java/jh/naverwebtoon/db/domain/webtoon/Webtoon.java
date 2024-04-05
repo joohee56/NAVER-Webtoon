@@ -35,6 +35,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.BatchSize;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -57,6 +58,7 @@ public class Webtoon extends BaseEntity {
     @OneToMany(mappedBy = "webtoon",cascade = CascadeType.ALL)
     private List<Tag> tags = new ArrayList<>();
 
+    @BatchSize(size = 5)
     @OneToMany(mappedBy = "webtoon", cascade = CascadeType.ALL)
     private List<WebtoonGenre> genres = new ArrayList<>();
 
