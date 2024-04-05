@@ -6,7 +6,7 @@
 			<router-link :to="{name: 'roundList', params: {webtoonId : `${this.$route.params.webtoonId}`}}"><i class="fa-solid fa-angle-left"></i></router-link>
 			<router-link :to="{name: 'roundList', params: {webtoonId : `${this.$route.params.webtoonId}`}}">{{roundDetail.webtoonName}}</router-link>
 			<span class="separator"></span>
-			<span>{{roundDetail.roundNumber}}화. {{roundDetail.roundTitle}}</span>
+			<span>{{roundDetail.roundNumber}}화 {{roundDetail.roundTitle}}</span>
 			<span @click="moveBeforeRound" class="before-round">
 				<i class="fa-solid fa-caret-left"></i>
 				<span> 이전화</span>

@@ -2,10 +2,6 @@
   <div class="container">
     <nav>
       <button v-for="(categoryHeader, index) in categoryHeaders" @click="handleLinkClick(index)" :class="{active:isActive[index]}">{{categoryHeader}}</button>
-
-      <!-- <router-link :to="{name: 'main'}" @click="handleLinkClick">웹툰</router-link>
-      <router-link :to="{name: 'challenge'}" @click="handleLinkClick">도전만화</router-link>
-      <router-link to="/mypage/favorite" @click="handleLinkClick">마이페이지</router-link> -->
     </nav>
     <router-link :to="{name: 'creatorDashboard'}" class="creator-btn">CREATOR'S</router-link>
   </div>  
@@ -16,8 +12,8 @@ export default {
   data() {
     return {
       isActive: [true, false, false],
-      categoryHeaders: ["웹툰", "도전만화", "마이페이지"],
-      routerNames: ["main", "challenge", "mypage"],
+      categoryHeaders: ["웹툰", "도전만화"],
+      routerNames: ["main", "challenge"],
     };
   },
 

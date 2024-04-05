@@ -2,17 +2,14 @@
 	<div class="ranking-container">
 
     <div class="subject-wrap">
-      <div class="title-wrap">
-        <div class="title">실시간 인기 웹툰</div>
-        <div class="filter">
-          <button class="active">전체</button> ·
-          <button>여성</button> ·
-          <button>남성</button>
-        </div>
+      <div class="title">실시간 인기 웹툰</div>
+      <div class="filter">
+        <button class="active">전체</button> ·
+        <button>여성</button> ·
+        <button>남성</button>
       </div>
-      <div class="update-time">{{updatedAt}}</div>
+      <div class="update-time">{{updatedAt}} 기준</div>
     </div>
-
 
     <div class="box-container">
       <div v-if="rankings.length === 0">
@@ -119,11 +116,9 @@ export default {
 }
 .subject-wrap {
   margin-bottom: 15px;
-}
-.title-wrap {
   display: flex;
 }
-.title-wrap > div {
+.subject-wrap > div {
   margin-right: 10px;
 }
 .title {
@@ -132,17 +127,18 @@ export default {
   font-family: AppleSDGothicNeoEB;
 }
 .update-time {
+  font-size: 14px;
   font-family: AppleSDGothicNeoEB;
   color: #999;
-  font-size: 15px;
-  align-items: flex-end;
-  display: flex;
+  line-height: 30px;
+  /* align-items: flex-end;
+  display: flex; */
 }
 button {
   background: none;
   border: none;
   padding: 0;
-  font-size: 13;
+  font-size: 13px;
   font-family: AppleSDGothicNeoEB;
 }
 .active {
@@ -153,10 +149,11 @@ button {
 .box-container {
   border: #e8e8e8 solid 0.5px;
   border-radius: 6px;
-  /* padding: 12px 5px 12px 28px; */
-  padding: 12px 5px;
+  padding: 12px 10px;
   display: flex;
   justify-content: center;
+  box-shadow: 5px 1px 8px 0 rgba(0, 0, 0, 0.06);
+  background-color: #f6f8fa;
 }
 ul {
   list-style: none;
@@ -181,9 +178,6 @@ a {
 }
 .webtoon-list .webtoon-item-wrap {
   display: flex;
-}
-.webtoon-item-wrap:not(last-child) {
-  /* margin-right: 20px; */
 }
 
 /* 랭킹 숫자 */
@@ -242,6 +236,9 @@ a {
 .info-wrap .genre {
   font-size: 13px;
   color: #7c7c7c;
+}
+.genre span:not(:last-child)::after {
+  content: "/";
 }
 .overflow-hidden {
   white-space: nowrap; /* 줄 바꿈 방지 */
