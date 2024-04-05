@@ -36,4 +36,12 @@ public class WebtoonGenre {
         webtoonGenre.genre = genre;
         return webtoonGenre;
     }
+
+    @Override
+    public String toString() {
+        return "WebtoonGenre{" +
+                "id=" + id +
+                ", genre=" + genre +
+                '}';
+    }
 }

@@ -404,6 +404,9 @@ public class DataLoader implements ApplicationRunner {
         initCommentDislike(Long.valueOf(5), Long.valueOf(2));
         initCommentDislike(Long.valueOf(3), Long.valueOf(3));
         initCommentLike(Long.valueOf(5), Long.valueOf(3));
+
+//        WebtoonRanking
+//
     }
 
     public void initMember(String loginId, String password, String emailAddress, String name, LocalDate birthDate, Gender gender, CountryResidence countryResidence, String phoneNumber, String storeFileName) {

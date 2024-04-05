@@ -138,4 +138,14 @@ public class Webtoon extends BaseEntity {
         webtoon.webtoonThumbnail = webtoonThumbnail;
         return webtoon;
     }
+
+    @Override
+    public String toString() {
+        return "Webtoon{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", genres=" + genres +
+                ", webtoonThumbnail=" + webtoonThumbnail +
+                '}';
+    }
 }

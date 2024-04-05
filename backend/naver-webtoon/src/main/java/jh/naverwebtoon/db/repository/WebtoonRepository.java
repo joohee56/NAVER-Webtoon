@@ -55,7 +55,7 @@ public class WebtoonRepository {
     }
 
     public Webtoon findOneWithThumbnailAndGenre(Long webtoonId) {
-        return em.createQuery("select w from Webtoon w"
+        return em.createQuery("select distinct w from Webtoon w"
                 + " join fetch w.webtoonThumbnail"
                 + " join fetch w.genres g"
                 + " join fetch g.genre"

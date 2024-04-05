@@ -1,4 +1,4 @@
-package jh.naverwebtoon.util;
+package jh.naverwebtoon.config;
 
 import jakarta.servlet.Filter;
 import java.util.List;

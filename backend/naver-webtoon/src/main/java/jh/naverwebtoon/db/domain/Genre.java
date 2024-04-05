@@ -23,4 +23,12 @@ public class Genre {
         genre.genreEnum = genreEnum;
         return genre;
     }
+
+    @Override
+    public String toString() {
+        return "Genre{" +
+                "id=" + id +
+                ", genreEnum=" + genreEnum +
+                '}';
+    }
 }
