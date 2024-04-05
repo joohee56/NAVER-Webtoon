@@ -1,32 +1,45 @@
 <template lang="ko">
-	<div class="ranking-wrap">
-		<div class="box-container">
-			<div style="display: flex;">
-				<p class="title">실시간 인기 웹툰</p>
-				<div class="filter">
-					<button class="active">전체</button> • 
-					<button>여성</button> •
-					<button>남성</button>
-				</div>
-			</div>
-			<ul class="webtoon">
-				<li>
-					<div class="ranking">
-						<div class="rank-num">1</div>
-						<div>
-							<img src="@/assets/image/polygon.png">
-						</div>
+	<div class="ranking-container">
+
+    <div class="subject-wrap">
+      <div class="title-wrap">
+        <div class="title">실시간 인기 웹툰</div>
+        <div class="filter">
+          <button class="active">전체</button> ·
+          <button>여성</button> ·
+          <button>남성</button>
+        </div>
+      </div>
+      <div class="update-time">{{updatedAt}}</div>
+    </div>
+
+
+    <div class="box-container">
+      <div v-if="rankings.length === 0">
+        <div class="no-ranking-description-text">조회할 랭킹이 없습니다.</div>
+      </div>
+			<ul class="webtoon-list" v-if="rankings.length !== 0">
+				<li class="webtoon-item-wrap" v-for="(ranking, index) in rankings">
+					<div class="ranking-num-wrap">
+            <div class="ranking-status-image-wrap">
+              <img class="ranking-status-image" :src="require(`@/assets/image/ranking-status-${ranking.rankingStatus}.png`)">
+            </div>
+            <div class="rank-num">{{index+1}}</div>
+          </div>
+					<div class="cover-image">
+						<router-link :to="{name:'roundList', params: {webtoonId: ranking.webtoonId}}">
+							<img :src="require(`@/assets/image/${ranking.thumbnail}`)">
+						</router-link>
 					</div>
-					<div>
-						<img style="width: 90px;" src="@/assets/image/webtoon-cover-sample.png">
-					</div>
-					<div class="info">
-						<div class="like">
+					<div class="info-wrap">
+						<div class="like-cnt">
 							<i class="fa-solid fa-heart"></i>
-							<div>1025만</div>
+							<div>&nbsp;{{ranking.totalLikeCount}}</div>
 						</div>
-						<div class="title">세레나</div>
-						<div class="genre">로맨스</div>
+						<div class="title">{{ranking.webtoonName}}</div>
+						<div class="genre">
+              <span v-for="genre in ranking.genres">{{genre}} </span>
+            </div>
 					</div>
 				</li>
 			</ul>
@@ -35,26 +48,95 @@
 </template>
 
 <script>
-export default {};
+import SockJS from "sockjs-client";
+import Stomp from "webstomp-client";
+import { getWebtoonRanking } from "@/api/webtoon";
+
+export default {
+  data() {
+    return {
+      rankings: [], //webtoonId, webtoonName, thumbnail, totalLikeCount, rankingStatus, genres, ranking
+      updatedAt: "",
+    };
+  },
+  created() {
+    this.fetchRanking();
+    //해당 뷰가 생성되면 소켓 연결을 시도
+    this.connect();
+  },
+  beforeDestroy() {
+    this.disconnect();
+  },
+  methods: {
+    connect() {
+      const serverURL = "http://localhost:8081/websocket";
+      const socket = new SockJS(serverURL);
+      this.stompClient = Stomp.over(socket);
+      console.log(`소켓 연결을 시도합니다. 서버 주소 : ${serverURL}`);
+      //웹 소켓 연결
+      this.stompClient.connect(
+        {},
+        (frame) => {
+          //소켓 연결 성공
+          this.connected = true;
+          console.log("소켓 연결 성공", frame);
+
+          //서버 구독
+          this.stompClient.subscribe("/send", (res) => {
+            const responseData = JSON.parse(res.body);
+            this.rankings = responseData.rankings;
+            this.updatedAt = responseData.updatedAt;
+          });
+        },
+        (error) => {
+          //소켓 연결 실패
+          console.log("소켓 연결 실패", error);
+          this.connected = false;
+        }
+      );
+    },
+    disconnect() {
+      this.stompClient.disconnect();
+      this.connected = false;
+    },
+    async fetchRanking() {
+      try {
+        const response = await getWebtoonRanking();
+        console.log(response.data);
+        this.rankings = response.data.rankings;
+        this.updatedAt = response.data.updatedAt;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  },
+};
 </script>
 
 <style scoped>
-.ranking-wrap {
-  padding: 30px 0 40px;
+.ranking-container {
+  padding: 50px 0 60px;
 }
-.box-container {
-  background-color: #fbfbfb;
-  border: #e8e8e8 solid 0.5px;
-  border-radius: 13px;
-  height: 10rem;
-  padding: 1rem;
+.subject-wrap {
+  margin-bottom: 15px;
+}
+.title-wrap {
+  display: flex;
+}
+.title-wrap > div {
+  margin-right: 10px;
 }
 .title {
+  font-size: 1.2rem;
   margin: 0;
   font-family: AppleSDGothicNeoEB;
 }
-.filter {
-  margin-left: 1rem;
+.update-time {
+  font-family: AppleSDGothicNeoEB;
+  color: #999;
+  font-size: 15px;
+  align-items: flex-end;
+  display: flex;
 }
 button {
   background: none;
@@ -66,54 +148,104 @@ button {
 .active {
   color: #00dc64;
 }
+
+/* 웹툰 리스트 */
+.box-container {
+  border: #e8e8e8 solid 0.5px;
+  border-radius: 6px;
+  /* padding: 12px 5px 12px 28px; */
+  padding: 12px 5px;
+  display: flex;
+  justify-content: center;
+}
 ul {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
-.webtoon {
-  display: flex;
+a {
+  cursor: pointer;
 }
-.webtoon li {
-  display: flex;
-  margin-right: 1.5rem;
+.no-ranking-description-text {
+  text-align: center;
+  font-family: AppleSDGothicNeoM;
+  font-size: 18px;
+  padding: 15px 15px;
 }
-.webtoon div {
-  margin-left: 8px;
-}
-.ranking {
+.webtoon-list {
   display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr auto;
+  grid-template-columns: repeat(5, 1fr);
   justify-items: center;
+  column-gap: 10px;
+  /* display: flex; */
+}
+.webtoon-list .webtoon-item-wrap {
+  display: flex;
+}
+.webtoon-item-wrap:not(last-child) {
+  /* margin-right: 20px; */
+}
+
+/* 랭킹 숫자 */
+.ranking-num-wrap {
+  margin-top: auto;
+  text-align: center;
+  margin-right: 15px;
 }
 .rank-num {
-  font-size: 3rem;
+  font-size: 55px;
   font-weight: 700;
-  margin-top: auto;
+  line-height: 45px;
+  font-style: italic;
 }
-.info {
+.ranking-status-image-wrap {
+  display: flex;
+}
+.ranking-status-image {
+  width: 17px;
+  padding: 10px 0;
+  margin-left: auto;
+}
+
+/* 커버이미지 */
+.cover-image {
+  margin-right: 8px;
+}
+.cover-image img {
+  width: 115px;
+  aspect-ratio: 480 / 623;
+  border-radius: 3px;
+  height: 100%;
+}
+
+/* 웹툰 정보 */
+.info-wrap {
   font-family: AppleSDGothicNeoEB;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr auto;
+  margin-bottom: 5px;
 }
-.like {
+.like-cnt {
   color: #ff4d56;
   display: flex;
   margin: auto 0 0 0;
-}
-.like div {
-  margin: 0 5px auto;
   font-size: 0.8rem;
 }
-.fa-heart {
-  font-size: 15px;
+.like-cnt i {
+  font-size: 12px;
+  margin: auto 0;
 }
-.webtoon .title {
-  font-size: 1rem;
+.info-wrap .title {
+  font-size: 16px;
 }
-.genre {
-  font-size: 0.8rem;
-  color: #616161;
+.info-wrap .genre {
+  font-size: 13px;
+  color: #7c7c7c;
+}
+.overflow-hidden {
+  white-space: nowrap; /* 줄 바꿈 방지 */
+  overflow: hidden; /* 넘치는 부분 숨김 */
+  text-overflow: ellipsis; /* 넘치는 부분에 ... 추가 */
 }
 </style>

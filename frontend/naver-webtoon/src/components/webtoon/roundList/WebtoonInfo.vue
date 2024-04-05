@@ -9,7 +9,7 @@
 				<div class="info-line">
 					<img :src="require(`@/assets/image/${webtoonInfo.profileStoreFileName}`)" class="profile-image">
 					<span class="author-name">{{webtoonInfo.memberName}}</span>
-					<span>· 글/그림 | 토요웹툰 · {{webtoonInfo.ageLimit}}세 이용가</span>
+					<span>· 글/그림 | {{webtoonInfo.dayOfWeek}}웹툰 · {{webtoonInfo.ageLimit}}세 이용가</span>
 				</div>
 				<div class="summary">
 					<div>{{webtoonInfo.oneLineSummary}}</div>
@@ -27,9 +27,9 @@ export default {
   data() {
     return {
       webtoonInfo: {
-        posterStoreFileName: "",
+        posterStoreFileName: "default_webtoon_cover.png",
         webtoonName: "",
-        profileStoreFileName: "",
+        profileStoreFileName: "default-profile-image.png",
         memberName: "",
         dayOfWeek: "",
         ageLimit: "",

@@ -48,10 +48,20 @@ async function getCreateRoundInfo() {
   }
 }
 
+async function getWebtoonRanking() {
+  try {
+    const response = await jsonApi.get("/webtoon/ranking");
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export {
   postCreateWebtoon,
   getWebtoonAllByMember,
   getOfficialWebtoonAll,
   getOfficialWebtoonDetail,
   getCreateRoundInfo,
+  getWebtoonRanking,
 };

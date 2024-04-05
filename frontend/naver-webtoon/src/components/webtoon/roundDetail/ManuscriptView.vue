@@ -54,7 +54,7 @@
           <div v-for="round in previewRounds" class="preview-round-item">
             <router-link :to="{name: 'roundDetail', params: {weboonId: `${roundDetail.weboonId}`, roundId: `${round.roundId}`}}" :class={active:isNowRound(round.roundNumber)}>
               <img class="round-thumbnail" :src="require(`@/assets/image/${round.thumbnail}`)">
-              <p class="round-title overflow-hidden">{{round.roundNumber}}화. {{round.title}}</p>
+              <p class="round-title overflow-hidden">{{round.roundNumber}}화 {{round.title}}</p>
             </router-link>
           </div>
         </div>
@@ -326,8 +326,8 @@ export default {
 /* 목록 */
 .round-list {
   border: 1px solid #efefef;
-  height: 250px;
-  margin: 30px 0;
+  height: 200px;
+  margin: 30px 0 60px;
   display: flex;
   width: 100%;
 }

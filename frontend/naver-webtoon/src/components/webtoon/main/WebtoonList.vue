@@ -10,18 +10,50 @@
 		</div>
 
 		<div class="genre">
-			<form>
-				<label><input type="checkbox">전체</label>
-				<label><input type="checkbox">로맨스</label>
-				<label><input type="checkbox">판타지</label>
-				<label><input type="checkbox">액션</label>
-				<label><input type="checkbox">스포츠</label>
-				<label><input type="checkbox">개그</label>
-				<label><input type="checkbox">스릴러</label>
-				<label><input type="checkbox">무협/사극</label>
-				<label><input type="checkbox">감성</label>
-				<label><input type="checkbox">소설원작</label>
-			</form>
+      <div>
+        <input type="checkbox">
+        <label>전체</label>
+      </div>
+      <div>
+        <input type="checkbox">
+        <label>로맨스</label>
+      </div>
+      <div>
+        <input type="checkbox">
+        <label>판타지</label>
+      </div>
+      <div>
+        <input type="checkbox">
+        <label>액션</label>
+      </div>
+      <div>
+        <input type="checkbox">
+        <label>스포츠</label>
+      </div>
+      <div>
+        <input type="checkbox">
+        <label>개그</label>
+      </div>
+      <div>
+        <input type="checkbox">
+        <label>스릴러</label>
+      </div>
+      <div>
+        <input type="checkbox">
+        <label>무협/사극</label>
+      </div>
+      <div>
+        <input type="checkbox">
+        <label>감성</label>
+      </div>
+      <div>
+        <input type="checkbox">
+        <label>소설원작</label>
+      </div>
+      <div>
+        <input type="checkbox">
+        <label>완결</label>
+      </div>
 		</div>
 
 		<div class="webtoon-container">
@@ -114,7 +146,7 @@ export default {
 }
 .title {
   margin: 0;
-  font-family: AppleSDGothicNeoSB;
+  font-family: AppleSDGothicNeoB;
   font-size: 1.4rem;
 }
 .filter {
@@ -134,8 +166,14 @@ export default {
   float: right;
   margin-bottom: 20px;
   font-family: AppleSDGothicNeoM;
+  display: flex;
 }
-
+.genre > div {
+  margin-right: 10px;
+}
+.genre > div > input {
+  margin-right: 5px;
+}
 /* webtoons */
 .webtoon-container {
   border: #d9d9d9 solid 0.5px;
