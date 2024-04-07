@@ -2,11 +2,8 @@ package jh.naverwebtoon.dto.response;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import jh.naverwebtoon.db.domain.Genre;
 import jh.naverwebtoon.db.domain.WebtoonGenre;
 import jh.naverwebtoon.db.domain.WebtoonRanking;
-import jh.naverwebtoon.db.domain.enums.RankingStatus;
 import lombok.Data;
 import lombok.Getter;
 
@@ -21,20 +18,6 @@ public class WebtoonRankingDto {
     private String rankingStatus;
     private int rankingNum;
 
-    public static WebtoonRankingDto create(FindNewRanking findNewRanking, RankingStatus rankingStatus, List<Genre> genres, int ranking) {
-        WebtoonRankingDto res = new WebtoonRankingDto();
-        res.webtoonId = findNewRanking.getWebtoonId();
-        res.webtoonName = findNewRanking.getWebtoonName();
-        res.thumbnail = findNewRanking.getThumbnail().getPosterImage().getStoreFileName();
-        res.genres = genres.stream()
-                .map(genre -> genre.getGenreEnum().getTitle())
-                .collect(Collectors.toList());
-        res.totalLikeCount = findNewRanking.getTotalLikeCount();
-        res.rankingStatus = rankingStatus.getName();
-        res.rankingNum = ranking;
-        return res;
-    }
-
     public static WebtoonRankingDto create(WebtoonRanking webtoonRanking) {
         WebtoonRankingDto res = new WebtoonRankingDto();
         res.webtoonId = webtoonRanking.getWebtoon().getId();
@@ -48,5 +31,4 @@ public class WebtoonRankingDto {
         res.rankingNum = webtoonRanking.getRanking().ordinal()+1;
         return res;
     }
-
 }

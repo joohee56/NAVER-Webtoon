@@ -33,7 +33,8 @@ class WebtoonRankingRepositoryTest {
 
     @Test
     void 최신_랭킹_조회() {
-        List<FindNewRanking> findNewRankings = repository.findRankingsByRecentRounds();
+        int offset=0, limit = 10;
+        List<FindNewRanking> findNewRankings = repository.findRankingsByRecentRounds(offset, limit);
         for (FindNewRanking findNewRanking : findNewRankings) {
             System.out.println(findNewRanking.getWebtoonId() + ", " + findNewRanking.getWebtoonName() + ", " + findNewRanking.getThumbnail().getPosterImage().getStoreFileName());
         }
