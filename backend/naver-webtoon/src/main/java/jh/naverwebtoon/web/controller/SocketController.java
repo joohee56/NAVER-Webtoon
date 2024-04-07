@@ -15,7 +15,8 @@ public class SocketController {
     private final WebtoonRankingService webtoonRankingService;
 
     public void findRanking() {
-        List<WebtoonRankingDto> webtoonRankings = webtoonRankingService.updateRanking();
+        int offset =0, limit = 10;
+        List<WebtoonRankingDto> webtoonRankings = webtoonRankingService.updateRanking(offset, limit);
         sendingOperations.convertAndSend("/send", FindWebtoonRankingsRes.create(webtoonRankings));
     }
 }

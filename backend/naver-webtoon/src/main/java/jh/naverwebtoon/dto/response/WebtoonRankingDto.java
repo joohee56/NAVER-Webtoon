@@ -8,8 +8,10 @@ import jh.naverwebtoon.db.domain.WebtoonGenre;
 import jh.naverwebtoon.db.domain.WebtoonRanking;
 import jh.naverwebtoon.db.domain.enums.RankingStatus;
 import lombok.Data;
+import lombok.Getter;
 
 @Data
+@Getter
 public class WebtoonRankingDto {
     private Long webtoonId;
     private String webtoonName;
@@ -17,7 +19,7 @@ public class WebtoonRankingDto {
     private List<String> genres = new ArrayList<>();
     private Long totalLikeCount;
     private String rankingStatus;
-    private int ranking;
+    private int rankingNum;
 
     public static WebtoonRankingDto create(FindNewRanking findNewRanking, RankingStatus rankingStatus, List<Genre> genres, int ranking) {
         WebtoonRankingDto res = new WebtoonRankingDto();
@@ -29,7 +31,7 @@ public class WebtoonRankingDto {
                 .collect(Collectors.toList());
         res.totalLikeCount = findNewRanking.getTotalLikeCount();
         res.rankingStatus = rankingStatus.getName();
-        res.ranking = ranking;
+        res.rankingNum = ranking;
         return res;
     }
 
@@ -43,7 +45,8 @@ public class WebtoonRankingDto {
         }
         res.totalLikeCount = webtoonRanking.getTotalLikeCount();
         res.rankingStatus = webtoonRanking.getStatus().getName();
-        res.ranking = webtoonRanking.getRanking().ordinal();
+        res.rankingNum = webtoonRanking.getRanking().ordinal()+1;
         return res;
     }
+
 }

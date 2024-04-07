@@ -15,7 +15,8 @@ class WebtoonRankingServiceTest {
 
     @Test
     void test() {
-        List<WebtoonRankingDto> rankings = service.findRanking();
+        int offset=0, limit = 5;
+        List<WebtoonRankingDto> rankings = service.findRanking(offset, limit);
         for (WebtoonRankingDto ranking : rankings) {
             System.out.println(ranking.toString());
         }
@@ -23,15 +24,16 @@ class WebtoonRankingServiceTest {
 
     @Test
     void 웹툰_랭킹_갱신_및_조회() {
+        int offset=0, limit = 5;
         System.out.println("첫 번째");
-        List<WebtoonRankingDto> webtoons = service.updateRanking();
+        List<WebtoonRankingDto> webtoons = service.updateRanking(offset, limit);
 
         for (WebtoonRankingDto webtoon : webtoons) {
             System.out.println(webtoon.toString());
         }
 
         System.out.println("두 번째");
-        List<WebtoonRankingDto> webtoons2 = service.updateRanking();
+        List<WebtoonRankingDto> webtoons2 = service.updateRanking(offset, limit);
 
         for (WebtoonRankingDto webtoon : webtoons2) {
             System.out.println(webtoon.toString());

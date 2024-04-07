@@ -364,21 +364,43 @@ public class DataLoader implements ApplicationRunner {
         }
         initRoundLike(Long.valueOf(1), Long.valueOf(1));
 
-        for(int i=18; i<=25; i++) {
+        for(int i=18; i<=26; i++) {
             initRoundLike(Long.valueOf(i), Long.valueOf(79));  //신의탑
         }
 
-        for(int i=18; i<=22; i++) {
+        for(int i=18; i<=25; i++) {
             initRoundLike(Long.valueOf(i), Long.valueOf(69));  //사내연애 사절
         }
 
-        for(int i=18; i<=20; i++) {
+        for(int i=18; i<=24; i++) {
             initRoundLike(Long.valueOf(i), Long.valueOf(77));  //전지적 독자 시점
         }
 
-        for(int i=18; i<=19; i++) {
+        for(int i=18; i<=23; i++) {
             initRoundLike(Long.valueOf(i), Long.valueOf(72));  //같은 학교 친구
         }
+
+//        5위~10위
+        for(int i=18; i<=22; i++) {
+            initRoundLike(Long.valueOf(i), Long.valueOf(75));
+        }
+
+        for(int i=18; i<=21; i++) {
+            initRoundLike(Long.valueOf(i), Long.valueOf(76));
+        }
+
+        for(int i=18; i<=20; i++) {
+            initRoundLike(Long.valueOf(i), Long.valueOf(65));
+        }
+
+        for(int i=18; i<=19; i++) {
+            initRoundLike(Long.valueOf(i), Long.valueOf(68));
+        }
+
+        for(int i=18; i<=18; i++) {
+            initRoundLike(Long.valueOf(i), Long.valueOf(71));
+        }
+
 
 
 //        Comment
