@@ -9,50 +9,10 @@
 			</div>
 		</div>
 
-		<div class="genre">
-      <div>
-        <input type="checkbox">
-        <label>전체</label>
-      </div>
-      <div>
-        <input type="checkbox">
-        <label>로맨스</label>
-      </div>
-      <div>
-        <input type="checkbox">
-        <label>판타지</label>
-      </div>
-      <div>
-        <input type="checkbox">
-        <label>액션</label>
-      </div>
-      <div>
-        <input type="checkbox">
-        <label>스포츠</label>
-      </div>
-      <div>
-        <input type="checkbox">
-        <label>개그</label>
-      </div>
-      <div>
-        <input type="checkbox">
-        <label>스릴러</label>
-      </div>
-      <div>
-        <input type="checkbox">
-        <label>무협/사극</label>
-      </div>
-      <div>
-        <input type="checkbox">
-        <label>감성</label>
-      </div>
-      <div>
-        <input type="checkbox">
-        <label>소설원작</label>
-      </div>
-      <div>
-        <input type="checkbox">
-        <label>완결</label>
+		<div class="genre-wrap">
+      <div v-for="genre in genres">
+        <input type="checkbox" :id="genre.value" :value="genre.value" @click="clickGenre(genre.value)" v-model="selectedGenres">
+        <label class="genre-checkbox-label" :for="genre.value">{{genre.title}}</label>
       </div>
 		</div>
 
@@ -84,7 +44,6 @@ export default {
         saturday: [],
         sunday: [],
       },
-
       dayOfWeekHeaders: [
         "월요웹툰",
         "화요웹툰",
@@ -94,6 +53,20 @@ export default {
         "토요웹툰",
         "일요웹툰",
       ],
+      genres: [
+        { title: "전체", value: "all" },
+        { title: "로맨스", value: "romance" },
+        { title: "일상", value: "daily_life" },
+        { title: "판타지", value: "fantasy" },
+        { title: "액션", value: "action" },
+        { title: "스포츠", value: "sports" },
+        { title: "개그", value: "comedy" },
+        { title: "스릴러", value: "thriller" },
+        { title: "무협/사극", value: "martial_arts_and_historical" },
+        { title: "감성", value: "emotion" },
+        { title: "완결", value: "complete" },
+      ],
+      selectedGenres: [],
     };
   },
   components: {
@@ -136,6 +109,12 @@ export default {
         console.log(error);
       }
     },
+    clickGenre(value) {
+      if (value === "all") {
+        this.selectedGenres = [];
+        this.selectedGenres.push(value);
+      }
+    },
   },
 };
 </script>
@@ -162,18 +141,46 @@ export default {
 .active {
   color: #00dc64;
 }
-.genre {
+
+/* genre checkbox */
+.genre-wrap {
   float: right;
   margin-bottom: 20px;
   font-family: AppleSDGothicNeoM;
   display: flex;
 }
-.genre > div {
+.genre-wrap > div {
   margin-right: 10px;
 }
-.genre > div > input {
-  margin-right: 5px;
+input[type="checkbox"] {
+  display: none;
 }
+.genre-checkbox-label::before {
+  content: "";
+  display: inline-block;
+  width: 13px;
+  border-radius: 3px;
+  aspect-ratio: 1/1;
+  background-color: #fff;
+  border: 1px solid #999;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+/* 체크된 상태일 때의 가상 요소 스타일 정의 */
+input[type="checkbox"]:checked + .genre-checkbox-label::before {
+  background-color: #00dc64;
+  border: 1px solid #00dc64;
+  border-radius: 4px;
+  content: "\2713";
+  color: white;
+  font-size: 16px;
+  text-align: center;
+  width: 13px;
+  height: 13px;
+  font-weight: 600;
+  line-height: 14px;
+}
+
 /* webtoons */
 .webtoon-container {
   border: #d9d9d9 solid 0.5px;

@@ -25,7 +25,7 @@
 
 		<!-- 원고 -->
 		<div id="manuscript" class="manusript-wrap">
-			<img class="manuscript" :src="require(`@/assets/image/${roundDetail.mergeManuscript}`)">
+			<img v-if="roundDetail.mergeManuscript !== ''" class="manuscript" :src="require(`@/assets/image/${roundDetail.mergeManuscript}`)">
 		</div>
 
     <!-- 좋아요 -->

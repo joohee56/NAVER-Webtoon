@@ -15,31 +15,35 @@
       <div v-if="rankings.length === 0">
         <div class="no-ranking-description-text">조회할 랭킹이 없습니다.</div>
       </div>
-			<ul class="webtoon-list" v-if="rankings.length !== 0">
-				<li class="webtoon-item-wrap" v-for="(ranking, index) in rankings">
-					<div class="ranking-num-wrap">
-            <div class="ranking-status-image-wrap">
-              <img class="ranking-status-image" :src="require(`@/assets/image/ranking-status-${ranking.rankingStatus}.png`)">
+      <div v-if="rankings.length !== 0" class="box-container-inner">
+        <button class="ranking-arrow-btn" style="cursor: pointer;" @click="clickLeftRankingBtn" v-if="!isLeftBtnDisabled"><i class="fa-solid fa-chevron-left"></i></button>
+        <ul class="webtoon-list">
+          <li class="webtoon-item-wrap" v-for="(ranking, index) in rankings">
+            <div class="ranking-num-wrap">
+              <div class="rank-num">{{ranking.rankingNum}}</div>
+              <div class="ranking-status-image-wrap">
+                <img class="ranking-status-image" :src="require(`@/assets/image/ranking-status-${ranking.rankingStatus}.png`)">
+              </div>
             </div>
-            <div class="rank-num">{{index+1}}</div>
-          </div>
-					<div class="cover-image">
-						<router-link :to="{name:'roundList', params: {webtoonId: ranking.webtoonId}}">
-							<img :src="require(`@/assets/image/${ranking.thumbnail}`)">
-						</router-link>
-					</div>
-					<div class="info-wrap">
-						<div class="like-cnt">
-							<i class="fa-solid fa-heart"></i>
-							<div>&nbsp;{{ranking.totalLikeCount}}</div>
-						</div>
-						<div class="title">{{ranking.webtoonName}}</div>
-						<div class="genre">
-              <span v-for="genre in ranking.genres">{{genre}} </span>
+            <div class="cover-image">
+              <router-link :to="{name:'roundList', params: {webtoonId: ranking.webtoonId}}">
+                <img :src="require(`@/assets/image/${ranking.thumbnail}`)">
+              </router-link>
             </div>
-					</div>
-				</li>
-			</ul>
+            <div class="info-wrap">
+              <div class="like-cnt">
+                <i class="fa-solid fa-heart"></i>
+                <div>&nbsp;{{ranking.totalLikeCount}}</div>
+              </div>
+              <div class="title">{{ranking.webtoonName}}</div>
+              <div class="genre">
+                <span v-for="genre in ranking.genres">{{genre}} </span>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <button class="ranking-arrow-btn" style="cursor: pointer;" @click="clickRightRankingBtn" v-if="!isRightBtnDisabled"><i class="fa-solid fa-chevron-right"></i></button>
+      </div>
 		</div>
 	</div>
 </template>
@@ -52,14 +56,24 @@ import { getWebtoonRanking } from "@/api/webtoon";
 export default {
   data() {
     return {
-      rankings: [], //webtoonId, webtoonName, thumbnail, totalLikeCount, rankingStatus, genres, ranking
+      rankings: [], //webtoonId, webtoonName, thumbnail, totalLikeCount, rankingStatus, genres, rankingNum
       updatedAt: "",
+      rankingStartIndex: "",
+      rankingLimit: 5,
+      isRightBtnDisabled: false,
+      isLeftBtnDisabled: false,
     };
   },
+  watch: {
+    rankingStartIndex() {
+      this.fetchRanking();
+      this.setRankigBtnDisabled();
+    },
+  },
   created() {
-    this.fetchRanking();
     //해당 뷰가 생성되면 소켓 연결을 시도
     this.connect();
+    this.rankingStartIndex = 0;
   },
   beforeDestroy() {
     this.disconnect();
@@ -83,6 +97,7 @@ export default {
             const responseData = JSON.parse(res.body);
             this.rankings = responseData.rankings;
             this.updatedAt = responseData.updatedAt;
+            this.rankingStartIndex = 0;
           });
         },
         (error) => {
@@ -98,7 +113,10 @@ export default {
     },
     async fetchRanking() {
       try {
-        const response = await getWebtoonRanking();
+        const response = await getWebtoonRanking(
+          this.rankingStartIndex,
+          this.rankingLimit
+        );
         console.log(response.data);
         this.rankings = response.data.rankings;
         this.updatedAt = response.data.updatedAt;
@@ -106,11 +124,38 @@ export default {
         console.log(error);
       }
     },
+    clickRightRankingBtn() {
+      this.rankingStartIndex += this.rankingLimit;
+    },
+    clickLeftRankingBtn() {
+      this.rankingStartIndex -= this.rankingLimit;
+    },
+    setRankigBtnDisabled() {
+      if (this.rankingStartIndex + this.rankingLimit >= 10) {
+        this.isRightBtnDisabled = true;
+      } else {
+        this.isRightBtnDisabled = false;
+      }
+
+      if (this.rankingStartIndex === 0) {
+        this.isLeftBtnDisabled = true;
+      } else {
+        this.isLeftBtnDisabled = false;
+      }
+    },
   },
 };
 </script>
 
 <style scoped>
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+a {
+  cursor: pointer;
+}
 .ranking-container {
   padding: 50px 0 60px;
 }
@@ -149,19 +194,15 @@ button {
 .box-container {
   border: #e8e8e8 solid 0.5px;
   border-radius: 6px;
-  padding: 12px 10px;
+  padding: 20px 20px;
   display: flex;
-  justify-content: center;
-  box-shadow: 5px 1px 8px 0 rgba(0, 0, 0, 0.06);
-  background-color: #f6f8fa;
+  /* justify-content: center; */
+  box-shadow: 5px 1px 8px 0 rgba(0, 0, 0, 0.08);
+  /* background-color: #f6f8fa; */
 }
-ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-a {
-  cursor: pointer;
+.box-container-inner {
+  display: flex;
+  width: 100%;
 }
 .no-ranking-description-text {
   text-align: center;
@@ -172,12 +213,19 @@ a {
 .webtoon-list {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  justify-items: center;
+  justify-items: left;
   column-gap: 10px;
+  padding: 0 10px;
+  width: 100%;
   /* display: flex; */
 }
 .webtoon-list .webtoon-item-wrap {
   display: flex;
+}
+/* 화살표 버튼 */
+.ranking-arrow-btn {
+  font-size: 20px;
+  font-weight: 800;
 }
 
 /* 랭킹 숫자 */
@@ -189,7 +237,7 @@ a {
 .rank-num {
   font-size: 55px;
   font-weight: 700;
-  line-height: 45px;
+  line-height: 60px;
   font-style: italic;
 }
 .ranking-status-image-wrap {
@@ -197,16 +245,18 @@ a {
 }
 .ranking-status-image {
   width: 17px;
-  padding: 10px 0;
-  margin-left: auto;
+  /* margin-left: auto; */
+  /* text-align: center; */
+  margin: 0 auto;
 }
 
 /* 커버이미지 */
 .cover-image {
   margin-right: 8px;
+  box-shadow: 5px 1px 8px 0 rgba(0, 0, 0, 0.08);
 }
 .cover-image img {
-  width: 115px;
+  width: 100px;
   aspect-ratio: 480 / 623;
   border-radius: 3px;
   height: 100%;
@@ -218,7 +268,6 @@ a {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr auto;
-  margin-bottom: 5px;
 }
 .like-cnt {
   color: #ff4d56;
