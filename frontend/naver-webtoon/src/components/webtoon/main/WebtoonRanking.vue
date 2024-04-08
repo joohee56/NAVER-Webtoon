@@ -87,10 +87,10 @@ export default {
       //웹 소켓 연결
       this.stompClient.connect(
         {},
-        (frame) => {
+        () => {
           //소켓 연결 성공
           this.connected = true;
-          console.log("소켓 연결 성공", frame);
+          console.log("소켓 연결 성공");
 
           //서버 구독
           this.stompClient.subscribe("/send", (res) => {

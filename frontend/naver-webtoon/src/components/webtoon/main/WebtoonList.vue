@@ -54,19 +54,20 @@ export default {
         "일요웹툰",
       ],
       genres: [
-        { title: "전체", value: "all" },
-        { title: "로맨스", value: "romance" },
-        { title: "일상", value: "daily_life" },
-        { title: "판타지", value: "fantasy" },
-        { title: "액션", value: "action" },
-        { title: "스포츠", value: "sports" },
-        { title: "개그", value: "comedy" },
-        { title: "스릴러", value: "thriller" },
-        { title: "무협/사극", value: "martial_arts_and_historical" },
-        { title: "감성", value: "emotion" },
+        { title: "전체", value: "ALL" },
+        { title: "로맨스", value: "ROMANCE" },
+        { title: "판타지", value: "FANTASY" },
+        { title: "액션", value: "ACTION" },
+        { title: "일상", value: "DAILY_LIFE" },
+        { title: "스릴러", value: "THRILLER" },
+        { title: "개그", value: "COMEDY" },
+        { title: "무협/사극", value: "MARTIAL_ARTS_AND_HISTORICAL" },
+        { title: "드라마", value: "DRAMA" },
+        { title: "감성", value: "EMOTION" },
+        { title: "스포츠", value: "SPORTS" },
         { title: "완결", value: "complete" },
       ],
-      selectedGenres: [],
+      selectedGenres: ["ALL"],
     };
   },
   components: {
@@ -75,10 +76,29 @@ export default {
   mounted() {
     this.fetchOfficialWebtoons();
   },
+  watch: {
+    selectedGenres() {
+      if (this.selectedGenres.length === 0) {
+        this.selectedGenres = [];
+        this.selectedGenres.push("ALL");
+      }
+      this.fetchOfficialWebtoons();
+    },
+  },
   methods: {
     async fetchOfficialWebtoons() {
       try {
-        const response = await getOfficialWebtoonAll();
+        const response = await getOfficialWebtoonAll(this.selectedGenres);
+        this.webtoons = {
+          monday: [],
+          tuesday: [],
+          wednesday: [],
+          thursday: [],
+          friday: [],
+          saturday: [],
+          sunday: [],
+        };
+
         for (const webtoon of response.data) {
           switch (webtoon.dayOfWeek) {
             case "MONDAY":
@@ -110,9 +130,14 @@ export default {
       }
     },
     clickGenre(value) {
-      if (value === "all") {
+      if (value === "ALL") {
         this.selectedGenres = [];
-        this.selectedGenres.push(value);
+        this.selectedGenres.push("ALL");
+      } else {
+        if (this.selectedGenres[0] === "ALL") {
+          this.selectedGenres.splice(0, 1);
+          this.selectedGenres.push(value);
+        }
       }
     },
   },

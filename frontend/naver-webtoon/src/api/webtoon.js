@@ -21,9 +21,9 @@ async function getWebtoonAllByMember() {
   }
 }
 
-async function getOfficialWebtoonAll() {
+async function getOfficialWebtoonAll(genres) {
   try {
-    const response = await jsonApi.get("/webtoon/official");
+    const response = await jsonApi.post("/webtoon/official", genres);
     return response;
   } catch (error) {
     console.log(error);
