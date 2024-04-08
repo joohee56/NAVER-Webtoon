@@ -36,7 +36,7 @@ class WebtoonRankingRepositoryTest {
         int offset=0, limit = 10;
         List<FindNewRanking> findNewRankings = repository.findRankingsByRecentRounds(offset, limit);
         for (FindNewRanking findNewRanking : findNewRankings) {
-            System.out.println(findNewRanking.getWebtoonId() + ", " + findNewRanking.getWebtoonName() + ", " + findNewRanking.getThumbnail().getPosterImage().getStoreFileName());
+            System.out.println(findNewRanking.getWebtoonId() + "," + findNewRanking.getTotalLikeCount());
         }
     }
 }

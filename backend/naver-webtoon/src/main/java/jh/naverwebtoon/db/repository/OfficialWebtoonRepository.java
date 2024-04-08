@@ -20,8 +20,7 @@ public class OfficialWebtoonRepository {
     }
 
     public List<OfficialWebtoon> findAll() {
-        return em.createQuery("select distinct ow from OfficialWebtoon ow"
-                        + " join fetch ow.member m"
+        return em.createQuery("select ow from OfficialWebtoon ow"
                         + " join fetch ow.webtoonThumbnail wt", OfficialWebtoon.class)
                 .getResultList();
     }

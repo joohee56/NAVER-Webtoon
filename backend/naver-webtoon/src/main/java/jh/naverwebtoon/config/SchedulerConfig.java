@@ -12,6 +12,6 @@ public class SchedulerConfig {
 
     @Scheduled(fixedDelay = 1000*20)  //20초마다 실행
     public void run() {
-        socketController.findRanking();
+//        socketController.findRanking();
     }
 }
