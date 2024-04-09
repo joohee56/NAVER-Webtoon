@@ -65,7 +65,6 @@ export default {
         { title: "드라마", value: "DRAMA" },
         { title: "감성", value: "EMOTION" },
         { title: "스포츠", value: "SPORTS" },
-        { title: "완결", value: "complete" },
       ],
       selectedGenres: ["ALL"],
     };
@@ -75,6 +74,7 @@ export default {
   },
   mounted() {
     this.fetchOfficialWebtoons();
+    this.getSelectedGenres();
   },
   watch: {
     selectedGenres() {
@@ -82,6 +82,7 @@ export default {
         this.selectedGenres = [];
         this.selectedGenres.push("ALL");
       }
+      localStorage.setItem("genres", JSON.stringify(this.selectedGenres));
       this.fetchOfficialWebtoons();
     },
   },
@@ -127,6 +128,11 @@ export default {
         console.log(this.webtoons);
       } catch (error) {
         console.log(error);
+      }
+    },
+    getSelectedGenres() {
+      if (localStorage.getItem("genres") !== null) {
+        this.selectedGenres = JSON.parse(localStorage.getItem("genres"));
       }
     },
     clickGenre(value) {
