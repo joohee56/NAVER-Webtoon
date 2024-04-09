@@ -216,6 +216,68 @@ public class DataLoader implements ApplicationRunner {
                 + "그리고 그런 소년을 시험하는 탑","신의 탑_커버.png", DayOfWeek.TUESDAY);
 
 
+        genreEnums = new ArrayList<>();
+        genreEnums.add(GenreEnum.DRAMA);
+        initOfficialWebtoon(Long.valueOf(17), "뷰티풀 군바리", WebtoonCategory.STORY, genreEnums, null, "'여자도 군대에 간다면?'본격 여자도 군대 가는 만화!","뷰티풀 군바리_커버.png", DayOfWeek.MONDAY);
+
+
+        genreEnums = new ArrayList<>();
+        genreEnums.add(GenreEnum.ACTION);
+        initOfficialWebtoon(Long.valueOf(17), "참교육", WebtoonCategory.STORY, genreEnums, null, "무너진 교권을 지키기 위해 교권보호국 소속 나화진의 참교육이 시작된다!\n"
+                + "<부활남> 채용택 작가 X <신석기녀> 한가람 작가의 신작!","참교육_커버.png", DayOfWeek.MONDAY);
+
+        genreEnums = new ArrayList<>();
+        genreEnums.add(GenreEnum.DRAMA);
+        genreEnums.add(GenreEnum.EMOTION);
+        initOfficialWebtoon(Long.valueOf(17), "백수세끼", WebtoonCategory.STORY, genreEnums, null, "백수 시절 내 곁을 지켜줬던 그녀... 돌아와 주면 안 되겠니?\n"
+                + "음식 메뉴마다 담겨 있는 우리들의 연애 흑역사!","백수세끼_커버.png", DayOfWeek.MONDAY);
+
+        genreEnums = new ArrayList<>();
+        genreEnums.add(GenreEnum.DRAMA);
+        initOfficialWebtoon(Long.valueOf(17), "왕과의 야행", WebtoonCategory.STORY, genreEnums, null, "젊은 왕과 아름다운 여인이 발을 사이에 두고 앉아있다.\n"
+                + "가느다란 흰 손가락으로 책장을 넘기는 여인은\n"
+                + "고혹적인 목소리로 글을 읽어 내려가는데...","왕과의 야행_커버.png", DayOfWeek.MONDAY);
+
+        genreEnums = new ArrayList<>();
+        genreEnums.add(GenreEnum.DRAMA);
+        initOfficialWebtoon(Long.valueOf(17), "퀘스트지상주의", WebtoonCategory.STORY, genreEnums, null, "[외모지상주의], [싸움독학], [인생존망]과 세계관을 공유하는 작품!\n"
+                + "공부, 싸움, 외모.\n"
+                + "뭐 하나 잘난 것 없는 평범한 고등학생 ‘김수현’의 눈앞에 갑자기 퀘스트창이 나타났다!\n"
+                + "첫 번째 퀘스트, [엄마한테 사과하기]를 완료한 수현은 보상으로 키가 3cm 커지게 되는데!\n"
+                + "퀘스트 엄청 쉽잖아?! 어떤 퀘스트든 완료해주마! 그런데 다음 퀘스트가?\n"
+                + "[system] 학교 일진녀와 키스하십시오","퀘스트지상주의_커버.png", DayOfWeek.MONDAY);
+
+        genreEnums = new ArrayList<>();
+        genreEnums.add(GenreEnum.SPORTS);
+        initOfficialWebtoon(Long.valueOf(17), "윈드브레이커", WebtoonCategory.STORY, genreEnums, null, "혼자서 자전거를 즐겨타던 모범생 조자현.\n"
+                + "원치 않게 자전거 크루의 일에 자꾸 휘말리게 되는데...\n"
+                + "자유를 꿈꾸는 청춘들의 스트릿라이딩 드라마!","윈드브레이커_커버.png", DayOfWeek.MONDAY);
+
+        genreEnums = new ArrayList<>();
+        genreEnums.add(GenreEnum.FANTASY);
+        initOfficialWebtoon(Long.valueOf(17), "신화급 귀속 아이템을 손에 넣었다", WebtoonCategory.STORY, genreEnums, null, "D급 무투계 레이더로 마법계 레이더들의 고기방패나 하며 별 볼 일 없이 살던 재현.\n"
+                + "그러던 어느 날, 던전에서 우연히 \"오딘의 눈\" 이라는 최강의 귀속 아이템을 얻게 됐다.\n"
+                + "신의 눈을 가진 자, 세계를 구할 신의 대적자의 운명을 개척하라!","신화급 귀속 아이템을 손에 넣었다_커버.png", DayOfWeek.MONDAY);
+
+        genreEnums = new ArrayList<>();
+        genreEnums.add(GenreEnum.ROMANCE);
+        initOfficialWebtoon(Long.valueOf(17), "버림받은 왕녀의 은밀한 침실", WebtoonCategory.STORY, genreEnums, null, "한때는 추앙받았지만 지금은 비참하게 버림받은 왕녀 르웰린. 아무도 보호해 주지 않는 그녀에게 추악한 저주가 내려진다.\n"
+                + "그것은 바로 남자를 욕망하게 되는 저주.\n"
+                + "르웰린은 저주의 폭주를 막기 위해 결국 자신의 침실을 열게 되는데...\n"
+                + "버림받은 왕녀와 얽히고 설키는 네명의 남자들.\n"
+                + "저주의 진실은 밝혀질 것인가? 그리고 그녀와 함께 할 사내는 과연 누가 될 것인가?","버림받은 왕녀의 은밀한 침실_커버.png", DayOfWeek.MONDAY);
+
+        genreEnums = new ArrayList<>();
+        genreEnums.add(GenreEnum.DRAMA);
+        initOfficialWebtoon(Long.valueOf(17), "팔이피플", WebtoonCategory.STORY, genreEnums, null, "<마스크걸>, <위대한 방옥숙> 매미/희세 작가의 신작!\n"
+                + "SNS에서 육아용품 파는 평범한 유부녀 박주연, 그녀의 고등학교 동창인 김예희는 팔로워 70만의 셀럽으로 엄청난 부와 명성을 누리는 중이다.\n"
+                + "박주연은 김예희를 미워하는 동시에 집착하고 있는데, 과연 그녀는 김예희의 과거를 폭로하고 셀럽으로 올라설 수 있을까?","팔이피플_커버.png", DayOfWeek.MONDAY);
+
+        genreEnums = new ArrayList<>();
+        genreEnums.add(GenreEnum.MARTIAL_ARTS_AND_HISTORICAL);
+        initOfficialWebtoon(Long.valueOf(17), "절대 검감", WebtoonCategory.STORY, genreEnums, null, "단전이 부숴졌다는 이유로 집에서는 내놓은 자식 취급을 받던 소운휘는 혈교에 납치되어서도 삼류 첩자로 살아왔다.\n"
+                + "어느 날, 전설로만 알려진 검선비록을 찾는데 이용당하다 죽은 운휘는 10년 전, 혈교에 납치되던 그 날로 돌아가게 되고 검의 목소리를 듣는 신비한 능력을 얻는다.","절대검감_커버.png", DayOfWeek.MONDAY);
+
 
 
         //Challeger Webtoon
