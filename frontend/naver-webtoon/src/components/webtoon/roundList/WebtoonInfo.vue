@@ -12,7 +12,7 @@
 					<span>· 글/그림 | {{webtoonInfo.dayOfWeek}}웹툰 · {{webtoonInfo.ageLimit}}세 이용가</span>
 				</div>
 				<div class="summary">
-					<div>{{webtoonInfo.oneLineSummary}}</div>
+					<div class="overflow-hidden">{{webtoonInfo.oneLineSummary}}</div>
 					<div v-html="webtoonInfo.summary"></div>
 				</div>
 			</div>
@@ -27,7 +27,7 @@ export default {
   data() {
     return {
       webtoonInfo: {
-        posterStoreFileName: "default_webtoon_cover.png",
+        posterStoreFileName: "default-webtoon-cover.png",
         webtoonName: "",
         profileStoreFileName: "default-profile-image.png",
         memberName: "",
@@ -99,5 +99,10 @@ export default {
 }
 .summary {
   font-size: 18px;
+}
+.overflow-hidden {
+  white-space: nowrap; /* 줄 바꿈 방지 */
+  overflow: hidden; /* 넘치는 부분 숨김 */
+  text-overflow: ellipsis; /* 넘치는 부분에 ... 추가 */
 }
 </style>

@@ -54,6 +54,7 @@ nav button {
   background-color: white;
   font-size: 19px;
   font-family: AppleSDGothicNeoSB;
+  cursor: pointer;
 }
 
 .active {
