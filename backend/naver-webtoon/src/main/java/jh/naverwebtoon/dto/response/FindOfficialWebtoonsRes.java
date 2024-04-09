@@ -10,7 +10,6 @@ public class FindOfficialWebtoonsRes {
     private String webtoonName;
     private String posterStoreFileName;
     private DayOfWeek dayOfWeek;
-    private boolean isComplete;
 
     public static FindOfficialWebtoonsRes create(OfficialWebtoon officialWebtoon) {
         FindOfficialWebtoonsRes findOfficialWebtoonsRes = new FindOfficialWebtoonsRes();
@@ -19,7 +18,6 @@ public class FindOfficialWebtoonsRes {
         findOfficialWebtoonsRes.posterStoreFileName = officialWebtoon.getWebtoonThumbnail().getPosterImage()
                 .getStoreFileName();
         findOfficialWebtoonsRes.dayOfWeek = officialWebtoon.getDayOfWeek();
-        findOfficialWebtoonsRes.isComplete = officialWebtoon.isComplete();
         return findOfficialWebtoonsRes;
     }
 }

@@ -1,7 +1,10 @@
 package jh.naverwebtoon.web.controller;
 
+import java.time.DayOfWeek;
 import java.util.List;
 import jh.naverwebtoon.db.domain.enums.GenreEnum;
+import jh.naverwebtoon.db.repository.OfficialWebtoonRepository;
+import jh.naverwebtoon.dto.response.FindOfficialWebtoonByDayOfWeekRes;
 import jh.naverwebtoon.dto.response.FindOfficialWebtoonDetailRes;
 import jh.naverwebtoon.dto.response.FindOfficialWebtoonsRes;
 import jh.naverwebtoon.service.OfficialWebtoonService;
@@ -19,10 +22,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class OfficialWebtoonController {
     private final OfficialWebtoonService officialWebtoonService;
+    private final OfficialWebtoonRepository officialWebtoonRepository;
     private final WebtoonGenreService webtoonGenreService;
 
     /**
-     * 장르별 웹툰 리스트 조회
+     * 웹툰 리스트 조회(전체), 장르별 조회
      */
     @PostMapping()
     public List<FindOfficialWebtoonsRes> findAll(@RequestBody List<GenreEnum> genres) {
@@ -33,8 +37,21 @@ public class OfficialWebtoonController {
         }
     }
 
-    @GetMapping("/{id}")
+    /**
+     * 요일별 웹툰 조회
+     */
+    @GetMapping("/{dayOfWeek}")
+    public List<FindOfficialWebtoonByDayOfWeekRes> findAllByDayOfWeek(@PathVariable("dayOfWeek") DayOfWeek dayOfWeek) {
+        return officialWebtoonRepository.findAllByDayOfWeek(dayOfWeek);
+    }
+
+    /**
+     * 웹툰 디테일 정보 조회
+     */
+    @GetMapping("/detail/{id}")
     public FindOfficialWebtoonDetailRes findWebtoonDetail(@PathVariable("id") Long webtoonId) {
         return officialWebtoonService.findOfficialWebtoonDetail(webtoonId);
     }
+
+
 }

@@ -63,4 +63,6 @@ public class WebtoonRepository {
                 .setParameter("webtoonId", webtoonId)
                 .getSingleResult();
     }
+
+
 }
