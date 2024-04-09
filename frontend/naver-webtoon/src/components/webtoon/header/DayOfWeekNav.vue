@@ -1,14 +1,14 @@
 <template lang="ko">
 	<nav>
-		<router-link to="/" class="active">요일전체</router-link>
-		<router-link to="/mon">월</router-link>
-		<router-link to="/tue">화</router-link>
-		<router-link to="/wed">수</router-link>
-		<router-link to="/thu">목</router-link>
-		<router-link to="/fri">금</router-link>
-		<router-link to="/sat">토</router-link>
-		<router-link to="/sun">일</router-link>
-		<router-link to="/finish">완결</router-link>
+		<router-link :to="{name: 'main'}">요일전체</router-link>
+		<router-link :to="{name:'dayOfWeek', params: {dayOfWeek: 'mon'}}">월</router-link>
+		<router-link :to="{name:'dayOfWeek', params: {dayOfWeek: 'tue'}}">화</router-link>
+		<router-link :to="{name:'dayOfWeek', params: {dayOfWeek: 'wed'}}">수</router-link>
+		<router-link :to="{name:'dayOfWeek', params: {dayOfWeek: 'thu'}}">목</router-link>
+		<router-link :to="{name:'dayOfWeek', params: {dayOfWeek: 'fri'}}">금</router-link>
+		<router-link :to="{name:'dayOfWeek', params: {dayOfWeek: 'sat'}}">토</router-link>
+		<router-link :to="{name:'dayOfWeek', params: {dayOfWeek: 'sun'}}">일</router-link>
+		<router-link :to="{name:'dayOfWeek', params: {dayOfWeek: 'finish'}}">완결</router-link>
 	</nav>
 </template>
 

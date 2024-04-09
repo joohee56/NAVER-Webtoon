@@ -18,6 +18,7 @@ import CreateNewWebtoon from "@/components/creator/main/CreateNewWebtoon";
 import CreateNewRound from "@/components/creator/main/CreateNewRound";
 import RoundList from "@/views/RoundList";
 import RoundDetail from "@/views/RoundDetail";
+import DayOfWeekView from "@/views/DayOfWeekView.vue";
 import WebSocket from "@/views/WebSocket";
 Vue.use(VueRouter);
 
@@ -44,6 +45,11 @@ const routes = [
         path: "/main",
         name: "main",
         component: MainView,
+      },
+      {
+        path: "/:dayOfWeek",
+        name: "dayOfWeek",
+        component: DayOfWeekView,
       },
       {
         path: "/challenge",
