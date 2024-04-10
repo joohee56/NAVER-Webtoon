@@ -4,8 +4,7 @@
 			<p class="title">요일별 전체 웹툰</p>
 			<div class="filter">
 				<button class="active">인기순</button> · 
-				<button>업데이트순</button> ·
-				<button>조회순</button>
+				<button>업데이트순</button>
 			</div>
 		</div>
 
@@ -215,7 +214,10 @@ input[type="checkbox"]:checked + .genre-checkbox-label::before {
 /* webtoons */
 .webtoon-container {
   border: #d9d9d9 solid 0.5px;
-  display: flex;
+  /* display: flex; */
   width: 100%;
+  display: grid;
+  /* grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); */
+  grid-template-columns: repeat(7, 1fr);
 }
 </style>

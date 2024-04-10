@@ -6,8 +6,8 @@
 				<router-link :to="{name: 'roundList', params: {webtoonId:`${webtoon.webtoonId}`}}">
 					<img :src="require(`@/assets/image/${webtoon.posterStoreFileName}`)">
 				</router-link>
-				<div>
-					<!-- <span class="up">UP</span> -->
+				<div class="webtoon-name-wrap overflow-hidden">
+					<span class="up" v-if="webtoon.roundUpdateCount>0">UP</span>
 					<router-link :to="{name: 'roundList', params: {webtoonId:`${webtoon.webtoonId}`}}">
 						<span class="webtoon-name">{{webtoon.webtoonName}}</span>
 					</router-link>
@@ -30,7 +30,7 @@ export default {
 
 <style scoped>
 .week-day-item-wrap {
-  flex: 1;
+  /* flex: 1; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -63,8 +63,11 @@ export default {
 }
 .webtoon-item img {
   width: 160px;
-  height: 207px;
+  aspect-ratio: 480 / 623;
   border-radius: 4px;
+}
+.webtoon-name-wrap {
+  display: block;
 }
 .webtoon-item .up {
   color: #ff4d56;
@@ -72,12 +75,17 @@ export default {
   border: #ff4d56 solid 0.5px;
   font-family: AppleSDGothicNeoEB;
   text-align: center;
-  padding: 1px 4px;
+  padding: 0 4px;
   margin-right: 5px;
   font-size: 14px;
 }
 .webtoon-name {
   font-size: 15px;
+}
+.overflow-hidden {
+  white-space: nowrap; /*줄 바꿈 방지*/
+  overflow: hidden; /* 넘치는 부분 숨김 */
+  text-overflow: ellipsis; /* 넘치는 부분에 ... 추가 */
 }
 
 /* today */
