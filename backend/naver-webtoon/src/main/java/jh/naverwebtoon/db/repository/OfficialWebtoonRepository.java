@@ -3,8 +3,10 @@ package jh.naverwebtoon.db.repository;
 import jakarta.persistence.EntityManager;
 import java.time.DayOfWeek;
 import java.util.List;
+import jh.naverwebtoon.db.domain.Round;
 import jh.naverwebtoon.db.domain.webtoon.OfficialWebtoon;
 import jh.naverwebtoon.dto.response.FindOfficialWebtoonByDayOfWeekRes;
+import jh.naverwebtoon.dto.response.FindOfficialWebtoonsRes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -21,9 +23,17 @@ public class OfficialWebtoonRepository {
         return em.find(OfficialWebtoon.class, id);
     }
 
-    public List<OfficialWebtoon> findAll() {
-        return em.createQuery("select ow from OfficialWebtoon ow"
-                        + " join fetch ow.webtoonThumbnail wt", OfficialWebtoon.class)
+    /**
+     * 전체 웹툰 리스트 조회 (웹툰 정보 + 오늘 날짜에 업로드된 회차의 갯수)
+     */
+    public List<FindOfficialWebtoonsRes> findAll() {
+        return em.createQuery("select new jh.naverwebtoon.dto.response.FindOfficialWebtoonsRes(ow.id, ow.name, ow.webtoonThumbnail.posterImage.storeFileName, ow.dayOfWeek, (select count(r) from Round r where function('date_format', r.createdAt, \"%Y-%m-%d\") = current_date() and r.webtoon = ow))"
+                                + " from OfficialWebtoon ow", FindOfficialWebtoonsRes.class)
+                .getResultList();
+    }
+
+    public List<Round> findTest() {
+        return em.createQuery("select count(r) from Round r where function('date_format', r.createdAt, \"%Y-%m-%d\") = current_date()", Round.class)
                 .getResultList();
     }
 

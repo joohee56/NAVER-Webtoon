@@ -1,6 +1,5 @@
 package jh.naverwebtoon.service;
 
-import java.io.IOException;
 import java.time.DayOfWeek;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,7 +29,7 @@ public class OfficialWebtoonService {
     private final FileStore fileStore;
 
     @Transactional
-    public void createOfficialWebtoon(Long memberId, CreateWebtoonReq createWebtoonReq, DayOfWeek dayOfWeek) throws IOException {
+    public void createOfficialWebtoon(Long memberId, CreateWebtoonReq createWebtoonReq, DayOfWeek dayOfWeek) {
         Member member = memberRepository.findOne(memberId);
         List<Genre> genres = createWebtoonReq.getGenres().stream()
                 .map(genreEnum -> genreRepository.findByGenreEnum(genreEnum))
@@ -45,9 +44,10 @@ public class OfficialWebtoonService {
     }
 
     public List<FindOfficialWebtoonsRes> findAllOfficialWebtoon() {
-        return officialWebtoonRepository.findAll().stream()
-                .map(officialWebtoon -> FindOfficialWebtoonsRes.create(officialWebtoon))
-                .collect(Collectors.toList());
+        return officialWebtoonRepository.findAll();
+//        return officialWebtoonRepository.findAll().stream()
+//                .map(officialWebtoon -> FindOfficialWebtoonsRes.create(officialWebtoon))
+//                .collect(Collectors.toList());
     }
 
     public FindOfficialWebtoonDetailRes findOfficialWebtoonDetail(Long webtoonId) {
