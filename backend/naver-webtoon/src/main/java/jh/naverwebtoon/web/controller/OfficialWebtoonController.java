@@ -29,15 +29,17 @@ public class OfficialWebtoonController {
 
     /**
      * 웹툰 리스트 조회(전체), 장르별 조회
+     * 인기순 / 업데이트순 정렬
      */
     @PostMapping()
     public List<FindOfficialWebtoonsRes> findAll(@RequestBody List<GenreEnum> genres, @RequestParam(name = "sorting") SortingEnum sorting) {
         if (genres.get(0) == GenreEnum.ALL) {
-            return officialWebtoonService.findAllOfficialWebtoon(sorting);
+            return officialWebtoonService.findAll(sorting);
         } else {
-            return webtoonGenreService.findOfficialWebtoonsByGenre(genres);
+            return webtoonGenreService.findOfficialWebtoonsByGenre(sorting, genres);
         }
     }
+
 
     /**
      * 요일별 웹툰 조회

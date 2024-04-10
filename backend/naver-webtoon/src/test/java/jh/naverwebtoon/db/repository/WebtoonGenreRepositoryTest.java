@@ -25,10 +25,20 @@ class WebtoonGenreRepositoryTest {
     }
 
     @Test
-    void 장르별_웹툰_리스트_조회() {
+    void 장르별_웹툰_리스트_조회_업데이트순() {
         List<GenreEnum> genres = new ArrayList<>();
         genres.add(GenreEnum.ROMANCE);
-        List<FindOfficialWebtoonsRes> webtoons = webtoonGenreRepository.findOfficialWebtoonByGenre(genres);
+        List<FindOfficialWebtoonsRes> webtoons = webtoonGenreRepository.findOfficialWebtoonByGenreUpdate(genres);
+        for (FindOfficialWebtoonsRes webtoon : webtoons) {
+            System.out.println(webtoon.toString());
+        }
+    }
+
+    @Test
+    void 장르별_웹툰_리스트_조회_인기순() {
+        List<GenreEnum> genres = new ArrayList<>();
+        genres.add(GenreEnum.ROMANCE);
+        List<FindOfficialWebtoonsRes> webtoons = webtoonGenreRepository.findOfficialWebtoonByGenreOrderByPopularity(genres);
         for (FindOfficialWebtoonsRes webtoon : webtoons) {
             System.out.println(webtoon.toString());
         }

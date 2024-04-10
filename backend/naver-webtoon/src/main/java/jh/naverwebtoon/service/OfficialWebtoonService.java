@@ -44,11 +44,12 @@ public class OfficialWebtoonService {
         officialWebtoonRepository.save(officialWebtoon);
     }
 
-    public List<FindOfficialWebtoonsRes> findAllOfficialWebtoon(SortingEnum sorting) {
+    public List<FindOfficialWebtoonsRes> findAll(SortingEnum sorting) {
         if (sorting == SortingEnum.POPULARITY) {
             return officialWebtoonRepository.findAllOrderByPopularity();
+        } else {  //UPDATE
+            return officialWebtoonRepository.findAllOrderByUpdate();
         }
-        return officialWebtoonRepository.findAll();
     }
 
     public FindOfficialWebtoonDetailRes findOfficialWebtoonDetail(Long webtoonId) {

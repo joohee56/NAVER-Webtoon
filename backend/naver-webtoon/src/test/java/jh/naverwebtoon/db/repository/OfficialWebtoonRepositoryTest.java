@@ -2,7 +2,6 @@ package jh.naverwebtoon.db.repository;
 
 import java.time.DayOfWeek;
 import java.util.List;
-import jh.naverwebtoon.db.domain.webtoon.OfficialWebtoon;
 import jh.naverwebtoon.dto.response.FindOfficialWebtoonByDayOfWeekRes;
 import jh.naverwebtoon.dto.response.FindOfficialWebtoonsRes;
 import org.junit.jupiter.api.Test;
@@ -25,18 +24,19 @@ class OfficialWebtoonRepositoryTest {
     }
 
     @Test
-    void 전쳬_웹툰_리스트_조회() {
-        List<FindOfficialWebtoonsRes> webtoons = repository.findAll();
+    void 전쳬_웹툰_리스트_조회_업데이트순() {
+        List<FindOfficialWebtoonsRes> webtoons = repository.findAllOrderByUpdate();
         for (FindOfficialWebtoonsRes webtoon : webtoons) {
             System.out.println(webtoon.toString());
         }
     }
 
     @Test
-    void 테스트() {
-        List<OfficialWebtoon> webtoons = repository.test();
-        for (OfficialWebtoon webtoon : webtoons) {
+    void 전쳬_웹툰_리스트_조회_인기순() {
+        List<FindOfficialWebtoonsRes> webtoons = repository.findAllOrderByPopularity();
+        for (FindOfficialWebtoonsRes webtoon : webtoons) {
             System.out.println(webtoon.toString());
         }
     }
+
 }

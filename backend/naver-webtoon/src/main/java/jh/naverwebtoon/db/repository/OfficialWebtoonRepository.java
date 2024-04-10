@@ -24,21 +24,31 @@ public class OfficialWebtoonRepository {
 
     /**
      * 전체 웹툰 리스트 조회 (웹툰 정보 + 오늘 날짜에 업로드된 회차의 갯수)
+     * 최근 업데이트 순으로 정렬
      */
-    public List<FindOfficialWebtoonsRes> findAll() {
+    public List<FindOfficialWebtoonsRes> findAllOrderByUpdate() {
         return em.createQuery("select new jh.naverwebtoon.dto.response.FindOfficialWebtoonsRes(ow"
-                        + ", (select count(r) from Round r where function('date_format', r.createdAt, \"%Y-%m-%d\") = current_date() and r.webtoon = ow))"
-                        + " from OfficialWebtoon ow"
-                        + " join fetch ow.webtoonThumbnail wt", FindOfficialWebtoonsRes.class)
+                        + ", (select count(r) from Round r where function('date_format', r.createdAt, \"%Y-%m-%d\") = current_date() and r.webtoon = ow)"
+                        + ", null"
+                        + ", (select r.createdAt from Round r where r.webtoon=ow order by r.createdAt desc limit 1) as updatedAt"
+                        + ") from OfficialWebtoon ow"
+                        + " join fetch ow.webtoonThumbnail wt"
+                        + " order by updatedAt desc", FindOfficialWebtoonsRes.class)
                 .getResultList();
     }
 
+    /**
+     * 전체 웹툰 리스트 조회 (웹툰 정보 + 오늘 날짜에 업로드된 회차의 갯수)
+     * 인기순으로 정렬
+     */
     public List<FindOfficialWebtoonsRes> findAllOrderByPopularity() {
         return em.createQuery("select new jh.naverwebtoon.dto.response.FindOfficialWebtoonsRes(ow"
-                        + ", (select count(r) from Round r where function('date_format', r.createdAt, \"%Y-%m-%d\") = current_date() and r.webtoon = ow))"
-                        + " from OfficialWebtoon ow"
+                        + ", (select count(r) from Round r where function('date_format', r.createdAt, \"%Y-%m-%d\") = current_date() and r.webtoon = ow)"
+                        + ", (select count(rl) as likeCount from RoundLike rl where rl.round.id in (select roundId from (select r.id as roundId from Round r where r.webtoon=ow order by r.createdAt desc limit 10) as sub)) as totalLikeCount"
+                        + ", null"
+                        + ") from OfficialWebtoon ow"
                         + " join fetch ow.webtoonThumbnail wt"
-                        + " order by (select count(rl) as likeCount from RoundLike rl where rl.round.id in (select roundId from (select r.id as roundId from Round r where r.webtoon=ow order by r.createdAt desc limit 10) as sub)) desc", FindOfficialWebtoonsRes.class)
+                        + " order by totalLikeCount desc", FindOfficialWebtoonsRes.class)
                         .getResultList();
     }
 
