@@ -25,7 +25,7 @@ public class WebtoonGenreRepository {
      * 장르별 전체 웹툰 리스트 조회 (웹툰 정보 + 오늘 날짜에 업로드된 회차의 갯수)
      */
     public List<FindOfficialWebtoonsRes> findOfficialWebtoonByGenre(List<GenreEnum> genres) {
-        return em.createQuery("select new jh.naverwebtoon.dto.response.FindOfficialWebtoonsRes(wg.webtoon"
+        return em.createQuery("select distinct new jh.naverwebtoon.dto.response.FindOfficialWebtoonsRes(wg.webtoon"
                 + ", (select count(r) from Round r where function('date_format', r.createdAt, \"%Y-%m-%d\") = current_date() and r.webtoon = wg.webtoon) as roundUpdateCount"
                 + ") from WebtoonGenre wg"
                 + " join fetch wg.webtoon.webtoonThumbnail wt"
