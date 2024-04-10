@@ -12,4 +12,5 @@ public class FindOfficialWebtoonByDayOfWeekRes {
     private String thumbnail;
     private DayOfWeek dayOfWeek;
     private Long totalLikeCount;
+    private Long roundUpdateCount;
 }

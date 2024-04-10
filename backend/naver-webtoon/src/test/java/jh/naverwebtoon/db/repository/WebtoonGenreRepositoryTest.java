@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import jh.naverwebtoon.db.domain.Genre;
 import jh.naverwebtoon.db.domain.enums.GenreEnum;
-import jh.naverwebtoon.db.domain.webtoon.OfficialWebtoon;
+import jh.naverwebtoon.dto.response.FindOfficialWebtoonsRes;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,13 +25,12 @@ class WebtoonGenreRepositoryTest {
     }
 
     @Test
-    void 장르별_웹툰_조회() {
+    void 장르별_웹툰_리스트_조회() {
         List<GenreEnum> genres = new ArrayList<>();
         genres.add(GenreEnum.ROMANCE);
-        genres.add(GenreEnum.DAILY_LIFE);
-        List<OfficialWebtoon> webtoons = webtoonGenreRepository.findOfficialWebtoonByGenre(genres);
-        for (OfficialWebtoon webtoon : webtoons) {
-            System.out.println(webtoon.getId() + ", " + webtoon.getName() + ", " + webtoon.getWebtoonThumbnail().getPosterImage().getStoreFileName() + ", " + webtoon.getDayOfWeek() + ", " + webtoon.isComplete());
+        List<FindOfficialWebtoonsRes> webtoons = webtoonGenreRepository.findOfficialWebtoonByGenre(genres);
+        for (FindOfficialWebtoonsRes webtoon : webtoons) {
+            System.out.println(webtoon.toString());
         }
     }
 }

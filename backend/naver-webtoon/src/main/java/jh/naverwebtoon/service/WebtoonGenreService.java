@@ -1,7 +1,6 @@
 package jh.naverwebtoon.service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import jh.naverwebtoon.db.domain.enums.GenreEnum;
 import jh.naverwebtoon.db.repository.WebtoonGenreRepository;
 import jh.naverwebtoon.dto.response.FindOfficialWebtoonsRes;
@@ -16,8 +15,6 @@ public class WebtoonGenreService {
     private final WebtoonGenreRepository webtoonGenreRepository;
 
     public List<FindOfficialWebtoonsRes> findOfficialWebtoonsByGenre(List<GenreEnum> genres) {
-        return webtoonGenreRepository.findOfficialWebtoonByGenre(genres).stream()
-                .map(officialWebtoon -> FindOfficialWebtoonsRes.create(officialWebtoon))
-                .collect(Collectors.toList());
+        return webtoonGenreRepository.findOfficialWebtoonByGenre(genres);
     }
 }

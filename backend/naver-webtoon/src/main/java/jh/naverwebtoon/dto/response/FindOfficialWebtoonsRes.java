@@ -2,13 +2,12 @@ package jh.naverwebtoon.dto.response;
 
 import java.time.DayOfWeek;
 import jh.naverwebtoon.db.domain.webtoon.OfficialWebtoon;
-import lombok.AllArgsConstructor;
+import jh.naverwebtoon.db.domain.webtoon.Webtoon;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+@ToString
 public class FindOfficialWebtoonsRes {
     private Long webtoonId;
     private String webtoonName;
@@ -16,13 +15,13 @@ public class FindOfficialWebtoonsRes {
     private DayOfWeek dayOfWeek;
     private Long roundUpdateCount;
 
-    public static FindOfficialWebtoonsRes create(OfficialWebtoon officialWebtoon) {
-        FindOfficialWebtoonsRes findOfficialWebtoonsRes = new FindOfficialWebtoonsRes();
-        findOfficialWebtoonsRes.webtoonId = officialWebtoon.getId();
-        findOfficialWebtoonsRes.webtoonName = officialWebtoon.getName();
-        findOfficialWebtoonsRes.posterStoreFileName = officialWebtoon.getWebtoonThumbnail().getPosterImage()
+    public FindOfficialWebtoonsRes(Webtoon webtoon, Long roundUpdateCount) {
+        OfficialWebtoon officialWebtoon = (OfficialWebtoon) webtoon;
+        this.webtoonId = officialWebtoon.getId();
+        this.webtoonName = officialWebtoon.getName();
+        this.posterStoreFileName = officialWebtoon.getWebtoonThumbnail().getPosterImage()
                 .getStoreFileName();
-        findOfficialWebtoonsRes.dayOfWeek = officialWebtoon.getDayOfWeek();
-        return findOfficialWebtoonsRes;
+        this.dayOfWeek = officialWebtoon.getDayOfWeek();
+        this.roundUpdateCount = roundUpdateCount;
     }
 }

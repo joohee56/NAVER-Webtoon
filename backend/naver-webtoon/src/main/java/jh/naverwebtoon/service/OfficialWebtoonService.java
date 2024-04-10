@@ -45,9 +45,6 @@ public class OfficialWebtoonService {
 
     public List<FindOfficialWebtoonsRes> findAllOfficialWebtoon() {
         return officialWebtoonRepository.findAll();
-//        return officialWebtoonRepository.findAll().stream()
-//                .map(officialWebtoon -> FindOfficialWebtoonsRes.create(officialWebtoon))
-//                .collect(Collectors.toList());
     }
 
     public FindOfficialWebtoonDetailRes findOfficialWebtoonDetail(Long webtoonId) {
