@@ -30,7 +30,6 @@ export default {
 
 <style scoped>
 .week-day-item-wrap {
-  /* flex: 1; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -46,7 +45,6 @@ export default {
   width: 100%;
   justify-content: center;
 }
-
 .webtoon-list-wrap {
   list-style: none;
   padding: 10px 0 23px;
@@ -54,7 +52,6 @@ export default {
   display: block;
   margin: 0;
 }
-
 .webtoon-item {
   width: 160px;
 }
@@ -65,9 +62,6 @@ export default {
   width: 160px;
   aspect-ratio: 480 / 623;
   border-radius: 4px;
-}
-.webtoon-name-wrap {
-  display: block;
 }
 .webtoon-item .up {
   color: #ff4d56;
@@ -81,6 +75,9 @@ export default {
 }
 .webtoon-name {
   font-size: 15px;
+}
+.webtoon-name:hover {
+  text-decoration: underline;
 }
 .overflow-hidden {
   white-space: nowrap; /*줄 바꿈 방지*/

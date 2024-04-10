@@ -4,9 +4,12 @@
       <router-link :to="{name: 'roundList', params: {webtoonId: webtoon.webtoonId}}">
         <img class="cover-image" :src="require(`@/assets/image/${webtoon.thumbnail}`)">
       </router-link>
-      <router-link :to="{name: 'roundList', params: {webtoonId: webtoon.webtoonId}}">
-        <div class="title overflow-hidden">{{webtoon.webtoonName}}</div>
-      </router-link>
+      <div class="webtoon-name-wrap overflow-hidden">
+        <span class="up" v-if="webtoon.roundUpdateCount>0">UP</span>
+        <router-link :to="{name: 'roundList', params: {webtoonId: webtoon.webtoonId}}">
+          <span class="title">{{webtoon.webtoonName}}</span>
+        </router-link>
+      </div>
       <div class="like-cnt-wrap">
         <i class="fa-solid fa-heart"></i>
         <div>&nbsp;{{webtoon.totalLikeCount}}</div>
@@ -51,16 +54,33 @@ export default {
   width: 100%;
   margin-bottom: 180px;
 }
-.webtoon .title {
-  font-family: AppleSDGothicNeoB;
-  font-size: 17px;
-  margin-left: 5px;
-}
 .cover-image {
   width: 100%;
   border-radius: 4px;
   border: 1px solid #c3c1c1;
   aspect-ratio: 480 / 623;
+}
+.webtoon-name-wrap {
+  display: block;
+}
+.webtoon .up {
+  color: #ff4d56;
+  border-radius: 5px;
+  border: #ff4d56 solid 0.5px;
+  font-family: AppleSDGothicNeoEB;
+  text-align: center;
+  padding: 0 4px;
+  margin-right: 3px;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+.webtoon .title {
+  font-family: AppleSDGothicNeoM;
+  font-size: 15px;
+  margin-left: 5px;
+}
+.webtoon .title:hover {
+  text-decoration: underline;
 }
 .like-cnt-wrap {
   display: flex;
