@@ -3,8 +3,10 @@
 		<div class="subject-container">
 			<p class="title">요일별 전체 웹툰</p>
 			<div class="filter">
-				<button class="active">인기순</button> · 
-				<button>업데이트순</button>
+				<input type="radio" id="popularity" v-model="selectedSorting" value="POPULARITY" hidden/>
+        <label for="popularity">인기순</label> · 
+				<input type="radio" id="update" v-model="selectedSorting" value="UPDATE" hidden/>
+        <label for="update">업데이트순</label>
 			</div>
 		</div>
 
@@ -66,6 +68,7 @@ export default {
         { title: "스포츠", value: "SPORTS" },
       ],
       selectedGenres: ["ALL"],
+      selectedSorting: "POPULARITY",
     };
   },
   components: {
@@ -84,11 +87,17 @@ export default {
       localStorage.setItem("genres", JSON.stringify(this.selectedGenres));
       this.fetchOfficialWebtoons();
     },
+    selectedSorting() {
+      this.fetchOfficialWebtoons();
+    },
   },
   methods: {
     async fetchOfficialWebtoons() {
       try {
-        const response = await getOfficialWebtoonAll(this.selectedGenres);
+        const response = await getOfficialWebtoonAll(
+          this.selectedGenres,
+          this.selectedSorting
+        );
         this.webtoons = {
           monday: [],
           tuesday: [],
@@ -160,15 +169,15 @@ export default {
 }
 .filter {
   margin-left: 1rem;
+  line-height: 30px;
 }
-.filter button {
+.filter label {
   background: none;
-  border: none;
-  padding: 0;
-  font-size: 13;
+  font-size: 13px;
   font-family: AppleSDGothicNeoEB;
+  cursor: pointer;
 }
-.active {
+.filter input:checked + label {
   color: #00dc64;
 }
 

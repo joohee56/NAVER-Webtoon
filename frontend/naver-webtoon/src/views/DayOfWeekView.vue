@@ -1,6 +1,5 @@
 <template lang="ko">
 	<div class="container">
-		<WebtoonRanking></WebtoonRanking>
 		<div class="subject-wrap">
 			<div class="title">전체 {{subjectTitle}} 웹툰</div>
 			<div class="filter-wrap">
@@ -14,7 +13,6 @@
 </template>
 
 <script>
-import WebtoonRanking from "@/components/webtoon/main/WebtoonRanking";
 import WebtoonContainer from "@/components/webtoon/dayOfWeek/WebtoonContainer.vue";
 
 export default {
@@ -54,7 +52,6 @@ export default {
     },
   },
   components: {
-    WebtoonRanking,
     WebtoonContainer,
   },
 };
@@ -69,6 +66,7 @@ export default {
   font-style: normal;
   font-variation-settings: "slnt" 0;
   width: 85rem;
+  margin-top: 50px;
 }
 
 /* 타이틀 */
