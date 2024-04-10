@@ -444,23 +444,23 @@ public class DataLoader implements ApplicationRunner {
 
 //        5위~10위
         for(int i=18; i<=22; i++) {
-            initRoundLike(Long.valueOf(i), Long.valueOf(75));
+            initRoundLike(Long.valueOf(i), Long.valueOf(75));  //신혼일기
         }
 
         for(int i=18; i<=21; i++) {
-            initRoundLike(Long.valueOf(i), Long.valueOf(76));
+            initRoundLike(Long.valueOf(i), Long.valueOf(76));  //나노리스트
         }
 
         for(int i=18; i<=20; i++) {
-            initRoundLike(Long.valueOf(i), Long.valueOf(65));
+            initRoundLike(Long.valueOf(i), Long.valueOf(65));  //소녀의 세계
         }
 
         for(int i=18; i<=19; i++) {
-            initRoundLike(Long.valueOf(i), Long.valueOf(68));
+            initRoundLike(Long.valueOf(i), Long.valueOf(68));  //베이비 폭군
         }
 
         for(int i=18; i<=18; i++) {
-            initRoundLike(Long.valueOf(i), Long.valueOf(71));
+            initRoundLike(Long.valueOf(i), Long.valueOf(71)); //마음의 소리2
         }
 
 

@@ -33,6 +33,15 @@ public class OfficialWebtoonRepository {
                 .getResultList();
     }
 
+    public List<FindOfficialWebtoonsRes> findAllOrderByPopularity() {
+        return em.createQuery("select new jh.naverwebtoon.dto.response.FindOfficialWebtoonsRes(ow"
+                        + ", (select count(r) from Round r where function('date_format', r.createdAt, \"%Y-%m-%d\") = current_date() and r.webtoon = ow))"
+                        + " from OfficialWebtoon ow"
+                        + " join fetch ow.webtoonThumbnail wt"
+                        + " order by (select count(rl) as likeCount from RoundLike rl where rl.round.id in (select roundId from (select r.id as roundId from Round r where r.webtoon=ow order by r.createdAt desc limit 10) as sub)) desc", FindOfficialWebtoonsRes.class)
+                        .getResultList();
+    }
+
     public OfficialWebtoon findOneByIdWithMemberAndThumbnail(Long webtoonId) {
         return em.createQuery("select distinct ow from OfficialWebtoon ow"
                         + " join fetch ow.member m "

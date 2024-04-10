@@ -7,6 +7,7 @@ import jh.naverwebtoon.db.domain.Genre;
 import jh.naverwebtoon.db.domain.Member;
 import jh.naverwebtoon.db.domain.UploadImage;
 import jh.naverwebtoon.db.domain.WebtoonThumbnail;
+import jh.naverwebtoon.db.domain.enums.SortingEnum;
 import jh.naverwebtoon.db.domain.webtoon.OfficialWebtoon;
 import jh.naverwebtoon.db.repository.GenreRepository;
 import jh.naverwebtoon.db.repository.MemberRepository;
@@ -43,7 +44,10 @@ public class OfficialWebtoonService {
         officialWebtoonRepository.save(officialWebtoon);
     }
 
-    public List<FindOfficialWebtoonsRes> findAllOfficialWebtoon() {
+    public List<FindOfficialWebtoonsRes> findAllOfficialWebtoon(SortingEnum sorting) {
+        if (sorting == SortingEnum.POPULARITY) {
+            return officialWebtoonRepository.findAllOrderByPopularity();
+        }
         return officialWebtoonRepository.findAll();
     }
 
