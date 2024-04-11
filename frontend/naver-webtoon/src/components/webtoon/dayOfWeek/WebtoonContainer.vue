@@ -27,14 +27,22 @@ export default {
       webtoons: [], //webtoonId, webtoonName, thumbnail, totalLikeCount
     };
   },
-  props: ["dayOfWeek"],
+  props: ["dayOfWeek", "selectedSorting"],
+  watch: {
+    selectedSorting() {
+      this.fetchWebtoons();
+    },
+  },
   mounted() {
     this.fetchWebtoons();
   },
   methods: {
     async fetchWebtoons() {
       try {
-        const response = await getOfficialWebtoonAllByDayOfWeek(this.dayOfWeek);
+        const response = await getOfficialWebtoonAllByDayOfWeek(
+          this.dayOfWeek,
+          this.selectedSorting
+        );
         console.log(response);
         this.webtoons = response.data;
       } catch (error) {

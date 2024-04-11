@@ -172,7 +172,6 @@ export default {
   line-height: 30px;
 }
 .filter label {
-  background: none;
   font-size: 13px;
   font-family: AppleSDGothicNeoEB;
   cursor: pointer;

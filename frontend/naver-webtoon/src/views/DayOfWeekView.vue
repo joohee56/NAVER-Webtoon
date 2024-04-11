@@ -3,12 +3,13 @@
 		<div class="subject-wrap">
 			<div class="title">전체 {{subjectTitle}} 웹툰</div>
 			<div class="filter-wrap">
-				<button class="active">인기순</button> · 
-				<button>업데이트순</button> ·
-				<button>조회순</button>
+        <input type="radio" id="popularity" v-model="selectedSorting" value="POPULARITY" hidden/>
+        <label for="popularity">인기순</label> · 
+				<input type="radio" id="update" v-model="selectedSorting" value="UPDATE" hidden/>
+        <label for="update">업데이트순</label>
 			</div>
 		</div>
-		<WebtoonContainer :dayOfWeek=this.dayOfWeek></WebtoonContainer>
+		<WebtoonContainer :dayOfWeek=this.dayOfWeek :selectedSorting=this.selectedSorting></WebtoonContainer>
 	</div>
 </template>
 
@@ -19,6 +20,7 @@ export default {
   data() {
     return {
       dayOfWeek: this.$route.params.dayOfWeek,
+      selectedSorting: "POPULARITY",
     };
   },
   watch: {
@@ -82,14 +84,12 @@ export default {
 .filter-wrap {
   margin-left: auto;
 }
-.filter-wrap button {
-  background: none;
-  border: none;
-  padding: 0;
-  font-size: 13;
+.filter-wrap label {
+  font-size: 13px;
   font-family: AppleSDGothicNeoEB;
+  cursor: pointer;
 }
-.active {
+.filter-wrap input:checked + label {
   color: #00dc64;
 }
 </style>

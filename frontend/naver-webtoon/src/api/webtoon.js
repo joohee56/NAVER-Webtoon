@@ -43,9 +43,14 @@ async function getOfficialWebtoonDetail(webtoonId) {
   }
 }
 
-async function getOfficialWebtoonAllByDayOfWeek(dayOfWeek) {
+async function getOfficialWebtoonAllByDayOfWeek(dayOfWeek, sorting) {
   try {
-    const response = await jsonApi.get(`/webtoon/official/${dayOfWeek}`);
+    const response = await jsonApi.get("/webtoon/official", {
+      params: {
+        dayOfWeek: dayOfWeek,
+        sorting: sorting,
+      },
+    });
     return response;
   } catch (error) {
     console.log(error);
