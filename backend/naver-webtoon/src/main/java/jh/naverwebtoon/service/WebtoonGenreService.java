@@ -15,6 +15,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class WebtoonGenreService {
     private final WebtoonGenreRepository webtoonGenreRepository;
 
+    /**
+     * 장르에 해당하는 전체 웹툰 리스트 조회
+     * 인기순 / 업데이트 순으로 정렬
+     */
     public List<FindOfficialWebtoonsRes> findOfficialWebtoonsByGenre(SortingEnum sorting, List<GenreEnum> genres) {
         if (sorting == SortingEnum.POPULARITY) {
             return webtoonGenreRepository.findOfficialWebtoonByGenreOrderByPopularity(genres);

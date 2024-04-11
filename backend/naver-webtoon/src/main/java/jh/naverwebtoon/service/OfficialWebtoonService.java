@@ -44,6 +44,10 @@ public class OfficialWebtoonService {
         officialWebtoonRepository.save(officialWebtoon);
     }
 
+    /**
+     * 전체 웹툰 리스트 조회
+     * 인기순 / 업데이트 순으로 정렬
+     */
     public List<FindOfficialWebtoonsRes> findAll(SortingEnum sorting) {
         if (sorting == SortingEnum.POPULARITY) {
             return officialWebtoonRepository.findAllOrderByPopularity();

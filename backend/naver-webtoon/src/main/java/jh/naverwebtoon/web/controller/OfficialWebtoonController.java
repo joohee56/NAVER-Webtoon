@@ -44,9 +44,9 @@ public class OfficialWebtoonController {
     /**
      * 요일별 웹툰 조회
      */
-    @GetMapping("/{dayOfWeek}")
-    public List<FindOfficialWebtoonByDayOfWeekRes> findAllByDayOfWeek(@PathVariable("dayOfWeek") DayOfWeek dayOfWeek) {
-        return officialWebtoonRepository.findAllByDayOfWeek(dayOfWeek);
+    @GetMapping()
+    public List<FindOfficialWebtoonByDayOfWeekRes> findAllByDayOfWeek(@RequestParam("dayOfWeek") DayOfWeek dayOfWeek, @RequestParam(name = "sorting") SortingEnum sorting) {
+        return officialWebtoonRepository.findAllByDayOfWeek(dayOfWeek, sorting);
     }
 
     /**

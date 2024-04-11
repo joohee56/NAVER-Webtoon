@@ -22,7 +22,7 @@ public class WebtoonGenreRepository {
     }
 
     /**
-     * 장르별 전체 웹툰 리스트 조회 (웹툰 정보 + 오늘 날짜에 업로드된 회차의 갯수)
+     * 장르별 전체 웹툰 리스트 조회 (웹툰 정보 + 오늘 날짜에 업로드된 회차의 갯수 + 업데이트된 날짜)
      * 최근 업데이트 순서대로 정렬
      */
     public List<FindOfficialWebtoonsRes> findOfficialWebtoonByGenreUpdate(List<GenreEnum> genres) {
@@ -41,7 +41,7 @@ public class WebtoonGenreRepository {
     }
 
     /**
-     * 장르별 전체 웹툰 리스트 조회 (웹툰 정보 + 오늘 날짜에 업로드된 회차의 갯수)
+     * 장르별 전체 웹툰 리스트 조회 (웹툰 정보 + 오늘 날짜에 업로드된 회차의 갯수 + 총 좋아요 갯수)
      * 인기순으로 정렬
      */
     public List<FindOfficialWebtoonsRes> findOfficialWebtoonByGenreOrderByPopularity(List<GenreEnum> genres) {

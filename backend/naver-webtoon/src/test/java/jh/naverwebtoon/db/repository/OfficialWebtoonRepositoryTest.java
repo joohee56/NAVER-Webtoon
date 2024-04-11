@@ -2,6 +2,7 @@ package jh.naverwebtoon.db.repository;
 
 import java.time.DayOfWeek;
 import java.util.List;
+import jh.naverwebtoon.db.domain.enums.SortingEnum;
 import jh.naverwebtoon.dto.response.FindOfficialWebtoonByDayOfWeekRes;
 import jh.naverwebtoon.dto.response.FindOfficialWebtoonsRes;
 import org.junit.jupiter.api.Test;
@@ -17,7 +18,7 @@ class OfficialWebtoonRepositoryTest {
 
     @Test
     void 요일별_웹툰_리스트_조회() {
-        List<FindOfficialWebtoonByDayOfWeekRes> webtoons = repository.findAllByDayOfWeek(DayOfWeek.SATURDAY);
+        List<FindOfficialWebtoonByDayOfWeekRes> webtoons = repository.findAllByDayOfWeek(DayOfWeek.MONDAY, SortingEnum.POPULARITY);
         for (FindOfficialWebtoonByDayOfWeekRes webtoon : webtoons) {
             System.out.println(webtoon.getWebtoonId() + ", " + webtoon.getWebtoonName() + ", " + webtoon.getThumbnail() + ", " + webtoon.getTotalLikeCount());
         }
