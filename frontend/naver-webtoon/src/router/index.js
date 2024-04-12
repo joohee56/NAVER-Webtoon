@@ -57,7 +57,7 @@ const routes = [
         component: ChallengeView,
       },
       {
-        path: "/webtoon/:webtoonId",
+        path: "/webtoon/:webtoonId/:dayOfWeek",
         name: "roundList",
         component: RoundList,
       },

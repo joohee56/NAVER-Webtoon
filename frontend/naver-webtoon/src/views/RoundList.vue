@@ -8,13 +8,22 @@
 <script>
 import WebtoonInfo from "@/components/webtoon/roundList/WebtoonInfo.vue";
 import RoundList from "@/components/webtoon/roundList/RoundList.vue";
+import { mapMutations } from "vuex";
 
 export default {
   components: {
     WebtoonInfo,
     RoundList,
   },
-  created() {},
+  created() {
+    this.setDayOfWeekActive();
+  },
+  methods: {
+    ...mapMutations("dayOfWeekStore", ["SET_IS_ACTIVE"]),
+    setDayOfWeekActive() {
+      this.SET_IS_ACTIVE(this.$route.params.dayOfWeek);
+    },
+  },
 };
 </script>
 

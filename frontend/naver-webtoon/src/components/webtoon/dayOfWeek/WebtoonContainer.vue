@@ -65,7 +65,6 @@ export default {
 .cover-image {
   width: 100%;
   border-radius: 4px;
-  border: 1px solid #c3c1c1;
   aspect-ratio: 480 / 623;
 }
 .webtoon-name-wrap {

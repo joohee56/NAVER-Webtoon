@@ -8,11 +8,21 @@
 <script>
 import WebtoonRanking from "@/components/webtoon/main/WebtoonRanking";
 import WebtoonList from "@/components/webtoon/main/WebtoonList.vue";
+import { mapMutations } from "vuex";
 
 export default {
   components: {
     WebtoonRanking,
     WebtoonList,
+  },
+  created() {
+    this.setDayOfWeekActive();
+  },
+  methods: {
+    ...mapMutations("dayOfWeekStore", ["SET_IS_ACTIVE"]),
+    setDayOfWeekActive() {
+      this.SET_IS_ACTIVE(0);
+    },
   },
 };
 </script>

@@ -34,18 +34,6 @@ export default {
   overflow: hidden;
 }
 
-/* nav {
-  margin: 0;
-  font-family: AppleSDGothicNeoSB;
-  font-size: 20px;
-}
-
-nav a {
-  padding: 20px 20px;
-  box-sizing: border-box;
-  display: inline-block;
-} */
-
 nav button {
   padding: 20px 20px;
   box-sizing: border-box;
