@@ -9,7 +9,7 @@
 				<div class="info-line">
 					<img :src="require(`@/assets/image/${webtoonInfo.profileStoreFileName}`)" class="profile-image">
 					<span class="author-name">{{webtoonInfo.memberName}}</span>
-					<span>· 글/그림 | {{webtoonInfo.dayOfWeek}}웹툰 · {{webtoonInfo.ageLimit}}세 이용가</span>
+					<span>· 글/그림 | {{webtoonInfo.dayOfWeek | dayOfWeekTitle}}웹툰 · {{webtoonInfo.ageLimit}}세 이용가</span>
 				</div>
 				<div class="summary">
 					<div class="overflow-hidden">{{webtoonInfo.oneLineSummary}}</div>
@@ -38,6 +38,33 @@ export default {
         tags: [],
       },
     };
+  },
+  filters: {
+    dayOfWeekTitle(value) {
+      switch (value) {
+        case "MONDAY": {
+          return "월요";
+        }
+        case "TUESDAY": {
+          return "화요";
+        }
+        case "WEDNESDAY": {
+          return "수요";
+        }
+        case "THURSDAY": {
+          return "목요";
+        }
+        case "FRIDAY": {
+          return "금요";
+        }
+        case "SATURDAY": {
+          return "토요";
+        }
+        case "SUNDAY": {
+          return "일요";
+        }
+      }
+    },
   },
   mounted() {
     this.fetchWebtoonInfo();

@@ -149,6 +149,9 @@ export default {
 .sort-btn {
   margin-left: auto;
 }
+.sort-btn span {
+  cursor: pointer;
+}
 .select {
   color: black;
   font-family: AppleSDGothicNeoSB;
