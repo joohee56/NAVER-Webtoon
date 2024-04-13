@@ -9,10 +9,10 @@ import { mapMutations, mapState } from "vuex";
 
 export default {
   computed: {
-    ...mapState("dayOfWeekStore", ["dayOfWeeks"]),
+    ...mapState("navStore", ["dayOfWeeks"]),
   },
   methods: {
-    ...mapMutations("dayOfWeekStore", ["SET_IS_ACTIVE"]),
+    ...mapMutations("navStore", ["SET_IS_ACTIVE"]),
 
     handleLinkClick(index) {
       this.SET_IS_ACTIVE(index);

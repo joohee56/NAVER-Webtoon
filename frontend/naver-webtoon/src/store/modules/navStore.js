@@ -1,7 +1,7 @@
-const dayOfWeekStore = {
+const navStore = {
   namespaced: true,
   state: {
-    selectedIndex: 0,
+    selectedIndex_dayOfWeek: 0,
     dayOfWeeks: [
       {
         title: "요일전체",
@@ -48,13 +48,31 @@ const dayOfWeekStore = {
         isActive: false,
       },
     ],
+    selectedIndex_category: 0,
+    categorys: [
+      {
+        title: "웹툰",
+        routerName: "main",
+        isActive: true,
+      },
+      {
+        title: "도전만화",
+        routerName: "challengeMain",
+        isActive: false,
+      },
+    ],
   },
   mutations: {
-    SET_IS_ACTIVE(state, index) {
-      state.dayOfWeeks[state.selectedIndex].isActive = false;
+    SET_DAY_OF_WEEK_IS_ACTIVE(state, index) {
+      state.dayOfWeeks[state.selectedIndex_dayOfWeek].isActive = false;
       state.dayOfWeeks[index].isActive = true;
-      state.selectedIndex = index;
+      state.selectedIndex_dayOfWeek = index;
+    },
+    SET_CATEGORY_IS_ACTIVE(state, index) {
+      state.categorys[state.selectedIndex_category].isActive = false;
+      state.categorys[index].isActive = true;
+      state.selectedIndex_category = index;
     },
   },
 };
-export default dayOfWeekStore;
+export default navStore;

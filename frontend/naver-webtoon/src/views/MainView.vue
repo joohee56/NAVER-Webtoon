@@ -19,9 +19,9 @@ export default {
     this.setDayOfWeekActive();
   },
   methods: {
-    ...mapMutations("dayOfWeekStore", ["SET_IS_ACTIVE"]),
+    ...mapMutations("navStore", ["SET_DAY_OF_WEEK_IS_ACTIVE"]),
     setDayOfWeekActive() {
-      this.SET_IS_ACTIVE(0);
+      this.SET_DAY_OF_WEEK_IS_ACTIVE(0);
     },
   },
 };

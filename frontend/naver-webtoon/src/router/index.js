@@ -59,7 +59,7 @@ const routes = [
             component: DayOfWeekView,
           },
           {
-            path: "/webtoon/:webtoonId/:dayOfWeek",
+            path: "/webtoon/:webtoonId",
             name: "roundList",
             component: RoundList,
           },
@@ -76,7 +76,7 @@ const routes = [
         component: ChallengeView,
         children: [
           {
-            path: "/challengeMain",
+            path: "/challenge/main",
             name: "challengeMain",
             component: ChallengeMain,
           },

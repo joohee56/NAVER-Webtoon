@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import memberStore from "./modules/memberStore";
-import dayOfWeekStore from "./modules/dayOfWeekStore";
+import navStore from "./modules/navStore";
 import createPersistedState from "vuex-persistedstate";
 import Cookies from "js-cookie";
 
@@ -14,7 +14,7 @@ export default new Vuex.Store({
   actions: {},
   modules: {
     memberStore,
-    dayOfWeekStore,
+    navStore,
   },
   plugins: [
     //여기에 쓴 모듈만 cookie에 저장된다.
@@ -29,8 +29,8 @@ export default new Vuex.Store({
     }),
     //sessionstorage에 저장
     createPersistedState({
-      paths: ["dayOfWeekStore"],
-      key: "dayOfWeek",
+      paths: ["navStore"],
+      key: "navStore",
       storage: {
         getItem: (key) => sessionStorage.getItem(key),
         setItem: (key, value) => sessionStorage.setItem(key, value),

@@ -1,27 +1,22 @@
 <template lang="ko">
   <div class="container">
-    <nav>
-      <button v-for="(categoryHeader, index) in categoryHeaders" @click="handleLinkClick(index)" :class="{active:isActive[index]}">{{categoryHeader}}</button>
-    </nav>
+    <button class="category-nav" v-for="(category, index) in categorys" :class="{active:category.isActive}" @click="handleRouterClick(category, index)">{{category.title}}</button>
     <router-link :to="{name: 'creatorDashboard'}" class="creator-btn">CREATOR'S</router-link>
   </div>  
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      isActive: [true, false, false],
-      categoryHeaders: ["웹툰", "도전만화"],
-      routerNames: ["main", "challengeMain"],
-    };
-  },
+import { mapMutations, mapState } from "vuex";
 
+export default {
+  computed: {
+    ...mapState("navStore", ["categorys"]),
+  },
   methods: {
-    handleLinkClick(index) {
-      this.isActive = [false, false, false];
-      this.isActive[index] = true;
-      this.$router.push({ name: this.routerNames[index] });
+    ...mapMutations("navStore", ["SET_CATEGORY_IS_ACTIVE"]),
+    handleRouterClick(category, index) {
+      this.SET_CATEGORY_IS_ACTIVE(index);
+      this.$router.push({ name: category.routerName });
     },
   },
 };
@@ -34,7 +29,7 @@ export default {
   overflow: hidden;
 }
 
-nav button {
+.category-nav {
   padding: 20px 20px;
   box-sizing: border-box;
   display: inline-block;

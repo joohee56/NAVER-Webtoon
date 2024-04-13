@@ -22,6 +22,7 @@
 
 <script>
 import { getOfficialWebtoonDetail } from "@/api/webtoon";
+import { mapMutations } from "vuex";
 
 export default {
   data() {
@@ -66,8 +67,11 @@ export default {
       }
     },
   },
-  mounted() {
-    this.fetchWebtoonInfo();
+  async mounted() {
+    await this.fetchWebtoonInfo();
+    if (this.webtoonInfo.dayOfWeek) {
+      this.setDayOfWeekActive();
+    }
   },
   methods: {
     async fetchWebtoonInfo() {
@@ -83,6 +87,37 @@ export default {
         );
       } catch (error) {
         console.log(error);
+      }
+    },
+    ...mapMutations("navStore", ["SET_DAY_OF_WEEK_IS_ACTIVE"]),
+    setDayOfWeekActive() {
+      this.SET_DAY_OF_WEEK_IS_ACTIVE(
+        this.getDayOfWeekIndex(this.webtoonInfo.dayOfWeek)
+      );
+    },
+    getDayOfWeekIndex(value) {
+      switch (value) {
+        case "MONDAY": {
+          return 1;
+        }
+        case "TUESDAY": {
+          return 2;
+        }
+        case "WEDNESDAY": {
+          return 3;
+        }
+        case "THURSDAY": {
+          return 4;
+        }
+        case "FRIDAY": {
+          return 5;
+        }
+        case "SATURDAY": {
+          return 6;
+        }
+        case "SUNDAY": {
+          return 7;
+        }
       }
     },
   },

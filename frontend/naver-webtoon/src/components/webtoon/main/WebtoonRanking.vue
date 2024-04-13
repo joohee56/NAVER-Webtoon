@@ -101,7 +101,6 @@ export default {
             this.rankings = responseData.rankings;
             this.updatedAt = responseData.updatedAt;
             this.rankingStartIndex = 0;
-            alert("here");
           });
         },
         (error) => {

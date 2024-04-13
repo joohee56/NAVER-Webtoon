@@ -12,7 +12,7 @@
 		<!-- 회차 -->
 		<div class="round-wrap">
 			<div class="round-list-item" v-for="round in rounds">
-				<router-link :to="{name: 'roundDetail', params: {webtoonId: `${$route.params.webtoonId}`, roundId : `${round.roundId}`}}">
+				<router-link :to="{name: 'roundDetail', params: {webtoonId: `${$route.params.webtoonId}`, roundId: round.roundId}}">
 					<img class="thumbnail" :src="require(`@/assets/image/${round.thumbnail}`)">
 					<div class="detail-wrap">
 						<div class="webtoon-title">{{round.roundNumber}}화 {{round.title}}</div>
