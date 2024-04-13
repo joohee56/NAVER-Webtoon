@@ -76,12 +76,14 @@ export default {
     this.connect();
     this.rankingStartIndex = 0;
   },
-  beforeDestroy() {
+  destroyed() {
     this.disconnect();
   },
   methods: {
     connect() {
-      const serverURL = "http://localhost:8081/websocket/challenge";
+      const webtoonTypeConst =
+        this.webtoonType == "OFFICIAL" ? "official" : "challenge";
+      const serverURL = "http://localhost:8081/websocket";
       const socket = new SockJS(serverURL);
       this.stompClient = Stomp.over(socket);
       console.log(`소켓 연결을 시도합니다. 서버 주소 : ${serverURL}`);
@@ -94,11 +96,12 @@ export default {
           console.log("소켓 연결 성공");
 
           //서버 구독
-          this.stompClient.subscribe("/send/challenge", (res) => {
+          this.stompClient.subscribe("/send/" + webtoonTypeConst, (res) => {
             const responseData = JSON.parse(res.body);
             this.rankings = responseData.rankings;
             this.updatedAt = responseData.updatedAt;
             this.rankingStartIndex = 0;
+            alert("here");
           });
         },
         (error) => {
@@ -109,6 +112,7 @@ export default {
       );
     },
     disconnect() {
+      console.log("disconnect() 호출");
       this.stompClient.disconnect();
       this.connected = false;
     },

@@ -54,7 +54,7 @@ const routes = [
             component: MainView,
           },
           {
-            path: "/:dayOfWeek",
+            path: "/dayOfWeek/:dayOfWeek",
             name: "dayOfWeek",
             component: DayOfWeekView,
           },
