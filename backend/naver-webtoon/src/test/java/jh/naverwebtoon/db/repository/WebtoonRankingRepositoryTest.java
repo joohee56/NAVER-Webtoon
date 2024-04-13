@@ -3,6 +3,7 @@ package jh.naverwebtoon.db.repository;
 import java.util.List;
 import jh.naverwebtoon.db.domain.WebtoonGenre;
 import jh.naverwebtoon.db.domain.WebtoonRanking;
+import jh.naverwebtoon.db.domain.enums.WebtoonType;
 import jh.naverwebtoon.dto.response.FindNewRanking;
 import jh.naverwebtoon.web.controller.SocketController;
 import org.junit.jupiter.api.Test;
@@ -20,9 +21,10 @@ class WebtoonRankingRepositoryTest {
 
     @Test
     void 이전_랭킹_조회() {
-        socketController.findRanking();
+        socketController.sendOfficialRanking();
         int offset = 0, limit = 10;
-        List<WebtoonRanking> rankings = repository.findLatestOne(offset, limit);
+        WebtoonType webtoonType = WebtoonType.OFFICIAL;
+        List<WebtoonRanking> rankings = repository.findLatestOne(offset, limit, webtoonType);
         for (WebtoonRanking ranking : rankings) {
             System.out.println(ranking.getWebtoon().getId() + ", " + ranking.getWebtoon().getName() + ", " + ranking.getWebtoon().getWebtoonThumbnail().getPosterImage().getStoreFileName() + ", " + ranking.getTotalLikeCount() + ", " + ranking.getRanking());
             for (WebtoonGenre webtoonGenre : ranking.getWebtoon().getGenres()) {
@@ -34,7 +36,8 @@ class WebtoonRankingRepositoryTest {
     @Test
     void 최신_랭킹_조회() {
         int offset=0, limit = 10;
-        List<FindNewRanking> findNewRankings = repository.findRankingsByRecentRounds(offset, limit);
+        WebtoonType webtoonType = WebtoonType.OFFICIAL;
+        List<FindNewRanking> findNewRankings = repository.findRankingsByRecentRounds(offset, limit, webtoonType);
         for (FindNewRanking findNewRanking : findNewRankings) {
             System.out.println(findNewRanking.getWebtoonId() + "," + findNewRanking.getTotalLikeCount());
         }

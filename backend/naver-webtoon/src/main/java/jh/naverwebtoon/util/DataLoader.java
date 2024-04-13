@@ -290,7 +290,49 @@ public class DataLoader implements ApplicationRunner {
                 + "무조건적인 헌신과 희생을 바라는 사람들. 그리고 내가 아닌 다른 무언가로 불려지는 순간들. "
                 + "‘RN'휘장과 'RN'딱지의 경계를 넘나드는 '정신병원’ 신규시절 딱지 간호사의 일상은 과연 어떨까?", "오직 나의 이름으로_커버.png");
 
+        genreEnums = new ArrayList<>();
+        genreEnums.add(GenreEnum.EMOTION);
+        genreEnums.add(GenreEnum.DAILY_LIFE);
+        initWebtoon(Long.valueOf(5), "태권 반갑습니다!", WebtoonCategory.EPISODE, genreEnums, "", "우당탕탕 오늘도 평화로운 태권도장 이야기", "태권 반갑습니다_커버.png");
 
+        genreEnums = new ArrayList<>();
+        genreEnums.add(GenreEnum.FANTASY);
+        genreEnums.add(GenreEnum.DAILY_LIFE);
+        initWebtoon(Long.valueOf(5), "외계에서 온 지구인", WebtoonCategory.EPISODE, genreEnums, "", "평범하디 평범한 고등학생 이은조. 딱 하나 특별한 점이 있다면.....집에 돌아가면 밥을 차려주는 부모님, 아니 외계인이 있다는 점이다!", "외계에서 온 지구인_커버.png");
+
+        genreEnums = new ArrayList<>();
+        genreEnums.add(GenreEnum.COMEDY);
+        genreEnums.add(GenreEnum.DAILY_LIFE);
+        initWebtoon(Long.valueOf(5), "고고고", WebtoonCategory.EPISODE, genreEnums, "", "\"너, 내 집사가 되어라!\" 어느 날 갑자기 고양이 세 마리의 간택을 받게 된 집사! 겉모습만큼 성격도 가지각색인 고양이 세 마리와 집사의 털 날리는 일상 이야기. 주 1회 자유연재 / 인스타 @kkyul_jmt / 메일 ehowlgldus@naver.com", "고고고_커버.png");
+
+        genreEnums = new ArrayList<>();
+        genreEnums.add(GenreEnum.FANTASY);
+        genreEnums.add(GenreEnum.THRILLER);
+        initWebtoon(Long.valueOf(5), "화온의 세계에 내려와", WebtoonCategory.EPISODE, genreEnums, "", "\"만물을 창조하신 당신의 이름을 붙여, 우리들은 이곳을... '화온의 세계'라 부르겠나이다!\" . . . 건국 신화 속 신 '화온'을 모시는 세상에서, 감히 그를 모욕한 왕이 있었으니 그는 곧 쿠데타를 일으킨 이에게 쫓기는 신세가 된다. 하지만 도망자 신분이 된 백유신은 멈추지 않고 하늘의 신 화온을 찾아 죽이려 하는데... 신의 발자취를 쫓으며 괴이한 일들을 마주치는 유신 일행은 과연 화온을 찾을 수 있을까?", "화온의 세계에 내려와_커버.png");
+
+        genreEnums = new ArrayList<>();
+        genreEnums.add(GenreEnum.ROMANCE);
+        genreEnums.add(GenreEnum.COMEDY);
+        initWebtoon(Long.valueOf(5), "조금 수상한 연애시뮬레이션", WebtoonCategory.EPISODE, genreEnums, "", "미연시의 주인공이 되었는데 축복이 아니라 저주같다 (자유연재)", "조금 수상한 연애시뮬레이션_커버.png");
+
+        genreEnums = new ArrayList<>();
+        genreEnums.add(GenreEnum.SPORTS);
+        initWebtoon(Long.valueOf(5), "클리너", WebtoonCategory.EPISODE, genreEnums, "", "중학교시절 부터 각광받던 인재였던 백 수. 약팀인 바다고에 입학한 그는 엄청난 활약으로 바다고를 강팀으로 이끌어낸다. 그러다 돌연, 백 수는 '어떤 사건'으로 인해 선수를 그만두게 되는데... 과연 그는 다시 농구부에 복귀하여 목표를 이뤄낼 수 있을것인가?!", "클리너_커버.png");
+
+        genreEnums = new ArrayList<>();
+        genreEnums.add(GenreEnum.THRILLER);
+        genreEnums.add(GenreEnum.FANTASY);
+        initWebtoon(Long.valueOf(5), "요람에서 무덤까지", WebtoonCategory.EPISODE, genreEnums, "", "이 곳은 거대한 교육시설 요람. 이 시대의 모든 아이는 50층에서 태어나 상층을 목표로 나아간다. 그리고 오직 100층에 도달한 완벽한 아이만이 완벽한 어른이 된다. <완벽한 아이를 만들어내는 수수께끼의 기관 요람의 비밀을 파헤치는 이야기>", "요람에서 무덤까지_커버.png");
+
+        genreEnums = new ArrayList<>();
+        genreEnums.add(GenreEnum.COMEDY);
+        genreEnums.add(GenreEnum.DAILY_LIFE);
+        initWebtoon(Long.valueOf(5), "어시스턴트입니다", WebtoonCategory.EPISODE, genreEnums, "", "존경하는 작가님의 어시스턴트로 들어왔으나, 내가 생각한 것과는 많이 다른 작가님의 모습...? 웹툰 작가와 어시스턴트의 일상 러브 코미디! *1인 제작이라 업로드가 늦습니다.*", "어시스턴트입니다_커버.png");
+
+        genreEnums = new ArrayList<>();
+        genreEnums.add(GenreEnum.ROMANCE);
+        genreEnums.add(GenreEnum.COMEDY);
+        initWebtoon(Long.valueOf(5), "청춘은 바로 지금!", WebtoonCategory.EPISODE, genreEnums, "", "특출난 미모로 인기를 한 몸에 받아온 정유아. 근데... 인기가 많아도 너무 많잖아?! 언제나 끊임없이 떠받드는 사람들에게 이리 치이고 저리 치여 지쳐갈 때쯤, 험악한 분위기 때문에 아무도 다가가지 않는 강우주를 만난다. 그래, 이거다!! 누구에게나 사랑받는 정유아와 그 누구도 다가가려하지 않는 강우주의 우당탕탕 학원 로맨스 코미디!", "청춘은 바로 지금_커버.png");
 
 //        Round
         initRound(Long.valueOf(2), "세레나_1화_썸네일.png", "세레나_1화_원고.png", "세레니티의 소녀", ".");
@@ -416,6 +458,18 @@ public class DataLoader implements ApplicationRunner {
         //신의 탑
         initRound(Long.valueOf(17), "신의 탑_1화_썸네일.png", "신의 탑_1화_원고.png", "", ".");
 
+//        도전만화 회차
+        initRound(Long.valueOf(28), "default-thumbnail.png", "원고_샘플.png", "", ".");
+        initRound(Long.valueOf(29), "default-thumbnail.png", "원고_샘플.png", "", ".");
+        initRound(Long.valueOf(30), "default-thumbnail.png", "원고_샘플.png", "", ".");
+        initRound(Long.valueOf(31), "default-thumbnail.png", "원고_샘플.png", "", ".");
+        initRound(Long.valueOf(32), "default-thumbnail.png", "원고_샘플.png", "", ".");
+        initRound(Long.valueOf(33), "default-thumbnail.png", "원고_샘플.png", "", ".");
+        initRound(Long.valueOf(34), "default-thumbnail.png", "원고_샘플.png", "", ".");
+        initRound(Long.valueOf(35), "default-thumbnail.png", "원고_샘플.png", "", ".");
+        initRound(Long.valueOf(36), "default-thumbnail.png", "원고_샘플.png", "", ".");
+        initRound(Long.valueOf(37), "default-thumbnail.png", "원고_샘플.png", "", ".");
+
 
 //        RoundLike
         for(int i=18; i<=25; i++) {
@@ -463,6 +517,51 @@ public class DataLoader implements ApplicationRunner {
             initRoundLike(Long.valueOf(i), Long.valueOf(71)); //마음의 소리2
         }
 
+//      도전만화 좋아요
+        for(int i=18; i<=25; i++) {
+            initRoundLike(Long.valueOf(i), Long.valueOf(81));  //태권 반갑습니다
+        }
+        for(int i=26; i<=27; i++) {
+            initRoundLike(Long.valueOf(i), Long.valueOf(81));
+        }
+        initRoundLike(Long.valueOf(1), Long.valueOf(81));
+
+        for(int i=18; i<=26; i++) {
+            initRoundLike(Long.valueOf(i), Long.valueOf(82));
+        }
+
+        for(int i=18; i<=25; i++) {
+            initRoundLike(Long.valueOf(i), Long.valueOf(83));
+        }
+
+        for(int i=18; i<=24; i++) {
+            initRoundLike(Long.valueOf(i), Long.valueOf(84));
+        }
+
+        for(int i=18; i<=23; i++) {
+            initRoundLike(Long.valueOf(i), Long.valueOf(85));
+        }
+
+//        5위~10위
+        for(int i=18; i<=22; i++) {
+            initRoundLike(Long.valueOf(i), Long.valueOf(86));
+        }
+
+        for(int i=18; i<=21; i++) {
+            initRoundLike(Long.valueOf(i), Long.valueOf(87));
+        }
+
+        for(int i=18; i<=20; i++) {
+            initRoundLike(Long.valueOf(i), Long.valueOf(88));
+        }
+
+        for(int i=18; i<=19; i++) {
+            initRoundLike(Long.valueOf(i), Long.valueOf(89));
+        }
+
+        for(int i=18; i<=18; i++) {
+            initRoundLike(Long.valueOf(i), Long.valueOf(80));
+        }
 
 
 //        Comment

@@ -1,5 +1,6 @@
 package jh.naverwebtoon.web.controller;
 
+import jh.naverwebtoon.db.domain.enums.WebtoonType;
 import jh.naverwebtoon.dto.response.FindWebtoonRankingsRes;
 import jh.naverwebtoon.service.WebtoonRankingService;
 import lombok.RequiredArgsConstructor;
@@ -14,8 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class WebtoonRankingController {
     private final WebtoonRankingService webtoonRankingService;
 
-    @GetMapping("/{offset}/{limit}")
-    public FindWebtoonRankingsRes findWebtoonRanking(@PathVariable("offset") int offset, @PathVariable("limit") int limit) {
-        return FindWebtoonRankingsRes.create(webtoonRankingService.findRanking(offset, limit));
+    @GetMapping("/{offset}/{limit}/{webtoonType}")
+    public FindWebtoonRankingsRes findWebtoonRanking(@PathVariable("offset") int offset, @PathVariable("limit") int limit, @PathVariable("webtoonType")
+                                                     WebtoonType webtoonType) {
+        return FindWebtoonRankingsRes.create(webtoonRankingService.findRanking(offset, limit, webtoonType));
     }
 }

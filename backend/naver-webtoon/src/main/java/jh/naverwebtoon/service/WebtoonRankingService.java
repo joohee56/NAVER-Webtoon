@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import jh.naverwebtoon.db.domain.WebtoonRanking;
 import jh.naverwebtoon.db.domain.enums.RankingStatus;
+import jh.naverwebtoon.db.domain.enums.WebtoonType;
 import jh.naverwebtoon.db.domain.webtoon.Webtoon;
 import jh.naverwebtoon.db.repository.WebtoonRankingRepository;
 import jh.naverwebtoon.db.repository.WebtoonRepository;
@@ -24,8 +25,8 @@ public class WebtoonRankingService {
     /**
      * 가장 최근 웹툰 랭킹 조회
      */
-    public List<WebtoonRankingDto> findRanking(int offset, int limit) {
-        return  webtoonRankingRepository.findLatestOne(offset, limit).stream()
+    public List<WebtoonRankingDto> findRanking(int offset, int limit, WebtoonType webtoonType) {
+        return  webtoonRankingRepository.findLatestOne(offset, limit, webtoonType).stream()
                 .map(webtoonRanking -> WebtoonRankingDto.create(webtoonRanking))
                 .collect(Collectors.toList());
     }
@@ -34,12 +35,12 @@ public class WebtoonRankingService {
      * 웹툰 랭킹 갱신 및 조회 (지정된 시간에 자동으로 호출, 웹 소켓으로 전송)
      */
     @Transactional
-    public List<WebtoonRankingDto> updateRanking(int offset, int limit) {
+    public List<WebtoonRankingDto> updateRanking(int offset, int limit, WebtoonType webtoonType) {
         //1. 웹툰들의 최근 10회차 중 좋아요 누적 수가 가장 높은 10개의 웹툰 리스트 조회
-        List<FindNewRanking> findNewRankings = webtoonRankingRepository.findRankingsByRecentRounds(offset, limit);
+        List<FindNewRanking> findNewRankings = webtoonRankingRepository.findRankingsByRecentRounds(offset, limit, webtoonType);
 
         //2. 상승, 하강, 변화없음 비교를 위해 이전 웹툰 랭킹 조회
-        List<WebtoonRanking> latestRankings = webtoonRankingRepository.findLatestOne(offset, limit);
+        List<WebtoonRanking> latestRankings = webtoonRankingRepository.findLatestOne(offset, limit, webtoonType);
 
         //3. 새 랭킹 저장
         List<WebtoonRanking> newRankings = new ArrayList<>();
@@ -64,7 +65,7 @@ public class WebtoonRankingService {
             webtoonRankingRepository.save(newRanking);
         }
 
-        return findRanking(0, 5);
+        return findRanking(0, 5, webtoonType);
     }
 
     public RankingStatus calculateStatus(Long webtoonId, int ranking, List<WebtoonRanking> latestRankings) {

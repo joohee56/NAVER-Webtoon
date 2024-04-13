@@ -70,6 +70,7 @@ public class Webtoon extends BaseEntity {
 
     private int ageLimit;
 
+    @Enumerated(EnumType.STRING)
     private WebtoonType webtoonType;
 
     @ManyToOne(fetch = FetchType.LAZY)
