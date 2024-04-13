@@ -64,6 +64,7 @@ export default {
       isLeftBtnDisabled: false,
     };
   },
+  props: ["webtoonType"],
   watch: {
     rankingStartIndex() {
       this.fetchRanking();
@@ -80,7 +81,7 @@ export default {
   },
   methods: {
     connect() {
-      const serverURL = "http://localhost:8081/websocket";
+      const serverURL = "http://localhost:8081/websocket/challenge";
       const socket = new SockJS(serverURL);
       this.stompClient = Stomp.over(socket);
       console.log(`소켓 연결을 시도합니다. 서버 주소 : ${serverURL}`);
@@ -93,7 +94,7 @@ export default {
           console.log("소켓 연결 성공");
 
           //서버 구독
-          this.stompClient.subscribe("/send", (res) => {
+          this.stompClient.subscribe("/send/challenge", (res) => {
             const responseData = JSON.parse(res.body);
             this.rankings = responseData.rankings;
             this.updatedAt = responseData.updatedAt;
@@ -115,7 +116,8 @@ export default {
       try {
         const response = await getWebtoonRanking(
           this.rankingStartIndex,
-          this.rankingLimit
+          this.rankingLimit,
+          this.webtoonType
         );
         console.log(response.data);
         this.rankings = response.data.rankings;

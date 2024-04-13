@@ -52,13 +52,13 @@ export default {
 <style scoped>
 .toolbar-wrap {
   display: flex;
-  margin: 1rem 0;
+  margin: 10px 0;
 }
 .naver-logo {
   font-family: "Archivo Black", sans-serif;
   font-weight: 400;
   font-style: normal;
-  font-size: 1.5rem;
+  font-size: 20px;
   margin: 17px 10px;
 }
 .webtoon-logo {
@@ -66,7 +66,7 @@ export default {
   font-optical-sizing: auto;
   font-weight: 800;
   font-style: normal;
-  font-size: 1.8rem;
+  font-size: 25px;
   margin: 10px 0;
 }
 .search-wrap {

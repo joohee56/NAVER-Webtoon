@@ -19,7 +19,9 @@ import CreateNewRound from "@/components/creator/main/CreateNewRound";
 import RoundList from "@/views/RoundList";
 import RoundDetail from "@/views/RoundDetail";
 import DayOfWeekView from "@/views/DayOfWeekView.vue";
-import WebSocket from "@/views/WebSocket";
+import OfficialView from "@/views/OfficialView";
+import ChallengeMain from "@/views/ChallengeMain";
+
 Vue.use(VueRouter);
 
 const checkLogin = (to, from, next) => {
@@ -42,29 +44,43 @@ const routes = [
     redirect: "/main",
     children: [
       {
-        path: "/main",
-        name: "main",
-        component: MainView,
-      },
-      {
-        path: "/:dayOfWeek",
-        name: "dayOfWeek",
-        component: DayOfWeekView,
+        path: "/official",
+        name: "official",
+        component: OfficialView,
+        children: [
+          {
+            path: "/main",
+            name: "main",
+            component: MainView,
+          },
+          {
+            path: "/:dayOfWeek",
+            name: "dayOfWeek",
+            component: DayOfWeekView,
+          },
+          {
+            path: "/webtoon/:webtoonId/:dayOfWeek",
+            name: "roundList",
+            component: RoundList,
+          },
+          {
+            path: "/webtoon/:webtoonId/rounds/:roundId",
+            name: "roundDetail",
+            component: RoundDetail,
+          },
+        ],
       },
       {
         path: "/challenge",
         name: "challenge",
         component: ChallengeView,
-      },
-      {
-        path: "/webtoon/:webtoonId/:dayOfWeek",
-        name: "roundList",
-        component: RoundList,
-      },
-      {
-        path: "/webtoon/:webtoonId/rounds/:roundId",
-        name: "roundDetail",
-        component: RoundDetail,
+        children: [
+          {
+            path: "/challengeMain",
+            name: "challengeMain",
+            component: ChallengeMain,
+          },
+        ],
       },
     ],
   },
@@ -127,11 +143,6 @@ const routes = [
         component: CreateNewRound,
       },
     ],
-  },
-  {
-    path: "/websockettest",
-    name: "websocketview",
-    component: WebSocket,
   },
 ];
 

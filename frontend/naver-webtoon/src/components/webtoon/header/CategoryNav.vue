@@ -13,7 +13,7 @@ export default {
     return {
       isActive: [true, false, false],
       categoryHeaders: ["웹툰", "도전만화"],
-      routerNames: ["main", "challenge"],
+      routerNames: ["main", "challengeMain"],
     };
   },
 

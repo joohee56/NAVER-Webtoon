@@ -66,9 +66,11 @@ async function getCreateRoundInfo() {
   }
 }
 
-async function getWebtoonRanking(offset, limit) {
+async function getWebtoonRanking(offset, limit, webtoonType) {
   try {
-    const response = await jsonApi.get(`/webtoon/ranking/${offset}/${limit}`);
+    const response = await jsonApi.get(
+      `/webtoon/ranking/${offset}/${limit}/${webtoonType}`
+    );
     return response;
   } catch (error) {
     console.log(error);

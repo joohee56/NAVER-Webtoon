@@ -1,6 +1,6 @@
 <template lang="ko">
 	<div class="container">
-		<WebtoonRanking></WebtoonRanking>
+		<WebtoonRanking webtoonType="OFFICIAL"></WebtoonRanking>
 		<WebtoonList></WebtoonList>
 	</div>
 </template>
@@ -30,11 +30,6 @@ export default {
 <style scoped>
 .container {
   margin: 0 auto;
-  font-family: "Inter", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
-  font-variation-settings: "slnt" 0;
   width: 85rem;
 }
 </style>

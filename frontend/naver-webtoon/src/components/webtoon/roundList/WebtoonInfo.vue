@@ -8,8 +8,8 @@
 				<div class="webtoon-name">{{webtoonInfo.webtoonName}}</div>
 				<div class="info-line">
 					<img :src="require(`@/assets/image/${webtoonInfo.profileStoreFileName}`)" class="profile-image">
-					<span class="author-name">{{webtoonInfo.memberName}}</span>
-					<span>· 글/그림 | {{webtoonInfo.dayOfWeek | dayOfWeekTitle}}웹툰 · {{webtoonInfo.ageLimit}}세 이용가</span>
+					<span class="author-name">{{webtoonInfo.memberName}} · 글/그림</span>
+					<span v-if="webtoonInfo.dayOfWeek"> | {{webtoonInfo.dayOfWeek | dayOfWeekTitle}}웹툰 </span> <span>· {{webtoonInfo.ageLimit}}세 이용가</span>
 				</div>
 				<div class="summary">
 					<div class="overflow-hidden">{{webtoonInfo.oneLineSummary}}</div>

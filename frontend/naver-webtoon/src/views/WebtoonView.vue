@@ -2,9 +2,7 @@
   <div class="container">
     <HeaderComp></HeaderComp>
     <router-view></router-view>
-    <div class="footer">
-      <FooterComp></FooterComp>
-    </div>
+    <FooterComp></FooterComp>
   </div>
 </template>
 
@@ -20,10 +18,4 @@ export default {
 };
 </script>
 
-<style scoped>
-footer {
-  width: 85rem;
-  margin: 0 auto;
-  margin-top: 40px;
-}
-</style>
+<style scoped></style>

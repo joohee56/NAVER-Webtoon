@@ -165,7 +165,7 @@ export default {
   border-top: 1px solid #efefef;
 }
 .round-list-item {
-  height: 100px;
+  height: 90px;
   border-bottom: 1px solid #efefef;
 }
 .round-list-item a {

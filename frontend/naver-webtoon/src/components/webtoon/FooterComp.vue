@@ -40,11 +40,12 @@
 
 <style scoped>
 footer {
+  width: 85rem;
   border-top: #d9d9d9 solid 0.5px;
   color: #989b99;
-  margin: 2rem 0;
   font-size: 0.9rem;
   font-family: AppleSDGothicNeoM;
+  margin: 2rem auto;
 }
 a {
   color: #989b99;
