@@ -6,7 +6,7 @@ import java.util.List;
 import jh.naverwebtoon.db.domain.enums.SortingEnum;
 import jh.naverwebtoon.db.domain.enums.WebtoonType;
 import jh.naverwebtoon.db.domain.webtoon.OfficialWebtoon;
-import jh.naverwebtoon.dto.response.FindOfficialWebtoonByDayOfWeekRes;
+import jh.naverwebtoon.dto.response.FindWebtoonsByCondition;
 import jh.naverwebtoon.dto.response.FindOfficialWebtoonsRes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -69,9 +69,9 @@ public class OfficialWebtoonRepository {
     /**
      * 요일별 웹툰 리스트 조회 (웹툰 정보, 최근 등록된 10개 회차의 누적 좋아요 수, 오늘 날짜에 업로드된 회차의 갯수)
      */
-    public List<FindOfficialWebtoonByDayOfWeekRes> findAllByDayOfWeek(DayOfWeek dayOfWeek, SortingEnum sorting) {
-        String sql = "select new jh.naverwebtoon.dto.response.FindOfficialWebtoonByDayOfWeekRes"
-                + "(ow.id, ow.name, ow.webtoonThumbnail.posterImage.storeFileName, ow.dayOfWeek"
+    public List<FindWebtoonsByCondition> findAllByDayOfWeek(DayOfWeek dayOfWeek, SortingEnum sorting) {
+        String sql = "select new jh.naverwebtoon.dto.response.FindWebtoonsByCondition"
+                + "(ow.id, ow.name, ow.webtoonThumbnail.posterImage.storeFileName"
                 + ", (select count(rl) as likeCount from RoundLike rl where rl.round.id in (select roundId from (select r.id as roundId from Round r where r.webtoon=ow order by r.createdAt desc limit 10))) as totalLikeCount"
                 + ", (select count(r) from Round r where function('date_format', r.createdAt, \"%Y-%m-%d\") = current_date() and r.webtoon = ow)) from OfficialWebtoon ow"
                 + " where ow.dayOfWeek=:dayOfWeek";
@@ -82,7 +82,7 @@ public class OfficialWebtoonRepository {
             sql += " order by (select max(r.createdAt) from Round r where r.webtoon=ow) desc";
         }
 
-        return em.createQuery(sql, FindOfficialWebtoonByDayOfWeekRes.class)
+        return em.createQuery(sql, FindWebtoonsByCondition.class)
                 .setParameter("dayOfWeek", dayOfWeek)
                 .getResultList();
     }

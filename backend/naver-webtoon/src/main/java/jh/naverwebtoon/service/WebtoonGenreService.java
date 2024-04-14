@@ -21,7 +21,7 @@ public class WebtoonGenreService {
     private final WebtoonGenreRepository webtoonGenreRepository;
 
     /**
-     * 장르에 해당하는 전체 웹툰 리스트 조회
+     * 장르에 해당하는 전체 정식연재 웹툰 리스트 조회
      * 인기순 / 업데이트 순으로 정렬
      */
     public List<FindOfficialWebtoonsRes> findOfficialWebtoonsByGenre(SortingEnum sorting, List<GenreEnum> genres) {
@@ -43,5 +43,12 @@ public class WebtoonGenreService {
         System.out.println("MAX TOTAL COUNT= " + maxTotalCount);
         System.out.println("PAGE COUNT=" + pageCount);
         return new FindChallengeWebtoonsRes(webtoons, pageCount);
+    }
+
+    /**
+     * 장르별 전체 도전만화 조회
+     */
+    public List<FindChallengeWebtoonByGenre> findChallengeWebtoonAllByGenre(GenreEnum genre, SortingEnum sorting) {
+        return webtoonGenreRepository.findChallengeWebtoonList(genre, sorting, 0, 100);
     }
 }

@@ -54,6 +54,9 @@ public class WebtoonRepository {
                 .getResultList();
     }
 
+    /**
+     * 썸네일과 장르와 함께 웹툰 조회
+     */
     public Webtoon findOneWithThumbnailAndGenre(Long webtoonId) {
         return em.createQuery("select distinct w from Webtoon w"
                 + " join fetch w.webtoonThumbnail"
@@ -63,6 +66,5 @@ public class WebtoonRepository {
                 .setParameter("webtoonId", webtoonId)
                 .getSingleResult();
     }
-
 
 }

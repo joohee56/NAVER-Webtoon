@@ -50,7 +50,6 @@ public class WebtoonGenreRepository {
                 .getResultList();
     }
 
-
     /**
      * 정식 연재 웹툰 장르별 전체 리스트 조회 (웹툰 정보 + 오늘 날짜에 업로드된 회차의 갯수 + 총 좋아요 갯수)
      * 인기순 / 업데이트순 정렬

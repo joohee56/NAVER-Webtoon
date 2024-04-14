@@ -1,9 +1,11 @@
 package jh.naverwebtoon.web.controller;
 
 import java.util.List;
+import jh.naverwebtoon.db.domain.enums.GenreEnum;
 import jh.naverwebtoon.db.domain.enums.SortingEnum;
 import jh.naverwebtoon.db.domain.webtoon.Webtoon;
 import jh.naverwebtoon.dto.request.CreateWebtoonReq;
+import jh.naverwebtoon.dto.response.FindChallengeWebtoonByGenre;
 import jh.naverwebtoon.dto.response.FindChallengeWebtoonsRes;
 import jh.naverwebtoon.dto.response.FindCreateRoundInfoRes;
 import jh.naverwebtoon.dto.response.FindWebtoonsByMemberRes;
@@ -15,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -63,4 +66,11 @@ public class WebtoonController {
         return webtoonGenreService.findChallengeWebtoonAll(offset, limit, sorting);
     }
 
+    /**
+     * 장르별 전체 도전웹툰 조회
+     */
+    @GetMapping("/genres/{genre}")
+    public List<FindChallengeWebtoonByGenre> findChallengeWebtoonAllByGenre(@PathVariable("genre") GenreEnum genre, @RequestParam("sorting") SortingEnum sorting) {
+        return webtoonGenreService.findChallengeWebtoonAllByGenre(genre, sorting);
+    }
 }

@@ -5,7 +5,7 @@ import java.util.List;
 import jh.naverwebtoon.db.domain.enums.GenreEnum;
 import jh.naverwebtoon.db.domain.enums.SortingEnum;
 import jh.naverwebtoon.db.repository.OfficialWebtoonRepository;
-import jh.naverwebtoon.dto.response.FindOfficialWebtoonByDayOfWeekRes;
+import jh.naverwebtoon.dto.response.FindWebtoonsByCondition;
 import jh.naverwebtoon.dto.response.FindOfficialWebtoonDetailRes;
 import jh.naverwebtoon.dto.response.FindOfficialWebtoonsRes;
 import jh.naverwebtoon.service.OfficialWebtoonService;
@@ -44,7 +44,7 @@ public class OfficialWebtoonController {
      * 요일별 웹툰 조회
      */
     @GetMapping()
-    public List<FindOfficialWebtoonByDayOfWeekRes> findAllByDayOfWeek(@RequestParam("dayOfWeek") DayOfWeek dayOfWeek, @RequestParam(name = "sorting") SortingEnum sorting) {
+    public List<FindWebtoonsByCondition> findAllByDayOfWeek(@RequestParam("dayOfWeek") DayOfWeek dayOfWeek, @RequestParam(name = "sorting") SortingEnum sorting) {
         return officialWebtoonRepository.findAllByDayOfWeek(dayOfWeek, sorting);
     }
 

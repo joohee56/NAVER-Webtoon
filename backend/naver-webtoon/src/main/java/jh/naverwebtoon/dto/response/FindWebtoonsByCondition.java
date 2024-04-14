@@ -5,10 +5,10 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class FindOfficialWebtoonByDayOfWeekRes {
+public class FindWebtoonsByCondition {
     private Long webtoonId;
     private String webtoonName;
-    private String thumbnail;
+    private String posterStoreFileName;
     private Long totalLikeCount;
     private Long roundUpdateCount;
 }
