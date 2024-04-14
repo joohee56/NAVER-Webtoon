@@ -280,7 +280,7 @@ public class DataLoader implements ApplicationRunner {
 
 
 
-        //Challeger Webtoon
+        //Challenge Webtoon
         genreEnums = new ArrayList<>();
         genreEnums.add(GenreEnum.EMOTION);
         genreEnums.add(GenreEnum.DAILY_LIFE);
@@ -307,7 +307,7 @@ public class DataLoader implements ApplicationRunner {
 
         genreEnums = new ArrayList<>();
         genreEnums.add(GenreEnum.FANTASY);
-        genreEnums.add(GenreEnum.THRILLER);
+        genreEnums.add(GenreEnum.MARTIAL_ARTS_AND_HISTORICAL);
         initWebtoon(Long.valueOf(5), "화온의 세계에 내려와", WebtoonCategory.EPISODE, genreEnums, "", "\"만물을 창조하신 당신의 이름을 붙여, 우리들은 이곳을... '화온의 세계'라 부르겠나이다!\" . . . 건국 신화 속 신 '화온'을 모시는 세상에서, 감히 그를 모욕한 왕이 있었으니 그는 곧 쿠데타를 일으킨 이에게 쫓기는 신세가 된다. 하지만 도망자 신분이 된 백유신은 멈추지 않고 하늘의 신 화온을 찾아 죽이려 하는데... 신의 발자취를 쫓으며 괴이한 일들을 마주치는 유신 일행은 과연 화온을 찾을 수 있을까?", "화온의 세계에 내려와_커버.png");
 
         genreEnums = new ArrayList<>();
@@ -321,7 +321,6 @@ public class DataLoader implements ApplicationRunner {
 
         genreEnums = new ArrayList<>();
         genreEnums.add(GenreEnum.THRILLER);
-        genreEnums.add(GenreEnum.FANTASY);
         initWebtoon(Long.valueOf(5), "요람에서 무덤까지", WebtoonCategory.EPISODE, genreEnums, "", "이 곳은 거대한 교육시설 요람. 이 시대의 모든 아이는 50층에서 태어나 상층을 목표로 나아간다. 그리고 오직 100층에 도달한 완벽한 아이만이 완벽한 어른이 된다. <완벽한 아이를 만들어내는 수수께끼의 기관 요람의 비밀을 파헤치는 이야기>", "요람에서 무덤까지_커버.png");
 
         genreEnums = new ArrayList<>();
@@ -333,6 +332,54 @@ public class DataLoader implements ApplicationRunner {
         genreEnums.add(GenreEnum.ROMANCE);
         genreEnums.add(GenreEnum.COMEDY);
         initWebtoon(Long.valueOf(5), "청춘은 바로 지금!", WebtoonCategory.EPISODE, genreEnums, "", "특출난 미모로 인기를 한 몸에 받아온 정유아. 근데... 인기가 많아도 너무 많잖아?! 언제나 끊임없이 떠받드는 사람들에게 이리 치이고 저리 치여 지쳐갈 때쯤, 험악한 분위기 때문에 아무도 다가가지 않는 강우주를 만난다. 그래, 이거다!! 누구에게나 사랑받는 정유아와 그 누구도 다가가려하지 않는 강우주의 우당탕탕 학원 로맨스 코미디!", "청춘은 바로 지금_커버.png");
+
+        genreEnums = new ArrayList<>();
+        genreEnums.add(GenreEnum.ROMANCE);
+        genreEnums.add(GenreEnum.DRAMA);
+        initWebtoon(Long.valueOf(5), "너나들이", WebtoonCategory.EPISODE, genreEnums, "", "연애보다는 자기 일이 가장 좋은 남녀. 자기 실력을 인정받고 자기 일이 가장 좋은 아트디렉터 \\'유봄\\', 실력있고 인정받는 아이돌가수에서 홀로서기를 하며 일 좋아하고 사람좋아하는 가수 \\'김태식\\' 자기 일이 가장 중요하고 자기 생활이 가장 중요한 남녀의 연애 이야기", "너나들이_커버.png");
+
+        genreEnums = new ArrayList<>();
+        genreEnums.add(GenreEnum.ROMANCE);
+        genreEnums.add(GenreEnum.DRAMA);
+        initWebtoon(Long.valueOf(5), "사지선다", WebtoonCategory.EPISODE, genreEnums, "", "리메이크 연재 시작합니다. 도전만화 [사지선다]에서 감상하실 수 있습니다!0", "사지전다_커버.png");
+
+
+        genreEnums = new ArrayList<>();
+        genreEnums.add(GenreEnum.ROMANCE);
+        genreEnums.add(GenreEnum.MARTIAL_ARTS_AND_HISTORICAL);
+        initWebtoon(Long.valueOf(5), "만월에 핀 연꽃", WebtoonCategory.EPISODE, genreEnums, "", "고려 16대 황제 예종과 제 2비 순덕황후의 사랑이야기", "만월에 핀 연꽃_커버.png");
+
+        genreEnums = new ArrayList<>();
+        genreEnums.add(GenreEnum.ROMANCE);
+        genreEnums.add(GenreEnum.DAILY_LIFE);
+        initWebtoon(Long.valueOf(5), "그림그리기 좋은날", WebtoonCategory.EPISODE, genreEnums, "", "학원 성장물을 빙자한 학원 연애물", "그림그리기 좋은날_커버.png");
+
+        genreEnums = new ArrayList<>();
+        genreEnums.add(GenreEnum.ROMANCE);
+        genreEnums.add(GenreEnum.DAILY_LIFE);
+        initWebtoon(Long.valueOf(5), "별의별", WebtoonCategory.EPISODE, genreEnums, "", "잘생긴 외모로 인기가 많지만 연애는 해본 적 없는 모태솔로 김준혁, 상냥하고 바른 성격으로 모두가 좋아하지만 연애를 꺼리는 인서은. 서로에게 호감을 느낀 둘은 어떻게 가까워질 수 있을까? 서툴지만 결코 얕지 않은 10대 청소년들의 성장스토리를 다룬 이야기.", "별의별_커버.png");
+
+        genreEnums = new ArrayList<>();
+        genreEnums.add(GenreEnum.ROMANCE);
+        genreEnums.add(GenreEnum.DRAMA);
+        initWebtoon(Long.valueOf(5), "솔의 일기", WebtoonCategory.EPISODE, genreEnums, "", "이 험한 세상에서 내 편이 되어주어야 할 가족이 가장 위험한 존재라면... 어린 시절부터 남들과는 조금 다른 경험을 해온 솔이. 출구가 없는 어두운 터널을 지나는 솔이는 과연 터널을 무사히 빠져나갈 수 있을까? (자유연재)", "솔의 일기_커버.png");
+
+        genreEnums = new ArrayList<>();
+        genreEnums.add(GenreEnum.ROMANCE);
+        genreEnums.add(GenreEnum.DRAMA);
+        initWebtoon(Long.valueOf(5), "이상적인 관계", WebtoonCategory.EPISODE, genreEnums, "", "훈훈한 남사친들과 한지붕에서 동거시작! 그러나 첫날부터 충격적인 장면을 보게 되는데.. 이상한 관계의 우리들! 고백팔찌의 진실은?", "이상적인 관계_커버.png");
+
+        genreEnums = new ArrayList<>();
+        genreEnums.add(GenreEnum.ROMANCE);
+        genreEnums.add(GenreEnum.MARTIAL_ARTS_AND_HISTORICAL);
+        initWebtoon(Long.valueOf(5), "발자국이 녹기 전에", WebtoonCategory.EPISODE, genreEnums, "", "세상에 의한 아픔을 가진 옛 사람들의 사랑이야기", "발자국이 녹기 전에_커버.png");
+
+        genreEnums = new ArrayList<>();
+        genreEnums.add(GenreEnum.ROMANCE);
+        genreEnums.add(GenreEnum.EMOTION);
+        initWebtoon(Long.valueOf(5), "잘가, 좋은 아침이야", WebtoonCategory.EPISODE, genreEnums, "", "어릴 적에 살던 고향으로 돌아와 옛 친구들을 다시 만나며 펼쳐지는 초호화! 순정! 학원물! 로맨스!(자유연재)", "잘가 좋은 아침이야_커버.png");
+
+
 
 //        Round
         initRound(Long.valueOf(2), "세레나_1화_썸네일.png", "세레나_1화_원고.png", "세레니티의 소녀", ".");

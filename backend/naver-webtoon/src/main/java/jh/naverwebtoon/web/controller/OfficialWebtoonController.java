@@ -33,13 +33,12 @@ public class OfficialWebtoonController {
      */
     @PostMapping()
     public List<FindOfficialWebtoonsRes> findAll(@RequestBody List<GenreEnum> genres, @RequestParam(name = "sorting") SortingEnum sorting) {
-        if (genres.get(0) == GenreEnum.ALL) {
+        if (genres == null || genres.get(0) == GenreEnum.ALL) {
             return officialWebtoonService.findAll(sorting);
         } else {
             return webtoonGenreService.findOfficialWebtoonsByGenre(sorting, genres);
         }
     }
-
 
     /**
      * 요일별 웹툰 조회
@@ -56,6 +55,4 @@ public class OfficialWebtoonController {
     public FindOfficialWebtoonDetailRes findWebtoonDetail(@PathVariable("id") Long webtoonId) {
         return officialWebtoonService.findOfficialWebtoonDetail(webtoonId);
     }
-
-
 }

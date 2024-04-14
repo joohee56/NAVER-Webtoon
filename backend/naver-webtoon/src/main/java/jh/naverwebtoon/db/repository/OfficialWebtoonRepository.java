@@ -4,6 +4,7 @@ import jakarta.persistence.EntityManager;
 import java.time.DayOfWeek;
 import java.util.List;
 import jh.naverwebtoon.db.domain.enums.SortingEnum;
+import jh.naverwebtoon.db.domain.enums.WebtoonType;
 import jh.naverwebtoon.db.domain.webtoon.OfficialWebtoon;
 import jh.naverwebtoon.dto.response.FindOfficialWebtoonByDayOfWeekRes;
 import jh.naverwebtoon.dto.response.FindOfficialWebtoonsRes;
@@ -49,7 +50,9 @@ public class OfficialWebtoonRepository {
                         + ", null"
                         + ") from OfficialWebtoon ow"
                         + " join fetch ow.webtoonThumbnail wt"
+                        + " where ow.webtoonType=:webtoonType"
                         + " order by totalLikeCount desc", FindOfficialWebtoonsRes.class)
+                        .setParameter("webtoonType", WebtoonType.OFFICIAL)
                         .getResultList();
     }
 

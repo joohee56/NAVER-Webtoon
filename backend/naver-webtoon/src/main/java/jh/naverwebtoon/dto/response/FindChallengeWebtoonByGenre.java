@@ -8,7 +8,7 @@ import lombok.ToString;
 
 @Data
 @ToString
-public class FindChallengeWebtoonsRes {
+public class FindChallengeWebtoonByGenre {
     private Long webtoonId;
     private String webtoonName;
     private String posterStoreFileName;
@@ -17,7 +17,7 @@ public class FindChallengeWebtoonsRes {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
     private LocalDateTime updatedAt;
 
-    public FindChallengeWebtoonsRes(Webtoon webtoon, Long roundUpdateCount, Long totalLikeCount, LocalDateTime updatedAt) {
+    public FindChallengeWebtoonByGenre(Webtoon webtoon, Long roundUpdateCount, Long totalLikeCount, LocalDateTime updatedAt) {
         this.webtoonId = webtoon.getId();
         this.webtoonName = webtoon.getName();
         this.posterStoreFileName = webtoon.getWebtoonThumbnail().getPosterImage().getStoreFileName();
