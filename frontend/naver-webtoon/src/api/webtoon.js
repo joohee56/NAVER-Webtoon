@@ -92,6 +92,19 @@ async function getChallengeWebtoonAll(offset, limit, sorting) {
   }
 }
 
+async function getChallengeWebtoonByGenre(genre, sorting) {
+  try {
+    const response = await jsonApi.get(`/webtoon/genres/${genre}`, {
+      params: {
+        sorting: sorting,
+      },
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export {
   postCreateWebtoon,
   getWebtoonAllByMember,
@@ -101,4 +114,5 @@ export {
   getWebtoonRanking,
   getOfficialWebtoonAllByDayOfWeek,
   getChallengeWebtoonAll,
+  getChallengeWebtoonByGenre,
 };

@@ -12,10 +12,10 @@ export default {
     ...mapState("navStore", ["dayOfWeeks"]),
   },
   methods: {
-    ...mapMutations("navStore", ["SET_IS_ACTIVE"]),
+    ...mapMutations("navStore", ["SET_DAY_OF_WEEK_IS_ACTIVE"]),
 
     handleLinkClick(index) {
-      this.SET_IS_ACTIVE(index);
+      this.SET_DAY_OF_WEEK_IS_ACTIVE(index);
 
       if (index == 0) {
         this.$router.push({ name: "main" });

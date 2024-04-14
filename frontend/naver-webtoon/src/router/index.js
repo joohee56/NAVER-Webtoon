@@ -21,6 +21,7 @@ import RoundDetail from "@/views/RoundDetail";
 import DayOfWeekView from "@/views/DayOfWeekView.vue";
 import OfficialView from "@/views/OfficialView";
 import ChallengeMain from "@/views/ChallengeMain";
+import GenreView from "@/views/GenreView";
 
 Vue.use(VueRouter);
 
@@ -79,6 +80,11 @@ const routes = [
             path: "/challenge/main",
             name: "challengeMain",
             component: ChallengeMain,
+          },
+          {
+            path: "/challenge/:genre",
+            name: "genreView",
+            component: GenreView,
           },
         ],
       },

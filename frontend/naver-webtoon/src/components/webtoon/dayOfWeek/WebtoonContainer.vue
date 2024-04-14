@@ -2,7 +2,7 @@
   <div class="webtoon-wrap">
     <div class="webtoon" v-for="webtoon in webtoons">
       <router-link :to="{name: 'roundList', params: {webtoonId: webtoon.webtoonId}}">
-        <img class="cover-image" :src="require(`@/assets/image/${webtoon.thumbnail}`)">
+        <img class="cover-image" :src="require(`@/assets/image/${webtoon.posterStoreFileName}`)">
       </router-link>
       <div class="webtoon-name-wrap overflow-hidden">
         <span class="up" v-if="webtoon.roundUpdateCount>0">UP</span>
@@ -19,37 +19,8 @@
 </template>
 
 <script>
-import { getOfficialWebtoonAllByDayOfWeek } from "@/api/webtoon";
-
 export default {
-  data() {
-    return {
-      webtoons: [], //webtoonId, webtoonName, thumbnail, totalLikeCount
-    };
-  },
-  props: ["dayOfWeek", "selectedSorting"],
-  watch: {
-    selectedSorting() {
-      this.fetchWebtoons();
-    },
-  },
-  mounted() {
-    this.fetchWebtoons();
-  },
-  methods: {
-    async fetchWebtoons() {
-      try {
-        const response = await getOfficialWebtoonAllByDayOfWeek(
-          this.dayOfWeek,
-          this.selectedSorting
-        );
-        console.log(response);
-        this.webtoons = response.data;
-      } catch (error) {
-        console.log(error);
-      }
-    },
-  },
+  props: ["webtoons"], //webtoonId, webtoonName, posterStoreFileName, totalLikeCount
 };
 </script>
 

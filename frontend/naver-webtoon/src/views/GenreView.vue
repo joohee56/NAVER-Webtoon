@@ -10,25 +10,25 @@
         <label for="update">업데이트순</label>
 			</div>
 		</div>
-
+    
 		<WebtoonContainer :webtoons=this.webtoons></WebtoonContainer>
 	</div>
 </template>
 
 <script>
-import { getOfficialWebtoonAllByDayOfWeek } from "@/api/webtoon";
+import { getChallengeWebtoonByGenre } from "@/api/webtoon";
 import WebtoonContainer from "@/components/webtoon/dayOfWeek/WebtoonContainer.vue";
 
 export default {
   data() {
     return {
-      dayOfWeek: this.$route.params.dayOfWeek,
+      genre: this.$route.params.genre,
       selectedSorting: "POPULARITY",
       webtoons: [],
     };
   },
   watch: {
-    "$route.params.dayOfWeek"() {
+    "$route.params.genre"() {
       location.reload();
       window.scrollTo({
         top: 0,
@@ -45,8 +45,8 @@ export default {
   methods: {
     async fetchWebtoons() {
       try {
-        const response = await getOfficialWebtoonAllByDayOfWeek(
-          this.dayOfWeek,
+        const response = await getChallengeWebtoonByGenre(
+          this.genre,
           this.selectedSorting
         );
         console.log(response);
@@ -58,21 +58,27 @@ export default {
   },
   computed: {
     subjectTitle() {
-      switch (this.dayOfWeek) {
-        case "MONDAY":
-          return "월요";
-        case "TUESDAY":
-          return "화요";
-        case "WEDNESDAY":
-          return "수요";
-        case "THURSDAY":
-          return "목요";
-        case "FRIDAY":
-          return "금요";
-        case "SATURDAY":
-          return "토요";
-        case "SUNDAY":
-          return "일요";
+      switch (this.genre) {
+        case "ROMANCE":
+          return "로맨스";
+        case "FANTASY":
+          return "판타지";
+        case "ACTION":
+          return "액션";
+        case "DAILY_LIFE":
+          return "일상";
+        case "COMEDY":
+          return "개그";
+        case "MARTIAL_ARTS_AND_HISTORICAL":
+          return "무협/사극";
+        case "THRILLER":
+          return "스릴러";
+        case "SPORTS":
+          return "스포츠";
+        case "DRAMA":
+          return "드라마";
+        case "EMOTION":
+          return "감성";
       }
       return "오류";
     },
