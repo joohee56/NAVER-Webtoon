@@ -77,6 +77,21 @@ async function getWebtoonRanking(offset, limit, webtoonType) {
   }
 }
 
+async function getChallengeWebtoonAll(offset, limit, sorting) {
+  try {
+    const response = await jsonApi.get("/webtoon/all", {
+      params: {
+        offset: offset,
+        limit: limit,
+        sorting: sorting,
+      },
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export {
   postCreateWebtoon,
   getWebtoonAllByMember,
@@ -85,4 +100,5 @@ export {
   getCreateRoundInfo,
   getWebtoonRanking,
   getOfficialWebtoonAllByDayOfWeek,
+  getChallengeWebtoonAll,
 };

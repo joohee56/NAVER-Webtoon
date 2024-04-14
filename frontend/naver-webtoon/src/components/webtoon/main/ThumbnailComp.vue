@@ -1,17 +1,21 @@
 <template lang="ko">
 	<div class="week-day-item-wrap":class="{today:isToday}">
-		<h3 class="week-day-header"> {{dayOfWeekHeader}} </h3>
+		<h3 class="week-day-header"> {{headerTitle}} </h3>
 		<ul class="webtoon-list-wrap">
 			<li class="webtoon-item" v-for="webtoon in webtoons">
-				<router-link :to="{name: 'roundList', params: {webtoonId:`${webtoon.webtoonId}`, dayOfWeek: dayOfWeek==0?7:dayOfWeek}}">
+				<router-link :to="{name: 'roundList', params: {webtoonId:`${webtoon.webtoonId}`}}">
 					<img :src="require(`@/assets/image/${webtoon.posterStoreFileName}`)">
 				</router-link>
 				<div class="webtoon-name-wrap overflow-hidden">
 					<span class="up" v-if="webtoon.roundUpdateCount>0">UP</span>
-					<router-link :to="{name: 'roundList', params: {webtoonId:`${webtoon.webtoonId}`, dayOfWeek: dayOfWeek==0?7:dayOfWeek}}">
+					<router-link :to="{name: 'roundList', params: {webtoonId:`${webtoon.webtoonId}`}}">
 						<span class="webtoon-name">{{webtoon.webtoonName}}</span>
 					</router-link>
 				</div>
+        <div class="like-cnt-wrap" v-if="!dayOfWeek">
+          <i class="fa-solid fa-heart"></i>
+          <div>{{webtoon.totalLikeCount}}</div>
+        </div>
 			</li> 
 		</ul>	
 	</div>
@@ -19,7 +23,7 @@
 
 <script>
 export default {
-  props: ["dayOfWeekHeader", "webtoons", "dayOfWeek"],
+  props: ["headerTitle", "webtoons", "dayOfWeek"],
   computed: {
     isToday() {
       return new Date().getDay() === this.dayOfWeek;
@@ -83,6 +87,18 @@ export default {
   white-space: nowrap; /*줄 바꿈 방지*/
   overflow: hidden; /* 넘치는 부분 숨김 */
   text-overflow: ellipsis; /* 넘치는 부분에 ... 추가 */
+}
+.like-cnt-wrap {
+  display: flex;
+  font-size: 15px;
+  margin-top: 5px;
+  font-family: AppleSDGothicNeoM;
+}
+.like-cnt-wrap i {
+  margin-right: 5px;
+  font-size: 13px;
+  color: #6e6d6d;
+  line-height: 18px;
 }
 
 /* today */

@@ -1,19 +1,19 @@
 <template lang="ko">
 	<div class="container">
 		<WebtoonRanking webtoonType="OFFICIAL"></WebtoonRanking>
-		<WebtoonList></WebtoonList>
+		<OfficialWebtoonList></OfficialWebtoonList>
 	</div>
 </template>
 
 <script>
 import WebtoonRanking from "@/components/webtoon/main/WebtoonRanking";
-import WebtoonList from "@/components/webtoon/main/WebtoonList.vue";
+import OfficialWebtoonList from "@/components/webtoon/main/OfficialWebtoonList.vue";
 import { mapMutations } from "vuex";
 
 export default {
   components: {
     WebtoonRanking,
-    WebtoonList,
+    OfficialWebtoonList,
   },
   created() {
     this.setDayOfWeekActive();
