@@ -1,22 +1,24 @@
 <template lang="ko">
-	<div class="webtoon-info-container">
-		<div class="webtoon-info-wrap">
-			<div class="webtoon-thumbnail">
-				<img :src="require(`@/assets/image/${webtoonInfo.posterStoreFileName}`)">
-			</div>
-			<div class="webtoon-info">
-				<div class="webtoon-name">{{webtoonInfo.webtoonName}}</div>
-				<div class="info-line">
-					<img :src="require(`@/assets/image/${webtoonInfo.profileStoreFileName}`)" class="profile-image">
-					<span class="author-name">{{webtoonInfo.memberName}} · 글/그림</span>
-					<span v-if="webtoonInfo.dayOfWeek"> | {{webtoonInfo.dayOfWeek | dayOfWeekTitle}}웹툰 </span> <span>· {{webtoonInfo.ageLimit}}세 이용가</span>
-				</div>
-				<div class="summary">
-					<div class="overflow-hidden">{{webtoonInfo.oneLineSummary}}</div>
-					<div v-html="webtoonInfo.summary"></div>
-				</div>
-			</div>
-		</div>
+	<div class="container">
+    <div class="webtoon-thumbnail">
+      <img :src="require(`@/assets/image/${webtoonInfo.posterStoreFileName}`)">
+    </div>
+    <div class="webtoon-info">
+      <div class="webtoon-name">{{webtoonInfo.webtoonName}}</div>
+      <div class="detail-line">
+        <img :src="require(`@/assets/image/${webtoonInfo.profileStoreFileName}`)" class="profile-image">
+        <div class="author-name">{{webtoonInfo.memberName}}</div><div>· 글/그림</div>
+        <div v-if="webtoonInfo.dayOfWeek"> | {{webtoonInfo.dayOfWeek | dayOfWeekTitle}}웹툰 </div> <div>· {{webtoonInfo.ageLimit}}세 이용가</div>
+        <div v-if="!webtoonInfo.dayOfWeek"> | 도전만화 ·</div>
+        <div class="genre-wrap">
+          <div v-if="!webtoonInfo.dayOfWeek" v-for="genre in webtoonInfo.genres">{{genre}}</div>
+        </div>
+      </div>
+      <div class="summary">
+        <div class="overflow-hidden">{{webtoonInfo.oneLineSummary}}</div>
+        <div v-html="webtoonInfo.summary"></div>
+      </div>
+    </div>
 	</div>
 </template>
 
@@ -36,7 +38,7 @@ export default {
         ageLimit: "",
         oneLineSummary: "",
         summary: "",
-        tags: [],
+        genres: [],
       },
     };
   },
@@ -123,42 +125,54 @@ export default {
 </script>
 
 <style scoped>
-.webtoon-info-container {
+.container {
   padding: 30px 0;
-}
-.webtoon-info-wrap {
   display: flex;
 }
 .webtoon-thumbnail img {
   width: 230px;
   border-radius: 5px;
   border: #efefef solid 1px;
+  aspect-ratio: 480 / 623;
 }
+/* 웹툰 정보 */
 .webtoon-info {
   margin-left: 20px;
   font-family: AppleSDGothicNeoM;
-}
-.webtoon-info > *:not(:first-child) {
-  margin-top: 10px;
 }
 .webtoon-name {
   font-family: AppleSDGothicNeoB;
   font-size: 25px;
 }
-.info-line * {
+/* 웹툰 상세 정보 */
+.detail-line {
+  display: flex;
+  margin-top: 10px;
+}
+.detail-line * {
   color: #999;
   margin-right: 5px;
   font-size: 18px;
-  vertical-align: middle;
-}
-.info-line .author-name {
-  color: black;
 }
 .profile-image {
   width: 35px;
+  aspect-ratio: 1/1;
 }
+.detail-line .author-name {
+  color: black;
+  line-height: 31px;
+}
+.genre-wrap {
+  display: flex;
+  line-height: 31px;
+}
+.genre-wrap div:not(:last-child)::after {
+  content: ",";
+}
+/* 줄거리 */
 .summary {
   font-size: 18px;
+  margin-top: 15px;
 }
 .overflow-hidden {
   white-space: nowrap; /* 줄 바꿈 방지 */

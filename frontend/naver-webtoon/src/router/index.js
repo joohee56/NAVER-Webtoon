@@ -83,7 +83,7 @@ const routes = [
             component: ChallengeMain,
           },
           {
-            path: "/challenge/:genre",
+            path: "/challenge/genres/:genre",
             name: "genreView",
             component: GenreView,
           },

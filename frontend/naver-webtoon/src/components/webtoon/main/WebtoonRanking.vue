@@ -200,9 +200,7 @@ button {
   border-radius: 6px;
   padding: 20px 20px;
   display: flex;
-  /* justify-content: center; */
   box-shadow: 5px 1px 8px 0 rgba(0, 0, 0, 0.08);
-  /* background-color: #f6f8fa; */
 }
 .box-container-inner {
   display: flex;
@@ -221,7 +219,6 @@ button {
   column-gap: 10px;
   padding: 0 10px;
   width: 100%;
-  /* display: flex; */
 }
 .webtoon-list .webtoon-item-wrap {
   display: flex;
