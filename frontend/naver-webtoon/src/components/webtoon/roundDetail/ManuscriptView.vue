@@ -3,8 +3,8 @@
 
 		<!-- 상단 메뉴바 -->
 		<div id="menubar" class="menu-bar">
-			<router-link :to="{name: 'roundList', params: {webtoonId : `${this.$route.params.webtoonId}`}}"><i class="fa-solid fa-angle-left"></i></router-link>
-			<router-link :to="{name: 'roundList', params: {webtoonId : `${this.$route.params.webtoonId}`}}">{{roundDetail.webtoonName}}</router-link>
+			<router-link :to="{name: webtoonType+'RoundList', params: {webtoonId : `${this.$route.params.webtoonId}`}}"><i class="fa-solid fa-angle-left"></i></router-link>
+			<router-link :to="{name: webtoonType+'RoundList', params: {webtoonId : `${this.$route.params.webtoonId}`}}">{{roundDetail.webtoonName}}</router-link>
 			<span class="separator"></span>
 			<span>{{roundDetail.roundNumber}}화 {{roundDetail.roundTitle}}</span>
 			<span @click="moveBeforeRound" class="before-round">
@@ -12,7 +12,7 @@
 				<span> 이전화</span>
       </span>
 			<span class="separator"></span>
-			<router-link :to="{name: 'roundList', params: {webtoonId : `${this.$route.params.webtoonId}`}}">
+			<router-link :to="{name: webtoonType+'RoundList', params: {webtoonId : `${this.$route.params.webtoonId}`}}">
 				<i class="fa-solid fa-list-ul"></i>
 				<span> 목록</span>
 			</router-link>
@@ -101,6 +101,7 @@ export default {
       isPreviewRightBtnDisabled: "false",
     };
   },
+  props: ["webtoonType"],
   watch: {
     "$route.params.roundId": function () {
       location.reload();

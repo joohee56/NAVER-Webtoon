@@ -1,6 +1,6 @@
 <template lang="ko">
 	<div class="container">
-		<ManuscriptView></ManuscriptView>
+		<ManuscriptView webtoonType="official"></ManuscriptView>
 		<CommentView></CommentView>
 	</div>
 </template>

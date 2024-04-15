@@ -8,7 +8,7 @@
 					<img :src="require(`@/assets/image/${webtoon.posterStoreName}`)" class="cover-image">
           <div class="cover-image-wrap" :class="{isBlind:!webtoon.showLinkToWebtoon}">
           </div>
-          <router-link :to="{name: 'roundList', params: {webtoonId: webtoon.webtoonId}}" class="link-to-webtoon-detail" :class="{isBlind:!webtoon.showLinkToWebtoon}">웹툰에서 보기 ↗</router-link>
+          <router-link :to="{name: webtoon.serialType.toLowerCase()+'RoundList', params: {webtoonId: webtoon.webtoonId}}" class="link-to-webtoon-detail" :class="{isBlind:!webtoon.showLinkToWebtoon}">웹툰에서 보기 ↗</router-link>
 				</div>
 				<div class="webtoon-info">
 					<div>

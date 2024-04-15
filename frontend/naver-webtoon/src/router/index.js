@@ -16,12 +16,13 @@ import ManageAlarm from "@/components/creator/main/ManageAlarm";
 import ManageRound from "@/components/creator/main/ManageRound";
 import CreateNewWebtoon from "@/components/creator/main/CreateNewWebtoon";
 import CreateNewRound from "@/components/creator/main/CreateNewRound";
-import RoundList from "@/views/RoundList";
+import OfficialRoundList from "@/views/OfficialRoundList";
 import RoundDetail from "@/views/RoundDetail";
 import DayOfWeekView from "@/views/DayOfWeekView.vue";
 import OfficialView from "@/views/OfficialView";
 import ChallengeMain from "@/views/ChallengeMain";
 import GenreView from "@/views/GenreView";
+import ChallengeRoundList from "@/views/ChallengeRoundList";
 
 Vue.use(VueRouter);
 
@@ -61,8 +62,8 @@ const routes = [
           },
           {
             path: "/webtoon/:webtoonId",
-            name: "roundList",
-            component: RoundList,
+            name: "officialRoundList",
+            component: OfficialRoundList,
           },
           {
             path: "/webtoon/:webtoonId/rounds/:roundId",
@@ -85,6 +86,11 @@ const routes = [
             path: "/challenge/:genre",
             name: "genreView",
             component: GenreView,
+          },
+          {
+            path: "/challenge/:webtoonId",
+            name: "challengeRoundList",
+            component: ChallengeRoundList,
           },
         ],
       },

@@ -70,25 +70,24 @@ export default {
 
       this.setPageBtnDisabled();
     },
-
     nowPageIndex(val, oldVal) {
       this.pages[oldVal].isNowPage = false;
       this.pages[val].isNowPage = true;
     },
   },
   async mounted() {
-    await this.fetchRounds(0, true);
+    await this.fetchRounds(0);
     this.startPage = 1;
   },
   methods: {
-    async fetchRounds(offset, isDesc) {
+    async fetchRounds(offset) {
       try {
         console.log("ROUND LIST");
         const response = await getRoundsWithPaging(
           this.$route.params.webtoonId,
           offset,
           this.roundLimit,
-          isDesc
+          this.selectDesc
         );
         console.log(response.data);
         this.rounds = response.data.rounds;
@@ -100,12 +99,12 @@ export default {
     },
     sortToDesc(isDesc) {
       if (this.selectDesc != isDesc) {
-        this.fetchRounds(0, isDesc);
         this.selectDesc = !this.selectDesc;
+        this.fetchRounds(0);
       }
     },
-    changePage(n, index) {
-      this.fetchRounds((n - 1) * 10, this.selectDesc);
+    async changePage(n, index) {
+      await this.fetchRounds((n - 1) * 10);
       this.nowPageIndex = index;
     },
     clickBeforePage() {
@@ -113,10 +112,7 @@ export default {
       this.changePage(this.startPage, 0);
     },
     clickNextPage() {
-      this.startPage = Math.min(
-        this.totalPageCount + 1,
-        this.startPage + this.pageLimit
-      );
+      this.startPage = this.startPage + this.pageLimit;
       this.changePage(this.startPage, 0);
     },
     setPageBtnDisabled() {

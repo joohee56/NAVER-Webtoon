@@ -56,7 +56,7 @@ export default {
       webtoon: {
         webtoonId: this.$route.params.webtoonId,
         webtoonName: "",
-        webtoonThumbnail: "",
+        webtoonThumbnail: "default-webtoon-cover.png",
         summary: "",
       },
       rounds: [], //roundId, roundNumber, roundThumbnail, roundTitle, createdAt, updatedAt, totalLikeCount, totalCommentCount

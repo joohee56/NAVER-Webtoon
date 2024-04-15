@@ -26,7 +26,7 @@
               </div>
             </div>
             <div class="cover-image">
-              <router-link :to="{name:'roundList', params: {webtoonId: ranking.webtoonId}}">
+              <router-link :to="{name:this.webtoonType.toLowerCase()+'RoundList', params: {webtoonId: ranking.webtoonId}}">
                 <img :src="require(`@/assets/image/${ranking.thumbnail}`)">
               </router-link>
             </div>
@@ -81,8 +81,7 @@ export default {
   },
   methods: {
     connect() {
-      const webtoonTypeConst =
-        this.webtoonType == "OFFICIAL" ? "official" : "challenge";
+      const webtoonTypeConst = this.webtoonType.toLowerCase();
       const serverURL = "http://localhost:8081/websocket";
       const socket = new SockJS(serverURL);
       this.stompClient = Stomp.over(socket);

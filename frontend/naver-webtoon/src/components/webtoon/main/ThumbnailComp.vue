@@ -3,12 +3,12 @@
 		<h3 class="week-day-header"> {{headerTitle}} </h3>
 		<ul class="webtoon-list-wrap">
 			<li class="webtoon-item" v-for="webtoon in webtoons">
-				<router-link :to="{name: 'roundList', params: {webtoonId:`${webtoon.webtoonId}`}}">
+				<router-link :to="{name: webtoonType+'RoundList', params: {webtoonId:`${webtoon.webtoonId}`}}">
 					<img :src="require(`@/assets/image/${webtoon.posterStoreFileName}`)">
 				</router-link>
 				<div class="webtoon-name-wrap overflow-hidden">
 					<span class="up" v-if="webtoon.roundUpdateCount>0">UP</span>
-					<router-link :to="{name: 'roundList', params: {webtoonId:`${webtoon.webtoonId}`}}">
+					<router-link :to="{name: webtoonType+'RoundList', params: {webtoonId:`${webtoon.webtoonId}`}}">
 						<span class="webtoon-name">{{webtoon.webtoonName}}</span>
 					</router-link>
 				</div>
@@ -27,6 +27,13 @@ export default {
   computed: {
     isToday() {
       return new Date().getDay() === this.dayOfWeek;
+    },
+    webtoonType() {
+      if (this.dayOfWeek !== undefined) {
+        return "official";
+      } else {
+        return "challenge";
+      }
     },
   },
 };

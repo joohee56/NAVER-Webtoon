@@ -34,9 +34,9 @@ async function getOfficialWebtoonAll(genres, sorting) {
   }
 }
 
-async function getOfficialWebtoonDetail(webtoonId) {
+async function getWebtoonDetail(webtoonId) {
   try {
-    const response = await jsonApi.get(`/webtoon/official/detail/${webtoonId}`);
+    const response = await jsonApi.get(`/webtoon/detail/${webtoonId}`);
     return response;
   } catch (error) {
     console.log(error);
@@ -109,7 +109,7 @@ export {
   postCreateWebtoon,
   getWebtoonAllByMember,
   getOfficialWebtoonAll,
-  getOfficialWebtoonDetail,
+  getWebtoonDetail,
   getCreateRoundInfo,
   getWebtoonRanking,
   getOfficialWebtoonAllByDayOfWeek,

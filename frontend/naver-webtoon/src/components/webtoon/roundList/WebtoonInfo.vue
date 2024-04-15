@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { getOfficialWebtoonDetail } from "@/api/webtoon";
+import { getWebtoonDetail } from "@/api/webtoon";
 import { mapMutations } from "vuex";
 
 export default {
@@ -76,9 +76,7 @@ export default {
   methods: {
     async fetchWebtoonInfo() {
       try {
-        const response = await getOfficialWebtoonDetail(
-          this.$route.params.webtoonId
-        );
+        const response = await getWebtoonDetail(this.$route.params.webtoonId);
         console.log(response.data);
         this.webtoonInfo = response.data;
         this.webtoonInfo.summary = this.webtoonInfo.summary.replaceAll(

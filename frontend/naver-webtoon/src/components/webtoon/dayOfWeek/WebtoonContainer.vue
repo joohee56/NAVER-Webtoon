@@ -1,12 +1,12 @@
 <template lang="ko">
   <div class="webtoon-wrap">
     <div class="webtoon" v-for="webtoon in webtoons">
-      <router-link :to="{name: 'roundList', params: {webtoonId: webtoon.webtoonId}}">
+      <router-link :to="{name: webtoonType + 'RoundList', params: {webtoonId: webtoon.webtoonId}}">
         <img class="cover-image" :src="require(`@/assets/image/${webtoon.posterStoreFileName}`)">
       </router-link>
       <div class="webtoon-name-wrap overflow-hidden">
         <span class="up" v-if="webtoon.roundUpdateCount>0">UP</span>
-        <router-link :to="{name: 'roundList', params: {webtoonId: webtoon.webtoonId}}">
+        <router-link :to="{name: webtoonType + 'RoundList', params: {webtoonId: webtoon.webtoonId}}">
           <span class="title">{{webtoon.webtoonName}}</span>
         </router-link>
       </div>
@@ -20,7 +20,7 @@
 
 <script>
 export default {
-  props: ["webtoons"], //webtoonId, webtoonName, posterStoreFileName, totalLikeCount
+  props: ["webtoons", "webtoonType"], //webtoonId, webtoonName, posterStoreFileName, totalLikeCount
 };
 </script>
 

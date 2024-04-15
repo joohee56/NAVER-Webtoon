@@ -11,7 +11,7 @@
 			</div>
 		</div>
 
-		<WebtoonContainer :webtoons=this.webtoons></WebtoonContainer>
+		<WebtoonContainer :webtoons=this.webtoons webtoonType="official"></WebtoonContainer>
 	</div>
 </template>
 
@@ -106,7 +106,8 @@ export default {
   font-size: 23px;
 }
 .filter-wrap {
-  margin-left: auto;
+  margin-left: 20px;
+  margin-top: 5px;
 }
 .filter-wrap label {
   font-size: 13px;
