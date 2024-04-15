@@ -2,7 +2,6 @@ package jh.naverwebtoon.db.repository;
 
 import java.util.ArrayList;
 import java.util.List;
-import jh.naverwebtoon.db.domain.Genre;
 import jh.naverwebtoon.db.domain.enums.GenreEnum;
 import jh.naverwebtoon.db.domain.enums.SortingEnum;
 import jh.naverwebtoon.db.domain.enums.WebtoonType;
@@ -18,14 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 class WebtoonGenreRepositoryTest {
     @Autowired
     private WebtoonGenreRepository webtoonGenreRepository;
-
-    @Test
-    void 웹툰_장르_조회() {
-        List<Genre> genres = webtoonGenreRepository.findGenreByWebtoonId(Long.valueOf(1));
-        for (Genre genre : genres) {
-            System.out.println(genre.getGenreEnum().getTitle());
-        }
-    }
 
     @Test
     void 장르별_웹툰_리스트_조회_인기순() {

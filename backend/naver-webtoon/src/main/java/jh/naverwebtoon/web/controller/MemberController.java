@@ -33,7 +33,6 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/users")
 public class MemberController {
-
     private final MemberService memberService;
     private final MemberRepository memberRepository;
 

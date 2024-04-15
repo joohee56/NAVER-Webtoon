@@ -2,7 +2,6 @@ package jh.naverwebtoon.db.repository;
 
 import jakarta.persistence.EntityManager;
 import java.util.List;
-import jh.naverwebtoon.db.domain.Genre;
 import jh.naverwebtoon.db.domain.enums.GenreEnum;
 import jh.naverwebtoon.db.domain.enums.SortingEnum;
 import jh.naverwebtoon.db.domain.enums.WebtoonType;
@@ -16,13 +15,6 @@ import org.springframework.stereotype.Repository;
 public class WebtoonGenreRepository {
     private final EntityManager em;
 
-    public List<Genre> findGenreByWebtoonId(Long webtoonId) {
-        return em.createQuery("select wg.genre from WebtoonGenre wg"
-                + " where wg.webtoon.id=:webtoonId", Genre.class)
-                .setParameter("webtoonId", webtoonId)
-                .getResultList();
-    }
-
     /**
      * 도전웹툰 장르별 웹툰 조회 (페이징)
      * 인기순 / 업데이트순 정렬
@@ -35,7 +27,7 @@ public class WebtoonGenreRepository {
                 + ") from WebtoonGenre wg"
                 + " join fetch wg.webtoon.webtoonThumbnail wt"
                 + " where wg.webtoon.webtoonType=:webtoonType"
-                + " and wg.genre.genreEnum=:genre";
+                + " and wg.genre=:genre";
         if (sorting == SortingEnum.POPULARITY) {
             sql += " order by totalLikeCount desc";
         } else {
@@ -62,7 +54,7 @@ public class WebtoonGenreRepository {
                 + ") from WebtoonGenre wg"
                 + " join fetch wg.webtoon.webtoonThumbnail wt"
                 + " where wg.webtoon.webtoonType=:webtoonType"
-                + " and wg.genre.genreEnum in :genres";
+                + " and wg.genre in :genres";
 
         if (sorting == SortingEnum.POPULARITY) {
             sql += " order by totalLikeCount desc";
@@ -81,7 +73,7 @@ public class WebtoonGenreRepository {
      */
     public Long findTotalCountByGenre(GenreEnum genre, WebtoonType webtoonType) {
         return em.createQuery("select count(wg) from WebtoonGenre wg"
-                + " where wg.genre.genreEnum=:genre"
+                + " where wg.genre=:genre"
                 + " and wg.webtoon.webtoonType=:webtoonType", Long.class)
                 .setParameter("genre", genre)
                 .setParameter("webtoonType", webtoonType)

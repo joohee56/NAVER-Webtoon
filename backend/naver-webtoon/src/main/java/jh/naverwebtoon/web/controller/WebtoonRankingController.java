@@ -16,8 +16,7 @@ public class WebtoonRankingController {
     private final WebtoonRankingService webtoonRankingService;
 
     @GetMapping("/{offset}/{limit}/{webtoonType}")
-    public FindWebtoonRankingsRes findWebtoonRanking(@PathVariable("offset") int offset, @PathVariable("limit") int limit, @PathVariable("webtoonType")
-                                                     WebtoonType webtoonType) {
+    public FindWebtoonRankingsRes findWebtoonRanking(@PathVariable("offset") int offset, @PathVariable("limit") int limit, @PathVariable("webtoonType") WebtoonType webtoonType) {
         return FindWebtoonRankingsRes.create(webtoonRankingService.findRanking(offset, limit, webtoonType));
     }
 }

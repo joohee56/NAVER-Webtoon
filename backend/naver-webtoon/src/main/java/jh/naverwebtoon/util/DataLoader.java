@@ -6,9 +6,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import jh.naverwebtoon.db.domain.Comment;
-import jh.naverwebtoon.db.domain.Genre;
 import jh.naverwebtoon.db.domain.Member;
 import jh.naverwebtoon.db.domain.MergeManuscript;
 import jh.naverwebtoon.db.domain.ProfileImage;
@@ -26,7 +24,6 @@ import jh.naverwebtoon.db.domain.enums.WebtoonCategory;
 import jh.naverwebtoon.db.domain.webtoon.OfficialWebtoon;
 import jh.naverwebtoon.db.domain.webtoon.Webtoon;
 import jh.naverwebtoon.db.repository.CommentRepository;
-import jh.naverwebtoon.db.repository.GenreRepository;
 import jh.naverwebtoon.db.repository.MemberRepository;
 import jh.naverwebtoon.db.repository.RoundRepository;
 import jh.naverwebtoon.db.repository.WebtoonRepository;
@@ -47,7 +44,6 @@ public class DataLoader implements ApplicationRunner {
     private EntityManager em;
     private final MemberRepository memberRepository;
     private final RoundRepository roundRepository;
-    private final GenreRepository genreRepository;
     private final WebtoonRepository webtoonRepository;
     private final CommentRepository commentRepository;
 
@@ -83,9 +79,6 @@ public class DataLoader implements ApplicationRunner {
         initMember("user8", "1234", "user8@naver.com", "한가은", LocalDate.of(1999, 9, 19), Gender.FEMALE, CountryResidence.LOCAL, "010-1234-5678", "jjanggu-profile-image.png" );
         initMember("user9", "1234", "user9@naver.com", "이시아", LocalDate.of(1999, 9, 19), Gender.FEMALE, CountryResidence.LOCAL, "010-1234-5678", "jjanggu-profile-image.png" );
         initMember("user10", "1234", "user10@naver.com", "강이서", LocalDate.of(1999, 9, 19), Gender.FEMALE, CountryResidence.LOCAL, "010-1234-5678", "jjanggu-profile-image.png" );
-
-//        Genre
-        initGenre();
 
 //        Webtoon
         List<GenreEnum> genreEnums = new ArrayList<>();
@@ -660,32 +653,19 @@ public class DataLoader implements ApplicationRunner {
         em.persist(member);
     }
 
-    public void initGenre() {
-        for (GenreEnum genreEnum : GenreEnum.values()) {
-            Genre genre = Genre.create(genreEnum);
-            em.persist(genre);
-        }
-    }
-
     public void initOfficialWebtoon(Long memberId, String name, WebtoonCategory webtoonCategory, List<GenreEnum> genreEnums, String oneLineSummary, String summary, String storeFileName, DayOfWeek dayOfWeek) {
         Member member = memberRepository.findOne(memberId);
         CreateWebtoonReq createWebtoonReq = new CreateWebtoonReq(name, webtoonCategory, new ArrayList<>(), genreEnums, oneLineSummary, summary, null, null);
-        List<Genre> genres = createWebtoonReq.getGenres().stream()
-                .map(genreEnum -> genreRepository.findByGenreEnum(genreEnum))
-                .collect(Collectors.toList());
         WebtoonThumbnail webtoonThumbnail = WebtoonThumbnail.create(new UploadImage(storeFileName, storeFileName), new UploadImage(storeFileName, storeFileName));
-        OfficialWebtoon officialWebtoon = new OfficialWebtoon(member, createWebtoonReq, genres, webtoonThumbnail, dayOfWeek);
+        OfficialWebtoon officialWebtoon = new OfficialWebtoon(member, createWebtoonReq, webtoonThumbnail, dayOfWeek);
         em.persist(officialWebtoon);
     }
 
     public void initWebtoon(Long memberId, String name, WebtoonCategory webtoonCategory, List<GenreEnum> genreEnums, String oneLineSummary, String summary, String storeFileName) {
         Member member = memberRepository.findOne(memberId);
         CreateWebtoonReq createWebtoonReq = new CreateWebtoonReq(name, webtoonCategory, new ArrayList<>(), genreEnums, oneLineSummary, summary, null, null);
-        List<Genre> genres = createWebtoonReq.getGenres().stream()
-                .map(genreEnum -> genreRepository.findByGenreEnum(genreEnum))
-                .collect(Collectors.toList());
         WebtoonThumbnail webtoonThumbnail = WebtoonThumbnail.create(new UploadImage(storeFileName, storeFileName), new UploadImage(storeFileName, storeFileName));
-        Webtoon webtoon = Webtoon.create(member, createWebtoonReq, genres, webtoonThumbnail);
+        Webtoon webtoon = Webtoon.create(member, createWebtoonReq, webtoonThumbnail);
         em.persist(webtoon);
     }
 

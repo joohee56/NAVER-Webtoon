@@ -4,36 +4,40 @@ import java.time.DayOfWeek;
 import java.util.List;
 import java.util.stream.Collectors;
 import jh.naverwebtoon.db.domain.webtoon.OfficialWebtoon;
+import jh.naverwebtoon.db.domain.webtoon.Webtoon;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class FindOfficialWebtoonDetailRes {
-    private String posterStoreFileName;
+public class FindWebtoonDetailRes {
     private String webtoonName;
+    private String posterStoreFileName;
     private String memberName;
     private String profileStoreFileName;
     private DayOfWeek dayOfWeek;
     private Integer ageLimit;
     private String oneLineSummary;
     private String summary;
-    private List<String> tags;
+    private List<String> genres;
 
-    public static FindOfficialWebtoonDetailRes create(OfficialWebtoon webtoon) {
-        FindOfficialWebtoonDetailRes res = new FindOfficialWebtoonDetailRes();
-        res.posterStoreFileName = webtoon.getWebtoonThumbnail().getPosterImage().getStoreFileName();
+    public static FindWebtoonDetailRes create(Webtoon webtoon) {
+        FindWebtoonDetailRes res = new FindWebtoonDetailRes();
         res.webtoonName = webtoon.getName();
+        res.posterStoreFileName = webtoon.getWebtoonThumbnail().getPosterImage().getStoreFileName();
         res.memberName = webtoon.getMember().getName();
         res.profileStoreFileName = webtoon.getMember().getProfileImage().getUploadImage().getStoreFileName();
-        res.dayOfWeek = webtoon.getDayOfWeek();
         res.ageLimit = webtoon.getAgeLimit();
         res.oneLineSummary = webtoon.getOneLineSummary();
         res.summary = webtoon.getSummary();
-        res.tags = webtoon.getTags().stream()
-                .map(tag -> tag.getName())
+        res.genres = webtoon.getGenres().stream()
+                .map(webtoonGenre -> webtoonGenre.getGenre().getTitle())
                 .collect(Collectors.toList());
+        if(webtoon.getClass().equals(OfficialWebtoon.class)) {
+            OfficialWebtoon officialWebtoon = (OfficialWebtoon) webtoon;
+            res.dayOfWeek = officialWebtoon.getDayOfWeek();
+        }
         return res;
     }
 

@@ -8,6 +8,7 @@ import jh.naverwebtoon.dto.request.CreateWebtoonReq;
 import jh.naverwebtoon.dto.response.FindChallengeWebtoonByGenre;
 import jh.naverwebtoon.dto.response.FindChallengeWebtoonsRes;
 import jh.naverwebtoon.dto.response.FindCreateRoundInfoRes;
+import jh.naverwebtoon.dto.response.FindWebtoonDetailRes;
 import jh.naverwebtoon.dto.response.FindWebtoonsByMemberRes;
 import jh.naverwebtoon.service.WebtoonGenreService;
 import jh.naverwebtoon.service.WebtoonService;
@@ -41,7 +42,7 @@ public class WebtoonController {
     }
 
     /**
-     * 회원이 갖고 있는 웹툰 정보 조회
+     * 회원에 속한 웹툰 정보 조회
      */
     @Auth
     @GetMapping()
@@ -72,5 +73,13 @@ public class WebtoonController {
     @GetMapping("/genres/{genre}")
     public List<FindChallengeWebtoonByGenre> findChallengeWebtoonAllByGenre(@PathVariable("genre") GenreEnum genre, @RequestParam("sorting") SortingEnum sorting) {
         return webtoonGenreService.findChallengeWebtoonAllByGenre(genre, sorting);
+    }
+
+    /**
+     * 회차 리스트에서 웹툰 정보 조회
+     */
+    @GetMapping("/detail/{id}")
+    public FindWebtoonDetailRes findWebtoonDetail(@PathVariable("id") Long webtoonId) {
+        return webtoonService.findWebtoonDetail(webtoonId);
     }
 }

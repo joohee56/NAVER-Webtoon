@@ -5,14 +5,12 @@ import java.util.List;
 import jh.naverwebtoon.db.domain.enums.GenreEnum;
 import jh.naverwebtoon.db.domain.enums.SortingEnum;
 import jh.naverwebtoon.db.repository.OfficialWebtoonRepository;
-import jh.naverwebtoon.dto.response.FindWebtoonsByCondition;
-import jh.naverwebtoon.dto.response.FindOfficialWebtoonDetailRes;
 import jh.naverwebtoon.dto.response.FindOfficialWebtoonsRes;
+import jh.naverwebtoon.dto.response.FindWebtoonsByCondition;
 import jh.naverwebtoon.service.OfficialWebtoonService;
 import jh.naverwebtoon.service.WebtoonGenreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,11 +46,5 @@ public class OfficialWebtoonController {
         return officialWebtoonRepository.findAllByDayOfWeek(dayOfWeek, sorting);
     }
 
-    /**
-     * 웹툰 디테일 정보 조회
-     */
-    @GetMapping("/detail/{id}")
-    public FindOfficialWebtoonDetailRes findWebtoonDetail(@PathVariable("id") Long webtoonId) {
-        return officialWebtoonService.findOfficialWebtoonDetail(webtoonId);
-    }
+
 }

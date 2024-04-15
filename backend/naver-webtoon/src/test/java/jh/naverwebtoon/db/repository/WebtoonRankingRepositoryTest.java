@@ -28,7 +28,7 @@ class WebtoonRankingRepositoryTest {
         for (WebtoonRanking ranking : rankings) {
             System.out.println(ranking.getWebtoon().getId() + ", " + ranking.getWebtoon().getName() + ", " + ranking.getWebtoon().getWebtoonThumbnail().getPosterImage().getStoreFileName() + ", " + ranking.getTotalLikeCount() + ", " + ranking.getRanking());
             for (WebtoonGenre webtoonGenre : ranking.getWebtoon().getGenres()) {
-                System.out.println(webtoonGenre.getGenre().getGenreEnum().getTitle());
+                System.out.println(webtoonGenre.getGenre().getTitle());
             }
         }
     }

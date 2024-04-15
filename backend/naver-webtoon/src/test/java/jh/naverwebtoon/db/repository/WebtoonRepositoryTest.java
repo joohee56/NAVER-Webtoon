@@ -2,6 +2,7 @@ package jh.naverwebtoon.db.repository;
 
 import java.util.List;
 import jh.naverwebtoon.db.domain.webtoon.Webtoon;
+import jh.naverwebtoon.dto.response.FindWebtoonDetailRes;
 import jh.naverwebtoon.dto.response.FindWebtoonsByMemberRes;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,10 @@ class WebtoonRepositoryTest {
     }
 
     @Test
-    void 썸네일과_장르를_포함한_웹툰_조회() {
-        Webtoon webtoon = webtoonRepository.findOneWithThumbnailAndGenre(Long.valueOf(2));
-        System.out.println(webtoon.toString());
+    void 웹툰_조회_시_썸네일과_장르_함께_조회() {
+        Webtoon webtoon = webtoonRepository.findOneByIdWithMemberAndThumbnail(Long.valueOf(2));
+        FindWebtoonDetailRes res = FindWebtoonDetailRes.create(webtoon);
+        System.out.println(res.toString());
     }
+
 }

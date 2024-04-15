@@ -24,7 +24,7 @@ public class WebtoonRankingDto {
         res.webtoonName = webtoonRanking.getWebtoon().getName();
         res.thumbnail = webtoonRanking.getWebtoon().getWebtoonThumbnail().getPosterImage().getStoreFileName();
         for (WebtoonGenre webtoonGenre : webtoonRanking.getWebtoon().getGenres()) {
-            res.genres.add(webtoonGenre.getGenre().getGenreEnum().getTitle());
+            res.genres.add(webtoonGenre.getGenre().getTitle());
         }
         res.totalLikeCount = webtoonRanking.getTotalLikeCount();
         res.rankingStatus = webtoonRanking.getStatus().getName();

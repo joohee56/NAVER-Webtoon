@@ -20,7 +20,7 @@ class OfficialWebtoonRepositoryTest {
     void 요일별_웹툰_리스트_조회() {
         List<FindWebtoonsByCondition> webtoons = repository.findAllByDayOfWeek(DayOfWeek.MONDAY, SortingEnum.POPULARITY);
         for (FindWebtoonsByCondition webtoon : webtoons) {
-            System.out.println(webtoon.getWebtoonId() + ", " + webtoon.getWebtoonName() + ", " + webtoon.getThumbnail() + ", " + webtoon.getTotalLikeCount());
+            System.out.println(webtoon.getWebtoonId() + ", " + webtoon.getWebtoonName() + ", " + webtoon.getPosterStoreFileName() + ", " + webtoon.getTotalLikeCount());
         }
     }
 

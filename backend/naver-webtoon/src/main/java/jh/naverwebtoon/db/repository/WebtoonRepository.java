@@ -32,6 +32,20 @@ public class WebtoonRepository {
     }
 
     /**
+     * 회차 리스트 상단의 웹툰 정보 조회
+     */
+    public Webtoon findOneByIdWithMemberAndThumbnail(Long webtoonId) {
+        return em.createQuery("select w from Webtoon w"
+                        + " join fetch w.member m "
+                        + " join fetch m.profileImage"
+                        + " join fetch w.webtoonThumbnail wt"
+                        + " join fetch w.genres g"
+                        + " where w.id = :webtoonId", Webtoon.class)
+                .setParameter("webtoonId", webtoonId )
+                .getSingleResult();
+    }
+
+    /**
      * 작품관리 페이지에서 웹툰 조회
      */
     public List<FindWebtoonsByMemberRes> findAllByMemberWithThumbnail(Long memberId) {
@@ -52,19 +66,6 @@ public class WebtoonRepository {
                                 + " where w.member.id = :memberId")
                 .setParameter("memberId", memberId)
                 .getResultList();
-    }
-
-    /**
-     * 썸네일과 장르와 함께 웹툰 조회
-     */
-    public Webtoon findOneWithThumbnailAndGenre(Long webtoonId) {
-        return em.createQuery("select distinct w from Webtoon w"
-                + " join fetch w.webtoonThumbnail"
-                + " join fetch w.genres g"
-                + " join fetch g.genre"
-                + " where w.id = :webtoonId", Webtoon.class)
-                .setParameter("webtoonId", webtoonId)
-                .getSingleResult();
     }
 
 }

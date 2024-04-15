@@ -20,14 +20,13 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import jh.naverwebtoon.db.domain.BaseEntity;
-import jh.naverwebtoon.db.domain.Genre;
 import jh.naverwebtoon.db.domain.Member;
 import jh.naverwebtoon.db.domain.Round;
 import jh.naverwebtoon.db.domain.Tag;
 import jh.naverwebtoon.db.domain.WebtoonGenre;
 import jh.naverwebtoon.db.domain.WebtoonThumbnail;
+import jh.naverwebtoon.db.domain.enums.GenreEnum;
 import jh.naverwebtoon.db.domain.enums.WebtoonCategory;
 import jh.naverwebtoon.db.domain.enums.WebtoonType;
 import jh.naverwebtoon.dto.request.CreateWebtoonReq;
@@ -90,26 +89,19 @@ public class Webtoon extends BaseEntity {
         tags.add(tag);
         tag.setWebtoon(this);
     }
-    private void addGenre(WebtoonGenre webtoonGenre) {
-        genres.add(webtoonGenre);
-        webtoonGenre.setWebtoon(this);
+    private void addGenre(WebtoonGenre genre) {
+        this.genres.add(genre);
+        genre.setWebtoon(this);
     }
-
-    protected Webtoon(Member member, CreateWebtoonReq createWebtoonReq, List<Genre> genres, WebtoonThumbnail webtoonThumbnail, WebtoonType webtoonType) {
+    protected Webtoon(Member member, CreateWebtoonReq createWebtoonReq, WebtoonThumbnail webtoonThumbnail, WebtoonType webtoonType) {
         this.name = createWebtoonReq.getName();
         this.webtoonCategory = createWebtoonReq.getWebtoonCategory();
-
         for (String tagName : createWebtoonReq.getTags()) {
             this.addTag(Tag.create(tagName));
         }
-
-        List<WebtoonGenre> webtoonGenres = genres.stream()
-                .map(genre -> WebtoonGenre.create(genre))
-                .collect(Collectors.toList());
-        for (WebtoonGenre webtoonGenre : webtoonGenres) {
-            this.addGenre(webtoonGenre);
+        for (GenreEnum genreEnum : createWebtoonReq.getGenres()) {
+            addGenre(WebtoonGenre.create(genreEnum));
         }
-
         this.oneLineSummary = createWebtoonReq.getOneLineSummary();
         this.summary = createWebtoonReq.getSummary();
         this.ageLimit = 0;
@@ -118,37 +110,21 @@ public class Webtoon extends BaseEntity {
         this.webtoonThumbnail = webtoonThumbnail;
     }
 
-    public static Webtoon create(Member member, CreateWebtoonReq createWebtoonReq, List<Genre> genres, WebtoonThumbnail webtoonThumbnail) {
+    public static Webtoon create(Member member, CreateWebtoonReq createWebtoonReq, WebtoonThumbnail webtoonThumbnail) {
         Webtoon webtoon = new Webtoon();
         webtoon.name = createWebtoonReq.getName();
         webtoon.webtoonCategory = createWebtoonReq.getWebtoonCategory();
-
         for (String tagName : createWebtoonReq.getTags()) {
             webtoon.addTag(Tag.create(tagName));
         }
-
-        List<WebtoonGenre> webtoonGenres = genres.stream()
-                .map(genre -> WebtoonGenre.create(genre))
-                .collect(Collectors.toList());
-        for (WebtoonGenre webtoonGenre : webtoonGenres) {
-            webtoon.addGenre(webtoonGenre);
+        for (GenreEnum genreEnum : createWebtoonReq.getGenres()) {
+            webtoon.addGenre(WebtoonGenre.create(genreEnum));
         }
-
         webtoon.oneLineSummary = createWebtoonReq.getOneLineSummary();
         webtoon.summary = createWebtoonReq.getSummary();
         webtoon.webtoonType = WebtoonType.CHALLENGE;
         webtoon.member = member;
         webtoon.webtoonThumbnail = webtoonThumbnail;
         return webtoon;
-    }
-
-
-    @Override
-    public String toString() {
-        return "Webtoon{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", webtoonThumbnail=" + webtoonThumbnail.getPosterImage().getStoreFileName() +
-                '}';
     }
 }

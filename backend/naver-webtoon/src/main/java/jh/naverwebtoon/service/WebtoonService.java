@@ -2,17 +2,15 @@ package jh.naverwebtoon.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import jh.naverwebtoon.db.domain.Genre;
 import jh.naverwebtoon.db.domain.Member;
 import jh.naverwebtoon.db.domain.UploadImage;
 import jh.naverwebtoon.db.domain.WebtoonThumbnail;
 import jh.naverwebtoon.db.domain.webtoon.Webtoon;
-import jh.naverwebtoon.db.repository.GenreRepository;
 import jh.naverwebtoon.db.repository.MemberRepository;
 import jh.naverwebtoon.db.repository.WebtoonRepository;
 import jh.naverwebtoon.dto.request.CreateWebtoonReq;
 import jh.naverwebtoon.dto.response.FindCreateRoundInfoRes;
+import jh.naverwebtoon.dto.response.FindWebtoonDetailRes;
 import jh.naverwebtoon.dto.response.FindWebtoonsByMemberRes;
 import jh.naverwebtoon.util.FileStore;
 import lombok.RequiredArgsConstructor;
@@ -25,21 +23,15 @@ import org.springframework.transaction.annotation.Transactional;
 public class WebtoonService {
     private final WebtoonRepository webtoonRepository;
     private final MemberRepository memberRepository;
-    private final GenreRepository genreRepository;
     private final FileStore fileStore;
 
     @Transactional
     public Webtoon createWebtoon(Long memberId, CreateWebtoonReq createWebtoonReq) {
         Member member = memberRepository.findOne(memberId);
-        List<Genre> genres = createWebtoonReq.getGenres().stream()
-                .map(genreEnum -> genreRepository.findByGenreEnum(genreEnum))
-                .collect(Collectors.toList());
-
         UploadImage posterImage = fileStore.storeFile(createWebtoonReq.getPosterImage());
         UploadImage horizontalImage = fileStore.storeFile(createWebtoonReq.getHorizontalImage());
         WebtoonThumbnail webtoonThumbnail = WebtoonThumbnail.create(posterImage, horizontalImage);
-
-        Webtoon webtoon = Webtoon.create(member, createWebtoonReq, genres, webtoonThumbnail);
+        Webtoon webtoon = Webtoon.create(member, createWebtoonReq, webtoonThumbnail);
         Long webtoonId = webtoonRepository.save(webtoon);
         return webtoonRepository.findOne(webtoonId);
     }
@@ -55,6 +47,10 @@ public class WebtoonService {
             res.add(FindCreateRoundInfoRes.create((Long) webtoon[0], (String) webtoon[1], webtoon[2]));
         }
         return res;
+    }
+
+    public FindWebtoonDetailRes findWebtoonDetail(Long webtoonId) {
+        return FindWebtoonDetailRes.create(webtoonRepository.findOneByIdWithMemberAndThumbnail(webtoonId));
     }
 
 }

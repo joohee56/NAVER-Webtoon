@@ -6,8 +6,9 @@ import java.util.List;
 import jh.naverwebtoon.db.domain.enums.SortingEnum;
 import jh.naverwebtoon.db.domain.enums.WebtoonType;
 import jh.naverwebtoon.db.domain.webtoon.OfficialWebtoon;
-import jh.naverwebtoon.dto.response.FindWebtoonsByCondition;
+import jh.naverwebtoon.db.domain.webtoon.Webtoon;
 import jh.naverwebtoon.dto.response.FindOfficialWebtoonsRes;
+import jh.naverwebtoon.dto.response.FindWebtoonsByCondition;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -54,16 +55,6 @@ public class OfficialWebtoonRepository {
                         + " order by totalLikeCount desc", FindOfficialWebtoonsRes.class)
                         .setParameter("webtoonType", WebtoonType.OFFICIAL)
                         .getResultList();
-    }
-
-    public OfficialWebtoon findOneByIdWithMemberAndThumbnail(Long webtoonId) {
-        return em.createQuery("select distinct ow from OfficialWebtoon ow"
-                        + " join fetch ow.member m "
-                        + " join fetch m.profileImage"
-                        + " join fetch ow.webtoonThumbnail wt"
-                        + " where ow.id = :webtoonId", OfficialWebtoon.class)
-                .setParameter("webtoonId", webtoonId )
-                .getSingleResult();
     }
 
     /**
