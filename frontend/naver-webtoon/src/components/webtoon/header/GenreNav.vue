@@ -1,6 +1,6 @@
 <template lang="ko">
   <nav>
-		<button v-for="(genre, index) in genres"  @click="handleLinkClick(index)" :class="{active:genre.isActive}">{{genre.title}}</button>
+		<button v-for="genre of genres"  @click="handleLinkClick(genre.value)" :class="{active:genre.isActive}">{{genre.title}}</button>
 	</nav>
 </template>
 
@@ -14,16 +14,16 @@ export default {
   methods: {
     ...mapMutations("navStore", ["SET_GENRE_IS_ACTIVE"]),
 
-    handleLinkClick(index) {
-      this.SET_GENRE_IS_ACTIVE(index);
+    handleLinkClick(genre) {
+      this.SET_GENRE_IS_ACTIVE(genre);
 
-      if (index == 0) {
+      if (genre == "ALL") {
         this.$router.push({ name: "challengeMain" });
       } else {
         this.$router.push({
           name: "genreView",
           params: {
-            genre: this.genres[index].value,
+            genre: genre,
           },
         });
       }

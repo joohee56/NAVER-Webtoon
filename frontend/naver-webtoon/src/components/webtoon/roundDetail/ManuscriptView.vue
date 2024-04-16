@@ -52,7 +52,7 @@
       <button @click="lessRange" :disabled="isPreviewLeftBtnDisabled"><i class="fa-solid fa-angle-left"></i></button>
         <div class="preview-round-wrap">
           <div v-for="round in previewRounds" class="preview-round-item">
-            <router-link :to="{name: 'roundDetail', params: {weboonId: `${roundDetail.weboonId}`, roundId: `${round.roundId}`}}" :class={active:isNowRound(round.roundNumber)}>
+            <router-link :to="{name: webtoonType+'RoundDetail', params: {weboonId: `${roundDetail.weboonId}`, roundId: `${round.roundId}`}}" :class={active:isNowRound(round.roundNumber)}>
               <img class="round-thumbnail" :src="require(`@/assets/image/${round.thumbnail}`)">
               <p class="round-title overflow-hidden">{{round.roundNumber}}화 {{round.title}}</p>
             </router-link>
@@ -78,6 +78,7 @@
 
 <script>
 import { getRoundDetail, getRounds, postRoundLike } from "@/api/round";
+import { mapMutations } from "vuex";
 
 export default {
   data() {
@@ -127,8 +128,10 @@ export default {
   async mounted() {
     await this.fetchRoundDetail();
     await this.fetchRounds();
+    this.setNavActive();
   },
   methods: {
+    ...mapMutations("navStore", ["SET_CATEGORY_IS_ACTIVE"]),
     setPreviewBtnDisable() {
       if (this.previewRangeStart === 0) {
         this.isPreviewLeftBtnDisabled = true;
@@ -191,7 +194,7 @@ export default {
         alert("첫화입니다.");
       } else {
         this.$router.push({
-          name: "roundDetail",
+          name: this.webtoonType + "RoundDetail",
           params: {
             webtoonId: this.roundDetail.webtoonId,
             roundId: this.$route.params.roundId - 1,
@@ -204,12 +207,19 @@ export default {
         alert("마지막화입니다.");
       } else {
         this.$router.push({
-          name: "roundDetail",
+          name: this.webtoonType + "RoundDetail",
           params: {
             webtoonId: this.roundDetail.webtoonId,
             roundId: parseInt(this.$route.params.roundId, 10) + 1,
           },
         });
+      }
+    },
+    setNavActive() {
+      if (this.webtoonType == "official") {
+        this.SET_CATEGORY_IS_ACTIVE(0);
+      } else {
+        this.SET_CATEGORY_IS_ACTIVE(1);
       }
     },
     // menubarScoll() {
@@ -390,6 +400,8 @@ export default {
 }
 .author-profile-image {
   width: 40px;
+  border-radius: 50%;
+  aspect-ratio: 1/1;
 }
 .author-note {
   padding: 18px 5px;

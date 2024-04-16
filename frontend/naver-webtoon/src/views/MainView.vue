@@ -16,11 +16,15 @@ export default {
     OfficialWebtoonList,
   },
   created() {
-    this.setDayOfWeekActive();
+    this.navActive();
   },
   methods: {
-    ...mapMutations("navStore", ["SET_DAY_OF_WEEK_IS_ACTIVE"]),
-    setDayOfWeekActive() {
+    ...mapMutations("navStore", [
+      "SET_CATEGORY_IS_ACTIVE",
+      "SET_DAY_OF_WEEK_IS_ACTIVE",
+    ]),
+    navActive() {
+      this.SET_CATEGORY_IS_ACTIVE(0);
       this.SET_DAY_OF_WEEK_IS_ACTIVE(0);
     },
   },

@@ -38,7 +38,7 @@
 					</div>
 					<div class="btn">
 						<a link="#">작품 통계</a>
-						<router-link :to="{name: 'manageRound', params: {webtoonId: webtoon.webtoonId}}">회차 관리</router-link>
+						<router-link :to="{name: 'manageRound', params: {webtoonId: webtoon.webtoonId, webtoonType: webtoon.serialType.toLowerCase() }}">회차 관리</router-link>
 					</div>
 				</div>
       </div>

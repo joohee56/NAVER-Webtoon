@@ -15,7 +15,6 @@
 					<router-link to="#" class="green-btn"><i class="fa-solid fa-file-circle-plus"></i>&nbsp;신규 회차 등록</router-link>
 				</div>
 			</div>
-
 			<!-- 회차 리스트 -->
 			<div class="round-list-container">
 				<div class="round-list-wrap column-name">
@@ -32,8 +31,8 @@
 				<div>
 					<div v-for="round in rounds" class="round-list-wrap round">
 						<div>{{round.roundNumber}}</div>
-						<div><router-link :to="{name: 'roundDetail', params: {webtoonId: webtoon.webtoonId, roundId: round.roundId}}"><img class="thumbnail" :src="require(`@/assets/image/${round.roundThumbnail}`)"></router-link></div>
-						<div><router-link :to="{name: 'roundDetail', params: {webtoonId: webtoon.webtoonId, roundId: round.roundId}}">{{round.roundTitle}}</router-link></div>
+						<div><router-link :to="{name: webtoonType+'RoundDetail', params: {webtoonId: webtoon.webtoonId, roundId: round.roundId}}"><img class="thumbnail" :src="require(`@/assets/image/${round.roundThumbnail}`)"></router-link></div>
+						<div><router-link :to="{name: webtoonType+'RoundDetail', params: {webtoonId: webtoon.webtoonId, roundId: round.roundId}}">{{round.roundTitle}}</router-link></div>
 						<div>{{round.createdAt}}</div>
 						<div>{{round.updatedAt}}</div>
 						<div>0</div>
@@ -59,6 +58,7 @@ export default {
         webtoonThumbnail: "default-webtoon-cover.png",
         summary: "",
       },
+      webtoonType: this.$route.params.webtoonType,
       rounds: [], //roundId, roundNumber, roundThumbnail, roundTitle, createdAt, updatedAt, totalLikeCount, totalCommentCount
     };
   },

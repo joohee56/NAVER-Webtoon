@@ -89,8 +89,11 @@ export default {
       };
       try {
         const response = await postComment(comment);
-        location.reload();
         console.log(response.data);
+        if (response.status == 200) {
+          this.fetchComments();
+          this.content = "";
+        }
       } catch (error) {
         console.log(error);
       }

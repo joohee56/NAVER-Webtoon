@@ -61,64 +61,64 @@ const navStore = {
         isActive: false,
       },
     ],
-    selectedIndex_genre: 0,
-    genres: [
-      {
+    selected_genre: "ALL",
+    genres: {
+      ALL: {
         title: "전체",
         value: "ALL",
         isActive: true,
       },
-      {
+      ROMANCE: {
         title: "로맨스",
         value: "ROMANCE",
         isActive: false,
       },
-      {
+      FANTASY: {
         title: "판타지",
         value: "FANTASY",
         isActive: false,
       },
-      {
+      ACTION: {
         title: "액션",
         value: "ACTION",
         isActive: false,
       },
-      {
+      DAILY_LIFE: {
         title: "일상",
         value: "DAILY_LIFE",
         isActive: false,
       },
-      {
+      COMEDY: {
         title: "개그",
         value: "COMEDY",
         isActive: false,
       },
-      {
+      MARTIAL_ARTS_AND_HISTORICAL: {
         title: "무협/사극",
         value: "MARTIAL_ARTS_AND_HISTORICAL",
         isActive: false,
       },
-      {
+      THRILLER: {
         title: "스릴러",
         value: "THRILLER",
         isActive: false,
       },
-      {
+      SPORTS: {
         title: "스포츠",
         value: "SPORTS",
         isActive: false,
       },
-      {
+      DRAMA: {
         title: "드라마",
         value: "DRAMA",
         isActive: false,
       },
-      {
+      EMOTION: {
         title: "감성",
         value: "EMOTION",
         isActive: false,
       },
-    ],
+    },
   },
   mutations: {
     SET_DAY_OF_WEEK_IS_ACTIVE(state, index) {
@@ -131,10 +131,10 @@ const navStore = {
       state.categorys[index].isActive = true;
       state.selectedIndex_category = index;
     },
-    SET_GENRE_IS_ACTIVE(state, index) {
-      state.genres[state.selectedIndex_genre].isActive = false;
-      state.genres[index].isActive = true;
-      state.selectedIndex_genre = index;
+    SET_GENRE_IS_ACTIVE(state, genre) {
+      state.genres[state.selected_genre].isActive = false;
+      state.genres[genre].isActive = true;
+      state.selected_genre = genre;
     },
   },
 };

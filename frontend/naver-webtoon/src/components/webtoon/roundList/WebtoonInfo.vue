@@ -157,6 +157,7 @@ export default {
 .profile-image {
   width: 35px;
   aspect-ratio: 1/1;
+  border-radius: 50%;
 }
 .detail-line .author-name {
   color: black;

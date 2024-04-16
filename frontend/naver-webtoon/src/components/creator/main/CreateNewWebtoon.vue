@@ -134,7 +134,6 @@
 
 						<ul class="sub-description">
 							<li>파일 용량 1MB 이하 / jpg만 업로드 가능</li>
-							<li>가로형 대표 이미지를 업로드하시면 기타 이미지가 자동 생성됩니다.</li>
 							<li>포스터형은 작품 홈에서 대표 이미지로 활용됩니다. </li>
 						</ul>
 
@@ -192,9 +191,7 @@ export default {
         const response = await postCreateWebtoon(formData);
         console.log(response.data);
         if (response.status === 200) {
-          alert(
-            "작품 등록이 완료되었습니다. 신규 회차 등록 시, 도전만화에 노출됩니다."
-          );
+          alert("작품 등록이 완료되었습니다. 도전만화에 노출됩니다.");
           this.$router.push({ name: "manage" });
         }
       } catch (error) {

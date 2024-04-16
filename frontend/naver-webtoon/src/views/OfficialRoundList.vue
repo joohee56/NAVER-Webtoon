@@ -1,7 +1,7 @@
 <template lang="ko">
 	<div class="container">
     <WebtoonInfo></WebtoonInfo>
-    <RoundList></RoundList>
+    <RoundList webtoonType="official"></RoundList>
 	</div>
 </template>
 
