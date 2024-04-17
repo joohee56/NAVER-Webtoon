@@ -2,7 +2,7 @@
 	<div class="container">
 
 		<!-- 상단 메뉴바 -->
-		<div id="menubar" class="menu-bar">
+		<div ref="menubar" class="menu-bar">
 			<router-link :to="{name: webtoonType+'RoundList', params: {webtoonId : `${this.$route.params.webtoonId}`}}"><i class="fa-solid fa-angle-left"></i></router-link>
 			<router-link :to="{name: webtoonType+'RoundList', params: {webtoonId : `${this.$route.params.webtoonId}`}}">{{roundDetail.webtoonName}}</router-link>
 			<span class="separator"></span>
@@ -24,7 +24,7 @@
 		</div>
 
 		<!-- 원고 -->
-		<div id="manuscript" class="manusript-wrap">
+		<div ref="manuscript" class="manusript-wrap">
 			<img v-if="roundDetail.mergeManuscript !== ''" class="manuscript" :src="require(`@/assets/image/${roundDetail.mergeManuscript}`)">
 		</div>
 
@@ -73,6 +73,12 @@
       </div>
     </div>
 
+    <!-- 위아래 이동 버튼 -->
+    <div class="move-control-btn">
+      <button class="up" @click="moveToTop"><i class="fa-solid fa-angle-up"></i></button>
+      <button @click="moveToBottom"><i class="fa-solid fa-angle-down"></i></button>
+    </div>
+
 	</div>
 </template>
 
@@ -106,10 +112,7 @@ export default {
   watch: {
     "$route.params.roundId": function () {
       location.reload();
-      window.scrollTo({
-        top: 0,
-        left: 0,
-      });
+      this.moveToTop();
     },
     previewRangeStart() {
       this.previewRounds = [];
@@ -222,10 +225,23 @@ export default {
         this.SET_CATEGORY_IS_ACTIVE(1);
       }
     },
+    moveToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth", // 부드럽게 스크롤되도록 설정
+      });
+    },
+    moveToBottom() {
+      window.scrollTo({
+        // top: document.body.scrollHeight,
+        top: this.$refs.manuscript.scrollHeight,
+        behavior: "smooth", // 부드럽게 스크롤되도록 설정
+      });
+    },
     // menubarScoll() {
     //   // 메뉴바 트랜지션
-    //   const menubar = this.document.getElementById("menubar");
-    //   const manuscript = this.document.getElementById("manuscript");
+    //   const menubar = this.$refs.menubar;
+    //   const manuscript = this.$refs.manuscript.scrollHeight;
 
     //   window.addEventListener("scroll", transition);
     //   console.log(this.window.scrollY);
@@ -408,5 +424,28 @@ export default {
   font-family: AppleSDGothicNeoSB;
   font-size: 17px;
   border-bottom: 1px solid #efefef;
+}
+
+/* 위아래 이동 버튼 */
+.move-control-btn {
+  position: fixed;
+  right: 50px;
+  bottom: 50px;
+  z-index: 1000;
+}
+.move-control-btn button {
+  display: block;
+  background-color: white;
+  border-radius: 50%;
+  font-size: 30px;
+  width: 60px;
+  aspect-ratio: 1/1;
+  box-shadow: 0px 5px 5px 1px rgba(0, 0, 0, 0.068);
+  border: none;
+  color: #999;
+  cursor: pointer;
+}
+.move-control-btn .up {
+  margin-bottom: 20px;
 }
 </style>
