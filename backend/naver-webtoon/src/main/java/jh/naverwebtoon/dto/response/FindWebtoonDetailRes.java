@@ -20,7 +20,7 @@ public class FindWebtoonDetailRes {
     private Integer ageLimit;
     private String oneLineSummary;
     private String summary;
-    private List<String> genres;
+    private List<GenreRes> genres;
 
     public static FindWebtoonDetailRes create(Webtoon webtoon) {
         FindWebtoonDetailRes res = new FindWebtoonDetailRes();
@@ -32,7 +32,7 @@ public class FindWebtoonDetailRes {
         res.oneLineSummary = webtoon.getOneLineSummary();
         res.summary = webtoon.getSummary();
         res.genres = webtoon.getGenres().stream()
-                .map(webtoonGenre -> webtoonGenre.getGenre().getTitle())
+                .map(webtoonGenre -> new GenreRes(webtoonGenre.getGenre().name(), webtoonGenre.getGenre().getTitle()))
                 .collect(Collectors.toList());
         if(webtoon.getClass().equals(OfficialWebtoon.class)) {
             OfficialWebtoon officialWebtoon = (OfficialWebtoon) webtoon;
