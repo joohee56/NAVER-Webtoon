@@ -8,10 +8,10 @@
       <div class="detail-line">
         <img :src="require(`@/assets/image/${webtoonInfo.profileStoreFileName}`)" class="profile-image">
         <div class="author-name">{{webtoonInfo.memberName}}</div><div>· 글/그림</div>
-        <div v-if="webtoonInfo.dayOfWeek"> | {{webtoonInfo.dayOfWeek | dayOfWeekTitle}}웹툰 </div> <div>· {{webtoonInfo.ageLimit}}세 이용가</div>
+        <div v-if="webtoonInfo.dayOfWeek" class="day-of-week"> | {{webtoonInfo.dayOfWeek | dayOfWeekTitle}}웹툰 </div> <div>· {{webtoonInfo.ageLimit}}세 이용가</div>
         <div v-if="!webtoonInfo.dayOfWeek"> | 도전만화 ·</div>
         <div class="genre-wrap">
-          <div v-if="!webtoonInfo.dayOfWeek" v-for="genre in webtoonInfo.genres">{{genre}}</div>
+          <div v-if="!webtoonInfo.dayOfWeek" v-for="genre in webtoonInfo.genres">{{genre.title}}</div>
         </div>
       </div>
       <div class="summary">
@@ -72,7 +72,9 @@ export default {
   async mounted() {
     await this.fetchWebtoonInfo();
     if (this.webtoonInfo.dayOfWeek) {
-      this.setDayOfWeekActive();
+      this.setDayOfWeekNavActive();
+    } else {
+      this.setGenreNavActive();
     }
   },
   methods: {
@@ -89,11 +91,17 @@ export default {
         console.log(error);
       }
     },
-    ...mapMutations("navStore", ["SET_DAY_OF_WEEK_IS_ACTIVE"]),
-    setDayOfWeekActive() {
+    ...mapMutations("navStore", [
+      "SET_DAY_OF_WEEK_IS_ACTIVE",
+      "SET_GENRE_IS_ACTIVE",
+    ]),
+    setDayOfWeekNavActive() {
       this.SET_DAY_OF_WEEK_IS_ACTIVE(
         this.getDayOfWeekIndex(this.webtoonInfo.dayOfWeek)
       );
+    },
+    setGenreNavActive() {
+      this.SET_GENRE_IS_ACTIVE(this.webtoonInfo.genres[0].name);
     },
     getDayOfWeekIndex(value) {
       switch (value) {
@@ -162,6 +170,9 @@ export default {
 .detail-line .author-name {
   color: black;
   line-height: 31px;
+}
+.day-of-week {
+  margin-top: 3px;
 }
 .genre-wrap {
   display: flex;

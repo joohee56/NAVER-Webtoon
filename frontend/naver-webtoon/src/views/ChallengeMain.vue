@@ -21,7 +21,7 @@ export default {
   methods: {
     ...mapMutations("navStore", ["SET_GENRE_IS_ACTIVE"]),
     setGenreActive() {
-      this.SET_GENRE_IS_ACTIVE(0);
+      this.SET_GENRE_IS_ACTIVE("ALL");
     },
   },
 };
