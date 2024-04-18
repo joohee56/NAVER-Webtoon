@@ -1,19 +1,23 @@
 <template lang="ko">
 	<div class="container">
 		<div class="content-wrap">
+
+      <!-- 사이드바 -->
 			<div class="side-bar">
 
+        <!-- 헤더 -->
 				<div class="header-logo">
           <router-link to="/">N</router-link>
 					<span class="title">네이버ID</span>
 				</div>
 
+        <!-- 사용자 정보 -->
 				<div class="user-info">
 					<div class="profile-image">
-            <div :class={hidden:!isProfileImageHidden}>
+            <div :class={hidden:!isProfileImagePreviewHidden}>
               <img :src="require(`@/assets/image/${loginUser.profileImage}`)">
             </div>
-            <div :class={hidden:isProfileImageHidden}>
+            <div :class={hidden:isProfileImagePreviewHidden}>
               <img :src="previewProfileImage">
             </div>
 					</div>
@@ -26,11 +30,12 @@
 					<div class="profile-image-btn-wrap">
 						<input type="file" id="profile-image" @change="changeProfileImage" ref="image" hidden/>
             <label for="profile-image">사진 변경</label>
-            <label @click="deleteProfileImage">삭제</label>
-            <label id="submit-btn" @click="submitProfileImage" :class={hidden:isProfileImageHidden}>적용</label>
+            <label @click="deleteProfileImage" id="delete-profile-btn" v-if="loginUser.isProfileImageNull=='false'">삭제</label>
+            <label id="submit-btn" @click="submitProfileImage" :class={hidden:isProfileImagePreviewHidden}>적용</label>
 					</div>
 				</div>
 
+        <!-- 메뉴 -->
 				<div class="menu-footer-wrap">
 					<div class="menu">
 						<ul>
@@ -40,6 +45,7 @@
 						</ul>
 					</div>
 
+          <!-- 푸터 -->
 					<footer>
 						<div>
 							<button @click="logout">로그아웃</button> | <button>고객센터</button> 
@@ -51,6 +57,7 @@
 				</div>
 			</div>
 
+      <!-- 메인 화면 -->
 			<div class="main-content">
         <div class="account-box">
           <div class="title">          
@@ -123,6 +130,7 @@ import {
   postProfileImage,
   putUserInfo,
   postLogout,
+  deleteProfileImage,
 } from "@/api/member";
 import { mapMutations, mapState } from "vuex";
 import Cookies from "js-cookie";
@@ -142,7 +150,7 @@ export default {
       originUser: {},
       uploadProfileImage: null,
       previewProfileImage: null,
-      isProfileImageHidden: true,
+      isProfileImagePreviewHidden: true,
       isInfoHidden: true,
     };
   },
@@ -152,7 +160,7 @@ export default {
   watch: {
     previewProfileImage: function (val) {
       console.log(val);
-      this.isProfileImageHidden = val !== null ? false : true;
+      this.isProfileImagePreviewHidden = val !== null ? false : true;
     },
   },
   async mounted() {
@@ -180,15 +188,29 @@ export default {
 
       try {
         const response = await postProfileImage(formData);
-        this.SET_PROFILE_IMAGE(response.data);
-        console.log(response.data);
-        this.previewProfileImage = null;
+        if (response.status === 200) {
+          console.log(response.data);
+          this.SET_PROFILE_IMAGE(response.data);
+          this.previewProfileImage = null;
+        }
       } catch (error) {
         console.log(error);
       }
     },
-    deleteProfileImage() {
-      console.log("delete image");
+    async deleteProfileImage() {
+      const ok = confirm("삭제하시겠습니까?");
+      if (ok) {
+        try {
+          const response = await deleteProfileImage();
+          console.log(response);
+          if (response.status == 200) {
+            alert("삭제되었습니다.");
+            this.SET_PROFILE_IMAGE(null);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
     },
     editUserInfo() {
       console.log("change click");
@@ -304,7 +326,6 @@ export default {
 .profile-image-btn-wrap {
   margin-top: 15px;
 }
-
 .profile-image-btn-wrap label {
   margin: 10px 5px;
   padding: 6px 10px;
@@ -314,6 +335,11 @@ export default {
   border: solid gray 0.5px;
   background-color: #f9fbfc;
   color: gray;
+}
+#delete-profile-btn {
+  background-color: #ff2d53d2;
+  color: white;
+  border: solid #fd1e47f7 0.5px;
 }
 .hidden {
   display: none;
@@ -359,6 +385,7 @@ footer button {
   color: #b2b2b2;
   font-size: 13px;
   font-weight: 600;
+  cursor: pointer;
 }
 
 .footer-logo {

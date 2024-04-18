@@ -51,6 +51,15 @@ async function postProfileImage(formData) {
   }
 }
 
+async function deleteProfileImage() {
+  try {
+    const response = await jsonApi.delete("/users/profileImage");
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 async function putUserInfo(userInfo) {
   try {
     const response = await jsonApi.put("/users/edit", userInfo);
@@ -77,4 +86,5 @@ export {
   postProfileImage,
   putUserInfo,
   postLogout,
+  deleteProfileImage,
 };
