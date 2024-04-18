@@ -70,6 +70,19 @@ public class MemberService {
     }
 
     /**
+     * 프로필 이미지 삭제
+     */
+    @Transactional
+    public void deleteProfileImage(Long id) {
+        Member member = memberRepository.findOne(id);
+        if (member.getProfileImage() != null) {
+            String storeFileName = member.getProfileImage().getUploadImage().getStoreFileName();
+            fileStore.deleteFile(storeFileName);  //기존의 프로필 이미지 삭제
+        }
+        member.changeProfileImage(null);
+    }
+
+    /**
      * 사용자 정보 수정
      */
     @Transactional
