@@ -655,7 +655,7 @@ public class DataLoader implements ApplicationRunner {
 
     public void initOfficialWebtoon(Long memberId, String name, WebtoonCategory webtoonCategory, List<GenreEnum> genreEnums, String oneLineSummary, String summary, String storeFileName, DayOfWeek dayOfWeek) {
         Member member = memberRepository.findOne(memberId);
-        CreateWebtoonReq createWebtoonReq = new CreateWebtoonReq(name, webtoonCategory, new ArrayList<>(), genreEnums, oneLineSummary, summary, null, null);
+        CreateWebtoonReq createWebtoonReq = new CreateWebtoonReq(name, webtoonCategory, genreEnums, new ArrayList<>(), oneLineSummary, summary, null, null);
         WebtoonThumbnail webtoonThumbnail = WebtoonThumbnail.create(new UploadImage(storeFileName, storeFileName), new UploadImage(storeFileName, storeFileName));
         OfficialWebtoon officialWebtoon = new OfficialWebtoon(member, createWebtoonReq, webtoonThumbnail, dayOfWeek);
         em.persist(officialWebtoon);
@@ -663,7 +663,7 @@ public class DataLoader implements ApplicationRunner {
 
     public void initWebtoon(Long memberId, String name, WebtoonCategory webtoonCategory, List<GenreEnum> genreEnums, String oneLineSummary, String summary, String storeFileName) {
         Member member = memberRepository.findOne(memberId);
-        CreateWebtoonReq createWebtoonReq = new CreateWebtoonReq(name, webtoonCategory, new ArrayList<>(), genreEnums, oneLineSummary, summary, null, null);
+        CreateWebtoonReq createWebtoonReq = new CreateWebtoonReq(name, webtoonCategory, genreEnums, new ArrayList<>(), oneLineSummary, summary, null, null);
         WebtoonThumbnail webtoonThumbnail = WebtoonThumbnail.create(new UploadImage(storeFileName, storeFileName), new UploadImage(storeFileName, storeFileName));
         Webtoon webtoon = Webtoon.create(member, createWebtoonReq, webtoonThumbnail);
         em.persist(webtoon);

@@ -1,5 +1,6 @@
 package jh.naverwebtoon.dto.request;
 
+import jakarta.validation.constraints.NotBlank;
 import java.util.List;
 import jh.naverwebtoon.db.domain.enums.GenreEnum;
 import jh.naverwebtoon.db.domain.enums.WebtoonCategory;
@@ -14,10 +15,11 @@ import org.springframework.web.multipart.MultipartFile;
 @Setter
 @NoArgsConstructor
 public class CreateWebtoonReq {
+    @NotBlank
     private String name;
     private WebtoonCategory webtoonCategory;
-    private List<String> tags;
     private List<GenreEnum> genres;
+    private List<String> tags;
     private String oneLineSummary;
     private String summary;
     private MultipartFile posterImage;
