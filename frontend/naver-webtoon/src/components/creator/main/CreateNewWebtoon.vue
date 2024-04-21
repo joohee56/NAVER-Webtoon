@@ -243,7 +243,7 @@ export default {
   },
   methods: {
     async createWebtoon() {
-      if (this.validateInput()) {
+      if (!this.validateInput()) {
         return;
       }
 
@@ -276,52 +276,60 @@ export default {
     validateInput() {
       if (this.operatingPrinciple === "") {
         alert("운영원칙 동의가 필요합니다.");
-        return true;
+        return false;
       }
-      if (this.webtoon.name === "") {
-        alert("작품명을 입력해 주세요.");
-        return true;
-      }
-      if (this.webtoon.name.length > this.inputLimit.name) {
-        alert("작품명은 " + this.inputLimit.name + "자 이내로 입력해 주세요.");
-        return true;
+      if (
+        !this.validateInputText(
+          this.webtoon.name,
+          "작품명",
+          this.inputLimit.name
+        )
+      ) {
+        return false;
       }
       if (this.webtoon.genres.length === 0) {
         alert("장르를 선택해 주세요.");
-        return true;
+        return false;
       }
-      if (this.webtoon.oneLineSummary === "") {
-        alert("작품 한 줄 요약을 입력해 주세요.");
-        return true;
+      if (
+        this.validateInputText(
+          this.webtoon.oneLineSummary,
+          "작품 한 줄 요약",
+          this.inputLimit.oneLineSummary
+        )
+      ) {
+        return false;
       }
-      if (this.webtoon.oneLineSummary.length > this.inputLimit.oneLineSummary) {
-        alert(
-          "작품 한 줄 요약은 " +
-            this.inputLimit.oneLineSummary +
-            "자 이내로 입력해 주세요."
-        );
-        return true;
-      }
-      if (this.webtoon.summary === "") {
-        alert("줄거리를 입력해 주세요.");
-        return true;
-      }
-      if (this.webtoon.summary.length > this.inputLimit.summary) {
-        alert(
-          "줄거리는 " + this.inputLimit.summary + "자 이내로 입력해 주세요."
-        );
-        return true;
+      if (
+        this.validateInputText(
+          this.webtoon.summary,
+          "줄거리",
+          this.inputLimit.summary
+        )
+      ) {
+        return false;
       }
       if (this.isPosterSelect === false) {
         alert("대표이미지 포스터형을 선택해 주세요.");
-        return true;
+        return false;
       }
       if (this.isHorizontalSelect === false) {
         alert("대표이미지 가로형을 선택해 주세요.");
-        return true;
+        return false;
       }
 
-      return false;
+      return true;
+    },
+    validateInputText(field, fieldName, length) {
+      if (field === "") {
+        alert(fieldName + "을 입력해 주세요.");
+        return false;
+      }
+      if (field.length > length) {
+        alert(fieldName + "은 " + length + "자 이내로 입력해 주세요.");
+        return false;
+      }
+      return true;
     },
     selectPosterImg() {
       console.log("img changed");
