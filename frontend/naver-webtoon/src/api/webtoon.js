@@ -8,7 +8,7 @@ async function postCreateWebtoon(webtoon) {
     const response = await fileApi.post("/webtoon", webtoon);
     return response;
   } catch (error) {
-    console.log(error);
+    return error.response;
   }
 }
 
