@@ -23,8 +23,8 @@
 				<li class="item-row">
 					<p ref="name">작품명</p>
           <div class="input-text-wrap">
-            <input type="text" placeholder="작품명을 입력해 주세요." v-model="webtoon.name" :class="{violation: webtoon.name.length>30}">
-            <span class="input-letter-count">{{webtoon.name.length}} / 30</span>
+            <input type="text" placeholder="작품명을 입력해 주세요." v-model="webtoon.name" :class="{violation: webtoon.name.length>inputLimit.name}">
+            <span class="input-letter-count">{{webtoon.name.length}} / {{inputLimit.name}}</span>
           </div>
 				</li>
 				<li class="item-row">
@@ -110,8 +110,8 @@
 					<p ref="oneLineSummary">작품 한 줄 요약</p>
 					<div>
             <div class="input-text-wrap">
-              <input type="text" placeholder="작품을 한 줄로 소개해 주세요." v-model="webtoon.oneLineSummary" :class="{violation: webtoon.oneLineSummary.length>10}">
-              <span class="input-letter-count">{{webtoon.oneLineSummary.length}} / 10</span>
+              <input type="text" placeholder="작품을 한 줄로 소개해 주세요." v-model="webtoon.oneLineSummary" :class="{violation: webtoon.oneLineSummary.length>inputLimit.oneLineSummary}">
+              <span class="input-letter-count">{{webtoon.oneLineSummary.length}} / {{inputLimit.oneLineSummary}}</span>
             </div>
             <ul class="sub-description">
 							<li>
@@ -124,8 +124,8 @@
 					<p ref="summary">줄거리</p>
 					<div>
             <div class="input-text-wrap">
-              <textarea placeholder="작품의 줄거리를 작성해 주세요." v-model="webtoon.summary" :class="{violation: webtoon.summary.length>400}"></textarea>
-              <span class="input-letter-count">{{webtoon.summary.length}} / 400</span>
+              <textarea placeholder="작품의 줄거리를 작성해 주세요." v-model="webtoon.summary" :class="{violation: webtoon.summary.length>inputLimit.summary}"></textarea>
+              <span class="input-letter-count">{{webtoon.summary.length}} / {{inputLimit.summary}}</span>
             </div>
 						<ul class="sub-description">
 							<li>
@@ -222,6 +222,11 @@ export default {
         posterImage: null,
         horizontalImage: null,
       },
+      inputLimit: {
+        name: 30,
+        oneLineSummary: 10,
+        summary: 400,
+      },
       isPosterSelect: false,
       isHorizontalSelect: false,
       previewPoster: null,
@@ -241,6 +246,7 @@ export default {
       if (this.validateInput()) {
         return;
       }
+
       const formData = new FormData();
       for (const key in this.webtoon) {
         formData.append(key, this.webtoon[key]);
@@ -276,8 +282,8 @@ export default {
         alert("작품명을 입력해 주세요.");
         return true;
       }
-      if (this.webtoon.name.length > 30) {
-        alert("작품명은 30자 이내로 입력해 주세요.");
+      if (this.webtoon.name.length > this.inputLimit.name) {
+        alert("작품명은 " + this.inputLimit.name + "자 이내로 입력해 주세요.");
         return true;
       }
       if (this.webtoon.genres.length === 0) {
@@ -288,16 +294,22 @@ export default {
         alert("작품 한 줄 요약을 입력해 주세요.");
         return true;
       }
-      if (this.webtoon.oneLineSummary.length > 10) {
-        alert("작품 한 줄 요약은 10자 이내로 입력해 주세요.");
+      if (this.webtoon.oneLineSummary.length > this.inputLimit.oneLineSummary) {
+        alert(
+          "작품 한 줄 요약은 " +
+            this.inputLimit.oneLineSummary +
+            "자 이내로 입력해 주세요."
+        );
         return true;
       }
       if (this.webtoon.summary === "") {
         alert("줄거리를 입력해 주세요.");
         return true;
       }
-      if (this.webtoon.summary.length > 400) {
-        alert("줄거리는 400자 이내로 입력해 주세요.");
+      if (this.webtoon.summary.length > this.inputLimit.summary) {
+        alert(
+          "줄거리는 " + this.inputLimit.summary + "자 이내로 입력해 주세요."
+        );
         return true;
       }
       if (this.isPosterSelect === false) {
