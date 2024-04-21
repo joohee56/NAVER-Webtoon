@@ -23,12 +23,12 @@
 				<li class="item-row">
 					<p ref="name">작품명</p>
           <div class="input-text-wrap">
-            <input type="text" placeholder="작품명을 입력해 주세요." v-model="webtoon.name">
+            <input type="text" placeholder="작품명을 입력해 주세요." v-model="webtoon.name" :class="{violation: webtoon.name.length>30}">
             <span class="input-letter-count">{{webtoon.name.length}} / 30</span>
           </div>
 				</li>
 				<li class="item-row">
-					<p>형식</p>
+					<p ref="webtoonCategory">형식</p>
 					<div class="category">
             <div>
               <input type="radio" id="episode" value="EPISODE" v-model="webtoon.webtoonCategory" hidden>
@@ -45,7 +45,7 @@
 					</div>
 				</li>
 				<li class="item-row">
-					<p>장르</p>
+					<p ref="genres">장르</p>
 					<div class="genre">
             <div>
               <input type="checkbox" id="romance" value="ROMANCE" v-model="webtoon.genres" hidden>
@@ -90,11 +90,11 @@
 					</div>
 				</li>
 				<li class="item-row">
-					<p>태그</p>
+					<p ref="tags">태그</p>
 					<div>
             <div class="input-text-wrap">
               <input type="text" placeholder="내 작품을 가장 잘 표현해주는 태그를 입력해 주세요.">
-              <span class="input-letter-count">{{webtoon.oneLineSummary.length}} / 10</span>
+              <span class="input-letter-count">{{webtoon.tags.length}} / 10</span>
             </div>
             <ul class="sub-description">
 							<li>
@@ -110,7 +110,7 @@
 					<p ref="oneLineSummary">작품 한 줄 요약</p>
 					<div>
             <div class="input-text-wrap">
-              <input type="text" placeholder="작품을 한 줄로 소개해 주세요." v-model="webtoon.oneLineSummary">
+              <input type="text" placeholder="작품을 한 줄로 소개해 주세요." v-model="webtoon.oneLineSummary" :class="{violation: webtoon.oneLineSummary.length>10}">
               <span class="input-letter-count">{{webtoon.oneLineSummary.length}} / 10</span>
             </div>
             <ul class="sub-description">
@@ -121,10 +121,10 @@
 					</div>
 				</li>
 				<li class="item-row">
-					<p>줄거리</p>
+					<p ref="summary">줄거리</p>
 					<div>
             <div class="input-text-wrap">
-              <textarea placeholder="작품의 줄거리를 작성해 주세요." v-model="webtoon.summary"></textarea>
+              <textarea placeholder="작품의 줄거리를 작성해 주세요." v-model="webtoon.summary" :class="{violation: webtoon.summary.length>400}"></textarea>
               <span class="input-letter-count">{{webtoon.summary.length}} / 400</span>
             </div>
 						<ul class="sub-description">
@@ -145,7 +145,7 @@
 					<div>
 						<div class="representative-img-wrap">
 							<div class="representative-img-row">
-								<div class="title">포스터형</div>
+								<div class="title" ref="posterImage">포스터형</div>
 								<div class="img-input poster">
                   <!-- 이미지 선택 -->
 									<div class="img-wrap" :class={blind:!isPosterSelect}>
@@ -166,7 +166,7 @@
 							</div>
 
 							<div class="representative-img-row">
-								<div class="title">가로형</div>
+								<div class="title" ref="horizontalImage">가로형</div>
 								<div class="img-input horizontality">
 									<div class="img-wrap" :class={blind:!isHorizontalSelect}>
 										<label for="horizontal">
@@ -214,7 +214,7 @@ export default {
       operatingPrinciple: "",
       webtoon: {
         name: "",
-        webtoonCategory: "",
+        webtoonCategory: "EPISODE",
         tags: [],
         genres: [],
         oneLineSummary: "",
@@ -238,7 +238,9 @@ export default {
   },
   methods: {
     async createWebtoon() {
-      this.validateInput();
+      if (this.validateInput()) {
+        return;
+      }
       const formData = new FormData();
       for (const key in this.webtoon) {
         formData.append(key, this.webtoon[key]);
@@ -268,7 +270,46 @@ export default {
     validateInput() {
       if (this.operatingPrinciple === "") {
         alert("운영원칙 동의가 필요합니다.");
+        return true;
       }
+      if (this.webtoon.name === "") {
+        alert("작품명을 입력해 주세요.");
+        return true;
+      }
+      if (this.webtoon.name.length > 30) {
+        alert("작품명은 30자 이내로 입력해 주세요.");
+        return true;
+      }
+      if (this.webtoon.genres.length === 0) {
+        alert("장르를 선택해 주세요.");
+        return true;
+      }
+      if (this.webtoon.oneLineSummary === "") {
+        alert("작품 한 줄 요약을 입력해 주세요.");
+        return true;
+      }
+      if (this.webtoon.oneLineSummary.length > 10) {
+        alert("작품 한 줄 요약은 10자 이내로 입력해 주세요.");
+        return true;
+      }
+      if (this.webtoon.summary === "") {
+        alert("줄거리를 입력해 주세요.");
+        return true;
+      }
+      if (this.webtoon.summary.length > 400) {
+        alert("줄거리는 400자 이내로 입력해 주세요.");
+        return true;
+      }
+      if (this.isPosterSelect === false) {
+        alert("대표이미지 포스터형을 선택해 주세요.");
+        return true;
+      }
+      if (this.isHorizontalSelect === false) {
+        alert("대표이미지 가로형을 선택해 주세요.");
+        return true;
+      }
+
+      return false;
     },
     selectPosterImg() {
       console.log("img changed");
@@ -373,6 +414,9 @@ i {
   bottom: 13px;
   font-size: 13px;
   color: #b1b1b1;
+}
+.violation {
+  border: 1px solid red !important;
 }
 
 .item-row .category {
