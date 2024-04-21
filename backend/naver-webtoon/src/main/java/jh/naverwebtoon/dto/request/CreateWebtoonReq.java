@@ -20,6 +20,7 @@ public class CreateWebtoonReq {
     private WebtoonCategory webtoonCategory;
     private List<GenreEnum> genres;
     private List<String> tags;
+    @NotBlank
     private String oneLineSummary;
     private String summary;
     private MultipartFile posterImage;

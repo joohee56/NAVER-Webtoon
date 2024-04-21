@@ -1,5 +1,6 @@
 package jh.naverwebtoon.web.controller;
 
+import jakarta.validation.Valid;
 import java.util.List;
 import jh.naverwebtoon.db.domain.enums.GenreEnum;
 import jh.naverwebtoon.db.domain.enums.SortingEnum;
@@ -17,9 +18,6 @@ import jh.naverwebtoon.web.Login;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,17 +39,7 @@ public class WebtoonController {
      */
     @Auth
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public Long createWebtoon(@Login Long id, @Validated @ModelAttribute CreateWebtoonReq createWebtoonReq, BindingResult bindingResult) {
-        if(bindingResult.hasErrors()) {
-            List<ObjectError> errors = bindingResult.getAllErrors();
-            StringBuilder errorMessages = new StringBuilder();
-            for (ObjectError error : errors) {
-                // 각각의 오류에서 메시지를 추출하여 처리
-                String errorMessage = error.getDefaultMessage();
-                errorMessages.append(errorMessage).append(",");
-            }
-            throw new IllegalArgumentException(errorMessages.toString());
-        }
+    public Long createWebtoon(@Login Long id, @Valid @ModelAttribute CreateWebtoonReq createWebtoonReq) {
         Webtoon webtoon = webtoonService.createWebtoon(id, createWebtoonReq);
         return webtoon.getId();
     }
