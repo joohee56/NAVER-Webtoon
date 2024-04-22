@@ -198,15 +198,31 @@
 
     <!-- 버튼 -->
 		<div class="btn-wrap">
-			<button class="cancel">취소</button>
+			<button class="cancel" @click="showCancleConfirmModal = true">취소</button>
 			<button class="submit" @click="createWebtoon">등록</button>
 			<button class="submit">등록 후 1화 올리기</button>
 		</div>
+
+    <!-- 작품 등록 취소 모달 -->
+    <CancleConfirm :show="showCancleConfirmModal" @close="showCancleConfirmModal = false">
+      <template #header>
+        <div>작품 등록을 취소하시겠습니까?</div>
+      </template>
+      <template #body>
+        <!-- eslint-disable-next-line-->
+        <div class="modal-btn">
+          <button @click="showCancleConfirmModal = false">취소</button>
+          <button class="submit" @click="cancleCreateWebtoon">확인</button>
+        </div>
+      </template>
+    </CancleConfirm>
+
 	</div>
 </template>
 
 <script>
 import { postCreateWebtoon } from "@/api/webtoon";
+import CancleConfirm from "../modal/CancleConfirm.vue";
 
 export default {
   data() {
@@ -231,6 +247,7 @@ export default {
       isHorizontalSelect: false,
       previewPoster: null,
       previewHorizontal: null,
+      showCancleConfirmModal: false,
     };
   },
   watch: {
@@ -240,6 +257,9 @@ export default {
     previewHorizontal: function (val) {
       this.isHorizontalSelect = val !== null ? true : false;
     },
+  },
+  components: {
+    CancleConfirm
   },
   methods: {
     async createWebtoon() {
@@ -342,6 +362,9 @@ export default {
       this.previewHorizontal = URL.createObjectURL(
         this.webtoon.horizontalImage
       );
+    },
+    cancleCreateWebtoon() {
+      this.$router.go(-1);
     },
   },
 };
@@ -627,6 +650,21 @@ input[type="radio"]:checked + label::before {
   background-color: #e0e0e0;
 }
 .btn-wrap .submit {
+  color: white;
+  background-color: #00dc64;
+}
+
+/* 회차 업로드 모달 */
+.modal-btn button {
+  font-family: AppleSDGothicNeoM;
+  border-radius: 4px;
+  padding: 13px 30px 10px;
+  font-size: 16px;
+  align-items: center;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  margin-left: 8px;
+}
+.modal-btn .submit {
   color: white;
   background-color: #00dc64;
 }

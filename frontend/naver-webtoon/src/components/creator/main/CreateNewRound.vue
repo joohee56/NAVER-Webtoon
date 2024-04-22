@@ -146,23 +146,8 @@
       </template>
     </UploadProgress>
 
-    <!-- 이미지 업로드 완료 모달 -->
-    <UploadDone :show="showUploadDone" @close="showUploadDone = false">
-      <template #header>
-          <i class="upload-done-icon fa-solid fa-circle-check"></i>
-          <div class="upload-done-message">
-            <div>이미지 업로드 완료되었습니다.</div>
-            <div>미리보기를 통해 원고를 확인하세요.</div>
-          </div>
-      </template>
-      <template #body>
-        <!-- eslint-disable-next-line-->
-        <button class="close-modal-btn" @click="showUploadDone=false">닫기</button>
-      </template>
-    </UploadDone>
-
     <!-- 회차 업로드 모달 -->
-    <UploadRoundModal :show="showUploadRoundModal" @close="showUploadRoundModal = false">
+    <CancleConfirm :show="showUploadRoundModal" @close="showUploadRoundModal = false">
       <template #header>
         <div v-if="isCheckCreateRound">
           <div>회차를 등록하시겠습니까?</div>
@@ -203,7 +188,22 @@
           </div>
         </div>
       </template>
-    </UploadRoundModal>
+    </CancleConfirm>
+
+    <!-- 이미지 업로드 완료 모달 -->
+    <UploadDone :show="showUploadDone" @close="showUploadDone = false">
+      <template #header>
+          <i class="upload-done-icon fa-solid fa-circle-check"></i>
+          <div class="upload-done-message">
+            <div>이미지 업로드 완료되었습니다.</div>
+            <div>미리보기를 통해 원고를 확인하세요.</div>
+          </div>
+      </template>
+      <template #body>
+        <!-- eslint-disable-next-line-->
+        <button class="close-modal-btn" @click="showUploadDone=false">닫기</button>
+      </template>
+    </UploadDone>
 
 	</div>
 </template>
@@ -213,7 +213,7 @@ import { getCreateRoundInfo } from "@/api/webtoon";
 import { postRound } from "@/api/round";
 import UploadProgress from "../modal/UploadProgress.vue";
 import UploadDone from "../modal/UploadDone.vue";
-import UploadRoundModal from "../modal/UploadRoundModal.vue";
+import CancleConfirm from "../modal/CancleConfirm.vue";
 
 export default {
   data() {
@@ -246,7 +246,7 @@ export default {
   components: {
     UploadProgress,
     UploadDone,
-    UploadRoundModal
+    CancleConfirm
   },
   mounted() {
     this.fetchWebtoonInfo();
@@ -655,7 +655,6 @@ ul {
   text-align: left;
   padding-left: 5px;
 }
-/* .file-list button:focus { */
 .file-list .fileSelected {
   background-color: rgba(0, 220, 100, 0.2);
 }
