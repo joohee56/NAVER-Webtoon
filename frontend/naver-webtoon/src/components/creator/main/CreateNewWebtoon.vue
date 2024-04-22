@@ -199,8 +199,8 @@
     <!-- 버튼 -->
 		<div class="btn-wrap">
 			<button class="cancel" @click="showCancleConfirmModal = true">취소</button>
-			<button class="submit" @click="createWebtoon">등록</button>
-			<button class="submit">등록 후 1화 올리기</button>
+			<button class="submit" @click="createWebtoon('manage')">등록</button>
+			<button class="submit" @click="createWebtoon('createNewRound')">등록 후 1화 올리기</button>
 		</div>
 
     <!-- 작품 등록 취소 모달 -->
@@ -209,7 +209,6 @@
         <div>작품 등록을 취소하시겠습니까?</div>
       </template>
       <template #body>
-        <!-- eslint-disable-next-line-->
         <div class="modal-btn">
           <button @click="showCancleConfirmModal = false">취소</button>
           <button class="submit" @click="cancleCreateWebtoon">확인</button>
@@ -259,11 +258,12 @@ export default {
     },
   },
   components: {
-    CancleConfirm
+    CancleConfirm,
   },
   methods: {
-    async createWebtoon() {
-      if (!this.validateInput()) {
+    async createWebtoon(routerName) {
+      const pass = this.validateInput();
+      if (!pass) {
         return;
       }
 
@@ -277,7 +277,7 @@ export default {
         console.log(response.data);
         if (response.status === 200) {
           alert("작품 등록이 완료되었습니다. 도전만화에 노출됩니다.");
-          this.$router.push({ name: "manage" });
+          this.$router.push({ name: routerName });
         } else if (response.status === 400) {
           let errorMessage = "";
           for (const key in response.data) {
@@ -312,7 +312,7 @@ export default {
         return false;
       }
       if (
-        this.validateInputText(
+        !this.validateInputText(
           this.webtoon.oneLineSummary,
           "작품 한 줄 요약",
           this.inputLimit.oneLineSummary
@@ -321,7 +321,7 @@ export default {
         return false;
       }
       if (
-        this.validateInputText(
+        !this.validateInputText(
           this.webtoon.summary,
           "줄거리",
           this.inputLimit.summary
