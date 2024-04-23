@@ -37,17 +37,18 @@
 							<div class="panel-inner">
 
 								<div class="id-pw-wrap">
+
 									<!-- input id -->
-									<div class="input-row" id="id-line">
+									<div class="input-row" id="id-line" :class="{'focused' : idIsFocused}">
 										<i class="fa-regular fa-user icon-cell"></i>
-										<input type="text" id="id" name="id" class="input-text" placeholder="아이디" maxlength="41" v-model="user.loginId">
+										<input type="text" id="id" name="id" class="input-text" placeholder="아이디" maxlength="41" v-model="user.loginId" @focus="idIsFocused=true" @blur="idIsFocused=false">
 										<span class="btn-delete" id="id-clear" style="display: block;"><i class="fa-solid fa-circle-xmark"></i></span>
 									</div>
 
 									<!-- input pw -->
-									<div class="input-row" id="pw-line">
+									<div class="input-row" id="pw-line" :class="{'focused' : pwIsFocused}">
 										<i class="fa-solid fa-lock icon-cell"></i>
-										<input type="password" id="pw" name="pw" class="input-text" placeholder="비밀번호" maxlength="16" v-model="user.password">
+										<input type="password" id="pw" name="pw" class="input-text" placeholder="비밀번호" maxlength="16" v-model="user.password" @focus="pwIsFocused=true" @blur="pwIsFocused=false">
 										<span class="btn-delete" id="pw-clear" style="display: block;"><i class="fa-solid fa-circle-xmark"></i></span>
 									</div>
 								</div>
@@ -115,7 +116,7 @@
 				</ul>
 				<div class="footer-copy">
 					<a id="fot.naver" target="_blank" href="https://www.navercorp.com">
-							<span class="footer-logo"><span class="blind">네이버</span></span>
+							<span class="footer-logo">NAVER</span>
 					</a>
 					<span class="text">Copyright</span>
 					<span class="corp">© NAVER Corp.</span>
@@ -137,6 +138,8 @@ export default {
         loginId: "",
         password: "",
       },
+      idIsFocused: false,
+      pwIsFocused: false,
     };
   },
   methods: {
@@ -230,7 +233,6 @@ header {
   margin: 0;
   padding: 0;
 }
-
 .menu-item {
   position: relative;
   display: table-cell;
@@ -238,7 +240,6 @@ header {
   padding: 0;
   margin: 0;
 }
-
 .menu-id,
 .menu-ones,
 .menu-qr {
@@ -254,22 +255,18 @@ header {
   box-sizing: border-box;
   z-index: 2;
 }
-
 .menu-id {
   border-right: 0;
 }
-
 .on {
   border-color: #c6c6c6;
   background-color: white;
   z-index: 5;
 }
-
 .menu-ones {
   border-right: 0;
   border-radius: 0 0 6px 0;
 }
-
 .menu-qr {
   border-radius: 0 6px 0 0;
 }
@@ -279,7 +276,6 @@ form {
   margin: 0;
   padding: 0;
 }
-
 .panel-wrap {
   list-style: none;
   z-index: 3;
@@ -301,7 +297,7 @@ form {
   padding: 20px 28px;
 }
 
-/* id, pw */
+/* id, pw wrap */
 .id-pw-wrap .input-row {
   display: table;
   table-layout: fixed;
@@ -313,21 +309,26 @@ form {
   height: 100%;
   text-align: left;
 }
+
 #id-line {
   border-radius: 6px 6px 0 0;
-  box-shadow: none;
 }
 #pw-line {
-  border: #dbdbdb solid 0.5px;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
+}
+.input-row input {
+  outline: none;
+}
+.focused {
+  border: 1px solid #00dc64 !important;
 }
 
 .input-text {
   display: table-cell;
   padding-right: 30px;
   position: relative;
-  background-color: #e8f0fe;
+  /* background-color: #e8f0fe; */
   border: none;
   width: 100%;
   font-size: 16px;
@@ -351,6 +352,7 @@ form {
   text-align: center;
   vertical-align: center;
   line-height: 35px;
+  cursor: pointer;
 }
 .fa-solid.fa-circle-xmark {
   font-size: large;
@@ -467,7 +469,14 @@ footer .text {
 footer .footer-link + .footer-copy {
   margin-top: 9px;
 }
-
+.footer-logo {
+  font-family: "Archivo Black", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color: #03c75a;
+  vertical-align: top;
+  margin-right: 5px;
+}
 .footer-link li + li {
   position: relative;
   padding-left: 13px;
