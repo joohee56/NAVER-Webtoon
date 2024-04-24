@@ -43,7 +43,7 @@ public class MemberController {
      */
     @ResponseStatus(HttpStatus.OK)
     @PostMapping(value = "/join", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public JoinMemberRes join(@ModelAttribute JoinMemberReq joinMemberReq) {
+    public JoinMemberRes join(@Valid @ModelAttribute JoinMemberReq joinMemberReq) {
         Long savedId = memberService.join(joinMemberReq);
         Member member = memberRepository.findOne(savedId);
         return new JoinMemberRes(member.getLoginId(), member.getName());
