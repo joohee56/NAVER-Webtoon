@@ -23,7 +23,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(uniqueConstraints = {@UniqueConstraint(columnNames = "login_id"), @UniqueConstraint(columnNames = "email_address")})
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = "login_id")})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Member extends BaseEntity {
