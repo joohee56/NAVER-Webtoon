@@ -12,7 +12,7 @@
 						<span class="webtoon-name">{{webtoon.webtoonName}}</span>
 					</router-link>
 				</div>
-        <div class="like-cnt-wrap" v-if="!dayOfWeek">
+        <div class="like-cnt-wrap" v-if="dayOfWeek===undefined">
           <i class="fa-solid fa-heart"></i>
           <div>{{webtoon.totalLikeCount}}</div>
         </div>

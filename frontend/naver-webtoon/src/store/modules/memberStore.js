@@ -1,4 +1,4 @@
-const memberStore = {
+const memberStoreCookie = {
   namespaced: true,
   state: {
     loginUser: {
@@ -28,4 +28,4 @@ const memberStore = {
   },
 };
 
-export default memberStore;
+export default memberStoreCookie;

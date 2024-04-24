@@ -174,7 +174,10 @@ export default {
     }
   },
   methods: {
-    ...mapMutations("memberStore", ["SET_PROFILE_IMAGE", "SET_USER_NAME"]),
+    ...mapMutations("memberStoreCookie", [
+      "SET_PROFILE_IMAGE",
+      "SET_USER_NAME",
+    ]),
     changeProfileImage() {
       console.log("change event 발생");
       this.uploadProfileImage = this.$refs.image.files[0];

@@ -42,14 +42,14 @@
 									<div class="input-row" id="id-line" :class="{'focused' : idIsFocused}">
 										<i class="fa-regular fa-user icon-cell"></i>
 										<input type="text" id="id" name="id" class="input-text" placeholder="아이디" maxlength="41" v-model="user.loginId" @focus="idIsFocused=true" @blur="idIsFocused=false">
-										<span class="btn-delete" id="id-clear" style="display: block;"><i class="fa-solid fa-circle-xmark"></i></span>
+										<span class="btn-delete" id="id-clear" style="display: block;" v-if="user.loginId.length > 0" @click="user.loginId=''"><i class="fa-solid fa-circle-xmark"></i></span>
 									</div>
 
 									<!-- input pw -->
 									<div class="input-row" id="pw-line" :class="{'focused' : pwIsFocused}">
 										<i class="fa-solid fa-lock icon-cell"></i>
 										<input type="password" id="pw" name="pw" class="input-text" placeholder="비밀번호" maxlength="16" v-model="user.password" @focus="pwIsFocused=true" @blur="pwIsFocused=false">
-										<span class="btn-delete" id="pw-clear" style="display: block;"><i class="fa-solid fa-circle-xmark"></i></span>
+										<span class="btn-delete" id="pw-clear" style="display: block;" v-if="user.password.length > 0" @click="user.password=''"><i class="fa-solid fa-circle-xmark"></i></span>
 									</div>
 								</div>
 
@@ -328,7 +328,6 @@ form {
   display: table-cell;
   padding-right: 30px;
   position: relative;
-  /* background-color: #e8f0fe; */
   border: none;
   width: 100%;
   font-size: 16px;
