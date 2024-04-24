@@ -141,8 +141,8 @@ export default {
 
         const redirectUrl = this.$route.params.redirectUrl;
         this.$router.push(redirectUrl);
-      } else if (response.response.status === 400) {
-        let data = response.response.data;
+      } else if (response.status === 400) {
+        let data = response.data;
 
         if (data.code === "VALIDATION") {
           let errorMessage = "";

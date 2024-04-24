@@ -21,14 +21,14 @@
 		<div class="item-box input-form">
 			<ul>
 				<li class="item-row">
-					<p ref="name">작품명</p>
+					<p>작품명</p>
           <div class="input-text-wrap">
             <input type="text" placeholder="작품명을 입력해 주세요." v-model="webtoon.name" :class="{violation: webtoon.name.length>inputLimit.name}">
             <span class="input-letter-count">{{webtoon.name.length}} / {{inputLimit.name}}</span>
           </div>
 				</li>
 				<li class="item-row">
-					<p ref="webtoonCategory">형식</p>
+					<p>형식</p>
 					<div class="category">
             <div>
               <input type="radio" id="episode" value="EPISODE" v-model="webtoon.webtoonCategory" hidden>
@@ -45,7 +45,7 @@
 					</div>
 				</li>
 				<li class="item-row">
-					<p ref="genres">장르</p>
+					<p>장르</p>
 					<div class="genre">
             <div>
               <input type="checkbox" id="romance" value="ROMANCE" v-model="webtoon.genres" hidden>
@@ -90,7 +90,7 @@
 					</div>
 				</li>
 				<li class="item-row">
-					<p ref="tags">태그</p>
+					<p>태그</p>
 					<div>
             <div class="input-text-wrap">
               <input type="text" placeholder="내 작품을 가장 잘 표현해주는 태그를 입력해 주세요.">
@@ -107,7 +107,7 @@
 					</div>
 				</li>
 				<li class="item-row">
-					<p ref="oneLineSummary">작품 한 줄 요약</p>
+					<p>작품 한 줄 요약</p>
 					<div>
             <div class="input-text-wrap">
               <input type="text" placeholder="작품을 한 줄로 소개해 주세요." v-model="webtoon.oneLineSummary" :class="{violation: webtoon.oneLineSummary.length>inputLimit.oneLineSummary}">
@@ -121,7 +121,7 @@
 					</div>
 				</li>
 				<li class="item-row">
-					<p ref="summary">줄거리</p>
+					<p>줄거리</p>
 					<div>
             <div class="input-text-wrap">
               <textarea placeholder="작품의 줄거리를 작성해 주세요." v-model="webtoon.summary" :class="{violation: webtoon.summary.length>inputLimit.summary}"></textarea>
@@ -145,7 +145,7 @@
 					<div>
 						<div class="representative-img-wrap">
 							<div class="representative-img-row">
-								<div class="title" ref="posterImage">포스터형</div>
+								<div class="title">포스터형</div>
 								<div class="img-input poster">
                   <!-- 이미지 선택 -->
 									<div class="img-wrap" :class={blind:!isPosterSelect}>
@@ -166,7 +166,7 @@
 							</div>
 
 							<div class="representative-img-row">
-								<div class="title" ref="horizontalImage">가로형</div>
+								<div class="title">가로형</div>
 								<div class="img-input horizontality">
 									<div class="img-wrap" :class={blind:!isHorizontalSelect}>
 										<label for="horizontal">
@@ -242,6 +242,16 @@ export default {
         oneLineSummary: 10,
         summary: 400,
       },
+      title: {
+        name: "작품명",
+        webtoonCategory: "형식",
+        tags: "태그",
+        genres: "장르",
+        oneLineSummary: "작품 한 줄 요약",
+        summary: "줄거리",
+        posterImage: "포스터형 대표이미지",
+        horizontalImage: "가로형 대표이미지",
+      },
       isPosterSelect: false,
       isHorizontalSelect: false,
       previewPoster: null,
@@ -275,19 +285,19 @@ export default {
       try {
         const response = await postCreateWebtoon(formData);
         console.log(response);
+
         if (response.status === 200) {
           alert("작품 등록이 완료되었습니다. 도전만화에 노출됩니다.");
           this.$router.push({ name: routerName });
         } else if (response.status === 400) {
-          let errorMessage = "";
-          for (const key in response.data) {
-            errorMessage =
-              this.$refs[key].innerText +
-              response.data[key] +
-              "\n" +
-              errorMessage;
-          }
-          alert(errorMessage);
+          let data = response.data;
+          if (data.code === "VALIDATION") {
+            let errorMessage = "";
+            for (const key in data.message) {
+              errorMessage = this.title[key] + data.message[key] + "\n" + errorMessage;
+            }
+            alert(errorMessage);
+          } 
         }
       } catch (error) {
         console.log(error);
