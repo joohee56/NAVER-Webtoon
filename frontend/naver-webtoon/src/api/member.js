@@ -9,7 +9,7 @@ async function postJoinMember(member) {
   try {
     return await formApi.post("/users/join", member);
   } catch (error) {
-    console.log(error);
+    return error.response;
   }
 }
 
