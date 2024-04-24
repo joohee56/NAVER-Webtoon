@@ -60,25 +60,7 @@
 								</div>
 
 								<!-- error message -->
-								<div class="login-error-wrap" id="err-capslock" style="display: none;">
-									<div class="error-message">
-										<strong>CapsLock</strong>이 켜져 있습니다.
-									</div>
-								</div>
-								<div class="login-error-wrap" id="err-empty-id" style="display: none;">
-									<div class="error-message">
-										<strong>아이디</strong>를 입력해 주세요.
-									</div>
-								</div>
-								<div class="login-error-wrap" id="err-empty-pw" style="display: none;">
-									<div class="error-message">
-										<strong>비밀번호</strong>를 입력해 주세요.
-									</div>
-								</div>
-								<div class="login-error-wrap" id="err-common" style="display: none;">
-									<div class="error-message">
-									</div>
-								</div>
+                <div class="error-message" v-html="errorMessage"></div>
 
 								<!-- 로그인 버튼 -->
 								<div class="btn-login-wrap">
@@ -138,23 +120,40 @@ export default {
         loginId: "",
         password: "",
       },
+      title: {
+        loginId: "아이디",
+        password: "비밀번호",
+      },
       idIsFocused: false,
       pwIsFocused: false,
+      errorMessage: "",
     };
   },
   methods: {
     ...mapMutations("memberStore", ["SET_LOGIN_USER", "SET_PROFILE_IMAGE"]),
     async login() {
-      try {
-        const response = await postLogin(this.user);
-        if (response.status === 200) {
-          this.SET_LOGIN_USER(response.data);
-          this.SET_PROFILE_IMAGE(response.data.profileImage);
-          const redirectUrl = this.$route.params.redirectUrl;
-          this.$router.push(redirectUrl);
+      let response = await postLogin(this.user);
+      console.log(response);
+
+      if (response.status === 200) {
+        this.SET_LOGIN_USER(response.data);
+        this.SET_PROFILE_IMAGE(response.data.profileImage);
+
+        const redirectUrl = this.$route.params.redirectUrl;
+        this.$router.push(redirectUrl);
+      } else if (response.response.status === 400) {
+        let data = response.response.data;
+
+        if (data.code === "VALIDATION") {
+          let errorMessage = "";
+          for (const key in data.message) {
+            errorMessage =
+              this.title[key] + data.message[key] + "<br/>" + errorMessage;
+          }
+          this.errorMessage = errorMessage;
+        } else if (data.code === "BUSINESS") {
+          this.errorMessage = data.message;
         }
-      } catch (error) {
-        console.log(error);
       }
     },
   },
@@ -398,11 +397,9 @@ form {
 }
 
 /* 에러 메시지 */
-.login_error_wrap {
-  position: relative;
-  min-height: 34px;
-  margin: 24px 0 -22px;
-  padding-right: 40px;
+.error-message {
+  margin-top: 20px;
+  color: red;
 }
 
 /* 찾기 */

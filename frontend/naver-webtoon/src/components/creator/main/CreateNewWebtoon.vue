@@ -274,7 +274,7 @@ export default {
 
       try {
         const response = await postCreateWebtoon(formData);
-        console.log(response.data);
+        console.log(response);
         if (response.status === 200) {
           alert("작품 등록이 완료되었습니다. 도전만화에 노출됩니다.");
           this.$router.push({ name: routerName });

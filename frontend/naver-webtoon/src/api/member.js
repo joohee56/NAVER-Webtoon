@@ -21,7 +21,7 @@ async function postLogin(loginInfo) {
     }
     return response;
   } catch (error) {
-    console.log(error);
+    return error;
   }
 }
 
