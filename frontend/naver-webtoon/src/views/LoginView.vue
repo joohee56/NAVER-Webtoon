@@ -132,6 +132,11 @@ export default {
   methods: {
     ...mapMutations("memberStore", ["SET_LOGIN_USER", "SET_PROFILE_IMAGE"]),
     async login() {
+      const pass = this.validateInput();
+      if (!pass) {
+        return;
+      }
+
       let response = await postLogin(this.user);
       console.log(response);
 
@@ -155,6 +160,17 @@ export default {
           this.errorMessage = data.message;
         }
       }
+    },
+    validateInput() {
+      if (this.user.loginId === "") {
+        this.errorMessage = this.title.loginId + "를 입력해 주세요.";
+        return false;
+      }
+      if (this.user.password === "") {
+        this.errorMessage = this.title.password + "를 입력해 주세요.";
+        return false;
+      }
+      return true;
     },
   },
 };
