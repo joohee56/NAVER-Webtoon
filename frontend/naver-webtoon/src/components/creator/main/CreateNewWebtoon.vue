@@ -282,26 +282,23 @@ export default {
         formData.append(key, this.webtoon[key]);
       }
 
-      try {
-        const response = await postCreateWebtoon(formData);
-        console.log(response);
+      const response = await postCreateWebtoon(formData);
+      console.log(response);
 
-        if (response.status === 200) {
-          alert("작품 등록이 완료되었습니다. 도전만화에 노출됩니다.");
-          this.$router.push({ name: routerName });
-        } else if (response.status === 400) {
-          let data = response.data;
-          if (data.code === "VALIDATION") {
-            let errorMessage = "";
-            for (const key in data.message) {
-              errorMessage = this.title[key] + data.message[key] + "\n" + errorMessage;
-            }
-            alert(errorMessage);
-          } 
-        }
-      } catch (error) {
-        console.log(error);
+      if (response.status === 200) {
+        alert("작품 등록이 완료되었습니다. 도전만화에 노출됩니다.");
+        this.$router.push({ name: routerName });
+      } else if (response.status === 400) {
+        let data = response.data;
+        if (data.code === "VALIDATION") {
+          let errorMessage = "";
+          for (const key in data.message) {
+            errorMessage = this.title[key] + data.message[key] + "\n" + errorMessage;
+          }
+          alert(errorMessage);
+        } 
       }
+      
     },
     validateInput() {
       if (this.operatingPrinciple === "") {
