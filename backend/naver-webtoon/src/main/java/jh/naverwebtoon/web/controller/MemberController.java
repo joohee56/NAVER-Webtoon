@@ -2,6 +2,7 @@ package jh.naverwebtoon.web.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import jh.naverwebtoon.db.domain.Member;
 import jh.naverwebtoon.db.repository.MemberRepository;
 import jh.naverwebtoon.dto.request.EditMemberReq;
@@ -60,7 +61,7 @@ public class MemberController {
      * 로그인
      */
     @PostMapping(value = "/login", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public LoginRes login(@ModelAttribute LoginReq loginReq, HttpServletRequest request) {
+    public LoginRes login(@Valid @ModelAttribute LoginReq loginReq, HttpServletRequest request) {
         Member loginMember = memberService.login(loginReq);
 
         //세션 설정

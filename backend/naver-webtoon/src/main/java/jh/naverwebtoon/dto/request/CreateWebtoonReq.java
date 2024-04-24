@@ -19,7 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 @NoArgsConstructor
 public class CreateWebtoonReq {
     @NotBlank
-    @Size(min = 1, max = 10)
+    @Size(min = 1, max = 30)
     private String name;
     @NotNull
     private WebtoonCategory webtoonCategory;

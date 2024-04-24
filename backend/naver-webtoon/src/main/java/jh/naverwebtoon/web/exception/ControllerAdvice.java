@@ -5,12 +5,14 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import jh.naverwebtoon.db.domain.enums.ExceptionCode;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
@@ -25,26 +27,41 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class ControllerAdvice {
     private final MessageSource messageSource;
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler({IllegalArgumentException.class, IllegalStateException.class})
-    public String illegalxxxExHandle(Exception e){
-        log.info("예외 발생={}", e.getClass());
-        return e.getMessage();
+    @Data
+    @AllArgsConstructor
+    public class ErrorResult {
+        private ExceptionCode code;
+        private Object message;
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler({IllegalArgumentException.class, IllegalStateException.class})
+    public ErrorResult illegalxxxExHandle(Exception e){
+        log.info("예외 발생={}", e.getClass());
+        return new ErrorResult(ExceptionCode.BUSINESS, e.getMessage());
+    }
+
+    /**
+     * 검증 예외 처리
+     */
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({MethodArgumentNotValidException.class})
-    public ResponseEntity<Map<String, String>> validationExHandle(MethodArgumentNotValidException e){
+    public ErrorResult validationExHandle(MethodArgumentNotValidException e){
         log.info("예외 발생={}", e.getClass());
         Map<String, String> errors = new HashMap<>();
         e.getBindingResult().getAllErrors()
                 .forEach(c -> {
                     errors.put(((FieldError) c).getField(), getErrorMessage(c));
                 });
-        return ResponseEntity.badRequest().body(errors);
+        return new ErrorResult(ExceptionCode.VALIDATION, errors);
     }
 
+    /**
+     * 입력값 타입 예외 처리
+     */
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<Map<String, String>> handleTypeMismatchExceptions(HttpMessageNotReadableException e){
+    public ErrorResult handleTypeMismatchExceptions(HttpMessageNotReadableException e){
         log.info("예외 발생={}", e.getClass());
 
         Map<String, String> errors = new HashMap<>();
@@ -62,7 +79,7 @@ public class ControllerAdvice {
 
         log.error(e.toString());
 
-        return ResponseEntity.badRequest().body(errors);
+        return new ErrorResult(ExceptionCode.VALIDATION, errors);
     }
 
     /**
@@ -77,5 +94,7 @@ public class ControllerAdvice {
         }
         return error.getDefaultMessage();
     }
+
+
 
 }
