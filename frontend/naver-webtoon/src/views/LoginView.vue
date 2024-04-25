@@ -5,7 +5,7 @@
           <router-link to="/" class="naver-logo">NAVER</router-link>
 					<div class="lang">
 						<select class="select-language">
-							<option value="ko_KR">한국어</option> <!--slot...?-->
+							<option value="ko_KR">한국어</option>
 							<option value="en_US">English</option>
 						</select> 
 					</div>

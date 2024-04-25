@@ -21,12 +21,8 @@
 				</div>
 				<div class="input-row" :class="{error: pwErrorMessage!=''}" id="pw-line">
 					<i class="fa-solid fa-lock icon-cell"></i>
-					<input type="password" placeholder="비밀번호" v-model="user.password" @blur="pwCheck">
-					<div class="pw-check">
-						<em class="safe blind">안전</em>
-						<em class="dangerous blind">사용불가</em>
-					</div>
-					<button type="button" class="btn-pw-show hide">
+					<input type="password" id="passwordInput" placeholder="비밀번호" v-model="user.password" @blur="pwCheck">
+					<button type="button" class="btn-pw-show" :class="{hide:isHidePassword}" @click="toggleShowPw">
 						<span class="blind">비밀번호 보기</span>
 					</button>
 				</div>
@@ -130,6 +126,7 @@ export default {
       idErrorMessage: "",
       pwErrorMessage: "",
       section2ErrorMessage: "",
+      isHidePassword: true,
     };
   },
   methods: {
@@ -217,6 +214,15 @@ export default {
         return false;
       } else {
         return true;
+      }
+    },
+    toggleShowPw() {
+      this.isHidePassword = !this.isHidePassword;
+      var passwordInput = document.getElementById("passwordInput");
+      if (this.isHidePassword) {
+        passwordInput.type = "password";
+      } else {
+        passwordInput.type = "text";
       }
     },
   },
@@ -319,6 +325,7 @@ button {
   background-size: 372px 326px;
   display: inline-block;
   content: "";
+  cursor: pointer;
 }
 /* pw */
 .btn-pw-show.hide::before {
@@ -329,6 +336,7 @@ button {
   background-size: 372px 326px;
   display: inline-block;
   content: "";
+  cursor: pointer;
 }
 
 /* gender, foreigner */
