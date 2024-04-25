@@ -52,7 +52,7 @@
 				</div>
 				<div class="input-row" id="birth-date-line">
 					<i class="fa-regular fa-calendar icon-cell"></i>
-					<input type="text" placeholder="생년월일 8자리" v-model="user.birthDate">
+					<input type="text" placeholder="생년월일 8자리" v-model="user.birthDate" @blur="birthDateCheck">
 				</div>
 				<div class="input-row">
 					<div class="gender">
@@ -82,7 +82,7 @@
 				</div>
 				<div class="input-row">
 					<i class="fa-solid fa-mobile-retro icon-cell"></i>
-					<input type="tel" placeholder="휴대전화번호" v-model="user.phoneNumber">
+					<input type="tel" placeholder="휴대전화번호" v-model="user.phoneNumber" @blur="phoneNumberCheck">
 				</div>
 			</div>
 
@@ -174,6 +174,34 @@ export default {
         this.pwErrorMessage = "비밀번호: 필수 정보입니다.";
       } else {
         this.pwErrorMessage = "";
+      }
+    },
+    birthDateCheck() {
+      if (this.user.birthDate === "") {
+        this.section2ErrorMessage = "생년월일: 필수 정보입니다.";
+      } else if (!/^\d{8}$/.test(this.user.birthDate)) {
+        this.section2ErrorMessage =
+          "생년월일: 생년월일은 8자리 숫자로 입력해 주세요.";
+      } else {
+        this.user.birthDate = this.user.birthDate.replace(
+          /^(\d{4})(\d{2})(\d{2})$/,
+          "$1-$2-$3"
+        );
+        this.section2ErrorMessage = "";
+      }
+    },
+    phoneNumberCheck() {
+      if (this.user.phoneNumber === "") {
+        this.section2ErrorMessage = "휴대전화번호: 필수 정보입니다.";
+      } else if (!/^[0-9]{11}$/.test(this.user.phoneNumber)) {
+        this.section2ErrorMessage =
+          "휴대전화번호: 휴대전화번호가 정확한지 확인해 주세요.";
+      } else {
+        this.user.phoneNumber = this.user.phoneNumber.replace(
+          /^(\d{3})(\d{3,4})(\d{4})/g,
+          "$1-$2-$3"
+        );
+        this.section2ErrorMessage = "";
       }
     },
     async checkDuplicatedLoginId() {
