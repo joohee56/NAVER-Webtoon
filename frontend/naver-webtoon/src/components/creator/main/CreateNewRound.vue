@@ -133,7 +133,7 @@
     
 		<div class="btn-wrap">
 			<button class="cancel">취소</button>
-			<button class="submit" @click="showUploadRoundModal=true">등록</button>
+			<button class="submit" @click="clickSubmitBtn">등록</button>
 		</div>
 
     <!-- 이미지 업로드 진행 중 모달 -->
@@ -405,6 +405,14 @@ export default {
       tempImage.src = reader.result;
       return tempImage;
     },
+    clickSubmitBtn() {
+      const pass = this.validateInput();
+      if (!pass) {
+        return;
+      }
+
+      this.showUploadRoundModal = true;
+    },
     async submit() {
       this.isCheckCreateRound = false;
       this.isUploadingRound = true;
@@ -439,6 +447,51 @@ export default {
         this.isUploadingError = true;
         console.log(error);
       }
+    },
+    validateInput() {
+      if (
+        !this.validateInputText(
+          this.round.roundTitle,
+          "회차명",
+          this.inputLimit.roundTitle
+        )
+      ) {
+        return false;
+      }
+      if(this.round.thumbnail === "") {
+        alert("대표 이미지를 등록해주세요.");
+        return false;
+      }
+      if (this.round.manuscripts.length === 0) {
+        alert("원고를 등록해주세요.");
+        return false;
+      }
+      if (
+        !this.validateInputText(
+          this.round.authorNote,
+          "작가의 말",
+          this.inputLimit.authorNote
+        )
+      ) {
+        return false;
+      }
+      if(!this.operatingPrinciple) {
+        alert("운영원칙 동의가 필요합니다.");
+        return false;
+      }
+      
+      return true;
+    },
+    validateInputText(field, fieldName, length) {
+      if (field === "") {
+        alert(fieldName + "을 입력해 주세요.");
+        return false;
+      }
+      if (field.length > length) {
+        alert(fieldName + "은 " + length + "자 이내로 입력해 주세요.");
+        return false;
+      }
+      return true;
     },
     resetCreateModalStatus() {
       this.showUploadRoundModal=false;
