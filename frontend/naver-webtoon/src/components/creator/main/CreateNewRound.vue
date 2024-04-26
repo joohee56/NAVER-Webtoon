@@ -4,7 +4,7 @@
 		<div class="subject">
 			신규 회차 등록
 		</div>
-		<div class="item-box">
+		<div class="item-box section1">
 			<ul>
 				<li class="item-row">
 					<p>작품명</p>
@@ -25,14 +25,15 @@
 				</li>
 				<li class="item-row">
 					<p>회차명</p>
-					<div>
-						<input type="text" placeholder="회차명을 입력해 주세요." size="35" v-model="round.roundTitle">
+					<div class="input-text-wrap roundTitle">
+						<input type="text" placeholder="회차명을 입력해 주세요." size="30" v-model="round.roundTitle" :class="{violation: round.roundTitle.length>inputLimit.roundTitle}">
+            <span class="input-letter-count">{{round.roundTitle.length}} / {{inputLimit.roundTitle}}</span>
 					</div>				
 				</li>
 			</ul>
 		</div>
 
-		<div class="item-box">
+		<div class="item-box section2">
 			<ul>
 
 				<li class="item-row">
@@ -110,8 +111,9 @@
 
 				<li class="item-row">
 					<p>작가의 말</p>
-					<div>
-						<input type="text" placeholder="작가의 말을 입력해 주세요." size=100 v-model="round.authorNote">
+					<div class="input-text-wrap author-note">
+						<input type="text" placeholder="작가의 말을 입력해 주세요." v-model="round.authorNote" :class="{violation: round.authorNote.length>inputLimit.authorNote}"></input>
+            <span class="input-letter-count">{{round.authorNote.length}} / {{inputLimit.authorNote}}</span>
 					</div>
 				</li>
 			</ul>
@@ -121,8 +123,8 @@
 			<ul>
 				<li class="item-row">
 					<p>운영원칙 동의</p>
-					<div>
-						<input type="checkbox" id="operating-principle">
+					<div class="operating-principle">
+						<input type="checkbox" id="operating-principle" v-model="operatingPrinciple" hidden>
 						<label for="operating-principle">불법 게시물을 등록할 경우, 게시중단 및 삭제될 수 있으며 형사 처분 대상이 될 수 있습니다.</label>
 					</div>
 				</li>
@@ -225,6 +227,10 @@ export default {
         mergeManuscript: "",
         authorNote: "",
       },
+      inputLimit: {
+        roundTitle: 35,
+        authorNote: 100,
+      },
       webtoons: [], //roundNumber, webtoonId, webtoonName
       selectedWebtoonIndex: "0",
       roundNumber: "",
@@ -241,6 +247,7 @@ export default {
       isUploadingRound: false,
       isUploadingError: false,
       isUploadDone: false,
+      operatingPrinciple: false,
     };
   },
   components: {
@@ -469,7 +476,7 @@ export default {
 /* 박스 */
 .item-box {
   background-color: white;
-  border: 1px solid #ebebeb;
+  border: 1px solid #e0e0e0;
   border-radius: 5px;
   margin-top: 10px;
   font-family: AppleSDGothicNeoR;
@@ -482,47 +489,82 @@ ul {
 }
 .item-box .item-row {
   display: grid;
-  grid-template-columns: 2fr 8fr;
-  align-items: center;
+  grid-template-columns: 1.5fr 8.5fr;
 }
-
-/* 각 항목별 제목 */
 .item-row p {
   font-family: AppleSDGothicNeoSB;
-  font-size: 17px;
+  font-size: 16px;
+  margin: 0;
 }
-.item-box .item-row:not(:last-child) {
+.item-box.section1 .item-row:not(:last-child) {
   margin-bottom: 10px;
 }
-
+.item-box.section2 .item-row:not(:last-child) {
+  margin-bottom: 22px;
+}
 /* 작품명 */
 .item-row .webtoon-name-select {
-  border: 1px solid #ebebeb;
-  border-radius: 4px;
-  padding: 15px 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
   width: 350px;
+  font-size: 14px;
+  font-family: AppleSDGothicNeoR;
+  height: 50px;
+  padding-left: 10px;
 }
 
 /* 회차 번호 */
 .round-number {
-  border: 1px solid #ebebeb;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
   display: inline-block;
   padding: 10px 35px;
 }
 
 .item-row input[type="text"] {
   padding: 13px 15px;
-  border: 1px solid #ebebeb;
+  border: 1px solid #e0e0e0;
   border-radius: 3px;
 }
-.item-row input::placeholder {
-  font-size: 12px;
-  color: #c5c3c3;
+.author-note {
+  height: 70px;
+  width: 100%;
+}
+.author-note input {
+  width: 88%;
+  height: 25px;
+}
+.author-note .input-letter-count {
+  position: absolute;
+  font-size: 13px;
+  color: #b1b1b1;
+  right: 0;
+  bottom: 20px;
 }
 .item-row :disabled {
   background-color: white;
 }
-
+.input-text-wrap {
+  position: relative;
+}
+.input-text-wrap.roundTitle {
+  width: 330px;
+}
+.roundTitle .input-letter-count {
+  position: absolute;
+  right: 20px;
+  bottom: 5px;
+  font-size: 13px;
+  color: #b1b1b1;
+}
+.violation {
+  border: 1px solid red !important;
+}
+.item-row input[type="text"]:focus,
+.item-row textarea:focus {
+  outline: none;
+  border: 1px solid #00dc64;
+}
 .item-row .desription {
   color: #b1b1b1;
   font-size: 13px;
@@ -714,6 +756,34 @@ ul {
   width: 100%;
   vertical-align: top;
 }
+
+/* 운영원칙 동의 */
+.operating-principle input[type="checkbox"] + label::before {
+  content: "";
+  display: inline-block;
+  width: 17px;
+  border-radius: 3px;
+  aspect-ratio: 1/1;
+  background-color: #fff;
+  border: 1px solid #efefef;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+/* 체크된 상태일 때의 가상 요소 스타일 정의 */
+.operating-principle input[type="checkbox"]:checked + label::before {
+  background-color: #00dc64;
+  border: 1px solid #00dc64;
+  border-radius: 4px;
+  content: "\2713";
+  color: white;
+  font-size: 17px;
+  text-align: center;
+  width: 17px;
+  height: 17px;
+  font-weight: 600;
+  line-height: 19px;
+}
+
 /* button */
 .btn-wrap {
   margin-top: 10px;
