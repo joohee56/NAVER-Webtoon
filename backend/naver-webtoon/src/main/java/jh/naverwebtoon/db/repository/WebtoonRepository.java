@@ -20,7 +20,11 @@ public class WebtoonRepository {
     }
 
     public Webtoon findOne(Long id) {
-        return em.find(Webtoon.class, id);
+        return em.createQuery("select w from Webtoon w"
+                + " join fetch w.member m"
+                + " where w.id = :webtoonId", Webtoon.class)
+                .setParameter("webtoonId", id)
+                .getSingleResult();
     }
 
     public Webtoon findOneWithThumbnail(Long webtoonId) {

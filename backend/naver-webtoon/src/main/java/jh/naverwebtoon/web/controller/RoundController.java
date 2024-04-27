@@ -1,5 +1,6 @@
 package jh.naverwebtoon.web.controller;
 
+import jakarta.validation.Valid;
 import java.util.List;
 import jh.naverwebtoon.dto.request.CreateRoundReq;
 import jh.naverwebtoon.dto.response.FindRoundDetailRes;
@@ -54,7 +55,7 @@ public class RoundController {
      */
     @Auth
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public Long saveRond(@Login Long memberId, @ModelAttribute CreateRoundReq createRoundReq) {
+    public Long saveRond(@Login Long memberId, @Valid @ModelAttribute CreateRoundReq createRoundReq) {
        return roundService.save(memberId, createRoundReq);
     }
 
