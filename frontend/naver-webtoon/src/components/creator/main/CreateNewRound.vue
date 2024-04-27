@@ -413,10 +413,10 @@ export default {
       return tempImage;
     },
     clickSubmitBtn() {
-      // const pass = this.validateInput();
-      // if (!pass) {
-      //   return;
-      // }
+      const pass = this.validateInput();
+      if (!pass) {
+        return;
+      }
 
       this.showUploadRoundModal = true;
     },

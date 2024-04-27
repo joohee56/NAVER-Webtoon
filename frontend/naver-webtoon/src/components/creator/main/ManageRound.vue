@@ -12,7 +12,7 @@
 				</div>
 				<div class="btn-wrap">
 					<router-link to="#" class="gray-btn"><i class="fa-solid fa-pencil"></i>&nbsp;작품 정보 수정</router-link>
-					<router-link to="#" class="green-btn"><i class="fa-solid fa-file-circle-plus"></i>&nbsp;신규 회차 등록</router-link>
+					<router-link :to="{name: 'createNewRound'}" class="green-btn"><i class="fa-solid fa-file-circle-plus"></i>&nbsp;신규 회차 등록</router-link>
 				</div>
 			</div>
 			<!-- 회차 리스트 -->
