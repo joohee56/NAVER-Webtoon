@@ -1,5 +1,6 @@
 package jh.naverwebtoon.web.controller;
 
+import jakarta.validation.Valid;
 import java.util.List;
 import jh.naverwebtoon.dto.request.CreateCommentReq;
 import jh.naverwebtoon.dto.response.FindComments;
@@ -22,7 +23,7 @@ public class CommentController {
 
     @Auth
     @PostMapping()
-    public Long createComment(@Login Long memberId, @RequestBody CreateCommentReq createCommentReq) {
+    public Long createComment(@Login Long memberId, @Valid @RequestBody CreateCommentReq createCommentReq) {
         return commentService.save(memberId, createCommentReq);
     }
 
