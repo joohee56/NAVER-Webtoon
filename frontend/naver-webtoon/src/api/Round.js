@@ -54,9 +54,14 @@ async function postRoundLike(roundId) {
   }
 }
 
-async function getManageRound(webtoonId) {
+async function getManageRound(webtoonId, offset, limit) {
   try {
-    const response = await jsonApi.get(`/rounds/manage/round/${webtoonId}`);
+    const response = await jsonApi.get(`/rounds/manage/round/${webtoonId}`, {
+      params: {
+        offset: offset,
+        limit: limit,
+      },
+    });
     return response;
   } catch (error) {
     console.log(error);

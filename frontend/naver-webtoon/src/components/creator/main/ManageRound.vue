@@ -15,6 +15,7 @@
 					<router-link :to="{name: 'createNewRound'}" class="green-btn"><i class="fa-solid fa-file-circle-plus"></i>&nbsp;신규 회차 등록</router-link>
 				</div>
 			</div>
+
 			<!-- 회차 리스트 -->
 			<div class="round-list-container">
 				<div class="round-list-wrap column-name">
@@ -42,6 +43,16 @@
 					</div>	
 				</div>
 			</div>
+
+      <!-- 페이징 -->
+      <div class="paging-btn-wrap">
+        <button :disabled="paging.isBeforePageBtnDisabled" @click="clickBeforePage"><i class="fa-solid fa-angle-left before-page-btn"></i></button>
+        <div class="paging-btn">
+          <button v-for="(page, index) in paging.pages" @click="changePage(page, index)" class="page-btn" :class="{active: paging.nowPageIndex===index}">{{page}}</button>
+        </div>
+        <button :disabled="paging.isNextPageBtnDisabled" @click="clickNextPage"><i class="fa-solid fa-angle-right next-page-btn"></i></button>
+      </div>
+
 		</div>
 	</div>
 </template>
@@ -58,25 +69,92 @@ export default {
         webtoonThumbnail: "default-webtoon-cover.png",
         summary: "",
       },
+      paging: {
+        roundLimit: 10,
+        totalPageCount: "",
+        pages: [],
+        nowPageIndex: 0,
+        startPage: "",
+        pageLimit: 10,
+        isBeforePageBtnDisabled: false,
+        isNextPageBtnDisabled: false,
+      },
       webtoonType: this.$route.params.webtoonType,
       rounds: [], //roundId, roundNumber, roundThumbnail, roundTitle, createdAt, updatedAt, totalLikeCount, totalCommentCount
     };
   },
-  mounted() {
-    this.fetchManageRound();
+  watch: {
+    "paging.startPage"() {
+      this.paging.pages = [];
+      const endPage = Math.min(
+        this.paging.totalPageCount + 1,
+        this.paging.startPage + this.paging.pageLimit
+      );
+      for (let i = this.paging.startPage; i < endPage; i++) {
+        this.paging.pages.push(i);
+      }
+      this.paging.nowPageIndex = 0;
+
+      this.setPageBtnDisabled();
+    },
+  },
+  async mounted() {
+    await this.fetchManageRound(0);
+    this.paging.startPage = 1;
   },
   methods: {
-    async fetchManageRound() {
+    async fetchManageRound(offset) {
       try {
-        const response = await getManageRound(this.webtoon.webtoonId);
+        const response = await getManageRound(
+          this.webtoon.webtoonId,
+          offset,
+          this.paging.roundLimit
+        );
         console.log(response.data);
-        this.webtoon.webtoonName = response.data.webtoonName;
-        this.webtoon.webtoonThumbnail = response.data.webtoonThumbnail;
-        this.webtoon.summary = response.data.summary.replaceAll("\n", "<br />");
-        this.rounds = response.data.rounds;
+        if (response.status === 200) {
+          this.webtoon.webtoonName = response.data.webtoonName;
+          this.webtoon.webtoonThumbnail = response.data.webtoonThumbnail;
+          this.webtoon.summary = response.data.summary.replaceAll(
+            "\n",
+            "<br />"
+          );
+          this.rounds = response.data.rounds;
+          this.paging.totalPageCount = response.data.totalPageCount;
+        }
       } catch (error) {
         console.log(error);
       }
+    },
+    setPageBtnDisabled() {
+      if (this.paging.startPage === 1) {
+        this.paging.isBeforePageBtnDisabled = true;
+      } else {
+        this.paging.isBeforePageBtnDisabled = false;
+      }
+
+      if (
+        this.paging.startPage + this.paging.pageLimit >
+        this.paging.totalPageCount
+      ) {
+        this.paging.isNextPageBtnDisabled = true;
+      } else {
+        this.paging.isNextPageBtnDisabled = false;
+      }
+    },
+    clickBeforePage() {
+      this.paging.startPage = Math.max(
+        1,
+        this.paging.startPage - this.paging.pageLimit
+      );
+      this.changePage(this.paging.startPage, 0);
+    },
+    clickNextPage() {
+      this.paging.startPage = this.paging.startPage + this.paging.pageLimit;
+      this.changePage(this.paging.startPage, 0);
+    },
+    async changePage(n, index) {
+      await this.fetchManageRound((n - 1) * this.paging.roundLimit);
+      this.paging.nowPageIndex = index;
     },
   },
 };
@@ -178,5 +256,25 @@ export default {
   padding: 5px 7px 3px;
   border-radius: 5px;
   font-size: 12px;
+}
+
+/* 페이징 */
+.paging-btn-wrap {
+  display: flex;
+  margin-top: 30px;
+  justify-content: center;
+}
+.paging-btn-wrap > * {
+  margin-right: 20px;
+}
+.paging-btn-wrap button {
+  background-color: white;
+  border: none;
+  font-size: 17px;
+  font-family: AppleSDGothicNeoB;
+  cursor: pointer;
+}
+.paging-btn .active {
+  color: #00dc64;
 }
 </style>

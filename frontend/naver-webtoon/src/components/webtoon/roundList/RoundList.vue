@@ -105,7 +105,7 @@ export default {
       }
     },
     async changePage(n, index) {
-      await this.fetchRounds((n - 1) * 10);
+      await this.fetchRounds((n - 1) * this.roundLimit);
       this.nowPageIndex = index;
     },
     clickBeforePage() {
@@ -221,9 +221,5 @@ export default {
 }
 .paging-btn-wrap .active {
   color: #00dc64;
-}
-.before-page-btn,
-.next-page-btn {
-  cursor: pointer;
 }
 </style>
