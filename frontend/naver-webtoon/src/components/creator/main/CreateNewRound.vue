@@ -231,6 +231,13 @@ export default {
         roundTitle: 35,
         authorNote: 100,
       },
+      title: {
+        roundTitle: "회차명",
+        thumbnail: "대표 이미지",
+        manuscripts: "원고 파일",
+        mergeManuscript: "원고",
+        authorNote: "작가의 말",
+      }, 
       webtoons: [], //roundNumber, webtoonId, webtoonName
       selectedWebtoonIndex: "0",
       roundNumber: "",
@@ -406,10 +413,10 @@ export default {
       return tempImage;
     },
     clickSubmitBtn() {
-      const pass = this.validateInput();
-      if (!pass) {
-        return;
-      }
+      // const pass = this.validateInput();
+      // if (!pass) {
+      //   return;
+      // }
 
       this.showUploadRoundModal = true;
     },
@@ -441,6 +448,17 @@ export default {
         if(response.status === 200) {
           this.isUploadingRound = false;
           this.isUploadDone = true;
+        } else if(response.status === 400) {
+          let data = response.data;
+          if (data.code === "VALIDATION") {
+            let errorMessage = "";
+            for (const key in data.message) {
+              errorMessage = this.title[key] + data.message[key] + "\n" + errorMessage;
+            }
+            alert(errorMessage);
+          } 
+          this.isUploadingRound = false;
+          this.isUploadingError = true;
         }
       } catch (error) {
         this.isUploadingRound = false;

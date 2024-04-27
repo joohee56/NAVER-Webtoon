@@ -37,7 +37,7 @@ async function postRound(formData) {
     const response = await fileApi.post("/rounds", formData);
     return response;
   } catch (error) {
-    console.log(error);
+    return error.response;
   }
 }
 
