@@ -53,7 +53,7 @@ public class WebtoonRepository {
      * 작품관리 페이지에서 웹툰 조회
      */
     public List<FindWebtoonsByMemberRes> findAllByMemberWithThumbnail(Long memberId) {
-        return em.createQuery("select new FindWebtoonsByMemberRes(w.id, w.name, w.webtoonThumbnail.posterImage.storeFileName, w.webtoonType, (select count(c) from Comment c where c.round.webtoon=w)) from Webtoon w"
+        return em.createQuery("select new FindWebtoonsByMemberRes(w.id, w.name, w.webtoonThumbnail.posterImage.storeFileName, w.webtoonType, (select count(c) from Comment c where c.round.webtoon=w), (select max(r.createdAt) from Round r where r.webtoon.id = w.id)) from Webtoon w"
                         + " where w.member.id = :memberId", FindWebtoonsByMemberRes.class)
                 .setParameter("memberId", memberId)
                 .getResultList();

@@ -1,5 +1,7 @@
 package jh.naverwebtoon.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import java.time.LocalDateTime;
 import jh.naverwebtoon.db.domain.enums.WebtoonType;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -15,5 +17,7 @@ public class FindWebtoonsByMemberRes {
     private String posterStoreName;
     private WebtoonType serialType;
     private Long totalCommentCount;
+    @JsonFormat(pattern = "yyyy.MM.dd", timezone = "Asia/Seoul")
+    private LocalDateTime createdAt;
 
 }
