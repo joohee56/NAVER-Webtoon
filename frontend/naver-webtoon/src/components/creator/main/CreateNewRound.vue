@@ -456,7 +456,9 @@ export default {
               errorMessage = this.title[key] + data.message[key] + "\n" + errorMessage;
             }
             alert(errorMessage);
-          } 
+          } else if(data.code === "BUSINESS") {
+            alert(data.message);
+          }
           this.isUploadingRound = false;
           this.isUploadingError = true;
         }
