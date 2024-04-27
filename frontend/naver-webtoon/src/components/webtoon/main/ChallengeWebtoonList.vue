@@ -19,9 +19,11 @@
 
     <!-- 페이지 -->
     <div class="paging-btn-wrap">
-      <button :disabled="beforePageBtnDisabled" @click="clickBeforePage"><i class="fa-solid fa-angle-left before-page-btn"></i></button>
-			<button v-for="(page, index) in pages" @click="changePage(page.n, index)" class="page-btn" :class="{active:page.isNowPage}">{{page.n}}</button>
-      <button :disabled="nextPageBtnDisabled" @click="clickNextPage"><i class="fa-solid fa-angle-right next-page-btn"></i></button>
+      <button :disabled="paging.isBeforePageBtnDisabled" @click="clickBeforePage"><i class="fa-solid fa-angle-left before-page-btn"></i></button>
+      <div class="paging-btn">
+        <button v-for="(page, index) in paging.pages" @click="changePage(page, index)" class="page-btn" :class="{active: paging.nowPageIndex===index}">{{page}}</button>
+      </div>
+      <button :disabled="paging.isNextPageBtnDisabled" @click="clickNextPage"><i class="fa-solid fa-angle-right next-page-btn"></i></button>
     </div>
 
 	</div>
@@ -54,62 +56,55 @@ export default {
         "스릴러",
         "스포츠",
       ],
-      pages: [],
-      nowPageIndex: 0,
-      totalPageCount: 0,
-      startPageNum: "",
-      pageLimit: 5,
-      webtoonLimit: 5,
-      offset: 0,
+      paging: {
+        webtoonLimit: 5,
+        totalPageCount: "",
+        pages: [],
+        nowPageIndex: 0,
+        startPage: "",
+        pageLimit: 5,
+        isBeforePageBtnDisabled: false,
+        isNextPageBtnDisabled: false,
+      },
       selectedSorting: "POPULARITY",
-      beforePageBtnDisabled: false,
-      nextPageBtnDisabled: false,
     };
   },
   components: {
     ThumbnailComp,
   },
   async mounted() {
-    await this.fetchChallengeWebtoons();
-    this.startPageNum = 1;
+    await this.fetchChallengeWebtoons(0);
+    this.paging.startPage = 1;
   },
   watch: {
     selectedSorting() {
-      this.fetchChallengeWebtoons();
+      this.fetchChallengeWebtoons(0);
     },
-    startPageNum() {
-      this.pages = [];
-      const end = Math.min(
-        this.totalPageCount + 1,
-        this.startPageNum + this.pageLimit
+    "paging.startPage"() {
+      this.paging.pages = [];
+      const endPage = Math.min(
+        this.paging.totalPageCount + 1,
+        this.paging.startPage + this.paging.pageLimit
       );
-      for (let i = this.startPageNum; i < end; i++) {
-        this.pages.push({ n: i, isNowPage: false });
+      for (let i = this.paging.startPage; i < endPage; i++) {
+        this.paging.pages.push(i);
       }
-      this.nowPageIndex = 0;
-      this.pages[0].isNowPage = true;
+      this.paging.nowPageIndex = 0;
 
       this.setPageBtnDisabled();
     },
-    nowPageIndex(val, oldVal) {
-      this.pages[oldVal].isNowPage = false;
-      this.pages[val].isNowPage = true;
-    },
-    offset() {
-      this.fetchChallengeWebtoons();
-    },
   },
   methods: {
-    async fetchChallengeWebtoons() {
+    async fetchChallengeWebtoons(offset) {
       try {
         const response = await getChallengeWebtoonAll(
-          this.offset,
-          this.pageLimit,
+          offset,
+          this.paging.pageLimit,
           this.selectedSorting
         );
         console.log(response);
         this.setWebtoons(response.data.webtoonMap);
-        this.totalPageCount = response.data.totalPageCount;
+        this.paging.totalPageCount = response.data.totalPageCount;
       } catch (error) {
         console.log(error);
       }
@@ -125,33 +120,36 @@ export default {
       this.webtoons.THRILLER = webtoonMap.THRILLER;
       this.webtoons.SPORTS = webtoonMap.SPORTS;
     },
-    clickBeforePage() {
-      this.startPageNum = Math.max(1, this.startPageNum - this.pageLimit);
-      this.changePage(this.startPageNum, 0);
-    },
-    clickNextPage() {
-      this.startPageNum = Math.min(
-        this.totalPageCount + 1,
-        this.startPageNum + this.pageLimit
-      );
-      this.changePage(this.startPageNum, 0);
-    },
-    changePage(n, index) {
-      this.offset = (n - 1) * this.webtoonLimit;
-      this.nowPageIndex = index;
-    },
     setPageBtnDisabled() {
-      if (this.startPageNum === 1) {
-        this.beforePageBtnDisabled = true;
+      if (this.paging.startPage === 1) {
+        this.paging.isBeforePageBtnDisabled = true;
       } else {
-        this.beforePageBtnDisabled = false;
+        this.paging.isBeforePageBtnDisabled = false;
       }
 
-      if (this.startPageNum + this.pageLimit > this.totalPageCount) {
-        this.nextPageBtnDisabled = true;
+      if (
+        this.paging.startPage + this.paging.pageLimit >
+        this.paging.totalPageCount
+      ) {
+        this.paging.isNextPageBtnDisabled = true;
       } else {
-        this.nextPageBtnDisabled = false;
+        this.paging.isNextPageBtnDisabled = false;
       }
+    },
+    clickBeforePage() {
+      this.paging.startPage = Math.max(
+        1,
+        this.paging.startPage - this.paging.pageLimit
+      );
+      this.changePage(this.paging.startPage, 0);
+    },
+    clickNextPage() {
+      this.paging.startPage = this.paging.startPage + this.paging.pageLimit;
+      this.changePage(this.paging.startPage, 0);
+    },
+    async changePage(n, index) {
+      await this.fetchChallengeWebtoons((n - 1) * this.paging.webtoonLimit);
+      this.paging.nowPageIndex = index;
     },
   },
 };
@@ -194,11 +192,9 @@ export default {
 
 /* 페이징 */
 .paging-btn-wrap {
-  text-align: center;
+  display: flex;
   margin-top: 30px;
-}
-.paging-btn-wrap > * {
-  margin-right: 20px;
+  justify-content: center;
 }
 .paging-btn-wrap button {
   background-color: white;
@@ -207,11 +203,10 @@ export default {
   font-family: AppleSDGothicNeoB;
   cursor: pointer;
 }
-.paging-btn-wrap .active {
-  color: #00dc64;
+.paging-btn-wrap button {
+  margin-right: 10px;
 }
-.before-page-btn,
-.next-page-btn {
-  cursor: pointer;
+.paging-btn .active {
+  color: #00dc64;
 }
 </style>
