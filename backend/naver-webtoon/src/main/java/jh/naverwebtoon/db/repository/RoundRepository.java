@@ -85,7 +85,7 @@ public class RoundRepository {
     /**
      * 웹툰 회차 관리 정보 조회 (웹툰 정보, 회차 리스트, 댓글 갯수, 좋아요 갯수)
      */
-    public List<FindRoundsManageRes> findAllByWebtoonWithManage(Long webtoonId) {
+    public List<FindRoundsManageRes> findAllByWebtoonWithManage(Long webtoonId, int offset, int limit) {
         return em.createQuery("select new jh.naverwebtoon.dto.response.FindRoundsManageRes(r.id, r.roundNumber, r.roundThumbnail.thumbnail.storeFileName, r.roundTitle, r.createdAt, r.updatedAt,"
                 + " (select count(rl) from RoundLike rl where rl.round = r),"
                 + " (select count(c) from Comment c where c.round = r))"
@@ -93,6 +93,8 @@ public class RoundRepository {
                 + " where r.webtoon.id = :webtoonId"
                 + " order by r.roundNumber desc", FindRoundsManageRes.class)
                 .setParameter("webtoonId", webtoonId)
+                .setFirstResult(offset)
+                .setMaxResults(limit)
                 .getResultList();
     }
 

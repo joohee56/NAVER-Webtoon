@@ -1,7 +1,5 @@
 package jh.naverwebtoon.db.repository;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.List;
 import jh.naverwebtoon.dto.response.FindRoundsManageRes;
 import jh.naverwebtoon.dto.response.RoundListDto;
@@ -18,11 +16,13 @@ class RoundRepositoryTest {
 
     @Test
     void 회차_관리_정보_조회() {
-        List<FindRoundsManageRes> rounds = roundRepository.findAllByWebtoonWithManage(Long.valueOf(2));
+        int offset = 0, limit = 10;
+        List<FindRoundsManageRes> rounds = roundRepository.findAllByWebtoonWithManage(Long.valueOf(2), offset, limit);
         for (FindRoundsManageRes round : rounds) {
             System.out.println(round.toString());
         }
     }
+
     @Test
     void 회차_리스트_조회() {
         List<RoundListDto> rounds = roundRepository.findAllByWebtoonWithPaging(Long.valueOf(2), 0, 15,

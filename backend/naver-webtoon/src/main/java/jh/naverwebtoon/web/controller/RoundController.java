@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -60,12 +61,11 @@ public class RoundController {
     }
 
     /**
-     * 회차 괸리 페이지 조회
+     * 회차 관리 페이지 조회
      */
     @Auth
     @GetMapping("/manage/round/{webtoonId}")
-    public FindRoundManageInfoRes findRoundManageInfo(@Login Long memberId, @PathVariable("webtoonId") Long webtoonId) {
-        //TODO: memberId에 해당하는 webtoon인지 권한 검사
-        return roundService.findRoundManageInfo(webtoonId);
+    public FindRoundManageInfoRes findRoundManageInfo(@Login Long memberId, @PathVariable("webtoonId") Long webtoonId, @RequestParam("offset") int offset, @RequestParam("limit") int limit) {
+        return roundService.findRoundManageInfo(webtoonId, offset, limit);
     }
 }

@@ -87,9 +87,13 @@ public class RoundService {
     /**
      * 회차 관리 페이지 조회
      */
-    public FindRoundManageInfoRes findRoundManageInfo(Long webtoonId) {
+    public FindRoundManageInfoRes findRoundManageInfo(Long webtoonId, int offset, int limit) {
         Webtoon webtoon = webtoonRepository.findOneWithThumbnail(webtoonId);
-        List<FindRoundsManageRes> rounds = roundRepository.findAllByWebtoonWithManage(webtoonId);
-        return FindRoundManageInfoRes.create(webtoon, rounds);
+        List<FindRoundsManageRes> rounds = roundRepository.findAllByWebtoonWithManage(webtoonId, offset, limit);
+
+        Long totalRoundCount = roundRepository.findMaxRoundNumberByWebtoonId(webtoonId);  //총 회차 갯수
+        int pageCount = totalRoundCount==0 ? 1 : (int) Math.ceil((double)totalRoundCount / limit);  //총 페이지 갯수
+
+        return FindRoundManageInfoRes.create(webtoon, rounds, pageCount);
     }
 }
