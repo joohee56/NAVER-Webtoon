@@ -75,7 +75,7 @@ export default {
         pages: [],
         nowPageIndex: 0,
         startPage: "",
-        pageLimit: 10,
+        pageLimit: 5,
         isBeforePageBtnDisabled: false,
         isNextPageBtnDisabled: false,
       },
@@ -264,15 +264,15 @@ export default {
   margin-top: 30px;
   justify-content: center;
 }
-.paging-btn-wrap > * {
-  margin-right: 20px;
-}
 .paging-btn-wrap button {
   background-color: white;
   border: none;
   font-size: 17px;
   font-family: AppleSDGothicNeoB;
   cursor: pointer;
+}
+.paging-btn-wrap button {
+  margin-right: 10px;
 }
 .paging-btn .active {
   color: #00dc64;
