@@ -1,7 +1,7 @@
 <template lang="ko">
 	<div class="container">
 
-		<!-- 댓글 입력 -->
+		<!-- 댓글 입력란-->
 		<div>
 			<div class="title">의견쓰기 1,385</div>
 			<div class="comment-input-box">
@@ -11,7 +11,10 @@
           class="profile-image" />
 				<div class="login-user-name">{{loginUser.userName}}</div>
 				</div>
-				<textarea v-model="content" placeholder="주제와 무관한 댓글이나 스포일러, 악풀은 경고조치 없이 삭제되며 징계 대상이 될 수 있습니다." v-if="loginUser.loginId" class="editable-textarea"></textarea>
+        <div v-if="loginUser.loginId">
+          <textarea v-model="content" placeholder="주제와 무관한 댓글이나 스포일러, 악풀은 경고조치 없이 삭제되며 징계 대상이 될 수 있습니다." class="editable-textarea" :class="{violation: content.length>inputContentLimit}"></textarea>
+          <span class="input-letter-count">{{content.length}} / {{inputContentLimit}}</span>
+        </div>
         <div @click="moveToLogin" class="uneditable-textarea" v-else>
           <textarea ></textarea>
           <label>댓글을 작성하려면 <router-link :to="{ name: 'login', params: { redirectUrl: this.$route.path } }">로그인</router-link> 해주세요.</label>
@@ -54,6 +57,10 @@ export default {
   data() {
     return {
       content: "",
+      inputContentLimit: 500,
+      title: {
+        content: "댓글",
+      },
       comments: [], //commentId, userId, userName, content, updateAt, likeTotalCnt, isUserLike, dislikeTotalCnt, isUserDislike
       startIndex: 0,
       limit: 6,
@@ -90,9 +97,22 @@ export default {
       try {
         const response = await postComment(comment);
         console.log(response.data);
-        if (response.status == 200) {
+        if (response.status === 200) {
           this.fetchComments();
           this.content = "";
+        } else if (response.status === 400) {
+          let code = response.data.code;
+          if (code === "VALIDATION") {
+            let errorMessage = "";
+            for (const key in response.data.message) {
+              errorMessage =
+                this.title[key] +
+                response.data.message[key] +
+                errorMessage +
+                "\n";
+            }
+            alert(errorMessage);
+          }
         }
       } catch (error) {
         console.log(error);
@@ -164,7 +184,9 @@ export default {
   border: 1px solid #efefef;
   border-radius: 7px;
   width: 97%;
+  height: 170px;
   padding: 10px 10px;
+  position: relative;
 }
 .loginUser-info {
   display: flex;
@@ -188,6 +210,16 @@ export default {
   padding: 10px;
   border: none;
   font-size: 15px;
+}
+.input-letter-count {
+  position: absolute;
+  right: 20px;
+  bottom: 10px;
+  font-size: 13px;
+  color: #b1b1b1;
+}
+.violation {
+  border: 1px solid red !important;
 }
 .uneditable-textarea {
   position: relative;

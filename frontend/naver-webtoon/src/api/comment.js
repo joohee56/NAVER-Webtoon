@@ -7,7 +7,7 @@ async function postComment(comment) {
     const response = await jsonApi.post("/comments", comment);
     return response;
   } catch (error) {
-    console.log(error);
+    return error.response;
   }
 }
 

@@ -223,11 +223,14 @@ export default {
       console.log("submit edit user");
       try {
         const response = await putUserInfo(this.userInfo);
-        this.userInfo = response.data;
-        this.originUser = { ...this.userInfo };
-        this.SET_USER_NAME(response.data.userName);
-        this.isInfoHidden = true;
         console.log(response.data);
+
+        if (response.status === 200) {
+          this.userInfo = response.data;
+          this.originUser = { ...this.userInfo };
+          this.SET_USER_NAME(response.data.userName);
+          this.isInfoHidden = true;
+        }
       } catch (error) {
         console.log(error);
       }
