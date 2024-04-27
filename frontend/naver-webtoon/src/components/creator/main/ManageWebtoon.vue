@@ -17,7 +17,7 @@
 					</div>
 					<div class="description">
 						<div class="domain">{{webtoon.serialType | serialType}} | </div>
-						<div class="date">최신 회차 공개일 2021.09.20</div>
+						<div class="date">최신 회차 공개일 {{webtoon.createdAt}}</div>
 					</div>
 					<div id="statistics">
             <!-- 조회수 -->
@@ -64,7 +64,7 @@ import { getWebtoonAllByMember } from "@/api/webtoon";
 export default {
   data() {
     return {
-      webtoons: [], //webtoonId, webtoonName, serialType, posterStoreName, totalCommentCount, showLinkToWebtoon
+      webtoons: [], //webtoonId, webtoonName, serialType, posterStoreName, totalCommentCount, showLinkToWebtoon, createdAt
       showLinkToWebtoon: [],
       test: true,
     };
@@ -98,7 +98,7 @@ export default {
   },
   filters: {
     serialType(value) {
-      return value === "official" ? "웹툰" : "도전만화";
+      return value === "OFFICIAL" ? "정식연재" : "도전만화";
     },
   },
 };
