@@ -19,8 +19,22 @@ public class CommentRepository {
         return comment.getId();
     }
 
+    public int delete(Long commentId) {
+        return em.createQuery("delete from Comment c where c.id = :commentId")
+                .setParameter("commentId", commentId)
+                .executeUpdate();
+    }
+
     public Comment findOne(Long commentId) {
         return em.find(Comment.class, commentId);
+    }
+
+    public Comment findWithMember(Long commentId) {
+        return em.createQuery("select c from Comment c"
+                + " join fetch c.member m"
+                + " where c.id=:commentId", Comment.class)
+                .setParameter("commentId", commentId)
+                .getSingleResult();
     }
 
     public List<FindComments> findAllByRoundIdWithPaging(Long memberId, Long roundId, int offset, int limit) {

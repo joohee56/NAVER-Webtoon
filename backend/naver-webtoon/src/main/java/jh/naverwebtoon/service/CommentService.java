@@ -29,6 +29,16 @@ public class CommentService {
         return commentRepository.save(comment);
     }
 
+    @Transactional
+    public int delete(Long memberId, Long commentId) {
+        //댓글 작성자 본인 확인
+        Comment comment = commentRepository.findWithMember(commentId);
+        if (comment.getMember().getId() != memberId) {
+            throw new IllegalStateException("잘못된 접근입니다.");
+        }
+        return commentRepository.delete(commentId);
+    }
+
     public List<FindComments> findAllWithPaging(Long memberId, Long roundId, int offset, int limit) {
         return commentRepository.findAllByRoundIdWithPaging(memberId, roundId, offset, limit);
     }
