@@ -31,6 +31,8 @@
 				<div class="user-info">
 					<div class="user-id">{{comment.userName}}({{comment.userId}})</div>
 					<div class="update-date">{{comment.updateAt}}</div>
+          <button class="menu-btn" @click="clickMenu" v-if="comment.userId===loginUser.loginId"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+          <button class="delete-btn" v-if="showMenu" @click="deleteComment(comment.commentId)">삭제</button>
 				</div>
 				<div class="content" :class="{bestComment:isBestComment(index)}">{{comment.content}}</div>
 				<div class="btn-wrap">
@@ -50,6 +52,7 @@ import {
   getComments,
   postCommentLike,
   postCommentDislike,
+  deleteComment,
 } from "@/api/comment";
 import { mapState } from "vuex";
 
@@ -62,6 +65,7 @@ export default {
         content: "댓글",
       },
       comments: [], //commentId, userId, userName, content, updateAt, likeTotalCnt, isUserLike, dislikeTotalCnt, isUserDislike
+      showMenu: false,
       startIndex: 0,
       limit: 6,
     };
@@ -71,6 +75,10 @@ export default {
   },
   mounted() {
     this.fetchComments();
+  },
+  beforeDestroy() {
+    // 컴포넌트가 파괴될 때 이벤트 리스너를 제거
+    document.removeEventListener("click", this.hideMenuButton);
   },
   methods: {
     async fetchComments() {
@@ -96,7 +104,7 @@ export default {
       };
       try {
         const response = await postComment(comment);
-        console.log(response.data);
+        console.log(response);
         if (response.status === 200) {
           this.fetchComments();
           this.content = "";
@@ -116,6 +124,28 @@ export default {
         }
       } catch (error) {
         console.log(error);
+      }
+    },
+    clickMenu() {
+      this.showMenu = !this.showMenu;
+      document.addEventListener("click", this.hideMenuButton);
+    },
+    hideMenuButton(event) {
+      const menuButton = document.querySelector(".menu-btn");
+      if (menuButton && !menuButton.contains(event.target)) {
+        this.showMenu = false;
+      }
+    },
+    async deleteComment(commentId) {
+      const ok = confirm("댓글을 삭제하시겠습니까?");
+      if (ok) {
+        const response = await deleteComment(commentId);
+        console.log(response);
+        if (response.status === 200) {
+          this.fetchComments();
+        } else if (response.staus === 400) {
+          console.log(response.data.message);
+        }
       }
     },
     async clickCommentLike(commentId, index) {
@@ -269,6 +299,7 @@ export default {
   border-radius: 10px;
   margin-top: 90px;
   width: 98%;
+  position: relative;
 }
 .comment-item:not(:last-child) {
   border-bottom: 1px solid #efefef;
@@ -278,7 +309,6 @@ export default {
   display: grid;
   row-gap: 5px;
 }
-/* .comment-list-wrap > :nth-child(-n + 4) .content::before { */
 .comment-list-wrap .bestComment::before {
   content: "BEST";
   background-color: #ff4d56;
@@ -304,6 +334,27 @@ export default {
   margin-left: 10px;
   font-size: 15px;
   line-height: 25px;
+}
+.user-info .menu-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  margin-left: auto;
+  cursor: pointer;
+}
+.user-info .delete-btn {
+  display: block;
+  padding: 15px 38px 16px;
+  border: 2px solid #d8d8d8;
+  font-size: 15px;
+  text-align: center;
+  background: white;
+  font-family: AppleSDGothicNeoSB;
+  border-radius: 5px;
+  position: absolute;
+  right: 25px;
+  top: 55px;
+  cursor: pointer;
 }
 .comment-list-wrap .btn-wrap {
   display: flex;

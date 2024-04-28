@@ -11,6 +11,15 @@ async function postComment(comment) {
   }
 }
 
+async function deleteComment(commentId) {
+  try {
+    const response = await jsonApi.delete(`/comments/comment/${commentId}`);
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+}
+
 async function getComments(roundId, offset, limit) {
   try {
     const response = await jsonApi.get(
@@ -44,4 +53,10 @@ async function postCommentDislike(commentId) {
   }
 }
 
-export { postComment, getComments, postCommentLike, postCommentDislike };
+export {
+  postComment,
+  getComments,
+  postCommentLike,
+  postCommentDislike,
+  deleteComment,
+};
