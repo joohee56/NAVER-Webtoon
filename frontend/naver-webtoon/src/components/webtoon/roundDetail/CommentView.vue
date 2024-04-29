@@ -31,8 +31,8 @@
 				<div class="user-info">
 					<div class="user-id">{{comment.userName}}({{comment.userId}})</div>
 					<div class="update-date">{{comment.updateAt}}</div>
-          <button class="menu-btn" @click="clickMenu" v-if="comment.userId===loginUser.loginId"><i class="fa-solid fa-ellipsis-vertical"></i></button>
-          <button class="delete-btn" v-if="showMenu" @click="deleteComment(comment.commentId)">삭제</button>
+          <button class="menu-btn" @click="clickMenu(index)" v-if="comment.userId===loginUser.loginId"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+          <button class="delete-btn" v-if="showMenuIndex===index" @click="deleteComment(comment.commentId)">삭제</button>
 				</div>
 				<div class="content" :class="{bestComment:isBestComment(index)}">{{comment.content}}</div>
 				<div class="btn-wrap">
@@ -66,6 +66,7 @@ export default {
       },
       comments: [], //commentId, userId, userName, content, updateAt, likeTotalCnt, isUserLike, dislikeTotalCnt, isUserDislike
       showMenu: false,
+      showMenuIndex: "",
       startIndex: 0,
       limit: 6,
     };
@@ -126,14 +127,14 @@ export default {
         console.log(error);
       }
     },
-    clickMenu() {
-      this.showMenu = !this.showMenu;
+    clickMenu(index) {
+      this.showMenuIndex = index;
       document.addEventListener("click", this.hideMenuButton);
     },
     hideMenuButton(event) {
       const menuButton = document.querySelector(".menu-btn");
       if (menuButton && !menuButton.contains(event.target)) {
-        this.showMenu = false;
+        this.showMenuIndex = "";
       }
     },
     async deleteComment(commentId) {
@@ -299,7 +300,6 @@ export default {
   border-radius: 10px;
   margin-top: 90px;
   width: 98%;
-  position: relative;
 }
 .comment-item:not(:last-child) {
   border-bottom: 1px solid #efefef;
@@ -308,6 +308,7 @@ export default {
   padding: 25px 20px 25px;
   display: grid;
   row-gap: 5px;
+  position: relative;
 }
 .comment-list-wrap .bestComment::before {
   content: "BEST";
