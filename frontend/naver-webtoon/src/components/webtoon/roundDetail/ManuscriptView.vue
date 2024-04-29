@@ -2,26 +2,28 @@
 	<div class="container">
 
 		<!-- 상단 메뉴바 -->
-		<div ref="menubar" class="menu-bar">
-			<router-link :to="{name: webtoonType+'RoundList', params: {webtoonId : `${this.$route.params.webtoonId}`}}"><i class="fa-solid fa-angle-left"></i></router-link>
-			<router-link :to="{name: webtoonType+'RoundList', params: {webtoonId : `${this.$route.params.webtoonId}`}}">{{roundDetail.webtoonName}}</router-link>
-			<span class="separator"></span>
-			<span>{{roundDetail.roundNumber}}화 {{roundDetail.roundTitle}}</span>
-			<span @click="moveBeforeRound" class="before-round">
-				<i class="fa-solid fa-caret-left"></i>
-				<span> 이전화</span>
-      </span>
-			<span class="separator"></span>
-			<router-link :to="{name: webtoonType+'RoundList', params: {webtoonId : `${this.$route.params.webtoonId}`}}">
-				<i class="fa-solid fa-list-ul"></i>
-				<span> 목록</span>
-			</router-link>
-			<span class="separator"></span>
-			<span @click="moveNextRound" class="next-round">
-				<span>다음화 </span>
-				<i class="fa-solid fa-caret-right"></i>
-			</span>
-		</div>
+    <div class="menubar-wrap">
+      <div ref="menubar" class="menu-bar">
+        <router-link :to="{name: webtoonType+'RoundList', params: {webtoonId : `${this.$route.params.webtoonId}`}}"><i class="fa-solid fa-angle-left"></i></router-link>
+        <router-link :to="{name: webtoonType+'RoundList', params: {webtoonId : `${this.$route.params.webtoonId}`}}">{{roundDetail.webtoonName}}</router-link>
+        <span class="separator"></span>
+        <span>{{roundDetail.roundNumber}}화 {{roundDetail.roundTitle}}</span>
+        <span @click="moveBeforeRound" class="before-round">
+          <i class="fa-solid fa-caret-left"></i>
+          <span> 이전화</span>
+        </span>
+        <span class="separator"></span>
+        <router-link :to="{name: webtoonType+'RoundList', params: {webtoonId : `${this.$route.params.webtoonId}`}}">
+          <i class="fa-solid fa-list-ul"></i>
+          <span> 목록</span>
+        </router-link>
+        <span class="separator"></span>
+        <span @click="moveNextRound" class="next-round">
+          <span>다음화 </span>
+          <i class="fa-solid fa-caret-right"></i>
+        </span>
+      </div>
+    </div>
 
 		<!-- 원고 -->
 		<div ref="manuscript" class="manusript-wrap">
@@ -267,17 +269,24 @@ export default {
 .container > * {
   margin: 0 auto;
 }
+.container .round-list,
+.container .author-note-wrap {
+  width: 85rem;
+}
 /* 상단 메뉴바 */
-.menu-bar {
+.menubar-wrap {
   background-color: #383b45;
+}
+.menu-bar {
   height: 70px;
   display: flex;
   align-items: center;
   font-size: 18px;
   position: sticky;
   top: 0;
-  width: 100%;
+  width: 85rem;
   z-index: 1000;
+  margin: 0 auto;
 }
 .menu-bar :first-child {
   margin-left: 20px;
@@ -354,7 +363,7 @@ export default {
 .round-list {
   border: 1px solid #efefef;
   height: 200px;
-  margin: 30px 0 60px;
+  margin: 30px auto 60px;
   display: flex;
   width: 100%;
 }

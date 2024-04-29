@@ -204,6 +204,8 @@ export default {
 <style scoped>
 .container {
   font-family: AppleSDGothicNeoM;
+  width: 85rem;
+  margin: 0 auto;
 }
 /* 댓글 입력 */
 .title {
