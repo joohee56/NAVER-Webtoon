@@ -1,24 +1,34 @@
 <template>
   <div class="toolbar-wrap">
+    <!-- 로고 -->
     <div class="naver-logo">
       <a href="/">NAVER</a>
     </div>
     <div class="webtoon-logo">
       <a href="/">웹툰</a>
     </div>
+
+    <!-- 검색창 -->
     <div class="search-wrap">
-      <form>
-        <input
-          type="search"
-          class="search"
-          placeholder="제목/작가로 검색할 수 있습니다."
-          size="35"
-        />
-        <button class="search-btn">
-          <img src="@/assets/image/search.png" alt="검색" onclick="" />
-        </button>
-      </form>
+      <input
+        type="text"
+        class="search"
+        placeholder="제목/작가로 검색할 수 있습니다."
+        v-model="searchContent"
+        @keyup.enter="search"
+      />
+      <span
+        class="btn-delete"
+        v-show="searchContent.length > 0"
+        @click="searchContent = ''"
+        ><i class="fa-solid fa-circle-xmark"></i
+      ></span>
+      <button class="search-btn">
+        <img src="@/assets/image/search.png" alt="검색" @click="search" />
+      </button>
     </div>
+
+    <!-- 사용자 정보 -->
     <div class="user-info" v-if="loginUser.userName != ''">
       <router-link :to="{ name: 'userProfile' }">
         <img
@@ -43,8 +53,27 @@
 import { mapState } from "vuex";
 
 export default {
+  data() {
+    return {
+      searchContent: "",
+    };
+  },
   computed: {
     ...mapState("memberStore", ["loginUser"]),
+  },
+  methods: {
+    search() {
+      if (this.searchContent === "") {
+        alert("검색어를 입력해 주십시오");
+        return;
+      }
+      this.$router.push({
+        name: "wholeResult",
+        params: {
+          keyword: this.searchContent,
+        },
+      });
+    },
   },
 };
 </script>
@@ -69,27 +98,27 @@ export default {
   font-size: 25px;
   margin: 10px 0;
 }
+
+/* 검색창 */
 .search-wrap {
-  margin: 0 0 0 auto;
-}
-form {
-  color: #03c75a;
   display: flex;
-  border: 1px solid currentColor;
+  border: 1px solid #03c75a;
   border-radius: 30px;
-  padding: 0;
+  height: 40px;
+  margin: auto 0;
+  margin-left: auto;
+  width: 380px;
 }
 .search {
   border: none;
-  background: transparent;
-  font-size: 15px;
-  color: inherit;
-  border: 1px solid transparent;
-  border-radius: inherit;
+  font-size: 16px;
   margin-left: 20px;
+  outline: none;
+  width: 100%;
 }
 .search::placeholder {
   color: #d2d2d2;
+  font-family: AppleSDGothicNeoM;
 }
 .search-btn {
   width: 30px;
@@ -97,9 +126,22 @@ form {
   border-radius: inherit;
   background: transparent;
   cursor: pointer;
-  opacity: 0.7;
+  margin-left: auto;
   margin-right: 20px;
 }
+.btn-delete {
+  width: 35px;
+  height: 35px;
+  z-index: 5;
+  background-color: #fff;
+  line-height: 40px;
+  cursor: pointer;
+}
+.btn-delete i {
+  font-size: large;
+  color: #9ba1a3;
+}
+/* 로그인 정보 */
 .user-info {
   display: flex;
 }

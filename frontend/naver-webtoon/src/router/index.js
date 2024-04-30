@@ -24,6 +24,8 @@ import GenreView from "@/views/GenreView";
 import ChallengeRoundList from "@/views/ChallengeRoundList";
 import OfficialRoundDetail from "@/views/OfficialRoundDetail";
 import ChallengeRoundDetail from "@/views/ChallengeRoundDetail";
+import SearchResult from "@/views/SearchResult";
+import WholeResult from "@/components/webtoon/search/WholeResult";
 
 Vue.use(VueRouter);
 
@@ -97,6 +99,18 @@ const routes = [
             path: "/challenge/:webtoonId/rounds/:roundId",
             name: "challengeRoundDetail",
             component: ChallengeRoundDetail,
+          },
+        ],
+      },
+      {
+        path: "/searchResult",
+        name: "searchResult",
+        component: SearchResult,
+        children: [
+          {
+            path: "/searchResult/:keyword",
+            name: "wholeResult",
+            component: WholeResult,
           },
         ],
       },

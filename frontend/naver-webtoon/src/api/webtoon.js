@@ -105,6 +105,34 @@ async function getChallengeWebtoonByGenre(genre, sorting) {
   }
 }
 
+async function getSearch(keyword, offset, limit) {
+  try {
+    const response = await jsonApi.get("/webtoon/search", {
+      params: {
+        keyword: keyword,
+        offset: offset,
+        limit: limit,
+      },
+    });
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+}
+
+async function getSearchCount(keyword) {
+  try {
+    const response = await jsonApi.get("/webtoon/search/count", {
+      params: {
+        keyword: keyword,
+      },
+    });
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+}
+
 export {
   postCreateWebtoon,
   getWebtoonAllByMember,
@@ -115,4 +143,6 @@ export {
   getOfficialWebtoonAllByDayOfWeek,
   getChallengeWebtoonAll,
   getChallengeWebtoonByGenre,
+  getSearch,
+  getSearchCount,
 };

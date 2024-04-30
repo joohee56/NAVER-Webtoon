@@ -35,8 +35,8 @@ export default {
   display: inline-block;
   border: none;
   background-color: white;
-  font-size: 19px;
-  font-family: AppleSDGothicNeoSB;
+  font-size: 18px;
+  font-family: AppleSDGothicNeoB;
   cursor: pointer;
 }
 

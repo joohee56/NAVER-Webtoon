@@ -121,15 +121,15 @@ const navStore = {
     },
   },
   mutations: {
-    SET_DAY_OF_WEEK_IS_ACTIVE(state, index) {
-      state.dayOfWeeks[state.selectedIndex_dayOfWeek].isActive = false;
-      state.dayOfWeeks[index].isActive = true;
-      state.selectedIndex_dayOfWeek = index;
-    },
     SET_CATEGORY_IS_ACTIVE(state, index) {
       state.categorys[state.selectedIndex_category].isActive = false;
       state.categorys[index].isActive = true;
       state.selectedIndex_category = index;
+    },
+    SET_DAY_OF_WEEK_IS_ACTIVE(state, index) {
+      state.dayOfWeeks[state.selectedIndex_dayOfWeek].isActive = false;
+      state.dayOfWeeks[index].isActive = true;
+      state.selectedIndex_dayOfWeek = index;
     },
     SET_GENRE_IS_ACTIVE(state, genre) {
       state.genres[state.selected_genre].isActive = false;
