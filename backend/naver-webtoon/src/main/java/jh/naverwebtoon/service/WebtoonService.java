@@ -5,6 +5,7 @@ import java.util.List;
 import jh.naverwebtoon.db.domain.Member;
 import jh.naverwebtoon.db.domain.UploadImage;
 import jh.naverwebtoon.db.domain.WebtoonThumbnail;
+import jh.naverwebtoon.db.domain.enums.WebtoonType;
 import jh.naverwebtoon.db.domain.webtoon.Webtoon;
 import jh.naverwebtoon.db.repository.MemberRepository;
 import jh.naverwebtoon.db.repository.WebtoonRepository;
@@ -12,6 +13,9 @@ import jh.naverwebtoon.dto.request.CreateWebtoonReq;
 import jh.naverwebtoon.dto.response.FindCreateRoundInfoRes;
 import jh.naverwebtoon.dto.response.FindWebtoonDetailRes;
 import jh.naverwebtoon.dto.response.FindWebtoonsByMemberRes;
+import jh.naverwebtoon.dto.response.SearchCountRes;
+import jh.naverwebtoon.dto.response.SearchRes;
+import jh.naverwebtoon.dto.response.SearchWebtoonDto;
 import jh.naverwebtoon.util.FileStore;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -51,6 +55,20 @@ public class WebtoonService {
 
     public FindWebtoonDetailRes findWebtoonDetail(Long webtoonId) {
         return FindWebtoonDetailRes.create(webtoonRepository.findOneByIdWithMemberAndThumbnail(webtoonId));
+    }
+
+    public SearchRes search(String keyword, int offset, int limit) {
+        List<SearchWebtoonDto> officials = webtoonRepository.findAllByKeyword(keyword, WebtoonType.OFFICIAL, offset, limit);
+        List<SearchWebtoonDto> challenges = webtoonRepository.findAllByKeyword(keyword, WebtoonType.CHALLENGE, offset, limit);
+        Long totalOfficialCount = webtoonRepository.findSearchCount(keyword, WebtoonType.OFFICIAL);
+        Long totalChallengeCount = webtoonRepository.findSearchCount(keyword, WebtoonType.CHALLENGE);
+        return new SearchRes(officials, challenges, totalOfficialCount, totalChallengeCount);
+    }
+
+    public SearchCountRes searchCount(String keyword) {
+        Long totalOfficialCount = webtoonRepository.findSearchCount(keyword, WebtoonType.OFFICIAL);
+        Long totalChallengeCount = webtoonRepository.findSearchCount(keyword, WebtoonType.CHALLENGE);
+        return new SearchCountRes(totalOfficialCount, totalChallengeCount);
     }
 
 }

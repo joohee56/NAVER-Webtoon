@@ -40,6 +40,9 @@ public class CommentController {
         return commentService.delete(memberId, commentId);
     }
 
+    /**
+     * 댓글 조회
+     */
     @GetMapping("/{roundId}/{offset}/{limit}")
     public List<FindComments> findCommentsWithPaging(@Login Long memberId, @PathVariable("roundId") Long roundId, @PathVariable("offset") int offset, @PathVariable("limit") int limit) {
         return commentService.findAllWithPaging(memberId, roundId, offset, limit);

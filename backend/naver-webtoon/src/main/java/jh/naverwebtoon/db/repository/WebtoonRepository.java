@@ -3,8 +3,10 @@ package jh.naverwebtoon.db.repository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import java.util.List;
+import jh.naverwebtoon.db.domain.enums.WebtoonType;
 import jh.naverwebtoon.db.domain.webtoon.Webtoon;
 import jh.naverwebtoon.dto.response.FindWebtoonsByMemberRes;
+import jh.naverwebtoon.dto.response.SearchWebtoonDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -71,5 +73,38 @@ public class WebtoonRepository {
                 .setParameter("memberId", memberId)
                 .getResultList();
     }
+
+    /**
+     * 웹툰 검색
+     */
+    public List<SearchWebtoonDto> findAllByKeyword(String keyword, WebtoonType webtoonType, int offset, int limit) {
+        return em.createQuery("select distinct new jh.naverwebtoon.dto.response.SearchWebtoonDto(w"
+                        + ", (select max(r.roundNumber) from Round r where r.webtoon=w)"
+                        + ", (select max(r.updatedAt) from Round r where r.webtoon=w)) from Webtoon w"
+                        + " join fetch w.member m"
+                        + " join fetch w.webtoonThumbnail wt"
+                        + " where w.webtoonType=:webtoonType"
+                        + " and w.name=:keyword"
+                        + " or w.member.name=:keyword", SearchWebtoonDto.class)
+                .setFirstResult(offset)
+                .setMaxResults(limit)
+                .setParameter("keyword", keyword)
+                .setParameter("webtoonType", webtoonType)
+                .getResultList();
+    }
+
+    /**
+     * 검색 결과 갯수 조회
+     */
+    public Long findSearchCount(String keyword, WebtoonType webtoonType) {
+        return em.createQuery("select distinct count(w) from Webtoon w"
+                        + " where w.webtoonType=:webtoonType"
+                        + " and w.name=:keyword"
+                        + " or w.member.name=:keyword", Long.class)
+                .setParameter("keyword", keyword)
+                .setParameter("webtoonType", webtoonType)
+                .getSingleResult();
+    }
+
 
 }
