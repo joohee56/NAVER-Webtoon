@@ -80,7 +80,7 @@ nav {
 }
 nav button {
   margin-right: 25px;
-  padding-bottom: 15px;
+  padding-bottom: 10px;
   font-family: AppleSDGothicNeoB;
   font-size: 17px;
   border: none;

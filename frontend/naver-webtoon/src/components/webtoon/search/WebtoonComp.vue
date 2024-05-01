@@ -9,13 +9,13 @@
           <span :class="{sameKeyword:webtoon.webtoonName === keyword}">{{webtoon.webtoonName}}</span>
         </router-link>
       </div>
-      <div class="gray-text">
-        <span :class="{sameKeyword:webtoon.authorName === keyword}">{{webtoon.authorName}}</span><span> · 글/그림</span>
+      <div class="info-detail">
+        <span class="author-name" :class="{sameKeyword:webtoon.authorName === keyword}">{{webtoon.authorName}}</span><span> · 글/그림</span>
         <span> | {{webtoon.dayOfWeek | dayOfWeekTitle}}웹툰</span>
         <span> · 총 {{webtoon.totalRoundCount}}화</span>
         <span> | 최종 업데이트 {{webtoon.recentUpdatedAt}}</span>
       </div>
-      <div>
+      <div class="summary">
         {{webtoon.summary}}
       </div>
     </div>
@@ -86,6 +86,7 @@ export default {
 <style scoped>
 .webtoon-wrap {
   display: flex;
+  margin-bottom: 15px;
 }
 a:hover {
   text-decoration: underline;
@@ -95,20 +96,28 @@ a:hover {
   margin-left: 15px;
 }
 .thumbnail {
-  width: 130px;
+  width: 135px;
   aspect-ratio: 480 / 623;
-  border-radius: 4px;
-  border: 1px solid #efefef;
+  border-radius: 5px;
+  border: 1px solid #e0e0e0;
 }
 .webtoon-name {
-  font-family: AppleSDGothicNeoSB;
+  font-family: AppleSDGothicNeoB;
   font-size: 20px;
 }
-.gray-text {
+.info-detail {
   color: #999;
   font-family: AppleSDGothicNeoSB;
 }
+.author-name {
+  color: black !important;
+}
 .sameKeyword {
   color: #00dc64 !important;
+}
+.summary {
+  margin-top: 10px;
+  font-family: AppleSDGothicNeoM;
+  line-height: 21px;
 }
 </style>

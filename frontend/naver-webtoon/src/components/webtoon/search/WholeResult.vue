@@ -1,8 +1,10 @@
 <template lang="ko">
 	<div>
 		<div>
-			<div>웹툰 <span>총 {{totalOfficialCount}}</span> <router-link to="#">웹툰 더보기</router-link></div>
-			<div>
+			<div class="title-wrap">
+        <span class="category">웹툰</span> <span class="count">총 {{totalOfficialCount}}</span> <router-link to="#" v-if="totalOfficialCount > limit" class="more-link">웹툰 더보기 <i class="fa-solid fa-chevron-right"></i></router-link>
+      </div>
+			<div class="result-wrap">
 				<WebtoonComp v-for="(official, index) in officials" :webtoon=official webtoonType="official" :key="index"></WebtoonComp>
 			</div>
 		</div>
@@ -46,4 +48,27 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.title-wrap {
+  padding: 30px 0 10px;
+  border-bottom: 1px solid #efefef;
+}
+.title-wrap .category {
+  font-family: AppleSDGothicNeoSB;
+  font-size: 23px;
+}
+.title-wrap .count {
+  font-family: AppleSDGothicNeoSB;
+  color: #666;
+}
+.title-wrap .more-link {
+  float: right;
+  font-family: AppleSDGothicNeoSB;
+  color: #666;
+  font-size: 17px;
+}
+
+.result-wrap {
+  padding: 20px 0;
+}
+</style>
