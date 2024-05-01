@@ -75,7 +75,7 @@ public class WebtoonRepository {
     }
 
     /**
-     * 웹툰 이름으로 검색
+     * 웹툰 검색 (웹툰 이름, 작가)
      */
     public List<SearchWebtoonDto> findAllByKeyword(String keyword, WebtoonType webtoonType, int offset, int limit) {
         return em.createQuery("select distinct new jh.naverwebtoon.dto.response.SearchWebtoonDto(w"
@@ -84,8 +84,9 @@ public class WebtoonRepository {
                         + " join fetch w.member m"
                         + " join fetch w.webtoonThumbnail wt"
                         + " where w.webtoonType=:webtoonType"
-                        + " and function('replace',w.name, ' ', '') like concat('%', :keyword, '%')"
-                        + " or function('replace', w.member.name, ' ', '') like concat('%', :keyword, '%')", SearchWebtoonDto.class)
+                        + " and function('replace', w.name, ' ', '') like concat('%', :keyword, '%')"
+                        + " or w.webtoonType=:webtoonType"
+                        + " and function('replace', w.member.name, ' ', '') like concat('%', :keyword, '%')", SearchWebtoonDto.class)
                 .setFirstResult(offset)
                 .setMaxResults(limit)
                 .setParameter("keyword", keyword)
@@ -100,7 +101,8 @@ public class WebtoonRepository {
         return em.createQuery("select distinct count(w) from Webtoon w"
                         + " where w.webtoonType=:webtoonType"
                         + " and function('replace',w.name, ' ', '') like concat('%', :keyword, '%')"
-                        + " or function('replace', w.member.name, ' ', '') like concat('%', :keyword, '%')", Long.class)
+                        + " or w.webtoonType=:webtoonType"
+                        + " and function('replace', w.member.name, ' ', '') like concat('%', :keyword, '%')", Long.class)
                 .setParameter("keyword", keyword)
                 .setParameter("webtoonType", webtoonType)
                 .getSingleResult();
