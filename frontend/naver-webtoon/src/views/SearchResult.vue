@@ -6,7 +6,7 @@
 
 		<!-- nav -->
 		<nav>
-			<button v-for="(menu, index) in menues" :class="{active: selectedMenuIndex===index}" @click="handleMenuClick(index)">{{menu.title}} ({{menu.count}})</button>
+			<button v-for="(menu, index) in menues" :class="{active: selectedMenuIndex===index}" @click="handleMenuClick(index)" :disabled="menu.count===0">{{menu.title}} ({{menu.count}})</button>
 		</nav>
 
 		<router-view></router-view>

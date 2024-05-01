@@ -11,7 +11,7 @@
       </div>
       <div class="info-detail">
         <span class="author-name" :class="{sameKeyword:webtoon.authorName === keyword}">{{webtoon.authorName}}</span><span> · 글/그림</span>
-        <span> | {{webtoon.dayOfWeek | dayOfWeekTitle}}웹툰</span>
+        <span v-if='webtoon.dayOfWeek !== null'> | {{webtoon.dayOfWeek | dayOfWeekTitle}}웹툰</span>
         <span> · 총 {{webtoon.totalRoundCount}}화</span>
         <span> | 최종 업데이트 {{webtoon.recentUpdatedAt}}</span>
       </div>
