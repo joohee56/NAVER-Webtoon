@@ -3,7 +3,7 @@
 
 		<!-- 상단 -->
 		<div class="header">
-			<div>총 {{totalRoundCount}}화</div>
+			<div>총 {{paging.totalRoundCount}}화</div>
 			<div class="sort-btn">
 				<span :class={select:selectDesc} @click="sortToDesc(true)">최신화부터</span> | <span :class={select:!selectDesc} @click="sortToDesc(false)">1화부터</span>
 			</div>
