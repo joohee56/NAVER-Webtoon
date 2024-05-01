@@ -58,6 +58,7 @@ public class WebtoonService {
     }
 
     public SearchRes search(String keyword, int offset, int limit) {
+        keyword = keyword.replaceAll(" ", "");
         List<SearchWebtoonDto> officials = webtoonRepository.findAllByKeyword(keyword, WebtoonType.OFFICIAL, offset, limit);
         List<SearchWebtoonDto> challenges = webtoonRepository.findAllByKeyword(keyword, WebtoonType.CHALLENGE, offset, limit);
         Long totalOfficialCount = webtoonRepository.findSearchCount(keyword, WebtoonType.OFFICIAL);
@@ -66,6 +67,7 @@ public class WebtoonService {
     }
 
     public SearchCountRes searchCount(String keyword) {
+        keyword = keyword.replaceAll(" ", "");
         Long totalOfficialCount = webtoonRepository.findSearchCount(keyword, WebtoonType.OFFICIAL);
         Long totalChallengeCount = webtoonRepository.findSearchCount(keyword, WebtoonType.CHALLENGE);
         return new SearchCountRes(totalOfficialCount, totalChallengeCount);
