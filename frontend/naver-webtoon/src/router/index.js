@@ -26,7 +26,7 @@ import OfficialRoundDetail from "@/views/OfficialRoundDetail";
 import ChallengeRoundDetail from "@/views/ChallengeRoundDetail";
 import SearchResult from "@/views/SearchResult";
 import WholeResult from "@/components/webtoon/search/WholeResult";
-
+import WebtoonWhole from "@/components/webtoon/search/WebtoonWhole";
 Vue.use(VueRouter);
 
 const checkLogin = (to, from, next) => {
@@ -111,6 +111,11 @@ const routes = [
             path: "/searchResult/:keyword",
             name: "wholeResult",
             component: WholeResult,
+          },
+          {
+            path: "/searchResult/:webtoonType/:keyword",
+            name: "webtoonWhole",
+            component: WebtoonWhole,
           },
         ],
       },

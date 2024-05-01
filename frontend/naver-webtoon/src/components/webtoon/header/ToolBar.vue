@@ -71,12 +71,14 @@ export default {
         location.reload();
         return;
       }
-      this.$router.push({
-        name: "wholeResult",
-        params: {
-          keyword: this.searchContent,
-        },
-      });
+      this.$router
+        .push({
+          name: "wholeResult",
+          params: {
+            keyword: this.searchContent,
+          },
+        })
+        .catch(() => {});
     },
   },
 };

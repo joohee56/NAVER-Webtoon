@@ -6,7 +6,7 @@
 
 		<!-- nav -->
 		<nav>
-			<button v-for="(menu, index) in menues" :class="{active: selectedMenuIndex===index}" @click="handleMenuClick(index)" :disabled="menu.count===0">{{menu.title}} ({{menu.count}})</button>
+			<button v-for="(menu, index) in menues" :class="{active: selectedMenuIndex===index}" @click="handleMenuClick(menu, index)" :disabled="menu.count===0">{{menu.title}} ({{menu.count}})</button>
 		</nav>
 
 		<router-view></router-view>
@@ -22,9 +22,19 @@ export default {
     return {
       keyword: this.$route.params.keyword,
       menues: [
-        { title: "전체", count: 0 },
-        { title: "웹툰", count: 0 },
-        { title: "도전만화", count: 0 },
+        { title: "전체", count: 0, routerName: "wholeResult" },
+        {
+          title: "웹툰",
+          count: 0,
+          routerName: "webtoonWhole",
+          webtoonType: "OFFICIAL",
+        },
+        {
+          title: "도전만화",
+          count: 0,
+          routerName: "webtoonWhole",
+          webtonType: "CHALLENGE",
+        },
       ],
       selectedMenuIndex: 0,
       totalChallengeCount: "",
@@ -40,8 +50,28 @@ export default {
     navActive() {
       // this.SET_CATEGORY_IS_ACTIVE("");
     },
-    handleMenuClick(index) {
+    handleMenuClick(menu, index) {
       this.selectedMenuIndex = index;
+      if (index === 0) {
+        this.$router
+          .push({
+            name: menu.routerName,
+            params: {
+              keyword: this.keyword,
+            },
+          })
+          .catch(() => {});
+      } else {
+        this.$router
+          .push({
+            name: menu.routerName,
+            params: {
+              keyword: this.keyword,
+              webtoonType: menu.webtonType,
+            },
+          })
+          .catch(() => {});
+      }
     },
     async fetchSearchCount() {
       const response = await getSearchCount(this.keyword);
