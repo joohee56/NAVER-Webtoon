@@ -9,7 +9,6 @@
 				<WebtoonComp v-for="(official, index) in officials" :webtoon=official webtoonType="official" :key="index"></WebtoonComp>
 			</div>
 		</div>
-		<WebtoonComp></WebtoonComp>
 
     <!-- 도전만화 -->
     <div v-if="totalChallengeCount > 0">
@@ -20,13 +19,11 @@
 				<WebtoonComp v-for="(cahllenge, index) in challenges" :webtoon=cahllenge webtoonType="challenge" :key="index"></WebtoonComp>
 			</div>
 		</div>
-		<WebtoonComp></WebtoonComp>
 	</div>
 </template>
 
 <script>
 import WebtoonComp from "@/components/webtoon/search/WebtoonComp.vue";
-
 import { getSearch } from "@/api/webtoon";
 
 export default {

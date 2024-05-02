@@ -108,12 +108,12 @@ const routes = [
         component: SearchResult,
         children: [
           {
-            path: "/searchResult/:keyword",
+            path: "/search/wholeResult/:keyword",
             name: "wholeResult",
             component: WholeResult,
           },
           {
-            path: "/searchResult/:webtoonType/:keyword",
+            path: "/search/webtoonResult/:webtoonType/:keyword",
             name: "webtoonWhole",
             component: WebtoonWhole,
           },

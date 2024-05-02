@@ -120,6 +120,22 @@ async function getSearch(keyword, offset, limit) {
   }
 }
 
+async function getSearchWebtoon(keyword, webtoonType, offset, limit) {
+  try {
+    const response = await jsonApi.get("/webtoon/search/webtoon", {
+      params: {
+        keyword: keyword,
+        webtoonType: webtoonType,
+        offset: offset,
+        limit: limit,
+      },
+    });
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+}
+
 async function getSearchCount(keyword) {
   try {
     const response = await jsonApi.get("/webtoon/search/count", {
@@ -144,5 +160,6 @@ export {
   getChallengeWebtoonAll,
   getChallengeWebtoonByGenre,
   getSearch,
+  getSearchWebtoon,
   getSearchCount,
 };

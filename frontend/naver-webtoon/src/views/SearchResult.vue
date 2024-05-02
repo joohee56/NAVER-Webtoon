@@ -33,7 +33,7 @@ export default {
           title: "도전만화",
           count: 0,
           routerName: "webtoonWhole",
-          webtonType: "CHALLENGE",
+          webtoonType: "CHALLENGE",
         },
       ],
       selectedMenuIndex: 0,
@@ -41,7 +41,12 @@ export default {
       totalOfficialCount: "",
     };
   },
-  created() {
+  watch: {
+    "$route.params.keyword"() {
+      location.reload();
+    },
+  },
+  mounted() {
     this.navActive();
     this.fetchSearchCount();
   },
@@ -66,8 +71,8 @@ export default {
           .push({
             name: menu.routerName,
             params: {
+              webtoonType: menu.webtoonType,
               keyword: this.keyword,
-              webtoonType: menu.webtonType,
             },
           })
           .catch(() => {});

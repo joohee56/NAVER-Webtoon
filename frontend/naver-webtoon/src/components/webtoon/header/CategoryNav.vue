@@ -16,7 +16,7 @@ export default {
     ...mapMutations("navStore", ["SET_CATEGORY_IS_ACTIVE"]),
     handleRouterClick(category, index) {
       this.SET_CATEGORY_IS_ACTIVE(index);
-      this.$router.push({ name: category.routerName });
+      this.$router.push({ name: category.routerName }).catch(() => {});
     },
   },
 };
