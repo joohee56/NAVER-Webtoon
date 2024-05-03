@@ -1,6 +1,6 @@
 <template lang="ko">
   <nav>
-		<button v-for="genre of genres"  @click="handleLinkClick(genre.value)" :class="{active:genre.isActive}">{{genre.title}}</button>
+		<button v-for="genre of genres"  @click="handleLinkClick(genre.value)" :class="{active:selected_genre === genre.value}">{{genre.title}}</button>
 	</nav>
 </template>
 
@@ -9,23 +9,25 @@ import { mapState, mapMutations } from "vuex";
 
 export default {
   computed: {
-    ...mapState("navStore", ["genres"]),
+    ...mapState("navStore", ["genres", "selected_genre"]),
   },
   methods: {
-    ...mapMutations("navStore", ["SET_GENRE_IS_ACTIVE"]),
+    ...mapMutations("navStore", ["SET_GENRE_ACTIVE"]),
 
     handleLinkClick(genre) {
-      this.SET_GENRE_IS_ACTIVE(genre);
+      this.SET_GENRE_ACTIVE(genre);
 
       if (genre == "ALL") {
         this.$router.push({ name: "challengeMain" });
       } else {
-        this.$router.push({
-          name: "genreView",
-          params: {
-            genre: genre,
-          },
-        });
+        this.$router
+          .push({
+            name: "genreView",
+            params: {
+              genre: genre,
+            },
+          })
+          .catch(() => {});
       }
     },
   },

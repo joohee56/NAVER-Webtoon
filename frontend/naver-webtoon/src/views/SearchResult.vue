@@ -6,7 +6,7 @@
 
 		<!-- nav -->
 		<nav>
-			<button v-for="(menu, index) in menues" :class="{active: selectedMenuIndex===index}" @click="handleMenuClick(menu, index)" :disabled="menu.count===0">{{menu.title}} ({{menu.count}})</button>
+			<button v-for="(menu, index) in menues" :class="{active: selectedIndex_search===index}" @click="handleMenuClick(menu, index)" :disabled="menu.count===0">{{menu.title}} ({{menu.count}})</button>
 		</nav>
 
 		<router-view></router-view>
@@ -15,7 +15,7 @@
 
 <script>
 import { getSearchCount } from "@/api/webtoon";
-import { mapMutations } from "vuex";
+import { mapMutations, mapState } from "vuex";
 
 export default {
   data() {
@@ -36,10 +36,12 @@ export default {
           webtoonType: "CHALLENGE",
         },
       ],
-      selectedMenuIndex: 0,
       totalChallengeCount: "",
       totalOfficialCount: "",
     };
+  },
+  computed: {
+    ...mapState("navStore", ["selectedIndex_search"]),
   },
   watch: {
     "$route.params.keyword"() {
@@ -47,16 +49,13 @@ export default {
     },
   },
   mounted() {
-    this.navActive();
+    this.SET_SEARCH_ACTIVE(0);
     this.fetchSearchCount();
   },
   methods: {
-    ...mapMutations("navStore", ["SET_CATEGORY_IS_ACTIVE"]),
-    navActive() {
-      // this.SET_CATEGORY_IS_ACTIVE("");
-    },
+    ...mapMutations("navStore", ["SET_SEARCH_ACTIVE"]),
     handleMenuClick(menu, index) {
-      this.selectedMenuIndex = index;
+      this.SET_SEARCH_ACTIVE(index);
       if (index === 0) {
         this.$router
           .push({

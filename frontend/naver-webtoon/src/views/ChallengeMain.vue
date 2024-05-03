@@ -19,9 +19,9 @@ export default {
     this.setGenreActive();
   },
   methods: {
-    ...mapMutations("navStore", ["SET_GENRE_IS_ACTIVE"]),
+    ...mapMutations("navStore", ["SET_GENRE_ACTIVE"]),
     setGenreActive() {
-      this.SET_GENRE_IS_ACTIVE("ALL");
+      this.SET_GENRE_ACTIVE("ALL");
     },
   },
 };

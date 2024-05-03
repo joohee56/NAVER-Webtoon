@@ -136,7 +136,7 @@ export default {
     this.setNavActive();
   },
   methods: {
-    ...mapMutations("navStore", ["SET_CATEGORY_IS_ACTIVE"]),
+    ...mapMutations("navStore", ["SET_CATEGORY_ACTIVE"]),
     setPreviewBtnDisable() {
       if (this.previewRangeStart === 0) {
         this.isPreviewLeftBtnDisabled = true;
@@ -222,9 +222,9 @@ export default {
     },
     setNavActive() {
       if (this.webtoonType == "official") {
-        this.SET_CATEGORY_IS_ACTIVE(0);
+        this.SET_CATEGORY_ACTIVE(0);
       } else {
-        this.SET_CATEGORY_IS_ACTIVE(1);
+        this.SET_CATEGORY_ACTIVE(1);
       }
     },
     moveToTop() {

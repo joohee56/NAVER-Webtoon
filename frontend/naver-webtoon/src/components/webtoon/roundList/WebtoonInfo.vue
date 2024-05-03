@@ -91,17 +91,14 @@ export default {
         console.log(error);
       }
     },
-    ...mapMutations("navStore", [
-      "SET_DAY_OF_WEEK_IS_ACTIVE",
-      "SET_GENRE_IS_ACTIVE",
-    ]),
+    ...mapMutations("navStore", ["SET_DAY_OF_WEEK_ACTIVE", "SET_GENRE_ACTIVE"]),
     setDayOfWeekNavActive() {
-      this.SET_DAY_OF_WEEK_IS_ACTIVE(
+      this.SET_DAY_OF_WEEK_ACTIVE(
         this.getDayOfWeekIndex(this.webtoonInfo.dayOfWeek)
       );
     },
     setGenreNavActive() {
-      this.SET_GENRE_IS_ACTIVE(this.webtoonInfo.genres[0].name);
+      this.SET_GENRE_ACTIVE(this.webtoonInfo.genres[0].name);
     },
     getDayOfWeekIndex(value) {
       switch (value) {

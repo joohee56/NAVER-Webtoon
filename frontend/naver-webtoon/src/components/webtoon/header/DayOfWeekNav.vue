@@ -1,6 +1,6 @@
 <template lang="ko">
 	<nav>
-		<button v-for="(dayOfWeek, index) in dayOfWeeks"  @click="handleLinkClick(index)" :class="{active:dayOfWeek.isActive}">{{dayOfWeek.title}}</button>
+		<button v-for="(dayOfWeek, index) in dayOfWeeks"  @click="handleLinkClick(index)" :class="{active:selectedIndex_dayOfWeek===index}">{{dayOfWeek.title}}</button>
 	</nav>
 </template>
 
@@ -9,21 +9,23 @@ import { mapMutations, mapState } from "vuex";
 
 export default {
   computed: {
-    ...mapState("navStore", ["dayOfWeeks"]),
+    ...mapState("navStore", ["dayOfWeeks", "selectedIndex_dayOfWeek"]),
   },
   methods: {
-    ...mapMutations("navStore", ["SET_DAY_OF_WEEK_IS_ACTIVE"]),
+    ...mapMutations("navStore", ["SET_DAY_OF_WEEK_ACTIVE"]),
 
     handleLinkClick(index) {
-      this.SET_DAY_OF_WEEK_IS_ACTIVE(index);
+      this.SET_DAY_OF_WEEK_ACTIVE(index);
 
       if (index == 0) {
         this.$router.push({ name: "main" });
       } else {
-        this.$router.push({
-          name: "dayOfWeek",
-          params: { dayOfWeek: this.dayOfWeeks[index].value },
-        });
+        this.$router
+          .push({
+            name: "dayOfWeek",
+            params: { dayOfWeek: this.dayOfWeeks[index].value },
+          })
+          .catch(() => {});
       }
     },
   },

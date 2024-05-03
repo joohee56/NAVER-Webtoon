@@ -3,7 +3,9 @@
     <!-- 웹툰 -->
 		<div v-if="totalOfficialCount > 0">
 			<div class="title-wrap">
-        <span class="category">웹툰</span> <span class="count">총 {{totalOfficialCount}}</span> <router-link to="#" v-if="totalOfficialCount > limit" class="more-link">웹툰 더보기 <i class="fa-solid fa-chevron-right"></i></router-link>
+        <span class="category">웹툰</span>
+        <span class="count"> 총 {{totalOfficialCount}}</span>
+        <router-link :to="{name: 'webtoonWhole', params: {webtoonType: 'OFFICIAL', keyword: keyword}}" v-if="totalOfficialCount > limit" class="more-link">웹툰 더보기 <i class="fa-solid fa-chevron-right"></i></router-link>
       </div>
 			<div class="result-wrap">
 				<WebtoonComp v-for="(official, index) in officials" :webtoon=official webtoonType="official" :key="index"></WebtoonComp>
@@ -13,7 +15,9 @@
     <!-- 도전만화 -->
     <div v-if="totalChallengeCount > 0">
 			<div class="title-wrap">
-        <span class="category">도전만화</span> <span class="count">총 {{totalChallengeCount}}</span> <router-link to="#" v-if="totalChallengeCount > limit" class="more-link">도전만화 더보기 <i class="fa-solid fa-chevron-right"></i></router-link>
+        <span class="category">도전만화</span> 
+        <span class="count"> 총 {{totalChallengeCount}}</span> 
+        <router-link :to="{name: 'webtoonWhole', params: {webtoonType: 'CHALLENGE', keyword: keyword}}" v-if="totalChallengeCount > limit" class="more-link">도전만화 더보기 <i class="fa-solid fa-chevron-right"></i></router-link>
       </div>
 			<div class="result-wrap">
 				<WebtoonComp v-for="(cahllenge, index) in challenges" :webtoon=cahllenge webtoonType="challenge" :key="index"></WebtoonComp>

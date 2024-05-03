@@ -20,12 +20,12 @@ export default {
   },
   methods: {
     ...mapMutations("navStore", [
-      "SET_CATEGORY_IS_ACTIVE",
-      "SET_DAY_OF_WEEK_IS_ACTIVE",
+      "SET_CATEGORY_ACTIVE",
+      "SET_DAY_OF_WEEK_ACTIVE",
     ]),
     navActive() {
-      this.SET_CATEGORY_IS_ACTIVE(0);
-      this.SET_DAY_OF_WEEK_IS_ACTIVE(0);
+      this.SET_CATEGORY_ACTIVE(0);
+      this.SET_DAY_OF_WEEK_ACTIVE(0);
     },
   },
 };

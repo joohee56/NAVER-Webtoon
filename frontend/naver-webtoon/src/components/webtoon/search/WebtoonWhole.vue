@@ -17,6 +17,7 @@
 <script>
 import WebtoonComp from "@/components/webtoon/search/WebtoonComp.vue";
 import { getSearchWebtoon } from "@/api/webtoon";
+import { mapMutations } from "vuex";
 
 export default {
   data() {
@@ -59,9 +60,15 @@ export default {
   },
   async created() {
     await this.fetchSearchResult(0);
+    if (this.webtoonType === "OFFICIAL") {
+      this.SET_SEARCH_ACTIVE(1);
+    } else {
+      this.SET_SEARCH_ACTIVE(2);
+    }
     this.paging.startPage = 1;
   },
   methods: {
+    ...mapMutations("navStore", ["SET_SEARCH_ACTIVE"]),
     async fetchSearchResult(offset) {
       const response = await getSearchWebtoon(
         this.keyword,

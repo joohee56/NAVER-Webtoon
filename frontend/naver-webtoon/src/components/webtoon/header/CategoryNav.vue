@@ -1,6 +1,6 @@
 <template lang="ko">
   <div class="container">
-    <button class="category-nav" v-for="(category, index) in categorys" :class="{active:category.isActive}" @click="handleRouterClick(category, index)">{{category.title}}</button>
+    <button class="category-nav" v-for="(category, index) in categorys" :class="{active:selectedIndex_category === index}" @click="handleRouterClick(category, index)">{{category.title}}</button>
     <router-link :to="{name: 'creatorDashboard'}" class="creator-btn">CREATOR'S</router-link>
   </div>  
 </template>
@@ -10,12 +10,12 @@ import { mapMutations, mapState } from "vuex";
 
 export default {
   computed: {
-    ...mapState("navStore", ["categorys"]),
+    ...mapState("navStore", ["categorys", "selectedIndex_category"]),
   },
   methods: {
-    ...mapMutations("navStore", ["SET_CATEGORY_IS_ACTIVE"]),
+    ...mapMutations("navStore", ["SET_CATEGORY_ACTIVE"]),
     handleRouterClick(category, index) {
-      this.SET_CATEGORY_IS_ACTIVE(index);
+      this.SET_CATEGORY_ACTIVE(index);
       this.$router.push({ name: category.routerName }).catch(() => {});
     },
   },
