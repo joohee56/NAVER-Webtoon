@@ -286,17 +286,17 @@ public class DataLoader implements ApplicationRunner {
         genreEnums = new ArrayList<>();
         genreEnums.add(GenreEnum.EMOTION);
         genreEnums.add(GenreEnum.DAILY_LIFE);
-        initWebtoon(Long.valueOf(5), "태권 반갑습니다!", WebtoonCategory.EPISODE, genreEnums, "", "우당탕탕 오늘도 평화로운 태권도장 이야기", "태권 반갑습니다_커버.png");
+        initWebtoon(Long.valueOf(2), "태권 반갑습니다!", WebtoonCategory.EPISODE, genreEnums, "", "우당탕탕 오늘도 평화로운 태권도장 이야기", "태권 반갑습니다_커버.png");
 
         genreEnums = new ArrayList<>();
         genreEnums.add(GenreEnum.FANTASY);
         genreEnums.add(GenreEnum.DAILY_LIFE);
-        initWebtoon(Long.valueOf(5), "외계에서 온 지구인", WebtoonCategory.EPISODE, genreEnums, "", "평범하디 평범한 고등학생 이은조. 딱 하나 특별한 점이 있다면.....집에 돌아가면 밥을 차려주는 부모님, 아니 외계인이 있다는 점이다!", "외계에서 온 지구인_커버.png");
+        initWebtoon(Long.valueOf(2), "외계에서 온 지구인", WebtoonCategory.EPISODE, genreEnums, "", "평범하디 평범한 고등학생 이은조. 딱 하나 특별한 점이 있다면.....집에 돌아가면 밥을 차려주는 부모님, 아니 외계인이 있다는 점이다!", "외계에서 온 지구인_커버.png");
 
         genreEnums = new ArrayList<>();
         genreEnums.add(GenreEnum.COMEDY);
         genreEnums.add(GenreEnum.DAILY_LIFE);
-        initWebtoon(Long.valueOf(5), "고고고", WebtoonCategory.EPISODE, genreEnums, "", "\"너, 내 집사가 되어라!\" 어느 날 갑자기 고양이 세 마리의 간택을 받게 된 집사! 겉모습만큼 성격도 가지각색인 고양이 세 마리와 집사의 털 날리는 일상 이야기. 주 1회 자유연재 / 인스타 @kkyul_jmt / 메일 ehowlgldus@naver.com", "고고고_커버.png");
+        initWebtoon(Long.valueOf(2), "고고고", WebtoonCategory.EPISODE, genreEnums, "", "\"너, 내 집사가 되어라!\" 어느 날 갑자기 고양이 세 마리의 간택을 받게 된 집사! 겉모습만큼 성격도 가지각색인 고양이 세 마리와 집사의 털 날리는 일상 이야기. 주 1회 자유연재 / 인스타 @kkyul_jmt / 메일 ehowlgldus@naver.com", "고고고_커버.png");
 
         genreEnums = new ArrayList<>();
         genreEnums.add(GenreEnum.FANTASY);

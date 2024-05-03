@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import java.util.List;
 import jh.naverwebtoon.db.domain.enums.GenreEnum;
 import jh.naverwebtoon.db.domain.enums.SortingEnum;
+import jh.naverwebtoon.db.domain.enums.WebtoonType;
 import jh.naverwebtoon.db.domain.webtoon.Webtoon;
 import jh.naverwebtoon.dto.request.CreateWebtoonReq;
 import jh.naverwebtoon.dto.response.FindChallengeWebtoonByGenre;
@@ -13,6 +14,7 @@ import jh.naverwebtoon.dto.response.FindWebtoonDetailRes;
 import jh.naverwebtoon.dto.response.FindWebtoonsByMemberRes;
 import jh.naverwebtoon.dto.response.SearchCountRes;
 import jh.naverwebtoon.dto.response.SearchRes;
+import jh.naverwebtoon.dto.response.SearchWebtoonDto;
 import jh.naverwebtoon.service.WebtoonGenreService;
 import jh.naverwebtoon.service.WebtoonService;
 import jh.naverwebtoon.web.Auth;
@@ -94,6 +96,14 @@ public class WebtoonController {
     @GetMapping("/search")
     public SearchRes search(@RequestParam("keyword") String keyword, @RequestParam("offset") int offset, @RequestParam("limit") int limit) {
         return webtoonService.search(keyword, offset, limit);
+    }
+
+    /**
+     * 웹툰 타입별 검색 (웹툰, 도전만화)
+     */
+    @GetMapping("/search/webtoon")
+    public List<SearchWebtoonDto> search(@RequestParam("keyword") String keyword, @RequestParam("webtoonType")WebtoonType webtoonType, @RequestParam("offset") int offset, @RequestParam("limit") int limit) {
+        return webtoonService.searchAllByWebtoonType(keyword, webtoonType, offset, limit);
     }
 
     /**
