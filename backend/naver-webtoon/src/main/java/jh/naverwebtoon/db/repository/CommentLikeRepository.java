@@ -33,6 +33,13 @@ public class CommentLikeRepository {
                 .executeUpdate();
     }
 
+    public int delete(Long commentId) {
+        return em.createQuery("delete from CommentLike cl"
+                        + " where cl.comment.id = :commentId")
+                .setParameter("commentId", commentId)
+                .executeUpdate();
+    }
+
     public Long findTotalCountByCommentId(Long commentId) {
         return em.createQuery("select count(cl) from CommentLike cl"
                 + " where cl.comment.id = :commentId", Long.class)

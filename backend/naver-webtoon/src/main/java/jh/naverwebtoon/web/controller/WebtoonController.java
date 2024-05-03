@@ -99,7 +99,7 @@ public class WebtoonController {
     }
 
     /**
-     * 웹툰 타입별 검색 (웹툰, 도전만화)
+     * 웹툰 타입별 검색 (정식연재, 도전만화)
      */
     @GetMapping("/search/webtoon")
     public List<SearchWebtoonDto> search(@RequestParam("keyword") String keyword, @RequestParam("webtoonType")WebtoonType webtoonType, @RequestParam("offset") int offset, @RequestParam("limit") int limit) {

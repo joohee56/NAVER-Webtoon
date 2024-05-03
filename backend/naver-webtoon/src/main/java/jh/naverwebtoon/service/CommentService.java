@@ -4,6 +4,8 @@ import java.util.List;
 import jh.naverwebtoon.db.domain.Comment;
 import jh.naverwebtoon.db.domain.Member;
 import jh.naverwebtoon.db.domain.Round;
+import jh.naverwebtoon.db.repository.CommentDislikeRepository;
+import jh.naverwebtoon.db.repository.CommentLikeRepository;
 import jh.naverwebtoon.db.repository.CommentRepository;
 import jh.naverwebtoon.db.repository.MemberRepository;
 import jh.naverwebtoon.db.repository.RoundRepository;
@@ -20,6 +22,8 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private final MemberRepository memberRepository;
     private final RoundRepository roundRepository;
+    private final CommentLikeRepository commentLikeRepository;
+    private final CommentDislikeRepository commentDislikeRepository;
 
     @Transactional
     public Long save(Long memberId, CreateCommentReq createCommentReq) {
@@ -36,6 +40,11 @@ public class CommentService {
         if (comment.getMember().getId() != memberId) {
             throw new IllegalStateException("잘못된 접근입니다.");
         }
+
+        //연관된 엔티티 우선 삭제
+        commentLikeRepository.delete(commentId);
+        commentDislikeRepository.delete(commentId);
+
         return commentRepository.delete(commentId);
     }
 
