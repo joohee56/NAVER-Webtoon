@@ -7,7 +7,7 @@ import jh.naverwebtoon.db.domain.enums.SortingEnum;
 import jh.naverwebtoon.db.domain.enums.WebtoonType;
 import jh.naverwebtoon.db.domain.webtoon.Webtoon;
 import jh.naverwebtoon.dto.request.CreateWebtoonReq;
-import jh.naverwebtoon.dto.response.FindChallengeWebtoonByGenre;
+import jh.naverwebtoon.dto.response.FindChallengeWebtoonsByGenreRes;
 import jh.naverwebtoon.dto.response.FindChallengeWebtoonsRes;
 import jh.naverwebtoon.dto.response.FindCreateRoundInfoRes;
 import jh.naverwebtoon.dto.response.FindWebtoonDetailRes;
@@ -78,8 +78,8 @@ public class WebtoonController {
      * 장르별 전체 도전웹툰 조회
      */
     @GetMapping("/genres/{genre}")
-    public List<FindChallengeWebtoonByGenre> findChallengeWebtoonAllByGenre(@PathVariable("genre") GenreEnum genre, @RequestParam("sorting") SortingEnum sorting) {
-        return webtoonGenreService.findChallengeWebtoonAllByGenre(genre, sorting);
+    public FindChallengeWebtoonsByGenreRes findChallengeWebtoonAllByGenre(@PathVariable("genre") GenreEnum genre, @RequestParam("sorting") SortingEnum sorting, @RequestParam("offset") int offset, @RequestParam("limit") int limit) {
+        return webtoonGenreService.findChallengeWebtoonAllByGenre(genre, sorting, offset, limit);
     }
 
     /**

@@ -8,6 +8,6 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class FindChallengeWebtoonsRes {
-    private Map<String, List<FindChallengeWebtoonByGenre>> webtoonMap;
+    private Map<String, List<WebtoonByGenreDto>> webtoonMap;
     private Integer totalPageCount;
 }

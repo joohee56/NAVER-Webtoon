@@ -5,7 +5,7 @@ import java.util.List;
 import jh.naverwebtoon.db.domain.enums.GenreEnum;
 import jh.naverwebtoon.db.domain.enums.SortingEnum;
 import jh.naverwebtoon.db.domain.enums.WebtoonType;
-import jh.naverwebtoon.dto.response.FindChallengeWebtoonByGenre;
+import jh.naverwebtoon.dto.response.WebtoonByGenreDto;
 import jh.naverwebtoon.dto.response.FindOfficialWebtoonsRes;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,9 +42,9 @@ class WebtoonGenreRepositoryTest {
 
     @Test
     void 도전만화_조회() {
-        List<FindChallengeWebtoonByGenre> challengeWebtoons = webtoonGenreRepository.findChallengeWebtoonList(GenreEnum.ROMANCE,
+        List<WebtoonByGenreDto> challengeWebtoons = webtoonGenreRepository.findChallengeWebtoonList(GenreEnum.ROMANCE,
                 SortingEnum.POPULARITY, 0, 5);
-        for (FindChallengeWebtoonByGenre challengeWebtoon : challengeWebtoons) {
+        for (WebtoonByGenreDto challengeWebtoon : challengeWebtoons) {
             System.out.println(challengeWebtoon.toString());
         }
     }

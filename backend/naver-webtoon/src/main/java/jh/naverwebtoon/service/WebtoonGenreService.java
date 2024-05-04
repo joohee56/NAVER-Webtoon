@@ -7,7 +7,8 @@ import jh.naverwebtoon.db.domain.enums.GenreEnum;
 import jh.naverwebtoon.db.domain.enums.SortingEnum;
 import jh.naverwebtoon.db.domain.enums.WebtoonType;
 import jh.naverwebtoon.db.repository.WebtoonGenreRepository;
-import jh.naverwebtoon.dto.response.FindChallengeWebtoonByGenre;
+import jh.naverwebtoon.dto.response.FindChallengeWebtoonsByGenreRes;
+import jh.naverwebtoon.dto.response.WebtoonByGenreDto;
 import jh.naverwebtoon.dto.response.FindChallengeWebtoonsRes;
 import jh.naverwebtoon.dto.response.FindOfficialWebtoonsRes;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +34,7 @@ public class WebtoonGenreService {
      * 장르별 웹툰, 전체 페이지 갯수
      */
     public FindChallengeWebtoonsRes findChallengeWebtoonAll(int offset, int limit, SortingEnum sorting) {
-        Map<String, List<FindChallengeWebtoonByGenre>> webtoons = new HashMap<>();
+        Map<String, List<WebtoonByGenreDto>> webtoons = new HashMap<>();
         Long maxTotalCount = Long.valueOf(0);
         for (GenreEnum genreEnum : GenreEnum.values()) {
             webtoons.put(genreEnum.name(), webtoonGenreRepository.findChallengeWebtoonList(genreEnum, sorting, offset, limit));
@@ -48,7 +49,10 @@ public class WebtoonGenreService {
     /**
      * 장르별 전체 도전만화 조회
      */
-    public List<FindChallengeWebtoonByGenre> findChallengeWebtoonAllByGenre(GenreEnum genre, SortingEnum sorting) {
-        return webtoonGenreRepository.findChallengeWebtoonList(genre, sorting, 0, 100);
+    public FindChallengeWebtoonsByGenreRes findChallengeWebtoonAllByGenre(GenreEnum genre, SortingEnum sorting, int offset, int limit) {
+        List<WebtoonByGenreDto> webtoons = webtoonGenreRepository.findChallengeWebtoonList(genre, sorting, offset, limit);
+        Long totalWebtoonCount = webtoonGenreRepository.findTotalCountByGenre(genre, WebtoonType.CHALLENGE);
+        int pageCount = totalWebtoonCount == 0 ? 1 : (int) Math.ceil((double)totalWebtoonCount / limit);
+        return new FindChallengeWebtoonsByGenreRes(webtoons, pageCount);
     }
 }

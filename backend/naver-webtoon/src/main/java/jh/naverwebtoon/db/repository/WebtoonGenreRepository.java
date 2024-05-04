@@ -5,7 +5,7 @@ import java.util.List;
 import jh.naverwebtoon.db.domain.enums.GenreEnum;
 import jh.naverwebtoon.db.domain.enums.SortingEnum;
 import jh.naverwebtoon.db.domain.enums.WebtoonType;
-import jh.naverwebtoon.dto.response.FindChallengeWebtoonByGenre;
+import jh.naverwebtoon.dto.response.WebtoonByGenreDto;
 import jh.naverwebtoon.dto.response.FindOfficialWebtoonsRes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -19,8 +19,8 @@ public class WebtoonGenreRepository {
      * 도전웹툰 장르별 웹툰 조회 (페이징)
      * 인기순 / 업데이트순 정렬
      */
-    public List<FindChallengeWebtoonByGenre> findChallengeWebtoonList(GenreEnum genre, SortingEnum sorting, int offset, int limit) {
-        String sql = "select distinct new jh.naverwebtoon.dto.response.FindChallengeWebtoonByGenre(wg.webtoon"
+    public List<WebtoonByGenreDto> findChallengeWebtoonList(GenreEnum genre, SortingEnum sorting, int offset, int limit) {
+        String sql = "select distinct new jh.naverwebtoon.dto.response.WebtoonByGenreDto(wg.webtoon"
                 + ", (select count(r) from Round r where function('date_format', r.createdAt, \"%Y-%m-%d\") = current_date() and r.webtoon = wg.webtoon) as roundUpdateCount"  //회차 업데이트 여부
                 + ", (select count(rl) as likeCount from RoundLike rl where rl.round.id in (select roundId from (select r.id as roundId from Round r where r.webtoon=wg.webtoon order by r.createdAt desc limit 10) as sub)) as totalLikeCount"
                 + ", (select max(r.createdAt) from Round r where r.webtoon=wg.webtoon) as updatedAt"
@@ -34,7 +34,7 @@ public class WebtoonGenreRepository {
             sql += " order by updatedAt desc";
         }
 
-        return em.createQuery(sql, FindChallengeWebtoonByGenre.class)
+        return em.createQuery(sql, WebtoonByGenreDto.class)
                 .setParameter("genre", genre)
                 .setParameter("webtoonType", WebtoonType.CHALLENGE)
                 .setFirstResult(offset)
