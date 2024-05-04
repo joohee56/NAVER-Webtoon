@@ -3,16 +3,10 @@
 
     <div class="subject-wrap">
       <div class="title">가장 핫한 웹툰만 모아봤어요!</div>
-      <div class="filter">
-        <button class="active">전체</button> ·
-        <button>여성</button> ·
-        <button>남성</button>
-      </div>
-      <div class="update-time">{{updatedAt}} 기준</div>
+      <div class="update-time" v-if="updatedAt !=''">{{updatedAt}} 기준</div>
     </div>
 
     <div class="box-container">
-
       <div v-if="rankings.length === 0">
         <div class="no-ranking-description-text">조회할 랭킹이 없습니다.</div>
       </div>
@@ -25,9 +19,9 @@
             
             <div class="thumbnail-ranking-wrap">
               <div class="cover-image">
-                <!-- <router-link :to="{name:this.webtoonType.toLowerCase()+'RoundList', params: {webtoonId: ranking.webtoonId}}"> -->
+                <router-link :to="{name:ranking.webtoonType.toLowerCase()+'RoundList', params: {webtoonId: ranking.webtoonId}}">
                   <img :src="require(`@/assets/image/${ranking.thumbnail}`)">
-                <!-- </router-link> -->
+                </router-link>
               </div>
               <div class="ranking-num-status-wrap">
                 <div class="ranking-status">
@@ -40,7 +34,12 @@
             </div>
             
             <div class="info-wrap">
-              <div class="title overflow-hidden">{{ranking.webtoonName}}</div>
+              
+              <div class="title overflow-hidden">
+                <router-link :to="{name:ranking.webtoonType.toLowerCase()+'RoundList', params: {webtoonId: ranking.webtoonId}}">
+                  {{ranking.webtoonName}}
+                </router-link>
+              </div>
               <div class="genre">
                 <span v-for="genre in ranking.genres">{{genre}} </span>
               </div>
@@ -67,7 +66,7 @@ import { getWebtoonRanking } from "@/api/webtoon";
 export default {
   data() {
     return {
-      rankings: [], //webtoonId, webtoonName, thumbnail, totalLikeCount, rankingStatus, genres, rankingNum
+      rankings: [], //webtoonId, webtoonName, thumbnail, webtoonType, totalLikeCount, rankingStatus, genres, rankingNum
       updatedAt: "",
       rankingStartIndex: "",
       rankingLimit: 7,
@@ -170,6 +169,9 @@ ul {
 }
 a {
   cursor: pointer;
+}
+a:hover {
+  text-decoration: underline;
 }
 .ranking-container {
   padding: 50px 0 60px;

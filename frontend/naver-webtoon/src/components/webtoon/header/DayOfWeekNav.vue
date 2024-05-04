@@ -18,7 +18,7 @@ export default {
       this.SET_DAY_OF_WEEK_ACTIVE(index);
 
       if (index == 0) {
-        this.$router.push({ name: "main" });
+        this.$router.push({ name: "main" }).catch(() => {});
       } else {
         this.$router
           .push({
