@@ -17,7 +17,7 @@
       <ThumbnailComp v-for="(webtoon, key, index) in webtoons" :key=key :headerTitle=genreTitle[index] :webtoons=webtoon></ThumbnailComp>
 		</div>
 
-    <!-- 페이지 -->
+    <!-- 페이징 -->
     <div class="paging-btn-wrap">
       <button :disabled="paging.isBeforePageBtnDisabled" @click="clickBeforePage"><i class="fa-solid fa-angle-left before-page-btn"></i></button>
       <div class="paging-btn">

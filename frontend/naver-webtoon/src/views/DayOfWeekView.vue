@@ -27,6 +27,30 @@ export default {
       webtoons: [],
     };
   },
+  computed: {
+    subjectTitle() {
+      switch (this.dayOfWeek) {
+        case "MONDAY":
+          return "월요";
+        case "TUESDAY":
+          return "화요";
+        case "WEDNESDAY":
+          return "수요";
+        case "THURSDAY":
+          return "목요";
+        case "FRIDAY":
+          return "금요";
+        case "SATURDAY":
+          return "토요";
+        case "SUNDAY":
+          return "일요";
+      }
+      return "오류";
+    },
+  },
+  components: {
+    WebtoonContainer,
+  },
   watch: {
     "$route.params.dayOfWeek"() {
       location.reload();
@@ -55,30 +79,6 @@ export default {
         console.log(error);
       }
     },
-  },
-  computed: {
-    subjectTitle() {
-      switch (this.dayOfWeek) {
-        case "MONDAY":
-          return "월요";
-        case "TUESDAY":
-          return "화요";
-        case "WEDNESDAY":
-          return "수요";
-        case "THURSDAY":
-          return "목요";
-        case "FRIDAY":
-          return "금요";
-        case "SATURDAY":
-          return "토요";
-        case "SUNDAY":
-          return "일요";
-      }
-      return "오류";
-    },
-  },
-  components: {
-    WebtoonContainer,
   },
 };
 </script>

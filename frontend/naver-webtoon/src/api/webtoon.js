@@ -92,11 +92,13 @@ async function getChallengeWebtoonAll(offset, limit, sorting) {
   }
 }
 
-async function getChallengeWebtoonByGenre(genre, sorting) {
+async function getChallengeWebtoonByGenre(genre, sorting, offset, limit) {
   try {
     const response = await jsonApi.get(`/webtoon/genres/${genre}`, {
       params: {
         sorting: sorting,
+        offset: offset,
+        limit: limit,
       },
     });
     return response;
