@@ -39,7 +39,7 @@ public class WebtoonRankingRepository {
     public List<FindNewRanking> findRankingsByRecentRounds(int offset, int limit, WebtoonType webtoonType) {
 
         return em.createQuery("select distinct new jh.naverwebtoon.dto.response.FindNewRanking(w.id"
-                        + ", (select count(rl) as likeCount from RoundLike rl where rl.round.id in (select roundId from (select r.id as roundId from Round r where r.webtoon=w order by r.createdAt desc limit 10) as sub)) as TotalLikeCount"
+                        + ", (select count(rl) as likeCount from RoundLike rl where rl.round.id in (select roundId from (select r.id as roundId from Round r where r.webtoon=w order by r.createdAt desc limit 14) as sub)) as TotalLikeCount"
                         + ") from Webtoon w"
                         + " where w.webtoonType=:webtoonType"
                         + " order by TotalLikeCount desc", FindNewRanking.class)
