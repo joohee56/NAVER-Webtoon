@@ -18,7 +18,7 @@ export default {
       this.SET_GENRE_ACTIVE(genre);
 
       if (genre == "ALL") {
-        this.$router.push({ name: "challengeMain" });
+        this.$router.push({ name: "challengeMain" }).catch(() => {});
       } else {
         this.$router
           .push({

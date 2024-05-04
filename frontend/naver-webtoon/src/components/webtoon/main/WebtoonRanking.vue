@@ -2,7 +2,7 @@
 	<div class="ranking-container">
 
     <div class="subject-wrap">
-      <div class="title">실시간 인기 웹툰</div>
+      <div class="title">가장 핫한 웹툰만 모아봤어요!</div>
       <div class="filter">
         <button class="active">전체</button> ·
         <button>여성</button> ·
@@ -12,38 +12,49 @@
     </div>
 
     <div class="box-container">
+
       <div v-if="rankings.length === 0">
         <div class="no-ranking-description-text">조회할 랭킹이 없습니다.</div>
       </div>
+
       <div v-if="rankings.length !== 0" class="box-container-inner">
-        <button class="ranking-arrow-btn" style="cursor: pointer;" @click="clickLeftRankingBtn" v-if="!isLeftBtnDisabled"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="ranking-arrow-btn" @click="clickLeftRankingBtn" v-if="!isLeftBtnDisabled"><i class="fa-solid fa-chevron-left"></i></button>
+        
         <ul class="webtoon-list">
           <li class="webtoon-item-wrap" v-for="(ranking, index) in rankings">
-            <div class="ranking-num-wrap">
-              <div class="rank-num">{{ranking.rankingNum}}</div>
-              <div class="ranking-status-image-wrap">
-                <img class="ranking-status-image" :src="require(`@/assets/image/ranking-status-${ranking.rankingStatus}.png`)">
+            
+            <div class="thumbnail-ranking-wrap">
+              <div class="cover-image">
+                <!-- <router-link :to="{name:this.webtoonType.toLowerCase()+'RoundList', params: {webtoonId: ranking.webtoonId}}"> -->
+                  <img :src="require(`@/assets/image/${ranking.thumbnail}`)">
+                <!-- </router-link> -->
+              </div>
+              <div class="ranking-num-status-wrap">
+                <div class="ranking-status">
+                  <i class="fa-solid fa-play up" v-if="ranking.rankingStatus==='up'"></i> 
+                  <i class="fa-solid fa-play down" v-if="ranking.rankingStatus==='down'"></i>
+                  <i class="fa-solid fa-minus" v-if="ranking.rankingStatus==='unchanging'"></i>
+                </div>
+                <div class="ranking-num">{{ranking.rankingNum}}</div>
               </div>
             </div>
-            <div class="cover-image">
-              <router-link :to="{name:this.webtoonType.toLowerCase()+'RoundList', params: {webtoonId: ranking.webtoonId}}">
-                <img :src="require(`@/assets/image/${ranking.thumbnail}`)">
-              </router-link>
-            </div>
+            
             <div class="info-wrap">
+              <div class="title overflow-hidden">{{ranking.webtoonName}}</div>
+              <div class="genre">
+                <span v-for="genre in ranking.genres">{{genre}} </span>
+              </div>
               <div class="like-cnt">
                 <i class="fa-solid fa-heart"></i>
                 <div>&nbsp;{{ranking.totalLikeCount}}</div>
               </div>
-              <div class="title">{{ranking.webtoonName}}</div>
-              <div class="genre">
-                <span v-for="genre in ranking.genres">{{genre}} </span>
-              </div>
             </div>
           </li>
         </ul>
-        <button class="ranking-arrow-btn" style="cursor: pointer;" @click="clickRightRankingBtn" v-if="!isRightBtnDisabled"><i class="fa-solid fa-chevron-right"></i></button>
+        
+        <button class="ranking-arrow-btn" @click="clickRightRankingBtn" v-if="!isRightBtnDisabled"><i class="fa-solid fa-chevron-right"></i></button>
       </div>
+
 		</div>
 	</div>
 </template>
@@ -59,7 +70,7 @@ export default {
       rankings: [], //webtoonId, webtoonName, thumbnail, totalLikeCount, rankingStatus, genres, rankingNum
       updatedAt: "",
       rankingStartIndex: "",
-      rankingLimit: 5,
+      rankingLimit: 7,
       isRightBtnDisabled: false,
       isLeftBtnDisabled: false,
     };
@@ -194,14 +205,6 @@ button {
   color: #00dc64;
 }
 
-/* 웹툰 리스트 */
-.box-container {
-  border: #e8e8e8 solid 0.5px;
-  border-radius: 6px;
-  padding: 20px 20px;
-  display: flex;
-  box-shadow: 5px 1px 8px 0 rgba(0, 0, 0, 0.08);
-}
 .box-container-inner {
   display: flex;
   width: 100%;
@@ -212,63 +215,93 @@ button {
   font-size: 18px;
   padding: 15px 15px;
 }
+
+/* 웹툰 리스트 */
 .webtoon-list {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(7, 1fr);
   justify-items: left;
   column-gap: 10px;
   padding: 0 10px;
   width: 100%;
 }
-.webtoon-list .webtoon-item-wrap {
-  display: flex;
-}
-/* 화살표 버튼 */
-.ranking-arrow-btn {
-  font-size: 20px;
-  font-weight: 800;
-}
 
-/* 랭킹 숫자 */
-.ranking-num-wrap {
-  margin-top: auto;
-  text-align: center;
-  margin-right: 15px;
-}
-.rank-num {
-  font-size: 55px;
-  font-weight: 700;
-  line-height: 60px;
-  font-style: italic;
-}
-.ranking-status-image-wrap {
-  display: flex;
-}
-.ranking-status-image {
-  width: 17px;
-  /* margin-left: auto; */
-  /* text-align: center; */
-  margin: 0 auto;
+.thumbnail-ranking-wrap {
+  position: relative;
 }
 
 /* 커버이미지 */
-.cover-image {
-  margin-right: 8px;
-  box-shadow: 5px 1px 8px 0 rgba(0, 0, 0, 0.08);
-}
 .cover-image img {
-  width: 100px;
+  width: 150px;
   aspect-ratio: 480 / 623;
-  border-radius: 3px;
+  border-radius: 4px;
+  border: 1px solid #dbdbdb;
   height: 100%;
+}
+
+/* 랭킹 숫자 */
+.ranking-num-status-wrap {
+  position: absolute;
+  top: 155px;
+}
+
+.ranking-num {
+  font-size: 60px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 800;
+  text-shadow: -1px 0px white, 0px 1px white, 1px 0px white, 0px -1px white;
+  display: inline-block;
+  width: 50px;
+  text-align: center;
+  line-height: 55px;
+}
+
+/* 상승,하강,변동없음 아이콘 */
+.ranking-status {
+  width: 50px;
+  text-align: center;
+}
+.ranking-status i {
+  text-shadow: -1px 0px white, 0px 1px white, 1px 0px white, 0px -1px white;
+}
+.ranking-status .fa-minus {
+  color: #c6c6c6;
+  font-weight: 800;
+}
+.ranking-status .up {
+  color: #ff4d56;
+  font-size: 15px;
+  transform: rotate(-90deg);
+}
+.ranking-status .down {
+  color: #7fc6fe;
+  font-size: 15px;
+  transform: rotate(90deg);
 }
 
 /* 웹툰 정보 */
 .info-wrap {
+  margin-top: 35px;
   font-family: AppleSDGothicNeoEB;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr auto;
+}
+.title-raking-status-wrap {
+  display: flex;
+}
+.info-wrap .title {
+  font-size: 16px;
+  margin-right: 5px;
+}
+
+/* 장르 */
+.info-wrap .genre {
+  font-size: 13px;
+  color: #7c7c7c;
+}
+.genre span:not(:last-child)::after {
+  content: "/";
 }
 .like-cnt {
   color: #ff4d56;
@@ -280,19 +313,20 @@ button {
   font-size: 12px;
   margin: auto 0;
 }
-.info-wrap .title {
-  font-size: 16px;
-}
-.info-wrap .genre {
-  font-size: 13px;
-  color: #7c7c7c;
-}
-.genre span:not(:last-child)::after {
-  content: "/";
-}
 .overflow-hidden {
   white-space: nowrap; /* 줄 바꿈 방지 */
   overflow: hidden; /* 넘치는 부분 숨김 */
   text-overflow: ellipsis; /* 넘치는 부분에 ... 추가 */
+}
+
+/* 화살표 버튼 */
+.ranking-arrow-btn {
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: 0px 5px 5px 1px rgba(0, 0, 0, 0.068);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-top: 80px;
 }
 </style>
