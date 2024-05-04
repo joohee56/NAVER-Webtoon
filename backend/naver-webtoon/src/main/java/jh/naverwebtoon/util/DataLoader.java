@@ -14,12 +14,14 @@ import jh.naverwebtoon.db.domain.Round;
 import jh.naverwebtoon.db.domain.RoundLike;
 import jh.naverwebtoon.db.domain.RoundThumbnail;
 import jh.naverwebtoon.db.domain.UploadImage;
+import jh.naverwebtoon.db.domain.WebtoonRanking;
 import jh.naverwebtoon.db.domain.WebtoonThumbnail;
 import jh.naverwebtoon.db.domain.commentReaction.CommentDislike;
 import jh.naverwebtoon.db.domain.commentReaction.CommentLike;
 import jh.naverwebtoon.db.domain.enums.CountryResidence;
 import jh.naverwebtoon.db.domain.enums.Gender;
 import jh.naverwebtoon.db.domain.enums.GenreEnum;
+import jh.naverwebtoon.db.domain.enums.RankingStatus;
 import jh.naverwebtoon.db.domain.enums.WebtoonCategory;
 import jh.naverwebtoon.db.domain.webtoon.OfficialWebtoon;
 import jh.naverwebtoon.db.domain.webtoon.Webtoon;
@@ -629,11 +631,11 @@ public class DataLoader implements ApplicationRunner {
         initCommentLike(Long.valueOf(5), Long.valueOf(3));
 
 //        WebtoonRanking
-//        em.persist(WebtoonRanking.create(webtoonRepository.findOne(Long.valueOf(2)), 1, RankingStatus.UP, Long.valueOf(10)));
-//        em.persist(WebtoonRanking.create(webtoonRepository.findOne(Long.valueOf(17)), 2, RankingStatus.UP, Long.valueOf(8)));
-//        em.persist(WebtoonRanking.create(webtoonRepository.findOne(Long.valueOf(7)), 2, RankingStatus.UP, Long.valueOf(5)));
-//        em.persist(WebtoonRanking.create(webtoonRepository.findOne(Long.valueOf(15)), 2, RankingStatus.UP, Long.valueOf(3)));
-//        em.persist(WebtoonRanking.create(webtoonRepository.findOne(Long.valueOf(10)), 2, RankingStatus.UP, Long.valueOf(2)));
+        em.persist(WebtoonRanking.create(webtoonRepository.findOne(Long.valueOf(2)), 1, RankingStatus.UP, Long.valueOf(10)));
+        em.persist(WebtoonRanking.create(webtoonRepository.findOne(Long.valueOf(17)), 2, RankingStatus.UP, Long.valueOf(8)));
+        em.persist(WebtoonRanking.create(webtoonRepository.findOne(Long.valueOf(7)), 2, RankingStatus.UP, Long.valueOf(5)));
+        em.persist(WebtoonRanking.create(webtoonRepository.findOne(Long.valueOf(15)), 2, RankingStatus.UP, Long.valueOf(3)));
+        em.persist(WebtoonRanking.create(webtoonRepository.findOne(Long.valueOf(10)), 2, RankingStatus.UP, Long.valueOf(2)));
     }
 
     public void initMember(String loginId, String password, String emailAddress, String name, LocalDate birthDate, Gender gender, CountryResidence countryResidence, String phoneNumber, String storeFileName) {

@@ -22,9 +22,8 @@ public class WebtoonRankingRepository {
      * 가장 최근에 등록한 랭킹 조회
      */
     public List<WebtoonRanking> findLatestOne(int offset, int limit, WebtoonType webtoonType) {
-        return em.createQuery("select wr from WebtoonRanking wr"
+        return em.createQuery("select distinct wr from WebtoonRanking wr"
                         + " join fetch wr.webtoon w"
-                        + " join fetch w.genres g"
                         + " join fetch w.webtoonThumbnail wt"
                         + " where wr.webtoon.webtoonType=:webtoonType"
                         + " order by wr.createdAt desc, wr.ranking asc", WebtoonRanking.class)

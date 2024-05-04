@@ -21,7 +21,6 @@ class WebtoonRankingRepositoryTest {
 
     @Test
     void 이전_랭킹_조회() {
-        socketController.sendOfficialRanking();
         int offset = 0, limit = 10;
         WebtoonType webtoonType = WebtoonType.OFFICIAL;
         List<WebtoonRanking> rankings = repository.findLatestOne(offset, limit, webtoonType);
@@ -34,7 +33,7 @@ class WebtoonRankingRepositoryTest {
     }
 
     @Test
-    void 최신_랭킹_조회() {
+    void 새_랭킹_조회() {
         int offset=0, limit = 10;
         WebtoonType webtoonType = WebtoonType.OFFICIAL;
         List<FindNewRanking> findNewRankings = repository.findRankingsByRecentRounds(offset, limit, webtoonType);
