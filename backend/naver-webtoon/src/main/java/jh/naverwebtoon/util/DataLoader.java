@@ -6,7 +6,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import jh.naverwebtoon.db.domain.Comment;
+import jh.naverwebtoon.db.domain.comment.Comment;
 import jh.naverwebtoon.db.domain.Member;
 import jh.naverwebtoon.db.domain.MergeManuscript;
 import jh.naverwebtoon.db.domain.ProfileImage;
@@ -14,14 +14,12 @@ import jh.naverwebtoon.db.domain.Round;
 import jh.naverwebtoon.db.domain.RoundLike;
 import jh.naverwebtoon.db.domain.RoundThumbnail;
 import jh.naverwebtoon.db.domain.UploadImage;
-import jh.naverwebtoon.db.domain.WebtoonRanking;
 import jh.naverwebtoon.db.domain.WebtoonThumbnail;
-import jh.naverwebtoon.db.domain.commentReaction.CommentDislike;
-import jh.naverwebtoon.db.domain.commentReaction.CommentLike;
+import jh.naverwebtoon.db.domain.comment.CommentDislike;
+import jh.naverwebtoon.db.domain.comment.CommentLike;
 import jh.naverwebtoon.db.domain.enums.CountryResidence;
 import jh.naverwebtoon.db.domain.enums.Gender;
 import jh.naverwebtoon.db.domain.enums.GenreEnum;
-import jh.naverwebtoon.db.domain.enums.RankingStatus;
 import jh.naverwebtoon.db.domain.enums.WebtoonCategory;
 import jh.naverwebtoon.db.domain.webtoon.OfficialWebtoon;
 import jh.naverwebtoon.db.domain.webtoon.Webtoon;
@@ -693,7 +691,7 @@ public class DataLoader implements ApplicationRunner {
     public void initComment(Long memberId, Long roundId, String content) {
         Member member = memberRepository.findOne(memberId);
         Round round = roundRepository.findOne(roundId);
-        Comment comment = Comment.create(member, round, content);
+        Comment comment = Comment.createOrdinary(member, round, content);
         em.persist(comment);
     }
 

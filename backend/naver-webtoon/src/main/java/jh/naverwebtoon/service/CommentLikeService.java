@@ -1,6 +1,6 @@
 package jh.naverwebtoon.service;
 
-import jh.naverwebtoon.db.domain.commentReaction.CommentLike;
+import jh.naverwebtoon.db.domain.comment.CommentLike;
 import jh.naverwebtoon.db.repository.CommentDislikeRepository;
 import jh.naverwebtoon.db.repository.CommentLikeRepository;
 import jh.naverwebtoon.db.repository.CommentRepository;

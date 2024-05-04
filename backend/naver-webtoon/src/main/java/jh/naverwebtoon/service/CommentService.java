@@ -1,7 +1,7 @@
 package jh.naverwebtoon.service;
 
 import java.util.List;
-import jh.naverwebtoon.db.domain.Comment;
+import jh.naverwebtoon.db.domain.comment.Comment;
 import jh.naverwebtoon.db.domain.Member;
 import jh.naverwebtoon.db.domain.Round;
 import jh.naverwebtoon.db.repository.CommentDislikeRepository;
@@ -29,7 +29,7 @@ public class CommentService {
     public Long save(Long memberId, CreateCommentReq createCommentReq) {
         Member member = memberRepository.findOne(memberId);
         Round round = roundRepository.findOne(createCommentReq.getRoundId());
-        Comment comment = Comment.create(member, round, createCommentReq.getContent());
+        Comment comment = Comment.createOrdinary(member, round, createCommentReq.getContent());
         return commentRepository.save(comment);
     }
 

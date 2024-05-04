@@ -1,13 +1,19 @@
-package jh.naverwebtoon.db.domain;
+package jh.naverwebtoon.db.domain.comment;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jh.naverwebtoon.db.domain.BaseEntity;
+import jh.naverwebtoon.db.domain.Member;
+import jh.naverwebtoon.db.domain.Round;
+import jh.naverwebtoon.db.domain.enums.CommentType;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,11 +36,19 @@ public class Comment extends BaseEntity {
     @JoinColumn(name = "round_id")
     private Round round;
 
-    public static Comment create(Member member, Round round, String content) {
+    @Enumerated(EnumType.STRING)
+    private CommentType commentType;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_comment_id")
+    private Comment parentCommentId;
+
+    public static Comment createOrdinary(Member member, Round round, String content) {
         Comment comment = new Comment();
         comment.content = content;
         comment.member = member;
         comment.round = round;
+        comment.commentType = CommentType.ORDINARY;
         return comment;
     }
 }

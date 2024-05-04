@@ -3,7 +3,8 @@ package jh.naverwebtoon.db.repository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import java.util.List;
-import jh.naverwebtoon.db.domain.Comment;
+import jh.naverwebtoon.db.domain.comment.Comment;
+import jh.naverwebtoon.db.domain.enums.CommentType;
 import jh.naverwebtoon.dto.response.FindComments;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -45,9 +46,11 @@ public class CommentRepository {
                         + " (select count(cd) from CommentDislike cd where cd.comment = c and cd.member.id =:memberId))"
                         + " from Comment c"
                         + " where c.round.id=:roundId"
+                        + " and c.commentType=:commentType"
                         + " order by likeTotalCnt desc, c.updatedAt desc, dislikeTotalCnt asc", FindComments.class)
                 .setParameter("roundId", roundId)
                 .setParameter("memberId", memberId)
+                .setParameter("commentType", CommentType.ORDINARY)
                 .setFirstResult(offset)
                 .setMaxResults(limit)
                 .getResultList();
