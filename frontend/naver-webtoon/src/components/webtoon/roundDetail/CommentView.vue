@@ -108,14 +108,13 @@ export default {
   data() {
     return {
       content: "",
+      replyContent: "",
       inputContentLimit: 500,
       title: {
         content: "댓글",
         replyContent: "답글",
       },
       comments: [], //commentId, userId, userName, content, updateAt, likeTotalCnt, isUserLike, dislikeTotalCnt, isUserDislike
-      replyContent: "",
-      showReplyIndex: 0,
       replys: [
         {
           commentId: "",
@@ -142,7 +141,8 @@ export default {
       ],
       showMenuIndex: "",
       replyShowMenuIndex: "",
-      startIndex: 0,
+      showReplyIndex: 0,
+      offset: 0,
       limit: 6,
     };
   },
@@ -161,7 +161,7 @@ export default {
       try {
         const response = await getComments(
           this.$route.params.roundId,
-          this.startIndex,
+          this.offset,
           this.limit
         );
         console.log(response);
@@ -257,11 +257,11 @@ export default {
       });
     },
     async moreComments() {
-      const nextStartIndex = this.startIndex + this.limit;
+      const nextOffset = this.offset + this.limit;
       try {
         const response = await getComments(
           this.$route.params.roundId,
-          nextStartIndex,
+          nextOffset,
           this.limit
         );
         console.log(response);
@@ -269,7 +269,7 @@ export default {
           for (const comment of response.data) {
             this.comments.push(comment);
           }
-          this.startIndex = nextStartIndex;
+          this.offset = nextOffset;
         } else {
           alert("더 이상 조회할 댓글이 없습니다.");
         }
