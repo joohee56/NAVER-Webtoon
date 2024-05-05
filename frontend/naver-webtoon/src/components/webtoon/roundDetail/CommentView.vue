@@ -52,7 +52,7 @@
             <div class="user-info-btn-wrap">
               <div class="user-id">{{reply.userName}}({{reply.userId}})</div>
               <button class="menu-btn" @click="clickMenu(index, true)" v-if="reply.userId===loginUser.loginId"><i class="fa-solid fa-ellipsis-vertical"></i></button>
-              <button class="delete-btn" v-if="reply===index" @click="deleteReplyComment(reply.commentId)">삭제</button>
+              <button class="delete-btn" v-if="replyShowMenuIndex===index" @click="deleteComment(reply.commentId, comment.commentId)">삭제</button>
             </div>
             <div class="content">{{reply.content}}</div>
             <div class="update-date">{{reply.updateAt}}</div>
@@ -240,13 +240,13 @@ export default {
         this.replyShowMenuIndex = "";
       }
     },
-    async deleteComment(commentId) {
+    async deleteComment(replyCommentId, parentCommentId) {
       const ok = confirm("댓글을 삭제하시겠습니까?");
       if (ok) {
-        const response = await deleteComment(commentId);
+        const response = await deleteComment(replyCommentId);
         console.log(response);
         if (response.status === 200) {
-          this.fetchComments();
+          this.fetchReply(parentCommentId);
         } else if (response.staus === 400) {
           console.log(response.data.message);
         }
@@ -462,7 +462,7 @@ export default {
   cursor: pointer;
 }
 .comment-list-wrap .content {
-  line-height: 28px;
+  line-height: 30px;
   margin-right: 10px;
 }
 .comment-list-wrap .btn-wrap {
