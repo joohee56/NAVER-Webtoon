@@ -39,7 +39,7 @@
 				</div>
 				<div class="content" :class="{bestComment:isBestComment(index)}">{{comment.content}}</div>
 				<div class="btn-wrap">
-					<button @click="showReply(index, comment.commentId)">답글</button>
+					<button @click="showReply(index, comment.commentId)">답글 {{comment.replyCnt}}</button>
 					<button class="btn-like" :class="{isUserLikeActive:comment.isUserLike}" @click="clickCommentLike(comment.commentId, index)"><i class="fa-regular fa-thumbs-up"></i> {{comment.likeTotalCnt}}</button>
 					<button :class="{isUserDislikeActive:comment.isUserDislike}" @click="clickCommentDislike(comment.commentId, index)"><i class="fa-regular fa-thumbs-down" ></i> {{comment.dislikeTotalCnt}}</button>
 				</div>
@@ -116,7 +116,7 @@ export default {
         content: "댓글",
         replyContent: "답글",
       },
-      comments: [], //commentId, userId, userName, content, updateAt, likeTotalCnt, isUserLike, dislikeTotalCnt, isUserDislike
+      comments: [], //commentId, userId, userName, content, updateAt, likeTotalCnt, isUserLike, dislikeTotalCnt, isUserDislike, replyCnt
       replys: [],
       showMenuIndex: "",
       replyShowMenuIndex: "",

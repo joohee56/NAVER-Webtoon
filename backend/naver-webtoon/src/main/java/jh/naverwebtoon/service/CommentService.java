@@ -11,7 +11,8 @@ import jh.naverwebtoon.db.repository.MemberRepository;
 import jh.naverwebtoon.db.repository.RoundRepository;
 import jh.naverwebtoon.dto.request.CreateCommentReq;
 import jh.naverwebtoon.dto.request.CreateReplyReq;
-import jh.naverwebtoon.dto.response.FindComments;
+import jh.naverwebtoon.dto.response.FindComment;
+import jh.naverwebtoon.dto.response.FindReply;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -70,14 +71,14 @@ public class CommentService {
     /**
      * 댓글 조회
      */
-    public List<FindComments> findAllWithPaging(Long memberId, Long roundId, int offset, int limit) {
+    public List<FindComment> findAllWithPaging(Long memberId, Long roundId, int offset, int limit) {
         return commentRepository.findAllByRoundIdWithPaging(memberId, roundId, offset, limit);
     }
 
     /**
      * 답글 조회
      */
-    public List<FindComments> findReplyAll(Long memberId, Long commentId) {
+    public List<FindReply> findReplyAll(Long memberId, Long commentId) {
         return commentRepository.findReplyAll(memberId, commentId);
     }
 }

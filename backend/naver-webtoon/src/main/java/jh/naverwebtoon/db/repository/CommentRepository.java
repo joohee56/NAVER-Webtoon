@@ -5,7 +5,8 @@ import jakarta.persistence.PersistenceContext;
 import java.util.List;
 import jh.naverwebtoon.db.domain.comment.Comment;
 import jh.naverwebtoon.db.domain.enums.CommentType;
-import jh.naverwebtoon.dto.response.FindComments;
+import jh.naverwebtoon.dto.response.FindComment;
+import jh.naverwebtoon.dto.response.FindReply;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -47,16 +48,17 @@ public class CommentRepository {
     /**
      * 댓글 조회 + 페이징
      */
-    public List<FindComments> findAllByRoundIdWithPaging(Long memberId, Long roundId, int offset, int limit) {
-        return em.createQuery("select new jh.naverwebtoon.dto.response.FindComments(c.id, c.content, c.member.loginId, c.member.name, c.updatedAt,"
+    public List<FindComment> findAllByRoundIdWithPaging(Long memberId, Long roundId, int offset, int limit) {
+        return em.createQuery("select new jh.naverwebtoon.dto.response.FindComment(c.id, c.content, c.member.loginId, c.member.name, c.updatedAt,"
                         + " (select count(cl) from CommentLike cl where cl.comment = c) as likeTotalCnt,"
                         + " (select count(cl) from CommentLike cl where cl.comment = c and cl.member.id =:memberId),"
                         + " (select count(cd) from CommentDislike cd where cd.comment = c) as dislikeTotalCnt,"
-                        + " (select count(cd) from CommentDislike cd where cd.comment = c and cd.member.id =:memberId))"
+                        + " (select count(cd) from CommentDislike cd where cd.comment = c and cd.member.id =:memberId),"
+                        + " (select count(rc) from Comment rc where rc.parentComment = c) as replyCnt)"
                         + " from Comment c"
                         + " where c.round.id=:roundId"
                         + " and c.commentType=:commentType"
-                        + " order by likeTotalCnt desc, c.updatedAt desc, dislikeTotalCnt asc", FindComments.class)
+                        + " order by likeTotalCnt desc, c.updatedAt desc, dislikeTotalCnt asc", FindComment.class)
                 .setParameter("roundId", roundId)
                 .setParameter("memberId", memberId)
                 .setParameter("commentType", CommentType.ORDINARY)
@@ -68,15 +70,15 @@ public class CommentRepository {
     /**
      * 답글 조회
      */
-    public List<FindComments> findReplyAll(Long memberId, Long commentId) {
-        return em.createQuery("select new jh.naverwebtoon.dto.response.FindComments(c.id, c.content, c.member.loginId, c.member.name, c.updatedAt,"
+    public List<FindReply> findReplyAll(Long memberId, Long commentId) {
+        return em.createQuery("select new jh.naverwebtoon.dto.response.FindReply(c.id, c.content, c.member.loginId, c.member.name, c.updatedAt,"
                         + " (select count(cl) from CommentLike cl where cl.comment = c) as likeTotalCnt,"
                         + " (select count(cl) from CommentLike cl where cl.comment = c and cl.member.id =:memberId),"
                         + " (select count(cd) from CommentDislike cd where cd.comment = c) as dislikeTotalCnt,"
                         + " (select count(cd) from CommentDislike cd where cd.comment = c and cd.member.id =:memberId))"
                         + " from Comment c"
                         + " where c.parentComment.id=:commentId"
-                        + " order by likeTotalCnt desc, c.updatedAt desc, dislikeTotalCnt asc", FindComments.class)
+                        + " order by likeTotalCnt desc, c.updatedAt desc, dislikeTotalCnt asc", FindReply.class)
                 .setParameter("commentId", commentId)
                 .setParameter("memberId", memberId)
                 .getResultList();

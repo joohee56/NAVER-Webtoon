@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class FindComments {
+public class FindReply {
     private Long commentId;
     private String content;
     private String userId;

@@ -4,7 +4,8 @@ import jakarta.validation.Valid;
 import java.util.List;
 import jh.naverwebtoon.dto.request.CreateCommentReq;
 import jh.naverwebtoon.dto.request.CreateReplyReq;
-import jh.naverwebtoon.dto.response.FindComments;
+import jh.naverwebtoon.dto.response.FindComment;
+import jh.naverwebtoon.dto.response.FindReply;
 import jh.naverwebtoon.service.CommentService;
 import jh.naverwebtoon.web.Auth;
 import jh.naverwebtoon.web.Login;
@@ -55,7 +56,7 @@ public class CommentController {
      * 댓글 조회
      */
     @GetMapping("/{roundId}/{offset}/{limit}")
-    public List<FindComments> findCommentsWithPaging(@Login Long memberId, @PathVariable("roundId") Long roundId, @PathVariable("offset") int offset, @PathVariable("limit") int limit) {
+    public List<FindComment> findCommentsWithPaging(@Login Long memberId, @PathVariable("roundId") Long roundId, @PathVariable("offset") int offset, @PathVariable("limit") int limit) {
         return commentService.findAllWithPaging(memberId, roundId, offset, limit);
     }
 
@@ -63,7 +64,7 @@ public class CommentController {
      * 답글 조회
      */
     @GetMapping("/reply")
-    public List<FindComments> findReplys(@Login Long memberId, @RequestParam("commentId") Long commentId) {
+    public List<FindReply> findReplys(@Login Long memberId, @RequestParam("commentId") Long commentId) {
         return commentService.findReplyAll(memberId, commentId);
     }
 
