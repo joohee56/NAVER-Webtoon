@@ -41,7 +41,7 @@ public class Comment extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_comment_id")
-    private Comment parentCommentId;
+    private Comment parentComment;
 
     public static Comment createOrdinary(Member member, Round round, String content) {
         Comment comment = new Comment();
@@ -49,6 +49,15 @@ public class Comment extends BaseEntity {
         comment.member = member;
         comment.round = round;
         comment.commentType = CommentType.ORDINARY;
+        return comment;
+    }
+    public static Comment createReply(Member member, Round round, String content, Comment parentComment) {
+        Comment comment = new Comment();
+        comment.content = content;
+        comment.member = member;
+        comment.round = round;
+        comment.commentType = CommentType.REPLY;
+        comment.parentComment = parentComment;
         return comment;
     }
 }

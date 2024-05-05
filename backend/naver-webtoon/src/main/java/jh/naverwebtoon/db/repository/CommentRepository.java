@@ -15,11 +15,17 @@ public class CommentRepository {
     @PersistenceContext
     private EntityManager em;
 
+    /**
+     * 댓글 저장
+     */
     public Long save(Comment comment) {
         em.persist(comment);
         return comment.getId();
     }
 
+    /**
+     * 댓글 삭제
+     */
     public int delete(Long commentId) {
         return em.createQuery("delete from Comment c where c.id = :commentId")
                 .setParameter("commentId", commentId)
@@ -38,6 +44,9 @@ public class CommentRepository {
                 .getSingleResult();
     }
 
+    /**
+     * 댓글 조회 + 페이징
+     */
     public List<FindComments> findAllByRoundIdWithPaging(Long memberId, Long roundId, int offset, int limit) {
         return em.createQuery("select new jh.naverwebtoon.dto.response.FindComments(c.id, c.content, c.member.loginId, c.member.name, c.updatedAt,"
                         + " (select count(cl) from CommentLike cl where cl.comment = c) as likeTotalCnt,"
