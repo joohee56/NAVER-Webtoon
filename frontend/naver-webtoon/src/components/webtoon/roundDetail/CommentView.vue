@@ -4,6 +4,7 @@
 		<!-- 댓글 입력란-->
 		<div>
 			<div class="title">의견쓰기 1,385</div>
+
 			<div class="comment-input-box">
 				<div class="loginUser-info" v-if="loginUser.loginId">
 					<img
@@ -23,15 +24,17 @@
 			<div>
 				<button class="submit-btn" @click="saveComment">등록</button>
 			</div>
+
 		</div>
 
 		<!-- 댓글 -->
 		<div class="comment-list-wrap"> 
 			<div class="comment-item" v-for="(comment, index) in comments">
-				<div class="user-info">
+				
+        <div class="user-info-btn-wrap">
 					<div class="user-id">{{comment.userName}}({{comment.userId}})</div>
 					<div class="update-date">{{comment.updateAt}}</div>
-          <button class="menu-btn" @click="clickMenu(index)" v-if="comment.userId===loginUser.loginId"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+          <button class="menu-btn" @click="clickMenu(index, false)" v-if="comment.userId===loginUser.loginId"><i class="fa-solid fa-ellipsis-vertical"></i></button>
           <button class="delete-btn" v-if="showMenuIndex===index" @click="deleteComment(comment.commentId)">삭제</button>
 				</div>
 				<div class="content" :class="{bestComment:isBestComment(index)}">{{comment.content}}</div>
@@ -40,8 +43,53 @@
 					<button class="btn-like" :class="{isUserLikeActive:comment.isUserLike}" @click="clickCommentLike(comment.commentId, index)"><i class="fa-regular fa-thumbs-up"></i> {{comment.likeTotalCnt}}</button>
 					<button :class="{isUserDislikeActive:comment.isUserDislike}" @click="clickCommentDislike(comment.commentId, index)"><i class="fa-regular fa-thumbs-down" ></i> {{comment.dislikeTotalCnt}}</button>
 				</div>
+
+        <!-- 답글 -->
+        <div class="nested-comments-wrap" v-if="nestedCommentIndex===index">
+          <!-- 답글 리스트 -->
+          <div class="nested-comment" v-for="(nestedComment, index) in nestedComments">
+            <span class="nested-comment-icon"></span>
+            <div class="user-info-btn-wrap">
+              <div class="user-id">{{nestedComment.userName}}({{nestedComment.userId}})</div>
+              <button class="menu-btn" @click="clickMenu(index, true)" v-if="nestedComment.userId===loginUser.loginId"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+              <button class="delete-btn" v-if="nestedShowMenuIndex===index" @click="deleteNestedComment(nestedComment.commentId)">삭제</button>
+            </div>
+            <div class="content">{{nestedComment.content}}</div>
+            <div class="update-date">{{nestedComment.updateAt}}</div>
+            <div class="btn-wrap">
+              <button class="btn-like" :class="{isUserLikeActive:nestedComment.isUserLike}" @click="clickCommentLike(nestedComment.commentId, index)"><i class="fa-regular fa-thumbs-up"></i> {{nestedComment.likeTotalCnt}}</button>
+              <button :class="{isUserDislikeActive:nestedComment.isUserDislike}" @click="clickCommentDislike(nestedComment.commentId, index)"><i class="fa-regular fa-thumbs-down" ></i> {{nestedComment.dislikeTotalCnt}}</button>
+            </div>
+          </div>
+
+          <!-- 답글 입력란 -->
+          <div class="comment-input-box nested">
+            <div class="loginUser-info" v-if="loginUser.loginId">
+              <img
+              :src="require(`@/assets/image/${loginUser.profileImage}`)"
+              class="profile-image" />
+              <div class="login-user-name">{{loginUser.userName}}</div>
+            </div>
+            <div v-if="loginUser.loginId">
+              <textarea v-model="content" placeholder="주제와 무관한 댓글이나 스포일러, 악풀은 경고조치 없이 삭제되며 징계 대상이 될 수 있습니다." class="editable-textarea" :class="{violation: content.length>inputContentLimit}"></textarea>
+              <span class="input-letter-count">{{content.length}} / {{inputContentLimit}}</span>
+            </div>
+            <div @click="moveToLogin" class="uneditable-textarea" v-else>
+              <textarea ></textarea>
+              <label>댓글을 작성하려면 <router-link :to="{ name: 'login', params: { redirectUrl: this.$route.path } }">로그인</router-link> 해주세요.</label>
+            </div>
+          </div>
+
+          <div>
+            <button class="submit-btn" @click="saveComment">등록</button>
+          </div>
+
+          <!-- 답글 접기 -->
+          <button class="close-reply-btn">답글 접기 <i class="fa-solid fa-angle-up"></i></button>
+        </div>
+      </div>
+
 			</div>
-		</div>
 		<button @click="moreComments" class="more-comment-btn">더보기 <i class="fa-solid fa-chevron-down"></i></button>
 	</div>
 </template>
@@ -65,8 +113,33 @@ export default {
         content: "댓글",
       },
       comments: [], //commentId, userId, userName, content, updateAt, likeTotalCnt, isUserLike, dislikeTotalCnt, isUserDislike
-      showMenu: false,
+      nestedCommentIndex: 0,
+      nestedComments: [
+        {
+          commentId: "",
+          userId: "joohee56",
+          userName: "어피치",
+          content: "나만 그런거 아니었어",
+          updateAt: "2024-04-19 22:06",
+          likeTotalCnt: "10",
+          isUserLike: "1",
+          dislikeTotalCnt: "0",
+          isUserDislike: "",
+        },
+        {
+          commentId: "",
+          userId: "qkek0123",
+          userName: "설레임",
+          content: "어케알았지...",
+          updateAt: "2024-04-22 22:10",
+          likeTotalCnt: "1",
+          isUserLike: "",
+          dislikeTotalCnt: "1",
+          isUserDislike: "1",
+        },
+      ],
       showMenuIndex: "",
+      nestedShowMenuIndex: "",
       startIndex: 0,
       limit: 6,
     };
@@ -127,14 +200,19 @@ export default {
         console.log(error);
       }
     },
-    clickMenu(index) {
-      this.showMenuIndex = index;
+    clickMenu(index, isNested) {
+      if (isNested) {
+        this.nestedShowMenuIndex = index;
+      } else {
+        this.showMenuIndex = index;
+      }
       document.addEventListener("click", this.hideMenuButton);
     },
     hideMenuButton(event) {
       const menuButton = document.querySelector(".menu-btn");
       if (menuButton && !menuButton.contains(event.target)) {
         this.showMenuIndex = "";
+        this.nestedShowMenuIndex = "";
       }
     },
     async deleteComment(commentId) {
@@ -207,6 +285,7 @@ export default {
   width: 85rem;
   margin: 0 auto;
 }
+
 /* 댓글 입력 */
 .title {
   font-family: AppleSDGothicNeoB;
@@ -220,7 +299,9 @@ export default {
   height: 170px;
   padding: 10px 10px;
   position: relative;
+  background-color: white;
 }
+
 .loginUser-info {
   display: flex;
   direction: column;
@@ -321,31 +402,27 @@ export default {
   padding: 4px 9px 2px;
   border-radius: 8px;
 }
-.comment-list-wrap .content {
-  line-height: 28px;
-  margin-right: 10px;
-}
-.comment-list-wrap .user-info {
+.comment-list-wrap .user-info-btn-wrap {
   display: flex;
 }
 .comment-list-wrap .user-id {
   font-family: AppleSDGothicNeoB;
   font-size: 17px;
+  margin-right: 10px;
 }
 .comment-list-wrap .update-date {
   color: #989898;
-  margin-left: 10px;
   font-size: 15px;
   line-height: 25px;
 }
-.user-info .menu-btn {
+.user-info-btn-wrap .menu-btn {
   background: none;
   border: none;
   font-size: 20px;
   margin-left: auto;
   cursor: pointer;
 }
-.user-info .delete-btn {
+.user-info-btn-wrap .delete-btn {
   display: block;
   padding: 15px 38px 16px;
   border: 2px solid #d8d8d8;
@@ -358,6 +435,10 @@ export default {
   right: 25px;
   top: 55px;
   cursor: pointer;
+}
+.comment-list-wrap .content {
+  line-height: 28px;
+  margin-right: 10px;
 }
 .comment-list-wrap .btn-wrap {
   display: flex;
@@ -389,5 +470,50 @@ export default {
   background-color: white;
   border: none;
   color: #999;
+}
+
+/* 답글 */
+.nested-comments-wrap {
+  background-color: #fafafa;
+  border-top: 1px solid #e2e2e2;
+  border-bottom: 1px solid #e2e2e2;
+  margin-top: 10px;
+}
+.nested-comment {
+  padding: 17px;
+  padding-left: 40px;
+  position: relative;
+}
+.nested-comment:not(:last-child) {
+  border-bottom: 1px solid #e2e2e2;
+}
+.nested-comment-icon {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  width: 13px;
+  height: 13px;
+  background-position: -19px -125px;
+  background-image: url(https://ssl.pstatic.net/static/comic/comment_new/sp_cbox.png);
+  background-repeat: no-repeat;
+  font-size: 0;
+  line-height: 0;
+}
+
+/* 댓글 입력란 */
+.comment-input-box.nested {
+  width: 95%;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
+/* 댓글 접기 */
+.close-reply-btn {
+  display: block;
+  margin: 20px auto;
+  background: none;
+  border: none;
+  color: #989898;
+  font-family: AppleSDGothicNeoM;
 }
 </style>
