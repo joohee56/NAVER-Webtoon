@@ -85,7 +85,7 @@
           </div>
 
           <!-- 답글 접기 -->
-          <button class="close-reply-btn">답글 접기 <i class="fa-solid fa-angle-up"></i></button>
+          <button class="close-reply-btn" @click="showReplyIndex=''">답글 접기 <i class="fa-solid fa-angle-up"></i></button>
         </div>
       </div>
 
@@ -540,5 +540,6 @@ export default {
   border: none;
   color: #989898;
   font-family: AppleSDGothicNeoM;
+  cursor: pointer;
 }
 </style>
