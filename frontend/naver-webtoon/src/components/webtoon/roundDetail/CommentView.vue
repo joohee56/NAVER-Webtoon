@@ -256,8 +256,8 @@ export default {
       try {
         const response = await postCommentLike(commentId);
         console.log(response.data);
-        this.comments[index].isUserLike = response.data.isUserLike;
-        this.comments[index].likeTotalCnt = response.data.likeTotalCnt;
+        this.replys[index].isUserLike = response.data.isUserLike;
+        this.replys[index].likeTotalCnt = response.data.likeTotalCnt;
       } catch (error) {
         console.log(error);
       }
@@ -266,8 +266,8 @@ export default {
       try {
         const response = await postCommentDislike(commentId);
         console.log(response.data);
-        this.comments[index].isUserDislike = response.data.isUserDislike;
-        this.comments[index].dislikeTotalCnt = response.data.dislikeTotalCnt;
+        this.replys[index].isUserDislike = response.data.isUserDislike;
+        this.replys[index].dislikeTotalCnt = response.data.dislikeTotalCnt;
       } catch (error) {
         console.log(error);
       }
