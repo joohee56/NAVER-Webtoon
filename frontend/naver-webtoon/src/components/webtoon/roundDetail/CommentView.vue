@@ -45,25 +45,25 @@
 				</div>
 
         <!-- 답글 -->
-        <div class="nested-comments-wrap" v-if="nestedCommentIndex===index">
+        <div class="reply-comments-wrap" v-if="showReplyIndex===index">
           <!-- 답글 리스트 -->
-          <div class="nested-comment" v-for="(nestedComment, index) in nestedComments">
-            <span class="nested-comment-icon"></span>
+          <div class="reply-comment" v-for="(reply, index) in replys">
+            <span class="reply-comment-icon"></span>
             <div class="user-info-btn-wrap">
-              <div class="user-id">{{nestedComment.userName}}({{nestedComment.userId}})</div>
-              <button class="menu-btn" @click="clickMenu(index, true)" v-if="nestedComment.userId===loginUser.loginId"><i class="fa-solid fa-ellipsis-vertical"></i></button>
-              <button class="delete-btn" v-if="nestedShowMenuIndex===index" @click="deleteNestedComment(nestedComment.commentId)">삭제</button>
+              <div class="user-id">{{reply.userName}}({{reply.userId}})</div>
+              <button class="menu-btn" @click="clickMenu(index, true)" v-if="reply.userId===loginUser.loginId"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+              <button class="delete-btn" v-if="reply===index" @click="deleteReplyComment(reply.commentId)">삭제</button>
             </div>
-            <div class="content">{{nestedComment.content}}</div>
-            <div class="update-date">{{nestedComment.updateAt}}</div>
+            <div class="content">{{reply.content}}</div>
+            <div class="update-date">{{reply.updateAt}}</div>
             <div class="btn-wrap">
-              <button class="btn-like" :class="{isUserLikeActive:nestedComment.isUserLike}" @click="clickCommentLike(nestedComment.commentId, index)"><i class="fa-regular fa-thumbs-up"></i> {{nestedComment.likeTotalCnt}}</button>
-              <button :class="{isUserDislikeActive:nestedComment.isUserDislike}" @click="clickCommentDislike(nestedComment.commentId, index)"><i class="fa-regular fa-thumbs-down" ></i> {{nestedComment.dislikeTotalCnt}}</button>
+              <button class="btn-like" :class="{isUserLikeActive:reply.isUserLike}" @click="clickCommentLike(reply.commentId, index)"><i class="fa-regular fa-thumbs-up"></i> {{reply.likeTotalCnt}}</button>
+              <button :class="{isUserDislikeActive:reply.isUserDislike}" @click="clickCommentDislike(reply.commentId, index)"><i class="fa-regular fa-thumbs-down" ></i> {{reply.dislikeTotalCnt}}</button>
             </div>
           </div>
 
           <!-- 답글 입력란 -->
-          <div class="comment-input-box nested">
+          <div class="comment-input-box reply">
             <div class="loginUser-info" v-if="loginUser.loginId">
               <img
               :src="require(`@/assets/image/${loginUser.profileImage}`)"
@@ -111,10 +111,12 @@ export default {
       inputContentLimit: 500,
       title: {
         content: "댓글",
+        replyContent: "답글",
       },
       comments: [], //commentId, userId, userName, content, updateAt, likeTotalCnt, isUserLike, dislikeTotalCnt, isUserDislike
-      nestedCommentIndex: 0,
-      nestedComments: [
+      replyContent: "",
+      showReplyIndex: 0,
+      replys: [
         {
           commentId: "",
           userId: "joohee56",
@@ -139,7 +141,7 @@ export default {
         },
       ],
       showMenuIndex: "",
-      nestedShowMenuIndex: "",
+      replyShowMenuIndex: "",
       startIndex: 0,
       limit: 6,
     };
@@ -200,9 +202,9 @@ export default {
         console.log(error);
       }
     },
-    clickMenu(index, isNested) {
-      if (isNested) {
-        this.nestedShowMenuIndex = index;
+    clickMenu(index, isReply) {
+      if (isReply) {
+        this.replyShowMenuIndex = index;
       } else {
         this.showMenuIndex = index;
       }
@@ -212,7 +214,7 @@ export default {
       const menuButton = document.querySelector(".menu-btn");
       if (menuButton && !menuButton.contains(event.target)) {
         this.showMenuIndex = "";
-        this.nestedShowMenuIndex = "";
+        this.replyShowMenuIndex = "";
       }
     },
     async deleteComment(commentId) {
@@ -473,21 +475,21 @@ export default {
 }
 
 /* 답글 */
-.nested-comments-wrap {
+.reply-comments-wrap {
   background-color: #fafafa;
   border-top: 1px solid #e2e2e2;
   border-bottom: 1px solid #e2e2e2;
   margin-top: 10px;
 }
-.nested-comment {
+.reply-comment {
   padding: 17px;
   padding-left: 40px;
   position: relative;
 }
-.nested-comment:not(:last-child) {
+.reply-comment:not(:last-child) {
   border-bottom: 1px solid #e2e2e2;
 }
-.nested-comment-icon {
+.reply-comment-icon {
   position: absolute;
   top: 18px;
   left: 18px;
@@ -501,7 +503,7 @@ export default {
 }
 
 /* 댓글 입력란 */
-.comment-input-box.nested {
+.comment-input-box.reply {
   width: 95%;
   margin: 0 auto;
   margin-top: 20px;
