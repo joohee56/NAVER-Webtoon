@@ -6,12 +6,12 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class CreateNestedCommentReq {
+public class CreateReplyReq {
     @NotNull
     private Long roundId;
     @NotBlank
     @Size(min = 1, max = 500)
-    private String content;
+    private String replyContent;
     @NotNull
     private Long commentId;
 }

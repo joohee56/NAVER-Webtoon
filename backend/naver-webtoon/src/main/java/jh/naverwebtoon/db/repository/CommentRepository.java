@@ -65,4 +65,22 @@ public class CommentRepository {
                 .getResultList();
     }
 
+    /**
+     * 답글 조회
+     */
+    public List<FindComments> findReplyAll(Long memberId, Long commentId) {
+        return em.createQuery("select new jh.naverwebtoon.dto.response.FindComments(c.id, c.content, c.member.loginId, c.member.name, c.updatedAt,"
+                        + " (select count(cl) from CommentLike cl where cl.comment = c) as likeTotalCnt,"
+                        + " (select count(cl) from CommentLike cl where cl.comment = c and cl.member.id =:memberId),"
+                        + " (select count(cd) from CommentDislike cd where cd.comment = c) as dislikeTotalCnt,"
+                        + " (select count(cd) from CommentDislike cd where cd.comment = c and cd.member.id =:memberId))"
+                        + " from Comment c"
+                        + " where c.parentComment.id=:commentId"
+                        + " order by likeTotalCnt desc, c.updatedAt desc, dislikeTotalCnt asc", FindComments.class)
+                .setParameter("commentId", commentId)
+                .setParameter("memberId", memberId)
+                .getResultList();
+    }
+
+
 }

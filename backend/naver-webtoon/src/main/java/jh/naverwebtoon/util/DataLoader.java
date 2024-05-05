@@ -616,6 +616,10 @@ public class DataLoader implements ApplicationRunner {
         initComment(Long.valueOf(1), Long.valueOf(63), "작가님 처음에 도입부 그림 너무 예뻐요!");
         initComment(Long.valueOf(3), Long.valueOf(63), "왜 여기서 끊기는 거야.. 오븐 불켜라");
 
+//        reply
+        initReply(Long.valueOf(1), Long.valueOf(63), "나만 그런거 아니었어", Long.valueOf(3) );
+        initReply(Long.valueOf(2), Long.valueOf(63), "어케알았지...", Long.valueOf(3));
+
 //        CommentLike
         initCommentLike(Long.valueOf(1), Long.valueOf(2));
         initCommentLike(Long.valueOf(3), Long.valueOf(2));
@@ -692,6 +696,14 @@ public class DataLoader implements ApplicationRunner {
         Member member = memberRepository.findOne(memberId);
         Round round = roundRepository.findOne(roundId);
         Comment comment = Comment.createOrdinary(member, round, content);
+        em.persist(comment);
+    }
+
+    public void initReply(Long memberId, Long roundId, String content, Long commentId) {
+        Member member = memberRepository.findOne(memberId);
+        Round round = roundRepository.findOne(roundId);
+        Comment parentComment = commentRepository.findOne(commentId);
+        Comment comment = Comment.createReply(member, round, content, parentComment);
         em.persist(comment);
     }
 

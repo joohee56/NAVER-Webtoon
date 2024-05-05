@@ -10,7 +10,7 @@ import jh.naverwebtoon.db.repository.CommentRepository;
 import jh.naverwebtoon.db.repository.MemberRepository;
 import jh.naverwebtoon.db.repository.RoundRepository;
 import jh.naverwebtoon.dto.request.CreateCommentReq;
-import jh.naverwebtoon.dto.request.CreateNestedCommentReq;
+import jh.naverwebtoon.dto.request.CreateReplyReq;
 import jh.naverwebtoon.dto.response.FindComments;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -38,14 +38,14 @@ public class CommentService {
     }
 
     /**
-     * 대댓글 저장
+     * 답글 저장
      */
     @Transactional
-    public Long save(Long memberId, CreateNestedCommentReq createNestedCommentReq) {
+    public Long save(Long memberId, CreateReplyReq createReplyReq) {
         Member member = memberRepository.findOne(memberId);
-        Round round = roundRepository.findOne(createNestedCommentReq.getRoundId());
-        Comment parentComment = commentRepository.findOne(createNestedCommentReq.getCommentId());
-        Comment comment = Comment.createReply(member, round, createNestedCommentReq.getContent(), parentComment);
+        Round round = roundRepository.findOne(createReplyReq.getRoundId());
+        Comment parentComment = commentRepository.findOne(createReplyReq.getCommentId());
+        Comment comment = Comment.createReply(member, round, createReplyReq.getReplyContent(), parentComment);
         return commentRepository.save(comment);
     }
 
@@ -67,7 +67,17 @@ public class CommentService {
         return commentRepository.delete(commentId);
     }
 
+    /**
+     * 댓글 조회
+     */
     public List<FindComments> findAllWithPaging(Long memberId, Long roundId, int offset, int limit) {
         return commentRepository.findAllByRoundIdWithPaging(memberId, roundId, offset, limit);
+    }
+
+    /**
+     * 답글 조회
+     */
+    public List<FindComments> findReplyAll(Long memberId, Long commentId) {
+        return commentRepository.findReplyAll(memberId, commentId);
     }
 }
