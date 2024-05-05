@@ -40,8 +40,8 @@
 				<div class="content" :class="{bestComment:isBestComment(index)}">{{comment.content}}</div>
 				<div class="btn-wrap">
 					<button @click="showReply(index, comment.commentId)">답글 {{comment.replyCnt}}</button>
-					<button class="btn-like" :class="{isUserLikeActive:comment.isUserLike}" @click="clickCommentLike(comment.commentId, index)"><i class="fa-regular fa-thumbs-up"></i> {{comment.likeTotalCnt}}</button>
-					<button :class="{isUserDislikeActive:comment.isUserDislike}" @click="clickCommentDislike(comment.commentId, index)"><i class="fa-regular fa-thumbs-down" ></i> {{comment.dislikeTotalCnt}}</button>
+					<button class="btn-like" :class="{isUserLikeActive:comment.isUserLike}" @click="clickCommentLike(comment.commentId, index, false)"><i class="fa-regular fa-thumbs-up"></i> {{comment.likeTotalCnt}}</button>
+					<button :class="{isUserDislikeActive:comment.isUserDislike}" @click="clickCommentDislike(comment.commentId, index, false)"><i class="fa-regular fa-thumbs-down" ></i> {{comment.dislikeTotalCnt}}</button>
 				</div>
 
         <!-- 답글 -->
@@ -57,8 +57,8 @@
             <div class="content">{{reply.content}}</div>
             <div class="update-date">{{reply.updateAt}}</div>
             <div class="btn-wrap">
-              <button class="btn-like" :class="{isUserLikeActive:reply.isUserLike}" @click="clickCommentLike(reply.commentId, index)"><i class="fa-regular fa-thumbs-up"></i> {{reply.likeTotalCnt}}</button>
-              <button :class="{isUserDislikeActive:reply.isUserDislike}" @click="clickCommentDislike(reply.commentId, index)"><i class="fa-regular fa-thumbs-down" ></i> {{reply.dislikeTotalCnt}}</button>
+              <button class="btn-like" :class="{isUserLikeActive:reply.isUserLike}" @click="clickCommentLike(reply.commentId, index, true)"><i class="fa-regular fa-thumbs-up"></i> {{reply.likeTotalCnt}}</button>
+              <button :class="{isUserDislikeActive:reply.isUserDislike}" @click="clickCommentDislike(reply.commentId, index, true)"><i class="fa-regular fa-thumbs-down" ></i> {{reply.dislikeTotalCnt}}</button>
             </div>
           </div>
 
@@ -252,22 +252,32 @@ export default {
         }
       }
     },
-    async clickCommentLike(commentId, index) {
+    async clickCommentLike(commentId, index, isReply) {
       try {
         const response = await postCommentLike(commentId);
         console.log(response.data);
-        this.replys[index].isUserLike = response.data.isUserLike;
-        this.replys[index].likeTotalCnt = response.data.likeTotalCnt;
+        if (isReply) {
+          this.replys[index].isUserLike = response.data.isUserLike;
+          this.replys[index].likeTotalCnt = response.data.likeTotalCnt;
+        } else {
+          this.comments[index].isUserLike = response.data.isUserLike;
+          this.comments[index].likeTotalCnt = response.data.likeTotalCnt;
+        }
       } catch (error) {
         console.log(error);
       }
     },
-    async clickCommentDislike(commentId, index) {
+    async clickCommentDislike(commentId, index, isReply) {
       try {
         const response = await postCommentDislike(commentId);
         console.log(response.data);
-        this.replys[index].isUserDislike = response.data.isUserDislike;
-        this.replys[index].dislikeTotalCnt = response.data.dislikeTotalCnt;
+        if (isReply) {
+          this.replys[index].isUserDislike = response.data.isUserDislike;
+          this.replys[index].dislikeTotalCnt = response.data.dislikeTotalCnt;
+        } else {
+          this.comments[index].isUserDislike = response.data.isUserDislike;
+          this.comments[index].dislikeTotalCnt = response.data.dislikeTotalCnt;
+        }
       } catch (error) {
         console.log(error);
       }
@@ -495,6 +505,7 @@ export default {
   background-color: white;
   border: none;
   color: #999;
+  cursor: pointer;
 }
 
 /* 답글 */
