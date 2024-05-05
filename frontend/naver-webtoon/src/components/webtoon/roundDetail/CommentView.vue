@@ -39,7 +39,7 @@
 				</div>
 				<div class="content" :class="{bestComment:isBestComment(index)}">{{comment.content}}</div>
 				<div class="btn-wrap">
-					<button>답글</button>
+					<button @click="showReply(index, comment.commentId)">답글</button>
 					<button class="btn-like" :class="{isUserLikeActive:comment.isUserLike}" @click="clickCommentLike(comment.commentId, index)"><i class="fa-regular fa-thumbs-up"></i> {{comment.likeTotalCnt}}</button>
 					<button :class="{isUserDislikeActive:comment.isUserDislike}" @click="clickCommentDislike(comment.commentId, index)"><i class="fa-regular fa-thumbs-down" ></i> {{comment.dislikeTotalCnt}}</button>
 				</div>
@@ -71,8 +71,8 @@
               <div class="login-user-name">{{loginUser.userName}}</div>
             </div>
             <div v-if="loginUser.loginId">
-              <textarea v-model="content" placeholder="주제와 무관한 댓글이나 스포일러, 악풀은 경고조치 없이 삭제되며 징계 대상이 될 수 있습니다." class="editable-textarea" :class="{violation: content.length>inputContentLimit}"></textarea>
-              <span class="input-letter-count">{{content.length}} / {{inputContentLimit}}</span>
+              <textarea v-model="replyContent" placeholder="주제와 무관한 댓글이나 스포일러, 악풀은 경고조치 없이 삭제되며 징계 대상이 될 수 있습니다." class="editable-textarea" :class="{violation: replyContent.length>inputContentLimit}"></textarea>
+              <span class="input-letter-count">{{replyContent.length}} / {{inputContentLimit}}</span>
             </div>
             <div @click="moveToLogin" class="uneditable-textarea" v-else>
               <textarea ></textarea>
@@ -81,7 +81,7 @@
           </div>
 
           <div>
-            <button class="submit-btn" @click="saveComment">등록</button>
+            <button class="submit-btn" @click="saveReply(comment.commentId)">등록</button>
           </div>
 
           <!-- 답글 접기 -->
@@ -101,6 +101,8 @@ import {
   postCommentLike,
   postCommentDislike,
   deleteComment,
+  postReply,
+  getReply,
 } from "@/api/comment";
 import { mapState } from "vuex";
 
@@ -115,33 +117,10 @@ export default {
         replyContent: "답글",
       },
       comments: [], //commentId, userId, userName, content, updateAt, likeTotalCnt, isUserLike, dislikeTotalCnt, isUserDislike
-      replys: [
-        {
-          commentId: "",
-          userId: "joohee56",
-          userName: "어피치",
-          content: "나만 그런거 아니었어",
-          updateAt: "2024-04-19 22:06",
-          likeTotalCnt: "10",
-          isUserLike: "1",
-          dislikeTotalCnt: "0",
-          isUserDislike: "",
-        },
-        {
-          commentId: "",
-          userId: "qkek0123",
-          userName: "설레임",
-          content: "어케알았지...",
-          updateAt: "2024-04-22 22:10",
-          likeTotalCnt: "1",
-          isUserLike: "",
-          dislikeTotalCnt: "1",
-          isUserDislike: "1",
-        },
-      ],
+      replys: [],
       showMenuIndex: "",
       replyShowMenuIndex: "",
-      showReplyIndex: 0,
+      showReplyIndex: "",
       offset: 0,
       limit: 6,
     };
@@ -170,6 +149,19 @@ export default {
         console.log(error);
       }
     },
+    async fetchReply(commentId) {
+      try {
+        const response = await getReply(commentId);
+        console.log(response);
+        this.replys = response.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async showReply(index, commentId) {
+      await this.fetchReply(commentId);
+      this.showReplyIndex = index;
+    },
     isBestComment(index) {
       return index < 4 && this.comments[index].likeTotalCnt > 0;
     },
@@ -184,6 +176,37 @@ export default {
         if (response.status === 200) {
           this.fetchComments();
           this.content = "";
+        } else if (response.status === 400) {
+          let code = response.data.code;
+          if (code === "VALIDATION") {
+            let errorMessage = "";
+            for (const key in response.data.message) {
+              errorMessage =
+                this.title[key] +
+                response.data.message[key] +
+                errorMessage +
+                "\n";
+            }
+            alert(errorMessage);
+          }
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async saveReply(commentId) {
+      const reply = {
+        roundId: this.$route.params.roundId,
+        replyContent: this.replyContent,
+        commentId: commentId,
+      };
+
+      try {
+        const response = await postReply(reply);
+        console.log(response);
+        if (response.status === 200) {
+          this.fetchReply(commentId);
+          this.replyContent = "";
         } else if (response.status === 400) {
           let code = response.data.code;
           if (code === "VALIDATION") {

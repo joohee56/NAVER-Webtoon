@@ -11,6 +11,15 @@ async function postComment(comment) {
   }
 }
 
+async function postReply(reply) {
+  try {
+    const response = await jsonApi.post("/comments/reply", reply);
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+}
+
 async function deleteComment(commentId) {
   try {
     const response = await jsonApi.delete(`/comments/comment/${commentId}`);
@@ -25,6 +34,19 @@ async function getComments(roundId, offset, limit) {
     const response = await jsonApi.get(
       `/comments/${roundId}/${offset}/${limit}`
     );
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function getReply(commentId) {
+  try {
+    const response = await jsonApi.get("/comments/reply", {
+      params: {
+        commentId: commentId,
+      },
+    });
     return response;
   } catch (error) {
     console.log(error);
@@ -59,4 +81,6 @@ export {
   postCommentLike,
   postCommentDislike,
   deleteComment,
+  postReply,
+  getReply,
 };
