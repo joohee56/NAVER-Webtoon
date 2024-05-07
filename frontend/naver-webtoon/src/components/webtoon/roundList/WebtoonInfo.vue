@@ -18,6 +18,9 @@
         <div class="overflow-hidden">{{webtoonInfo.oneLineSummary}}</div>
         <div v-html="webtoonInfo.summary"></div>
       </div>
+      <div class="genre-wrap">
+        <span v-for="genre in webtoonInfo.genres" class="genre">#{{genre.title}}</span>
+      </div>
     </div>
 	</div>
 </template>
@@ -187,5 +190,18 @@ export default {
   white-space: nowrap; /* 줄 바꿈 방지 */
   overflow: hidden; /* 넘치는 부분 숨김 */
   text-overflow: ellipsis; /* 넘치는 부분에 ... 추가 */
+}
+/* 장르 */
+.genre-wrap {
+  margin-top: 10px;
+}
+.genre-wrap .genre {
+  background-color: #f6f6f6;
+  padding: 0 10px;
+  border-radius: 4px;
+  font-size: 15px;
+  margin: 0 5px 5px 0;
+  color: #666;
+  font-family: AppleSDGothicNeoSB;
 }
 </style>
