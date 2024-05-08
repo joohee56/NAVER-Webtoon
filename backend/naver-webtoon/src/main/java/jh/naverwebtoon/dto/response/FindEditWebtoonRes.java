@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class FindEditWebtoonRes {
     private String webtoonName;
     private String webtoonCategory;
-    private List<GenreRes> genres;
+    private List<String> genres;
     private String oneLineSummary;
     private String summary;
     private String posterStoreFileName;
@@ -23,7 +23,7 @@ public class FindEditWebtoonRes {
         res.webtoonName = webtoon.getName();
         res.webtoonCategory = webtoon.getWebtoonCategory().name();
         res.genres = webtoon.getGenres().stream()
-                .map(webtoonGenre -> new GenreRes(webtoonGenre.getGenre().name(), webtoonGenre.getGenre().getTitle()))
+                .map(webtoonGenre -> webtoonGenre.getGenre().name())
                 .collect(Collectors.toList());
         res.oneLineSummary = webtoon.getOneLineSummary();
         res.summary = webtoon.getSummary();
