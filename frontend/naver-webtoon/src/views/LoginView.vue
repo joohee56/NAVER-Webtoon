@@ -406,6 +406,7 @@ form {
   padding: 13px 0;
   border-radius: 6px;
   box-sizing: border-box;
+  cursor: pointer;
 }
 .btn-text {
   font-family: AppleSDGothicNeoB;

@@ -13,7 +13,7 @@
 				<div class="webtoon-info">
 					<div>
 						<span class="title">{{webtoon.webtoonName}}</span>
-						<a link="#" class="edit-webtoon-btn">작품 정보 수정 ></a>
+            <router-link :to="{name: 'editWebtoon', params: {webtoonId: webtoon.webtoonId}}"  class="edit-webtoon-btn">작품 정보 수정 ></router-link>
 					</div>
 					<div class="description">
 						<div class="domain">{{webtoon.serialType | serialType}} | </div>

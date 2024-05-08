@@ -27,6 +27,7 @@ import ChallengeRoundDetail from "@/views/ChallengeRoundDetail";
 import SearchResult from "@/views/SearchResult";
 import WholeResult from "@/components/webtoon/search/WholeResult";
 import WebtoonWhole from "@/components/webtoon/search/WebtoonWhole";
+import EditWebtoon from "@/components/creator/main/EditWebtoon.vue";
 Vue.use(VueRouter);
 
 const checkLogin = (to, from, next) => {
@@ -178,6 +179,11 @@ const routes = [
         path: "/creators/manage/new/round",
         name: "createNewRound",
         component: CreateNewRound,
+      },
+      {
+        path: "/creators/manage/edit/webtoon/:webtoonId",
+        name: "editWebtoon",
+        component: EditWebtoon,
       },
     ],
   },
