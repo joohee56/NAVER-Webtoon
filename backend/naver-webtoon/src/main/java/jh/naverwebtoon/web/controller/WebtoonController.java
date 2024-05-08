@@ -10,6 +10,7 @@ import jh.naverwebtoon.dto.request.CreateWebtoonReq;
 import jh.naverwebtoon.dto.response.FindChallengeWebtoonsByGenreRes;
 import jh.naverwebtoon.dto.response.FindChallengeWebtoonsRes;
 import jh.naverwebtoon.dto.response.FindCreateRoundInfoRes;
+import jh.naverwebtoon.dto.response.FindEditWebtoonRes;
 import jh.naverwebtoon.dto.response.FindWebtoonDetailRes;
 import jh.naverwebtoon.dto.response.FindWebtoonsByMemberRes;
 import jh.naverwebtoon.dto.response.SearchCountRes;
@@ -112,5 +113,14 @@ public class WebtoonController {
     @GetMapping("/search/count")
     public SearchCountRes searchCount(@RequestParam("keyword") String keyword) {
         return webtoonService.searchCount(keyword);
+    }
+
+    /**
+     * 수정할 웹툰 정보 조회
+     */
+    @Auth
+    @GetMapping("/edit")
+    public FindEditWebtoonRes findEditWebtoon(@RequestParam("webtoonId") Long webtoonId) {
+        return webtoonService.findEditWebtoonInfo(webtoonId);
     }
 }

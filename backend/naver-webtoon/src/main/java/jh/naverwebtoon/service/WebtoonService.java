@@ -11,6 +11,7 @@ import jh.naverwebtoon.db.repository.MemberRepository;
 import jh.naverwebtoon.db.repository.WebtoonRepository;
 import jh.naverwebtoon.dto.request.CreateWebtoonReq;
 import jh.naverwebtoon.dto.response.FindCreateRoundInfoRes;
+import jh.naverwebtoon.dto.response.FindEditWebtoonRes;
 import jh.naverwebtoon.dto.response.FindWebtoonDetailRes;
 import jh.naverwebtoon.dto.response.FindWebtoonsByMemberRes;
 import jh.naverwebtoon.dto.response.SearchCountRes;
@@ -37,7 +38,7 @@ public class WebtoonService {
         WebtoonThumbnail webtoonThumbnail = WebtoonThumbnail.create(posterImage, horizontalImage);
         Webtoon webtoon = Webtoon.create(member, createWebtoonReq, webtoonThumbnail);
         Long webtoonId = webtoonRepository.save(webtoon);
-        return webtoonRepository.findOne(webtoonId);
+        return webtoonRepository.findOneWithMember(webtoonId);
     }
 
     public List<FindWebtoonsByMemberRes> findAllByMember(Long memberId) {
@@ -55,6 +56,10 @@ public class WebtoonService {
 
     public FindWebtoonDetailRes findWebtoonDetail(Long webtoonId) {
         return FindWebtoonDetailRes.create(webtoonRepository.findOneByIdWithMemberAndThumbnail(webtoonId));
+    }
+
+    public FindEditWebtoonRes findEditWebtoonInfo(Long webtoonId) {
+        return FindEditWebtoonRes.create(webtoonRepository.findOneByIdWithMemberAndThumbnail(webtoonId));
     }
 
     public SearchRes search(String keyword, int offset, int limit) {

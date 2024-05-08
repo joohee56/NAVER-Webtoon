@@ -58,7 +58,7 @@ public class WebtoonRankingService {
 
             //랭킹 상승, 하강, 변함없음 계산
             RankingStatus status = calculateStatus(webtoonId, ranking-1, latestRankings);
-            Webtoon webtoon = webtoonRepository.findOne(webtoonId);
+            Webtoon webtoon = webtoonRepository.findOneWithMember(webtoonId);
             newRankings.add(WebtoonRanking.create(webtoon, ranking, status, totalLikeCount));
 
             idx++;

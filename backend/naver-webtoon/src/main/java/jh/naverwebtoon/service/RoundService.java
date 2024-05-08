@@ -70,11 +70,11 @@ public class RoundService {
     @Transactional
     public Long save(Long memberId, CreateRoundReq createRoundReq) {
         //웹툰에 관한 memberId 권한 체크
-        if (webtoonRepository.findOne(createRoundReq.getWebtoonId()).getMember().getId() != memberId) {
+        if (webtoonRepository.findOneWithMember(createRoundReq.getWebtoonId()).getMember().getId() != memberId) {
             throw new IllegalStateException("잘못된 접근입니다.");
         }
 
-        Webtoon webtoon = webtoonRepository.findOne(createRoundReq.getWebtoonId());
+        Webtoon webtoon = webtoonRepository.findOneWithMember(createRoundReq.getWebtoonId());
         RoundThumbnail roundThumbnail = RoundThumbnail.create(fileStore.storeFile(createRoundReq.getThumbnail()));
         List<Manuscript> manuscripts = createRoundReq.getManuscripts().stream()
                 .map(multipartFile -> Manuscript.create(fileStore.storeFile(multipartFile)))

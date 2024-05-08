@@ -21,7 +21,7 @@ public class WebtoonRepository {
         return webtoon.getId();
     }
 
-    public Webtoon findOne(Long id) {
+    public Webtoon findOneWithMember(Long id) {
         return em.createQuery("select w from Webtoon w"
                 + " join fetch w.member m"
                 + " where w.id = :webtoonId", Webtoon.class)

@@ -674,7 +674,7 @@ public class DataLoader implements ApplicationRunner {
     }
 
     public void initRound(Long webtoonId, String thumbnail, String manuscript, String title, String authorNote) {
-        Webtoon webtoon = webtoonRepository.findOne(webtoonId);
+        Webtoon webtoon = webtoonRepository.findOneWithMember(webtoonId);
         RoundThumbnail roundThumbnail = RoundThumbnail.create(new UploadImage(thumbnail,thumbnail));
         MergeManuscript mergeManuscript = MergeManuscript.create(new UploadImage(manuscript, manuscript));
         CreateRoundReq roundReq = new CreateRoundReq();
