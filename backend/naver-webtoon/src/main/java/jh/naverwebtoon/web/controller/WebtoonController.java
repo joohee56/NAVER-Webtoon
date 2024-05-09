@@ -7,6 +7,7 @@ import jh.naverwebtoon.db.domain.enums.SortingEnum;
 import jh.naverwebtoon.db.domain.enums.WebtoonType;
 import jh.naverwebtoon.db.domain.webtoon.Webtoon;
 import jh.naverwebtoon.dto.request.CreateWebtoonReq;
+import jh.naverwebtoon.dto.request.EditWebtoonReq;
 import jh.naverwebtoon.dto.response.FindChallengeWebtoonsByGenreRes;
 import jh.naverwebtoon.dto.response.FindChallengeWebtoonsRes;
 import jh.naverwebtoon.dto.response.FindCreateRoundInfoRes;
@@ -47,6 +48,15 @@ public class WebtoonController {
     public Long createWebtoon(@Login Long id, @Valid @ModelAttribute CreateWebtoonReq createWebtoonReq) {
         Webtoon webtoon = webtoonService.createWebtoon(id, createWebtoonReq);
         return webtoon.getId();
+    }
+
+    /**
+     * 웹툰 수정
+     */
+    @Auth
+    @PostMapping(path= "/edit", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public FindEditWebtoonRes editWebtoon(@Login Long loginId, @Valid @ModelAttribute EditWebtoonReq editWebtoonReq) {
+        return webtoonService.editWebtoon(loginId, editWebtoonReq);
     }
 
     /**

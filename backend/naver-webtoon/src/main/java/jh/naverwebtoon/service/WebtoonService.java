@@ -3,13 +3,14 @@ package jh.naverwebtoon.service;
 import java.util.ArrayList;
 import java.util.List;
 import jh.naverwebtoon.db.domain.Member;
-import jh.naverwebtoon.db.domain.UploadImage;
 import jh.naverwebtoon.db.domain.WebtoonThumbnail;
 import jh.naverwebtoon.db.domain.enums.WebtoonType;
 import jh.naverwebtoon.db.domain.webtoon.Webtoon;
 import jh.naverwebtoon.db.repository.MemberRepository;
+import jh.naverwebtoon.db.repository.WebtoonGenreRepository;
 import jh.naverwebtoon.db.repository.WebtoonRepository;
 import jh.naverwebtoon.dto.request.CreateWebtoonReq;
+import jh.naverwebtoon.dto.request.EditWebtoonReq;
 import jh.naverwebtoon.dto.response.FindCreateRoundInfoRes;
 import jh.naverwebtoon.dto.response.FindEditWebtoonRes;
 import jh.naverwebtoon.dto.response.FindWebtoonDetailRes;
@@ -28,17 +29,31 @@ import org.springframework.transaction.annotation.Transactional;
 public class WebtoonService {
     private final WebtoonRepository webtoonRepository;
     private final MemberRepository memberRepository;
+    private final WebtoonGenreRepository webtoonGenreRepository;
     private final FileStore fileStore;
 
     @Transactional
     public Webtoon createWebtoon(Long memberId, CreateWebtoonReq createWebtoonReq) {
         Member member = memberRepository.findOne(memberId);
-        UploadImage posterImage = fileStore.storeFile(createWebtoonReq.getPosterImage());
-        UploadImage horizontalImage = fileStore.storeFile(createWebtoonReq.getHorizontalImage());
-        WebtoonThumbnail webtoonThumbnail = WebtoonThumbnail.create(posterImage, horizontalImage);
+        WebtoonThumbnail webtoonThumbnail = fileStore.createWebtoonThumbnail(createWebtoonReq.getPosterImage(), createWebtoonReq.getHorizontalImage());
         Webtoon webtoon = Webtoon.create(member, createWebtoonReq, webtoonThumbnail);
         Long webtoonId = webtoonRepository.save(webtoon);
         return webtoonRepository.findOneWithMember(webtoonId);
+    }
+
+    @Transactional
+    public FindEditWebtoonRes editWebtoon(Long loginId, EditWebtoonReq editWebtoonReq) {
+        //변경감지를 위해 준영속 -> 영속 상태 변경
+        Webtoon findWebtoon = webtoonRepository.findOneWithMemberAndThumbnail(editWebtoonReq.getWebtoonId());
+        if (findWebtoon.getMember().getId() != loginId) {
+            throw new IllegalStateException("잘못된 접근입니다.");
+        }
+        //웹툰이 갖고 있던 기존 장르 삭제
+        webtoonGenreRepository.deleteAllByWebtoonId(editWebtoonReq.getWebtoonId());
+        //썸네일 교체
+        fileStore.changeWebtoonThumbnail(editWebtoonReq.getPosterImage(), editWebtoonReq.getHorizontalImage(), findWebtoon);
+        findWebtoon.edit(editWebtoonReq);
+        return FindEditWebtoonRes.create(findWebtoon);
     }
 
     public List<FindWebtoonsByMemberRes> findAllByMember(Long memberId) {
@@ -82,5 +97,4 @@ public class WebtoonService {
         Long totalChallengeCount = webtoonRepository.findSearchCount(keyword, WebtoonType.CHALLENGE);
         return new SearchCountRes(totalOfficialCount, totalChallengeCount);
     }
-
 }

@@ -79,4 +79,14 @@ public class WebtoonGenreRepository {
                 .setParameter("webtoonType", webtoonType)
                 .getSingleResult();
     }
+
+    /**
+     * 웹툰에 속한 전체 장르 삭제
+     */
+    public int deleteAllByWebtoonId(Long webtoonId) {
+        return em.createQuery("delete from WebtoonGenre wg"
+                + " where wg.webtoon.id=:webtoonId")
+                .setParameter("webtoonId",webtoonId)
+                .executeUpdate();
+    }
 }

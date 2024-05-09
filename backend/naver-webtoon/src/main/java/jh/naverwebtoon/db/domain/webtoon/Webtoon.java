@@ -30,6 +30,7 @@ import jh.naverwebtoon.db.domain.enums.GenreEnum;
 import jh.naverwebtoon.db.domain.enums.WebtoonCategory;
 import jh.naverwebtoon.db.domain.enums.WebtoonType;
 import jh.naverwebtoon.dto.request.CreateWebtoonReq;
+import jh.naverwebtoon.dto.request.EditWebtoonReq;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -82,17 +83,17 @@ public class Webtoon extends BaseEntity {
     @OneToMany(mappedBy = "webtoon")
     private List<Round> rounds = new ArrayList<>();
 
-    /**
-     * 연관관계 메서드
-     */
+    //== 연관관계 메서드 ==/
     private void addTag(Tag tag) {
         tags.add(tag);
         tag.setWebtoon(this);
     }
+    //== 연관관계 메서드 ==/
     private void addGenre(WebtoonGenre genre) {
         this.genres.add(genre);
         genre.setWebtoon(this);
     }
+
     protected Webtoon(Member member, CreateWebtoonReq createWebtoonReq, WebtoonThumbnail webtoonThumbnail, WebtoonType webtoonType) {
         this.name = createWebtoonReq.getName();
         this.webtoonCategory = createWebtoonReq.getWebtoonCategory();
@@ -126,5 +127,17 @@ public class Webtoon extends BaseEntity {
         webtoon.member = member;
         webtoon.webtoonThumbnail = webtoonThumbnail;
         return webtoon;
+    }
+
+    public void edit(EditWebtoonReq editWebtoonReq) {
+        this.name = editWebtoonReq.getName();
+        this.webtoonCategory = editWebtoonReq.getWebtoonCategory();
+
+        this.genres = new ArrayList<>();
+        for (GenreEnum genreEnum : editWebtoonReq.getGenres()) {
+            this.addGenre(WebtoonGenre.create(genreEnum));
+        }
+        this.oneLineSummary = editWebtoonReq.getOneLineSummary();
+        this.summary = editWebtoonReq.getSummary();
     }
 }

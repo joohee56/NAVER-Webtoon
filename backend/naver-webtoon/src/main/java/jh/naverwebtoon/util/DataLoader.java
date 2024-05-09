@@ -101,12 +101,12 @@ public class DataLoader implements ApplicationRunner {
         genreEnums = new ArrayList<>();
         genreEnums.add(GenreEnum.EMOTION);
         genreEnums.add(GenreEnum.ROMANCE);
-        initOfficialWebtoon(Long.valueOf(4), "소녀의 세계", WebtoonCategory.STORY, genreEnums, null, "완벽해 보이지만 사실 외로웠던 백조들과 맘씨 착한 오리가 만나\n"
+        initOfficialWebtoon(Long.valueOf(4), "소녀의 세계", WebtoonCategory.STORY, genreEnums, "", "완벽해 보이지만 사실 외로웠던 백조들과 맘씨 착한 오리가 만나\n"
                 + "여러 갈등을 함께 겪으며 진짜 친구가 되어가는 소녀들의 찐 우정물", "소녀의 세계_커버.png", DayOfWeek.MONDAY);
 
         genreEnums = new ArrayList<>();
         genreEnums.add(GenreEnum.EMOTION);
-        initOfficialWebtoon(Long.valueOf(4), "괜찮니 얘들아?", WebtoonCategory.STORY, genreEnums, null, "본 컨텐츠는 보건복지부와 중앙자살예방센터의 브랜드 웹툰으로\n"
+        initOfficialWebtoon(Long.valueOf(4), "괜찮니 얘들아?", WebtoonCategory.STORY, genreEnums, "", "본 컨텐츠는 보건복지부와 중앙자살예방센터의 브랜드 웹툰으로\n"
                 + "모랑지 작가가 전하는 괜찮니? 캠페인 입니다.", "괜찮니 얘들아_커버.png", DayOfWeek.MONDAY);
 
         genreEnums = new ArrayList<>();
@@ -119,19 +119,19 @@ public class DataLoader implements ApplicationRunner {
         genreEnums = new ArrayList<>();
         genreEnums.add(GenreEnum.ROMANCE);
         genreEnums.add(GenreEnum.FANTASY);
-        initOfficialWebtoon(Long.valueOf(3), "베이비 폭군", WebtoonCategory.STORY, genreEnums, null, "가질 수 없었던 화목한 가정, 다정한 부모님.\n"
+        initOfficialWebtoon(Long.valueOf(3), "베이비 폭군", WebtoonCategory.STORY, genreEnums, "", "가질 수 없었던 화목한 가정, 다정한 부모님.\n"
                 + "비참한 결말 끝에 눈을 떠 보니, 환생했다.\n"
                 + "그것도 제국의 공주로!", "베이비 폭군_커버.png", DayOfWeek.WEDNESDAY);
 
         genreEnums = new ArrayList<>();
         genreEnums.add(GenreEnum.ROMANCE);
-        initOfficialWebtoon(Long.valueOf(4), "사내연애 사절!", WebtoonCategory.STORY , genreEnums, null, "첫사랑에서 친구로, 친구에서 동료로,\n"
+        initOfficialWebtoon(Long.valueOf(4), "사내연애 사절!", WebtoonCategory.STORY , genreEnums, "", "첫사랑에서 친구로, 친구에서 동료로,\n"
                 + "역행하는 관계 속에서 솔직한 내 마음은 '사내연애 사절!'", "사내연애 사절_커버.png", DayOfWeek.THURSDAY);
 
         genreEnums = new ArrayList<>();
         genreEnums.add(GenreEnum.ROMANCE);
         genreEnums.add(GenreEnum.DRAMA);
-        initOfficialWebtoon(Long.valueOf(2), "시월드가 내게 집착한다", WebtoonCategory.STORY, genreEnums, null, "사랑했던 가족들이 나를 죽였다.\n"
+        initOfficialWebtoon(Long.valueOf(2), "시월드가 내게 집착한다", WebtoonCategory.STORY, genreEnums, "", "사랑했던 가족들이 나를 죽였다.\n"
                 + "과거로 돌아온 나는 내 목숨과 유산을 지키기로 결심하고 라피레온 대공을 찾아갔다.\n"
                 + "그런데 이 대공가, 심상치 않다.\n"
                 + "\n"
@@ -140,7 +140,7 @@ public class DataLoader implements ApplicationRunner {
         genreEnums = new ArrayList<>();
         genreEnums.add(GenreEnum.COMEDY);
         genreEnums.add(GenreEnum.DAILY_LIFE);
-        initOfficialWebtoon(Long.valueOf(14), "마음의소리2", WebtoonCategory.STORY, genreEnums, null, "'마음의소리' 완결 후 3년, 조석 작가의 결코 소소하지 않은 일상(?) 대공개!\n"
+        initOfficialWebtoon(Long.valueOf(14), "마음의소리2", WebtoonCategory.STORY, genreEnums, "", "'마음의소리' 완결 후 3년, 조석 작가의 결코 소소하지 않은 일상(?) 대공개!\n"
                 + "제목은... '너는 그냥 개그만화나 그려라'\n"
                 + "(였는데 다들 '마음의소리2'라 불러서 제목 바꿈)","마음의소리2_커버.png", DayOfWeek.MONDAY);
 
@@ -148,7 +148,7 @@ public class DataLoader implements ApplicationRunner {
         genreEnums = new ArrayList<>();
         genreEnums.add(GenreEnum.ROMANCE);
         genreEnums.add(GenreEnum.EMOTION);
-        initOfficialWebtoon(Long.valueOf(6), "같은 학교 친구", WebtoonCategory.STORY, genreEnums, null, "항상 바른 자세를 하는 같은 반 친구 겨울이.\n"
+        initOfficialWebtoon(Long.valueOf(6), "같은 학교 친구", WebtoonCategory.STORY, genreEnums, "", "항상 바른 자세를 하는 같은 반 친구 겨울이.\n"
                 + "요한이는 그런 겨울이가 왠지 신경 쓰인다.\n"
                 + "그때 마침 짝이 된 두 사람. 가까워진 자리만큼 마음의 거리가 좁혀져 간다.\n"
                 + "두근대는 심장 소리.\n"
@@ -158,7 +158,7 @@ public class DataLoader implements ApplicationRunner {
         genreEnums = new ArrayList<>();
         genreEnums.add(GenreEnum.FANTASY);
         genreEnums.add(GenreEnum.DRAMA);
-        initOfficialWebtoon(Long.valueOf(7), "묘약마녀", WebtoonCategory.STORY, genreEnums, null, "약제사 바나는 블레록 시에서 작은 약초 상점을 운영하고 있다.\n"
+        initOfficialWebtoon(Long.valueOf(7), "묘약마녀", WebtoonCategory.STORY, genreEnums, "", "약제사 바나는 블레록 시에서 작은 약초 상점을 운영하고 있다.\n"
                 + "이 마을에는 밤만 되면 저주를 걸고 사라지는 ‘마녀 레이븐’이란 존재가 있어,\n"
                 + "바나는 마녀의 저주를 푸는 약을 자주 의뢰받고는 한다.\n"
                 + "그러던 어느 날, 한 경관이 바나를 찾아오는데…. 사실 마녀 레이븐의 정체는?!","묘약마녀_커버.png", DayOfWeek.WEDNESDAY);
@@ -167,14 +167,14 @@ public class DataLoader implements ApplicationRunner {
         genreEnums = new ArrayList<>();
         genreEnums.add(GenreEnum.EMOTION);
         genreEnums.add(GenreEnum.DRAMA);
-        initOfficialWebtoon(Long.valueOf(9), "개를 낳았다", WebtoonCategory.STORY, genreEnums, null, "사랑스러운 너와의 첫 만남부터 이별까지.\n"
+        initOfficialWebtoon(Long.valueOf(9), "개를 낳았다", WebtoonCategory.STORY, genreEnums, "", "사랑스러운 너와의 첫 만남부터 이별까지.\n"
                 + "처음으로 반려견을 키우게 된 다나와 모든것이 처음인 강아지 명동이가 만나 함께 살아가는 이야기.\n"
                 + "강아지 수명 20년. 너와 내가 함께하는 20년 동안 우린 어떤 일을 겪게 될까?","개를 낳았다_커버.png", DayOfWeek.THURSDAY);
 
         genreEnums = new ArrayList<>();
         genreEnums.add(GenreEnum.DAILY_LIFE);
         genreEnums.add(GenreEnum.COMEDY);
-        initOfficialWebtoon(Long.valueOf(13), "신혼일기", WebtoonCategory.STORY, genreEnums, null, "이젠 갠플이 아니라 팀플이다!\n"
+        initOfficialWebtoon(Long.valueOf(13), "신혼일기", WebtoonCategory.STORY, genreEnums, "", "이젠 갠플이 아니라 팀플이다!\n"
                 + "조별 과제와 차원이 다른 인생을 건 팀플이 시작된다.\n"
                 + "1인가구에서 2인가구로 성장한 자까 작가의 결혼 이야기.","신혼일기_커버.png", DayOfWeek.FRIDAY);
 
@@ -182,13 +182,13 @@ public class DataLoader implements ApplicationRunner {
         genreEnums = new ArrayList<>();
         genreEnums.add(GenreEnum.FANTASY);
         genreEnums.add(GenreEnum.ROMANCE);
-        initOfficialWebtoon(Long.valueOf(12), "나노리스트", WebtoonCategory.STORY, genreEnums, null, "내게 날아온 달콤살벌한 선물 나노\n"
+        initOfficialWebtoon(Long.valueOf(12), "나노리스트", WebtoonCategory.STORY, genreEnums, "", "내게 날아온 달콤살벌한 선물 나노\n"
                 + "안드로이드들의 비밀을 밝혀라!","나노리스트_커버.png", DayOfWeek.SATURDAY);
 
         genreEnums = new ArrayList<>();
         genreEnums.add(GenreEnum.FANTASY);
         genreEnums.add(GenreEnum.ACTION);
-        initOfficialWebtoon(Long.valueOf(15), "전지적 독자 시점", WebtoonCategory.STORY, genreEnums, null, "'이건 내가 아는 그 전개다'\n"
+        initOfficialWebtoon(Long.valueOf(15), "전지적 독자 시점", WebtoonCategory.STORY, genreEnums, "", "'이건 내가 아는 그 전개다'\n"
                 + "한순간에 세계가 멸망하고, 새로운 세상이 펼쳐졌다.\n"
                 + "오직 나만이 완주했던 소설 세계에서 평범했던 독자의 새로운 삶이 시작된다.","전지적 독자 시점_커버.png", DayOfWeek.SUNDAY);
 
@@ -196,7 +196,7 @@ public class DataLoader implements ApplicationRunner {
 
         genreEnums = new ArrayList<>();
         genreEnums.add(GenreEnum.DRAMA);
-        initOfficialWebtoon(Long.valueOf(16), "재벌집 막내아들", WebtoonCategory.STORY, genreEnums, null, "화제의 드라마 원작 웹툰!]\n"
+        initOfficialWebtoon(Long.valueOf(16), "재벌집 막내아들", WebtoonCategory.STORY, genreEnums, "", "화제의 드라마 원작 웹툰!]\n"
                 + "13년 동안의 수고를 배신으로 돌려받다니!\n"
                 + "머슴처럼 살다 버려진 순양그룹의 실장, 윤현우.\n"
                 + "모든 게 끝났다 싶었을 즘, 순양그룹 진 회장의 손주 진도준으로 깨어난다!\n"
@@ -205,35 +205,35 @@ public class DataLoader implements ApplicationRunner {
 
         genreEnums = new ArrayList<>();
         genreEnums.add(GenreEnum.DRAMA);
-        initOfficialWebtoon(Long.valueOf(17), "신의 탑", WebtoonCategory.STORY, genreEnums, null, "자신의 모든 것이었던 소녀를 쫓아 탑에 들어온 소년\n"
+        initOfficialWebtoon(Long.valueOf(17), "신의 탑", WebtoonCategory.STORY, genreEnums, "", "자신의 모든 것이었던 소녀를 쫓아 탑에 들어온 소년\n"
                 + "그리고 그런 소년을 시험하는 탑","신의 탑_커버.png", DayOfWeek.TUESDAY);
 
 
         genreEnums = new ArrayList<>();
         genreEnums.add(GenreEnum.DRAMA);
-        initOfficialWebtoon(Long.valueOf(17), "뷰티풀 군바리", WebtoonCategory.STORY, genreEnums, null, "'여자도 군대에 간다면?'본격 여자도 군대 가는 만화!","뷰티풀 군바리_커버.png", DayOfWeek.MONDAY);
+        initOfficialWebtoon(Long.valueOf(17), "뷰티풀 군바리", WebtoonCategory.STORY, genreEnums, "", "'여자도 군대에 간다면?'본격 여자도 군대 가는 만화!","뷰티풀 군바리_커버.png", DayOfWeek.MONDAY);
 
 
         genreEnums = new ArrayList<>();
         genreEnums.add(GenreEnum.ACTION);
-        initOfficialWebtoon(Long.valueOf(17), "참교육", WebtoonCategory.STORY, genreEnums, null, "무너진 교권을 지키기 위해 교권보호국 소속 나화진의 참교육이 시작된다!\n"
+        initOfficialWebtoon(Long.valueOf(17), "참교육", WebtoonCategory.STORY, genreEnums, "", "무너진 교권을 지키기 위해 교권보호국 소속 나화진의 참교육이 시작된다!\n"
                 + "<부활남> 채용택 작가 X <신석기녀> 한가람 작가의 신작!","참교육_커버.png", DayOfWeek.MONDAY);
 
         genreEnums = new ArrayList<>();
         genreEnums.add(GenreEnum.DRAMA);
         genreEnums.add(GenreEnum.EMOTION);
-        initOfficialWebtoon(Long.valueOf(17), "백수세끼", WebtoonCategory.STORY, genreEnums, null, "백수 시절 내 곁을 지켜줬던 그녀... 돌아와 주면 안 되겠니?\n"
+        initOfficialWebtoon(Long.valueOf(17), "백수세끼", WebtoonCategory.STORY, genreEnums, "", "백수 시절 내 곁을 지켜줬던 그녀... 돌아와 주면 안 되겠니?\n"
                 + "음식 메뉴마다 담겨 있는 우리들의 연애 흑역사!","백수세끼_커버.png", DayOfWeek.MONDAY);
 
         genreEnums = new ArrayList<>();
         genreEnums.add(GenreEnum.DRAMA);
-        initOfficialWebtoon(Long.valueOf(17), "왕과의 야행", WebtoonCategory.STORY, genreEnums, null, "젊은 왕과 아름다운 여인이 발을 사이에 두고 앉아있다.\n"
+        initOfficialWebtoon(Long.valueOf(17), "왕과의 야행", WebtoonCategory.STORY, genreEnums, "", "젊은 왕과 아름다운 여인이 발을 사이에 두고 앉아있다.\n"
                 + "가느다란 흰 손가락으로 책장을 넘기는 여인은\n"
                 + "고혹적인 목소리로 글을 읽어 내려가는데...","왕과의 야행_커버.png", DayOfWeek.MONDAY);
 
         genreEnums = new ArrayList<>();
         genreEnums.add(GenreEnum.DRAMA);
-        initOfficialWebtoon(Long.valueOf(17), "퀘스트지상주의", WebtoonCategory.STORY, genreEnums, null, "[외모지상주의], [싸움독학], [인생존망]과 세계관을 공유하는 작품!\n"
+        initOfficialWebtoon(Long.valueOf(17), "퀘스트지상주의", WebtoonCategory.STORY, genreEnums, "", "[외모지상주의], [싸움독학], [인생존망]과 세계관을 공유하는 작품!\n"
                 + "공부, 싸움, 외모.\n"
                 + "뭐 하나 잘난 것 없는 평범한 고등학생 ‘김수현’의 눈앞에 갑자기 퀘스트창이 나타났다!\n"
                 + "첫 번째 퀘스트, [엄마한테 사과하기]를 완료한 수현은 보상으로 키가 3cm 커지게 되는데!\n"
@@ -242,19 +242,19 @@ public class DataLoader implements ApplicationRunner {
 
         genreEnums = new ArrayList<>();
         genreEnums.add(GenreEnum.SPORTS);
-        initOfficialWebtoon(Long.valueOf(17), "윈드브레이커", WebtoonCategory.STORY, genreEnums, null, "혼자서 자전거를 즐겨타던 모범생 조자현.\n"
+        initOfficialWebtoon(Long.valueOf(17), "윈드브레이커", WebtoonCategory.STORY, genreEnums, "", "혼자서 자전거를 즐겨타던 모범생 조자현.\n"
                 + "원치 않게 자전거 크루의 일에 자꾸 휘말리게 되는데...\n"
                 + "자유를 꿈꾸는 청춘들의 스트릿라이딩 드라마!","윈드브레이커_커버.png", DayOfWeek.MONDAY);
 
         genreEnums = new ArrayList<>();
         genreEnums.add(GenreEnum.FANTASY);
-        initOfficialWebtoon(Long.valueOf(17), "신화급 귀속 아이템을 손에 넣었다", WebtoonCategory.STORY, genreEnums, null, "D급 무투계 레이더로 마법계 레이더들의 고기방패나 하며 별 볼 일 없이 살던 재현.\n"
+        initOfficialWebtoon(Long.valueOf(17), "신화급 귀속 아이템을 손에 넣었다", WebtoonCategory.STORY, genreEnums, "", "D급 무투계 레이더로 마법계 레이더들의 고기방패나 하며 별 볼 일 없이 살던 재현.\n"
                 + "그러던 어느 날, 던전에서 우연히 \"오딘의 눈\" 이라는 최강의 귀속 아이템을 얻게 됐다.\n"
                 + "신의 눈을 가진 자, 세계를 구할 신의 대적자의 운명을 개척하라!","신화급 귀속 아이템을 손에 넣었다_커버.png", DayOfWeek.MONDAY);
 
         genreEnums = new ArrayList<>();
         genreEnums.add(GenreEnum.ROMANCE);
-        initOfficialWebtoon(Long.valueOf(17), "버림받은 왕녀의 은밀한 침실", WebtoonCategory.STORY, genreEnums, null, "한때는 추앙받았지만 지금은 비참하게 버림받은 왕녀 르웰린. 아무도 보호해 주지 않는 그녀에게 추악한 저주가 내려진다.\n"
+        initOfficialWebtoon(Long.valueOf(17), "버림받은 왕녀의 은밀한 침실", WebtoonCategory.STORY, genreEnums, "", "한때는 추앙받았지만 지금은 비참하게 버림받은 왕녀 르웰린. 아무도 보호해 주지 않는 그녀에게 추악한 저주가 내려진다.\n"
                 + "그것은 바로 남자를 욕망하게 되는 저주.\n"
                 + "르웰린은 저주의 폭주를 막기 위해 결국 자신의 침실을 열게 되는데...\n"
                 + "버림받은 왕녀와 얽히고 설키는 네명의 남자들.\n"
@@ -262,13 +262,13 @@ public class DataLoader implements ApplicationRunner {
 
         genreEnums = new ArrayList<>();
         genreEnums.add(GenreEnum.DRAMA);
-        initOfficialWebtoon(Long.valueOf(17), "팔이피플", WebtoonCategory.STORY, genreEnums, null, "<마스크걸>, <위대한 방옥숙> 매미/희세 작가의 신작!\n"
+        initOfficialWebtoon(Long.valueOf(17), "팔이피플", WebtoonCategory.STORY, genreEnums, "", "<마스크걸>, <위대한 방옥숙> 매미/희세 작가의 신작!\n"
                 + "SNS에서 육아용품 파는 평범한 유부녀 박주연, 그녀의 고등학교 동창인 김예희는 팔로워 70만의 셀럽으로 엄청난 부와 명성을 누리는 중이다.\n"
                 + "박주연은 김예희를 미워하는 동시에 집착하고 있는데, 과연 그녀는 김예희의 과거를 폭로하고 셀럽으로 올라설 수 있을까?","팔이피플_커버.png", DayOfWeek.MONDAY);
 
         genreEnums = new ArrayList<>();
         genreEnums.add(GenreEnum.MARTIAL_ARTS_AND_HISTORICAL);
-        initOfficialWebtoon(Long.valueOf(17), "절대 검감", WebtoonCategory.STORY, genreEnums, null, "단전이 부숴졌다는 이유로 집에서는 내놓은 자식 취급을 받던 소운휘는 혈교에 납치되어서도 삼류 첩자로 살아왔다.\n"
+        initOfficialWebtoon(Long.valueOf(17), "절대 검감", WebtoonCategory.STORY, genreEnums, "", "단전이 부숴졌다는 이유로 집에서는 내놓은 자식 취급을 받던 소운휘는 혈교에 납치되어서도 삼류 첩자로 살아왔다.\n"
                 + "어느 날, 전설로만 알려진 검선비록을 찾는데 이용당하다 죽은 운휘는 10년 전, 혈교에 납치되던 그 날로 돌아가게 되고 검의 목소리를 듣는 신비한 능력을 얻는다.","절대검감_커버.png", DayOfWeek.MONDAY);
 
 

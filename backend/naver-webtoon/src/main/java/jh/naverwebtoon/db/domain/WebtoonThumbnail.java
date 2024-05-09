@@ -34,4 +34,13 @@ public class WebtoonThumbnail extends BaseEntity {
         webtoonThumbnail.horizontalImage = horizontalImage;
         return webtoonThumbnail;
     }
+
+    public void changeThumbnail(UploadImage posterImage, UploadImage horizontalImage) {
+        if (posterImage != null) {
+            this.posterImage = posterImage;
+        }
+        if(horizontalImage != null) {
+            this.horizontalImage = horizontalImage;
+        }
+    }
 }
