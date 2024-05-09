@@ -318,6 +318,7 @@ export default {
       console.log(response);
 
       if (response.status === 200) {
+        alert("작품 수정이 완료되었습니다.");
         this.$router.push({ name: 'manage' });
       } else if (response.status === 400) {
         let data = response.data;

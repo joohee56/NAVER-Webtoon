@@ -159,7 +159,7 @@
 									</div>
 
                   <!-- 포스터형 이미지 미선택  -->
-									<div>
+									<div :class="{blind:this.previewPoster!==null}">
 										<em>480 x 623</em>
 										<label class="image-select-btn" for="poster">파일 선택</label>
 										<input type="file" id="poster" ref="poster" accept=".jpg, .jpeg" @change="selectPosterImg" hidden>
@@ -182,7 +182,7 @@
 									</div>
 
 									<!-- 가로형 이미지 미선택 -->
-									<div>
+									<div :class="{blind:this.previewHorizontal!==null}">
 										<em>480 x 623</em>
 										<label class="image-select-btn" for="horizontal">파일 선택</label>
 										<input type="file" id="horizontal" ref="horizontal" @change="selectHorizontalImg" hidden>
