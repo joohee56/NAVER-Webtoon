@@ -147,8 +147,9 @@
 							<div class="representative-img-row">
 								<div class="title">포스터형</div>
 								<div class="img-input poster">
-                  <!-- 이미지 선택 -->
-									<div class="img-wrap" :class={blind:!isPosterSelect}>
+
+                  <!-- 포스터형 이미지 선택 -->
+									<div class="img-wrap" v-if='this.previewPoster!==null'>
 										<label for="poster">
 											<img :src="previewPoster">
 										</label>
@@ -156,8 +157,9 @@
 											<i class="fa-regular fa-trash-can"></i>
 										</label>
 									</div>
-                  <!-- 이미지 미선택  -->
-									<div :class={blind:isPosterSelect}>
+
+                  <!-- 포스터형 이미지 미선택  -->
+									<div>
 										<em>480 x 623</em>
 										<label class="image-select-btn" for="poster">파일 선택</label>
 										<input type="file" id="poster" ref="poster" accept=".jpg, .jpeg" @change="selectPosterImg" hidden>
@@ -168,7 +170,9 @@
 							<div class="representative-img-row">
 								<div class="title">가로형</div>
 								<div class="img-input horizontality">
-									<div class="img-wrap" :class={blind:!isHorizontalSelect}>
+
+									<!-- 가로형 이미지 선택 -->
+									<div class="img-wrap" v-if='this.previewHorizontal!==null'>
 										<label for="horizontal">
 											<img :src="previewHorizontal">
 										</label>
@@ -176,7 +180,9 @@
 											<i class="fa-regular fa-trash-can"></i>
 										</label>
 									</div>
-									<div :class={blind:isHorizontalSelect}>
+
+									<!-- 가로형 이미지 미선택 -->
+									<div>
 										<em>480 x 623</em>
 										<label class="image-select-btn" for="horizontal">파일 선택</label>
 										<input type="file" id="horizontal" ref="horizontal" @change="selectHorizontalImg" hidden>
@@ -252,20 +258,10 @@ export default {
         posterImage: "포스터형 대표이미지",
         horizontalImage: "가로형 대표이미지",
       },
-      isPosterSelect: false,
-      isHorizontalSelect: false,
       previewPoster: null,
       previewHorizontal: null,
       showCancleConfirmModal: false,
     };
-  },
-  watch: {
-    previewPoster: function (val) {
-      this.isPosterSelect = val !== null ? true : false;
-    },
-    previewHorizontal: function (val) {
-      this.isHorizontalSelect = val !== null ? true : false;
-    },
   },
   components: {
     CancleConfirm,

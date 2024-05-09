@@ -12,6 +12,15 @@ async function postCreateWebtoon(webtoon) {
   }
 }
 
+async function putWebtoon(webtoon) {
+  try {
+    const response = await fileApi.post("/webtoon/edit", webtoon);
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+}
+
 async function getWebtoonAllByMember() {
   try {
     const response = await jsonApi.get("/webtoon");
@@ -151,6 +160,19 @@ async function getSearchCount(keyword) {
   }
 }
 
+async function getEditWebtoon(webtoonId) {
+  try {
+    const response = await jsonApi.get("/webtoon/edit", {
+      params: {
+        webtoonId: webtoonId,
+      },
+    });
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+}
+
 export {
   postCreateWebtoon,
   getWebtoonAllByMember,
@@ -164,4 +186,6 @@ export {
   getSearch,
   getSearchWebtoon,
   getSearchCount,
+  getEditWebtoon,
+  putWebtoon,
 };

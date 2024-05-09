@@ -134,8 +134,9 @@
 							<div class="representative-img-row">
 								<div class="title">포스터형</div>
 								<div class="img-input poster">
-                  <!-- 이미지 선택 -->
-									<div class="img-wrap" :class={blind:!isPosterSelect}>
+
+                  <!-- 포스터형 이미지 선택 -->
+									<div class="img-wrap" v-if='this.previewPoster!==null'>
 										<label for="poster">
 											<img :src="previewPoster">
 										</label>
@@ -143,19 +144,33 @@
 											<i class="fa-regular fa-trash-can"></i>
 										</label>
 									</div>
-                  <!-- 이미지 미선택  -->
-									<div :class={blind:isPosterSelect}>
+
+									<!-- 저장된 포스터형 이미지 -->
+									<div class="img-wrap" v-if='this.receivedPoster!==null'>
+										<label for="poster">
+											<img :src="require(`@/assets/image/${receivedPoster}`)">
+										</label>
+										<label class="delete-img">
+											<i class="fa-regular fa-trash-can"></i>
+										</label>
+									</div>
+
+                  <!-- 포스터형 이미지 미선택  -->
+									<div style="display: none">
 										<em>480 x 623</em>
 										<label class="image-select-btn" for="poster">파일 선택</label>
 										<input type="file" id="poster" ref="poster" accept=".jpg, .jpeg" @change="selectPosterImg" hidden>
 									</div>
 								</div>
+								
 							</div>
 
 							<div class="representative-img-row">
 								<div class="title">가로형</div>
 								<div class="img-input horizontality">
-									<div class="img-wrap" :class={blind:!isHorizontalSelect}>
+
+									<!-- 가로형 이미지 선택 -->
+									<div class="img-wrap" v-if='this.previewHorizontal!==null'>
 										<label for="horizontal">
 											<img :src="previewHorizontal">
 										</label>
@@ -163,7 +178,19 @@
 											<i class="fa-regular fa-trash-can"></i>
 										</label>
 									</div>
-									<div :class={blind:isHorizontalSelect}>
+
+									<!-- 저장된 가로형 이미지 -->
+									<div class="img-wrap" v-if='this.receivedHorizontal!==null'>
+										<label for="horizontal">
+											<img :src="require(`@/assets/image/${receivedHorizontal}`)">
+										</label>
+										<label class="delete-img">
+											<i class="fa-regular fa-trash-can"></i>
+										</label>
+									</div>
+
+									<!-- 가로형 이미지 미선택 -->
+									<div style="display: none">
 										<em>480 x 623</em>
 										<label class="image-select-btn" for="horizontal">파일 선택</label>
 										<input type="file" id="horizontal" ref="horizontal" @change="selectHorizontalImg" hidden>
@@ -187,14 +214,28 @@
 		<div class="btn-wrap">
 			<button class="delete">작품 삭제</button>
 			<button class="cancel" @click="showCancleConfirmModal = true">취소</button>
-			<button class="submit" @click="createWebtoon('manage')">저장</button>
+			<button class="submit" @click="editWebtoon">저장</button>
 		</div>
+
+		<!-- 작품 등록 취소 모달 -->
+    <CancleConfirm :show="showCancleConfirmModal" @close="showCancleConfirmModal = false">
+      <template #header>
+        <div>작품 수정을 취소하시겠습니까?</div>
+      </template>
+      <template #body>
+        <div class="modal-btn">
+          <button @click="showCancleConfirmModal = false">취소</button>
+          <button class="submit" @click="cancleEditWebtoon">확인</button>
+        </div>
+      </template>
+    </CancleConfirm>
 
 	</div>
 </template>
 
 <script>
-import { postCreateWebtoon } from "@/api/webtoon";
+import { getEditWebtoon, putWebtoon } from "@/api/webtoon";
+import CancleConfirm from "../modal/CancleConfirm.vue";
 
 export default {
   data() {
@@ -225,39 +266,59 @@ export default {
         posterImage: "포스터형 대표이미지",
         horizontalImage: "가로형 대표이미지",
       },
-      isPosterSelect: false,
-      isHorizontalSelect: false,
       previewPoster: null,
       previewHorizontal: null,
+      receivedPoster: null,
+      receivedHorizontal: null,
       showCancleConfirmModal: false,
     };
   },
-  watch: {
-    previewPoster: function (val) {
-      this.isPosterSelect = val !== null ? true : false;
-    },
-    previewHorizontal: function (val) {
-      this.isHorizontalSelect = val !== null ? true : false;
-    },
+  created() {
+    this.fetchWebtoon();
+	},
+	components: {
+    CancleConfirm,
   },
   methods: {
-    async createWebtoon(routerName) {
+    async fetchWebtoon() {
+      const response = await getEditWebtoon(this.webtoonId);
+      console.log(response.data);
+      this.setWebtoon(response.data);
+    },
+    setWebtoon(data) {
+      this.webtoon.name = data.webtoonName;
+      this.webtoon.webtoonCategory = data.webtoonCategory;
+      this.webtoon.genres = data.genres;
+      this.webtoon.oneLineSummary = data.oneLineSummary;
+      this.webtoon.summary = data.summary;
+      this.receivedPoster = data.posterStoreFileName;
+      this.receivedHorizontal = data.horizontalStoreFileName;
+    },
+    async editWebtoon() {
       const pass = this.validateInput();
       if (!pass) {
         return;
       }
 
-      const formData = new FormData();
-      for (const key in this.webtoon) {
-        formData.append(key, this.webtoon[key]);
+			const formData = new FormData();
+			formData.append("webtoonId", this.webtoonId);
+			formData.append("name", this.webtoon.name);
+			formData.append("webtoonCategory", this.webtoon.webtoonCategory);
+			formData.append("genres", this.webtoon.genres);
+			formData.append("oneLineSummary", this.webtoon.oneLineSummary);
+      formData.append("summary", this.webtoon.summary);
+      if (this.webtoon.posterImage != null) {
+        formData.append("posterImage", this.webtoon.posterImage);
+      }
+      if (this.webtoon.horizontalImage != null) {
+        formData.append("horizontalImage", this.webtoon.horizontalImage);
       }
 
-      const response = await postCreateWebtoon(formData);
+      const response = await putWebtoon(formData);
       console.log(response);
 
       if (response.status === 200) {
-        alert("작품 등록이 완료되었습니다. 도전만화에 노출됩니다.");
-        this.$router.push({ name: routerName });
+        this.$router.push({ name: 'manage' });
       } else if (response.status === 400) {
         let data = response.data;
         if (data.code === "VALIDATION") {
@@ -332,6 +393,7 @@ export default {
       console.log("img changed");
       this.webtoon.posterImage = this.$refs.poster.files[0];
       this.previewPoster = URL.createObjectURL(this.webtoon.posterImage);
+      this.receivedPoster = null;
     },
     selectHorizontalImg() {
       console.log("img changed");
@@ -339,8 +401,9 @@ export default {
       this.previewHorizontal = URL.createObjectURL(
         this.webtoon.horizontalImage
       );
+      this.receivedHorizontal = null;
     },
-    cancleCreateWebtoon() {
+    cancleEditWebtoon() {
       this.$router.go(-1);
     },
   },
@@ -584,9 +647,6 @@ input[type="radio"]:checked + label::before {
   height: calc(100% - 26px);
   margin-top: 6px;
 }
-.blind {
-  display: none;
-}
 
 /* button */
 .btn-wrap {
@@ -601,6 +661,7 @@ input[type="radio"]:checked + label::before {
   align-items: center;
   border: 1px solid rgba(0, 0, 0, 0.06);
   margin-left: 8px;
+	cursor: pointer;
 }
 .btn-wrap .delete {
   background-color: #e0e0e0;
