@@ -254,16 +254,20 @@ export default {
       document.addEventListener("click", this.handleClickShowMenubar);
       document.addEventListener("scroll", this.handleScrollShowMenubar);
     },
-    handleClickShowMenubar() {
+    handleClickShowMenubar(e) {
       const menubar = document.querySelector(".menubar-wrap");
-      if (menubar && this.showMenuBar) {
-        menubar.style.transition = "opacity 0.5s ease";
-        menubar.style.opacity = 0;
-        this.showMenuBar = false;
-      } else {
-        menubar.style.transition = "opacity 0.5s ease";
-        menubar.style.opacity = 1;
-        this.showMenuBar = true;
+      const manuscript = document.querySelector(".manusript-wrap");
+
+      if (menubar && manuscript && e.target.contains(manuscript)) {
+        if (this.showMenuBar) {
+          menubar.style.transition = "opacity 0.5s ease";
+          menubar.style.opacity = 0;
+          this.showMenuBar = false;
+        } else {
+          menubar.style.transition = "opacity 0.5s ease";
+          menubar.style.opacity = 1;
+          this.showMenuBar = true;
+        }
       }
     },
     handleScrollShowMenubar() {
