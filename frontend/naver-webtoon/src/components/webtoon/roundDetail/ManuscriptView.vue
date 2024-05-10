@@ -3,7 +3,7 @@
 
 		<!-- 상단 메뉴바 -->
     <div class="menubar-wrap">
-      <div ref="menubar" class="menu-bar">
+      <div class="menu-bar">
         <router-link :to="{name: webtoonType+'RoundList', params: {webtoonId : `${this.$route.params.webtoonId}`}}"><i class="fa-solid fa-angle-left"></i></router-link>
         <router-link :to="{name: webtoonType+'RoundList', params: {webtoonId : `${this.$route.params.webtoonId}`}}">{{roundDetail.webtoonName}}</router-link>
         <span class="separator"></span>
@@ -108,6 +108,7 @@ export default {
       previewRangeStart: "",
       isPreviewLeftBtnDisabled: "false",
       isPreviewRightBtnDisabled: "false",
+      showMenuBar: true,
     };
   },
   props: ["webtoonType"],
@@ -134,6 +135,11 @@ export default {
     await this.fetchRoundDetail();
     await this.fetchRounds();
     this.setNavActive();
+    document.addEventListener("click", this.handleShowMenubar);
+  },
+  beforeDestroy() {
+    // 컴포넌트가 파괴될 때 이벤트 리스너를 제거
+    document.removeEventListener("click", this.handleShowMenubar);
   },
   methods: {
     ...mapMutations("navStore", ["SET_CATEGORY_ACTIVE"]),
@@ -240,6 +246,18 @@ export default {
         behavior: "smooth", // 부드럽게 스크롤되도록 설정
       });
     },
+    handleShowMenubar() {
+      const menubar = document.querySelector(".menubar-wrap");
+      if (menubar && this.showMenuBar) {
+        menubar.style.transition = "opacity 0.5s ease";
+        menubar.style.opacity = 0;
+        this.showMenuBar = false;
+      } else {
+        menubar.style.transition = "opacity 0.5s ease";
+        menubar.style.opacity = 1;
+        this.showMenuBar = true;
+      }
+    },
     // menubarScoll() {
     //   // 메뉴바 트랜지션
     //   const menubar = this.$refs.menubar;
@@ -273,17 +291,18 @@ export default {
 .container .author-note-wrap {
   width: 85rem;
 }
+
 /* 상단 메뉴바 */
 .menubar-wrap {
   background-color: #383b45;
+  position: sticky;
+  top: 0;
 }
 .menu-bar {
   height: 70px;
   display: flex;
   align-items: center;
   font-size: 18px;
-  position: sticky;
-  top: 0;
   width: 85rem;
   z-index: 1000;
   margin: 0 auto;
