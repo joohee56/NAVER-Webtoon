@@ -26,7 +26,7 @@
     </div>
 
 		<!-- 원고 -->
-		<div ref="manuscript" class="manusript-wrap">
+		<div class="manusript-wrap">
 			<img v-if="roundDetail.mergeManuscript !== ''" class="manuscript" :src="require(`@/assets/image/${roundDetail.mergeManuscript}`)">
 		</div>
 
@@ -135,11 +135,12 @@ export default {
     await this.fetchRoundDetail();
     await this.fetchRounds();
     this.setNavActive();
-    document.addEventListener("click", this.handleShowMenubar);
+    this.setEventLister();
   },
   beforeDestroy() {
     // 컴포넌트가 파괴될 때 이벤트 리스너를 제거
-    document.removeEventListener("click", this.handleShowMenubar);
+    document.removeEventListener("click", this.handleClickShowMenubar);
+    document.removeEventListener("scroll", this.handleScrollShowMenubar);
   },
   methods: {
     ...mapMutations("navStore", ["SET_CATEGORY_ACTIVE"]),
@@ -246,7 +247,11 @@ export default {
         behavior: "smooth", // 부드럽게 스크롤되도록 설정
       });
     },
-    handleShowMenubar() {
+    setEventLister() {
+      document.addEventListener("click", this.handleClickShowMenubar);
+      document.addEventListener("scroll", this.handleScrollShowMenubar);
+    },
+    handleClickShowMenubar() {
       const menubar = document.querySelector(".menubar-wrap");
       if (menubar && this.showMenuBar) {
         menubar.style.transition = "opacity 0.5s ease";
@@ -258,27 +263,33 @@ export default {
         this.showMenuBar = true;
       }
     },
-    // menubarScoll() {
-    //   // 메뉴바 트랜지션
-    //   const menubar = this.$refs.menubar;
-    //   const manuscript = this.$refs.manuscript.scrollHeight;
-
-    //   window.addEventListener("scroll", transition);
-    //   console.log(this.window.scrollY);
-    //   const transition = function () {
-    //     if (manuscript !== null) {
-    //       if (this.window.scrollY >= manuscript.offsetTop) {
-    //         menubar.style.transition = "opacity 0.5s ease";
-    //         menubar.style.opacity = 0;
-    //       } else {
-    //         menubar.style.transition = "opacity 0.5s ease";
-    //         menubar.style.opacity = 1;
-    //       }
-    //     } else {
-    //       window.removeEventListener("scroll", transition);
-    //     }
-    //   };
-    // },
+    handleScrollShowMenubar() {
+      const menubar = document.querySelector(".menubar-wrap");
+      const manuscript = document.querySelector(".manusript-wrap");
+      const scollY = window.scrollY;
+      if (menubar && manuscript) {
+        if (
+          this.showMenuBar &&
+          scollY >= manuscript.offsetTop &&
+          scollY < manuscript.offsetTop + manuscript.offsetHeight
+        ) {
+          //원고 내부 진입
+          menubar.style.transition = "opacity 0.5s ease";
+          menubar.style.opacity = 0;
+          this.showMenuBar = false;
+        }
+        if (
+          !this.showMenuBar &&
+          (scollY < manuscript.offsetTop ||
+            scollY >= manuscript.offsetTop + manuscript.offsetHeight)
+        ) {
+          //원고 외부
+          menubar.style.transition = "opacity 0.5s ease";
+          menubar.style.opacity = 1;
+          this.showMenuBar = true;
+        }
+      }
+    },
   },
 };
 </script>
