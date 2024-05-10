@@ -31,8 +31,10 @@ import EditWebtoon from "@/components/creator/main/EditWebtoon.vue";
 Vue.use(VueRouter);
 
 const checkLogin = (to, from, next) => {
-  const loginUser = Cookies.get("loginUser");
-  if (loginUser === undefined || loginUser.loginId === undefined) {
+  const loginUser = JSON.parse(Cookies.get("loginUser"));
+  const loginId = loginUser.memberStore.loginUser.loginId;
+
+  if (loginUser === undefined || loginId === "") {
     next({
       name: "login",
       params: { redirectUrl: from.path },
