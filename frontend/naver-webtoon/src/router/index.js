@@ -32,7 +32,7 @@ Vue.use(VueRouter);
 
 const checkLogin = (to, from, next) => {
   const loginUser = Cookies.get("loginUser");
-  if (loginUser === undefined) {
+  if (loginUser === undefined || loginUser.loginId === undefined) {
     next({
       name: "login",
       params: { redirectUrl: from.path },
@@ -135,6 +135,7 @@ const routes = [
   {
     path: "/join/success/:loginId/:name",
     name: "joinSuccess",
+    beforeEnter: checkLogin,
     component: JoinSuccess,
   },
   {
@@ -146,8 +147,8 @@ const routes = [
   {
     path: "/creators/dashboard",
     name: "creatorDashboard",
-    beforeEnter: checkLogin,
     component: CreatorView,
+    beforeEnter: checkLogin,
     redirect: "/creators/manage",
     children: [
       {
