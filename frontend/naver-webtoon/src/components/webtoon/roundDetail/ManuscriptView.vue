@@ -32,10 +32,10 @@
 
     <!-- 좋아요 -->
     <div class="reaction-btn-wrap">
-      <div>
+      <div @click="clickWebtoonOfInterest">
         <div class="icon circle-check"><i class="fa-solid fa-circle-check"></i></div>
         <div class="title">관심웹툰</div>
-        <div class="count">13,941</div>
+        <div class="count">0</div>
       </div>
       <div @click="clickRoundLike">
         <div class="icon" style="color: #ff5151;" v-if="this.roundDetail.isUserLike">
@@ -200,6 +200,9 @@ export default {
       } catch (error) {
         console.log(error);
       }
+    },
+    clickWebtoonOfInterest() {
+      alert("개발 진행 중인 기능입니다.");
     },
     moveBeforeRound() {
       if (this.roundDetail.roundNumber === 1) {

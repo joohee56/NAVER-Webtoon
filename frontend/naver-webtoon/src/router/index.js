@@ -44,6 +44,11 @@ const checkLogin = (to, from, next) => {
   }
 };
 
+const checkUndeveloped = (to, from, next) => {
+  alert("개발 진행 중인 기능입니다.");
+  next(false);
+};
+
 const routes = [
   {
     path: "/",
@@ -150,22 +155,24 @@ const routes = [
     path: "/creators/dashboard",
     name: "creatorDashboard",
     component: CreatorView,
-    beforeEnter: checkLogin,
     redirect: "/creators/manage",
     children: [
       {
         path: "/creators/manage",
         name: "manage",
+        beforeEnter: checkLogin,
         component: ManageWebtoon,
       },
       {
         path: "/creators/comment",
         name: "manageComment",
+        beforeEnter: checkUndeveloped,
         component: ManageComment,
       },
       {
         path: "/creators/alarm",
         name: "manageAlarm",
+        beforeEnter: checkUndeveloped,
         component: ManageAlarm,
       },
       {
