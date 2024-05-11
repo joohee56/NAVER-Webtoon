@@ -180,7 +180,7 @@ a:hover {
   text-decoration: underline;
 }
 .ranking-container {
-  padding: 50px 0 60px;
+  padding: 30px 0 50px;
 }
 .subject-wrap {
   margin-bottom: 15px;
