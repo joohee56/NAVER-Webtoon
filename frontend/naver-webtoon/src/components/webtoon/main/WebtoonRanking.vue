@@ -1,22 +1,26 @@
 <template lang="ko">
 	<div class="ranking-container">
 
+    <!-- 타이틀 -->
     <div class="subject-wrap">
       <div class="title">가장 핫한 웹툰만 모아봤어요!</div>
-      <div class="update-time" v-if="updatedAt !=''">{{updatedAt}} 기준</div>
+      <div class="update-time" v-if="updatedAt !== ''">{{updatedAt}} 기준</div>
     </div>
 
+    <!-- 웹툰 랭킹 -->
     <div class="box-container">
+      <!-- 랭킹이 없는 경우 -->
       <div v-if="rankings.length === 0">
         <div class="no-ranking-description-text">조회할 랭킹이 없습니다.</div>
       </div>
 
+      <!-- 랭킹이 있는 경우 -->
       <div v-if="rankings.length !== 0" class="box-container-inner">
         <button class="ranking-arrow-btn" @click="clickLeftRankingBtn" v-if="!isLeftBtnDisabled"><i class="fa-solid fa-chevron-left"></i></button>
         
         <ul class="webtoon-list">
           <li class="webtoon-item-wrap" v-for="(ranking, index) in rankings">
-            
+            <!-- 썸네일, 랭킹 숫자 -->
             <div class="thumbnail-ranking-wrap">
               <div class="cover-image">
                 <router-link :to="{name:ranking.webtoonType.toLowerCase()+'RoundList', params: {webtoonId: ranking.webtoonId}}">
@@ -33,15 +37,15 @@
               </div>
             </div>
             
+            <!-- 웹툰 정보 -->
             <div class="info-wrap">
-              
               <div class="title overflow-hidden">
                 <router-link :to="{name:ranking.webtoonType.toLowerCase()+'RoundList', params: {webtoonId: ranking.webtoonId}}">
                   {{ranking.webtoonName}}
                 </router-link>
               </div>
               <div class="genre">
-                <span v-for="genre in ranking.genres">{{genre}} </span>
+                <span v-for="genre in ranking.genres">{{genre}}</span>
               </div>
               <div class="like-cnt">
                 <i class="fa-solid fa-heart"></i>
@@ -70,6 +74,7 @@ export default {
       updatedAt: "",
       rankingStartIndex: "",
       rankingLimit: 7,
+      totalRankingCount: 14,
       isRightBtnDisabled: false,
       isLeftBtnDisabled: false,
     };
@@ -125,17 +130,15 @@ export default {
       this.connected = false;
     },
     async fetchRanking() {
-      try {
-        const response = await getWebtoonRanking(
-          this.rankingStartIndex,
-          this.rankingLimit,
-          this.webtoonType
-        );
-        console.log(response.data);
+      const response = await getWebtoonRanking(
+        this.rankingStartIndex,
+        this.rankingLimit,
+        this.webtoonType
+      );
+      console.log(response.data);
+      if (response.status === 200) {
         this.rankings = response.data.rankings;
         this.updatedAt = response.data.updatedAt;
-      } catch (error) {
-        console.log(error);
       }
     },
     clickRightRankingBtn() {
@@ -145,7 +148,10 @@ export default {
       this.rankingStartIndex -= this.rankingLimit;
     },
     setRankigBtnDisabled() {
-      if (this.rankingStartIndex + this.rankingLimit >= 10) {
+      if (
+        this.rankingStartIndex + this.rankingLimit >=
+        this.totalRankingCount
+      ) {
         this.isRightBtnDisabled = true;
       } else {
         this.isRightBtnDisabled = false;
