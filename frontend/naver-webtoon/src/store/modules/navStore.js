@@ -11,7 +11,7 @@ const navStore = {
         title: "도전만화",
         routerName: "challengeMain",
       },
-      {},
+      {}, //네비게이션 비활성화 용도
     ],
     selectedIndex_dayOfWeek: 0,
     dayOfWeeks: [
