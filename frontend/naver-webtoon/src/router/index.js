@@ -184,22 +184,26 @@ const routes = [
       },
       {
         path: "/creators/manage/round/:webtoonId/:webtoonType",
+        beforeEnter: checkLogin,
         name: "manageRound",
         component: ManageRound,
       },
       {
         path: "/creators/manage/new/webtoon",
         name: "createNewWebtoon",
+        beforeEnter: checkLogin,
         component: CreateNewWebtoon,
       },
       {
         path: "/creators/manage/new/round",
         name: "createNewRound",
+        beforeEnter: checkLogin,
         component: CreateNewRound,
       },
       {
         path: "/creators/manage/edit/webtoon/:webtoonId",
         name: "editWebtoon",
+        beforeEnter: checkLogin,
         component: EditWebtoon,
       },
     ],
