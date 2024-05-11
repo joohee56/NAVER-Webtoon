@@ -48,6 +48,6 @@ nav button {
 .active {
   font-family: AppleSDGothicNeoB;
   color: #00dc64;
-  border-bottom: #00dc64 solid 1.5px;
+  border-bottom: #00dc64 solid 3px;
 }
 </style>

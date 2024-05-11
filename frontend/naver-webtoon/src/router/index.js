@@ -184,8 +184,8 @@ const routes = [
       },
       {
         path: "/creators/manage/round/:webtoonId/:webtoonType",
-        beforeEnter: checkLogin,
         name: "manageRound",
+        beforeEnter: checkLogin,
         component: ManageRound,
       },
       {

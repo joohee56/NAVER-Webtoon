@@ -34,7 +34,7 @@ export default {
 
 <style scoped>
 nav button {
-  margin: 20px 30px 0 0;
+  margin: 20px 20px 0 0;
   padding-bottom: 0.5rem;
   font-family: AppleSDGothicNeoSB;
   font-size: 18px;
@@ -46,6 +46,6 @@ nav button {
 .active {
   font-family: AppleSDGothicNeoB;
   color: #00dc64;
-  border-bottom: #00dc64 solid 1.5px;
+  border-bottom: #00dc64 solid 3px;
 }
 </style>
