@@ -2,32 +2,39 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Cookies from "js-cookie";
 
-import WebtoonView from "@/views/WebtoonView";
-import LoginView from "@/views/LoginView";
-import MainView from "@/views/MainView";
-import JoinView from "@/views/JoinView";
-import JoinSuccess from "@/views/JoinSuccess.vue";
-import UserProfile from "@/views/UserProfile";
-import CreatorView from "@/views/CreatorView";
-import ChallengeView from "@/views/ChallengeView.vue";
+// creator
+import CreatorView from "@/views/creator/CreatorView";
 import ManageWebtoon from "@/components/creator/main/ManageWebtoon";
+import ManageRound from "@/components/creator/main/ManageRound";
 import ManageComment from "@/components/creator/main/ManageComment";
 import ManageAlarm from "@/components/creator/main/ManageAlarm";
-import ManageRound from "@/components/creator/main/ManageRound";
 import CreateNewWebtoon from "@/components/creator/main/CreateNewWebtoon";
 import CreateNewRound from "@/components/creator/main/CreateNewRound";
-import OfficialRoundList from "@/views/OfficialRoundList";
-import DayOfWeekView from "@/views/DayOfWeekView.vue";
-import OfficialView from "@/views/OfficialView";
-import ChallengeMain from "@/views/ChallengeMain";
-import GenreView from "@/views/GenreView";
-import ChallengeRoundList from "@/views/ChallengeRoundList";
-import OfficialRoundDetail from "@/views/OfficialRoundDetail";
-import ChallengeRoundDetail from "@/views/ChallengeRoundDetail";
-import SearchResult from "@/views/SearchResult";
+import EditWebtoon from "@/components/creator/main/EditWebtoon.vue";
+// user
+import LoginView from "@/views/user/LoginView";
+import JoinView from "@/views/user/JoinView";
+import JoinSuccess from "@/views/user/JoinSuccess.vue";
+import UserProfile from "@/views/user/UserProfile";
+//webtoon
+import WebtoonView from "@/views/webtoon/WebtoonView";
+// official
+import OfficialView from "@/views/webtoon/official/OfficialView";
+import MainView from "@/views/webtoon/official/MainView";
+import OfficialRoundList from "@/views/webtoon/official/OfficialRoundList";
+import OfficialRoundDetail from "@/views/webtoon/official/OfficialRoundDetail";
+import DayOfWeekView from "@/views/webtoon/official/DayOfWeekView.vue";
+// challenge
+import ChallengeView from "@/views/webtoon/challenge/ChallengeView.vue";
+import ChallengeMain from "@/views/webtoon/challenge/ChallengeMain";
+import ChallengeRoundList from "@/views/webtoon/challenge/ChallengeRoundList";
+import ChallengeRoundDetail from "@/views/webtoon/challenge/ChallengeRoundDetail";
+import GenreView from "@/views/webtoon/challenge/GenreView";
+// search
+import SearchResult from "@/views/webtoon/search/SearchResult";
 import WholeResult from "@/components/webtoon/search/WholeResult";
 import WebtoonWhole from "@/components/webtoon/search/WebtoonWhole";
-import EditWebtoon from "@/components/creator/main/EditWebtoon.vue";
+
 Vue.use(VueRouter);
 
 const checkLogin = (to, from, next) => {

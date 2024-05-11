@@ -54,10 +54,10 @@
 								</div>
 
 								<!-- 로그인 상태 유지 -->
-								<div class="login-keep-wrap">
+								<!-- <div class="login-keep-wrap">
 									<input type="checkbox" id="keep" class="input-keep">
 									<label for="keep" class="keep-text">로그인 상태 유지</label>
-								</div>
+								</div> -->
 
 								<!-- error message -->
                 <div class="error-message" v-html="errorMessage"></div>
