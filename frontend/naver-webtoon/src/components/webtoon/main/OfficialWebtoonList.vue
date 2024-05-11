@@ -1,5 +1,6 @@
 <template lang="ko">
 	<div class="container">
+
     <!-- 타이틀 -->
 		<div class="subject-container">
 			<p class="title">요일별 전체 웹툰</p>
@@ -11,6 +12,7 @@
 			</div>
 		</div>
 
+    <!-- 장르 필터 -->
 		<div class="genre-wrap">
       <div v-for="genre in genres">
         <input type="checkbox" :id="genre.value" :value="genre.value" @click="clickGenre(genre.value)" v-model="selectedGenres">
@@ -18,6 +20,7 @@
       </div>
 		</div>
 
+    <!-- 웹툰 리스트 -->
 		<div class="webtoon-container">
 			<ThumbnailComp :headerTitle="dayOfWeekHeaders[0]" :webtoons="webtoons.monday" :dayOfWeek="1"></ThumbnailComp>
 			<ThumbnailComp :headerTitle="dayOfWeekHeaders[1]" :webtoons="webtoons.tuesday" :dayOfWeek="2"></ThumbnailComp>
@@ -27,6 +30,7 @@
 			<ThumbnailComp :headerTitle="dayOfWeekHeaders[5]" :webtoons="webtoons.saturday" :dayOfWeek="6"></ThumbnailComp>
 			<ThumbnailComp :headerTitle="dayOfWeekHeaders[6]" :webtoons="webtoons.sunday" :dayOfWeek="0"></ThumbnailComp>
 		</div>
+
 	</div>
 </template>
 
@@ -78,7 +82,7 @@ export default {
   },
   mounted() {
     this.fetchOfficialWebtoons();
-    this.getSelectedGenres();
+    this.fetchSelectedGenres();
   },
   watch: {
     selectedGenres() {
@@ -95,12 +99,12 @@ export default {
   },
   methods: {
     async fetchOfficialWebtoons() {
-      try {
-        const response = await getOfficialWebtoonAll(
-          this.selectedGenres,
-          this.selectedSorting
-        );
+      const response = await getOfficialWebtoonAll(
+        this.selectedGenres,
+        this.selectedSorting
+      );
 
+      if (response.status === 200) {
         this.webtoons = {
           monday: [],
           tuesday: [],
@@ -137,11 +141,9 @@ export default {
           }
         }
         console.log(this.webtoons);
-      } catch (error) {
-        console.log(error);
       }
     },
-    getSelectedGenres() {
+    fetchSelectedGenres() {
       if (localStorage.getItem("genres") !== null) {
         this.selectedGenres = JSON.parse(localStorage.getItem("genres"));
       }
@@ -149,10 +151,10 @@ export default {
     clickGenre(value) {
       if (value === "ALL") {
         this.selectedGenres = [];
-        this.selectedGenres.push("ALL");
+        this.selectedGenres.push(value);
       } else {
         if (this.selectedGenres[0] === "ALL") {
-          this.selectedGenres.splice(0, 1);
+          this.selectedGenres.splice(0, 1); //"ALL" 제거
           this.selectedGenres.push(value);
         }
       }
