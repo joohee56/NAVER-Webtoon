@@ -190,19 +190,23 @@ export default {
   display: flex;
 }
 .genre-wrap > div {
-  margin-right: 10px;
+  margin-right: 14px;
 }
 input[type="checkbox"] {
   display: none;
+}
+.genre-checkbox-label {
+  display: inline-block;
+  vertical-align: middle;
 }
 .genre-checkbox-label::before {
   content: "";
   display: inline-block;
   width: 13px;
+  height: 13px;
   border-radius: 3px;
-  aspect-ratio: 1/1;
   background-color: #fff;
-  border: 1px solid #999;
+  border: 1px solid #bbbbbb;
   margin-right: 5px;
   vertical-align: middle;
 }
@@ -215,8 +219,8 @@ input[type="checkbox"]:checked + .genre-checkbox-label::before {
   color: white;
   font-size: 16px;
   text-align: center;
-  width: 13px;
-  height: 13px;
+  width: 14px;
+  height: 14px;
   font-weight: 600;
   line-height: 14px;
 }

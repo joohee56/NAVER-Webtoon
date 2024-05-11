@@ -115,7 +115,6 @@ export default {
   watch: {
     "$route.params.roundId": function () {
       location.reload();
-      this.moveToTop();
     },
     previewRangeStart() {
       this.previewRounds = [];
@@ -136,6 +135,7 @@ export default {
     await this.fetchRounds();
     this.setNavActive();
     this.setEventLister();
+    this.moveToTop();
   },
   beforeDestroy() {
     // 컴포넌트가 파괴될 때 이벤트 리스너를 제거
