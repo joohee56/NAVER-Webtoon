@@ -33,8 +33,15 @@ export default {
 </script>
 
 <style scoped>
+nav {
+  width: 85rem;
+  display: flex;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
 nav button {
-  margin: 20px 20px 0 0;
+  margin-right: 20px;
   padding-bottom: 0.5rem;
   font-family: AppleSDGothicNeoSB;
   font-size: 18px;

@@ -1,9 +1,7 @@
 <template lang="ko">
 	<div class="container">
 		<div class="line">
-			<div class="day-of-week-nav">
-				<DayOfWeekNav></DayOfWeekNav>
-			</div>
+      <DayOfWeekNav></DayOfWeekNav>
 		</div>
 		<router-view></router-view>
 	</div>
@@ -23,11 +21,5 @@ export default {
 .line {
   width: 100%;
   border-bottom: 0.5px solid #dadada;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.day-of-week-nav {
-  width: 85rem;
 }
 </style>
