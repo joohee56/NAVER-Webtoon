@@ -1,6 +1,7 @@
 <template lang="ko">
 	<div class="container">
 
+    <!-- 타이틀 -->
 		<div class="subject-wrap">
 			<div class="title">전체 {{subjectTitle}} 웹툰</div>
 			<div class="filter-wrap">
@@ -11,6 +12,7 @@
 			</div>
 		</div>
 
+    <!-- 웹툰 -->
 		<WebtoonContainer :webtoons=this.webtoons webtoonType="official"></WebtoonContainer>
 	</div>
 </template>
@@ -54,10 +56,6 @@ export default {
   watch: {
     "$route.params.dayOfWeek"() {
       location.reload();
-      window.scrollTo({
-        top: 0,
-        left: 0,
-      });
     },
     selectedSorting() {
       this.fetchWebtoons();
@@ -65,19 +63,23 @@ export default {
   },
   mounted() {
     this.fetchWebtoons();
+    this.moveToTop();
   },
   methods: {
     async fetchWebtoons() {
-      try {
-        const response = await getOfficialWebtoonAllByDayOfWeek(
-          this.dayOfWeek,
-          this.selectedSorting
-        );
-        console.log(response);
+      const response = await getOfficialWebtoonAllByDayOfWeek(
+        this.dayOfWeek,
+        this.selectedSorting
+      );
+      console.log(response);
+      if (response.status === 200) {
         this.webtoons = response.data;
-      } catch (error) {
-        console.log(error);
       }
+    },
+    moveToTop() {
+      window.scrollTo({
+        top: 0,
+      });
     },
   },
 };
