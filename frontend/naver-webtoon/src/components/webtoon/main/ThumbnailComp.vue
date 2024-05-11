@@ -1,13 +1,17 @@
 <template lang="ko">
-	<div class="week-day-item-wrap":class="{today:isToday}">
+	<div class="week-day-item-wrap" :class="{today:isToday}">
+
+    <!-- 타이틀 -->
 		<h3 class="week-day-header"> {{headerTitle}} </h3>
+
+    <!-- 웹툰 리스트 -->
 		<ul class="webtoon-list-wrap">
 			<li class="webtoon-item" v-for="webtoon in webtoons">
 				<router-link :to="{name: webtoonType+'RoundList', params: {webtoonId:`${webtoon.webtoonId}`}}">
 					<img :src="require(`@/assets/image/${webtoon.posterStoreFileName}`)">
 				</router-link>
 				<div class="webtoon-name-wrap overflow-hidden">
-					<span class="up" v-if="webtoon.roundUpdateCount>0">UP</span>
+					<span class="up" v-if="webtoon.roundUpdateCount > 0">UP</span>
 					<router-link :to="{name: webtoonType+'RoundList', params: {webtoonId:`${webtoon.webtoonId}`}}">
 						<span class="webtoon-name">{{webtoon.webtoonName}}</span>
 					</router-link>
@@ -18,6 +22,7 @@
         </div>
 			</li> 
 		</ul>	
+
 	</div>
 </template>
 
