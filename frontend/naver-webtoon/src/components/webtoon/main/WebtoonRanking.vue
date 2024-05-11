@@ -49,7 +49,7 @@
               </div>
               <div class="like-cnt">
                 <i class="fa-solid fa-heart"></i>
-                <div>&nbsp;{{ranking.totalLikeCount}}</div>
+                <span>&nbsp;{{ranking.totalLikeCount}}</span>
               </div>
             </div>
           </li>
@@ -302,6 +302,11 @@ button {
   font-size: 16px;
   margin-right: 5px;
 }
+.overflow-hidden {
+  white-space: nowrap; /* 줄 바꿈 방지 */
+  overflow: hidden; /* 넘치는 부분 숨김 */
+  text-overflow: ellipsis; /* 넘치는 부분에 ... 추가 */
+}
 
 /* 장르 */
 .info-wrap .genre {
@@ -311,20 +316,16 @@ button {
 .genre span:not(:last-child)::after {
   content: "/";
 }
+
+/* 좋아요수 */
 .like-cnt {
   color: #ff4d56;
   display: flex;
-  margin: auto 0 0 0;
   font-size: 0.8rem;
 }
 .like-cnt i {
   font-size: 12px;
-  margin: auto 0;
-}
-.overflow-hidden {
-  white-space: nowrap; /* 줄 바꿈 방지 */
-  overflow: hidden; /* 넘치는 부분 숨김 */
-  text-overflow: ellipsis; /* 넘치는 부분에 ... 추가 */
+  line-height: 18px;
 }
 
 /* 화살표 버튼 */
