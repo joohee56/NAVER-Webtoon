@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import ToolBar from "@/components/creator/ToolBar";
-import NavBar from "@/components/creator/NavBar.vue";
+import ToolBar from "@/components/creator/header/ToolBar";
+import NavBar from "@/components/creator/header/NavBar.vue";
 
 export default {
   components: {
