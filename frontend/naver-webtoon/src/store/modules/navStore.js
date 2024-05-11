@@ -11,6 +11,7 @@ const navStore = {
         title: "도전만화",
         routerName: "challengeMain",
       },
+      {},
     ],
     selectedIndex_dayOfWeek: 0,
     dayOfWeeks: [

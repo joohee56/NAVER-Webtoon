@@ -41,7 +41,7 @@ export default {
     };
   },
   computed: {
-    ...mapState("navStore", ["selectedIndex_search"]),
+    ...mapState("navStore", ["selectedIndex_category", "selectedIndex_search"]),
   },
   watch: {
     "$route.params.keyword"() {
@@ -49,11 +49,12 @@ export default {
     },
   },
   mounted() {
+    this.SET_CATEGORY_ACTIVE(2);
     this.SET_SEARCH_ACTIVE(0);
     this.fetchSearchCount();
   },
   methods: {
-    ...mapMutations("navStore", ["SET_SEARCH_ACTIVE"]),
+    ...mapMutations("navStore", ["SET_CATEGORY_ACTIVE", "SET_SEARCH_ACTIVE"]),
     handleMenuClick(menu, index) {
       this.SET_SEARCH_ACTIVE(index);
       if (index === 0) {
