@@ -1,5 +1,7 @@
 <template lang="ko">
 	<div class="container">
+
+    <!-- 타이틀 -->
 		<div class="title">
 			<span class="correct">'{{keyword}}'</span>에 대한 검색결과 입니다.
 		</div>
@@ -55,8 +57,22 @@ export default {
   },
   methods: {
     ...mapMutations("navStore", ["SET_CATEGORY_ACTIVE", "SET_SEARCH_ACTIVE"]),
+    async fetchSearchCount() {
+      const response = await getSearchCount(this.keyword);
+      if (response.status === 200) {
+        this.totalChallengeCount = response.data.totalChallengeCount;
+        this.totalOfficialCount = response.data.totalOfficialCount;
+        this.setMenuCount();
+      }
+    },
+    setMenuCount() {
+      this.menues[0].count = this.totalChallengeCount + this.totalOfficialCount;
+      this.menues[1].count = this.totalOfficialCount;
+      this.menues[2].count = this.totalChallengeCount;
+    },
     handleMenuClick(menu, index) {
       this.SET_SEARCH_ACTIVE(index);
+
       if (index === 0) {
         this.$router
           .push({
@@ -77,17 +93,6 @@ export default {
           })
           .catch(() => {});
       }
-    },
-    async fetchSearchCount() {
-      const response = await getSearchCount(this.keyword);
-      this.totalChallengeCount = response.data.totalChallengeCount;
-      this.totalOfficialCount = response.data.totalOfficialCount;
-      this.setMenuCount();
-    },
-    setMenuCount() {
-      this.menues[0].count = this.totalChallengeCount + this.totalOfficialCount;
-      this.menues[1].count = this.totalOfficialCount;
-      this.menues[2].count = this.totalChallengeCount;
     },
   },
 };
