@@ -2,7 +2,7 @@ package jh.naverwebtoon.db.repository;
 
 import java.util.List;
 import jh.naverwebtoon.db.domain.comment.Comment;
-import jh.naverwebtoon.dto.response.FindComment;
+import jh.naverwebtoon.dto.response.CommentDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,17 +14,17 @@ class CommentRepositoryTest {
 
     @Test
     void test() {
-        List<FindComment> comments = commentRepository.findAllByRoundIdWithPaging(null, Long.valueOf(9), 0, 5);
-        for (FindComment comment : comments) {
+        List<CommentDto> comments = commentRepository.findAllByRoundIdWithPaging(null, Long.valueOf(9), 0, 5);
+        for (CommentDto comment : comments) {
             System.out.println(comment.toString());
         }
     }
 
     @Test
     void start_limit_변경_테스트() {
-        List<FindComment> comments = commentRepository.findAllByRoundIdWithPaging(null, Long.valueOf(9),
+        List<CommentDto> comments = commentRepository.findAllByRoundIdWithPaging(null, Long.valueOf(9),
                 6, 1);
-        for (FindComment comment : comments) {
+        for (CommentDto comment : comments) {
             System.out.println(comment.toString());
         }
     }

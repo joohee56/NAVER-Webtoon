@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class FindComment {
+public class CommentDto {
     private Long commentId;
     private String content;
     private String userId;

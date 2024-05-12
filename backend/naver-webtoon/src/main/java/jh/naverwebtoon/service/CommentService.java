@@ -1,9 +1,9 @@
 package jh.naverwebtoon.service;
 
 import java.util.List;
-import jh.naverwebtoon.db.domain.comment.Comment;
 import jh.naverwebtoon.db.domain.Member;
 import jh.naverwebtoon.db.domain.Round;
+import jh.naverwebtoon.db.domain.comment.Comment;
 import jh.naverwebtoon.db.repository.CommentDislikeRepository;
 import jh.naverwebtoon.db.repository.CommentLikeRepository;
 import jh.naverwebtoon.db.repository.CommentRepository;
@@ -11,7 +11,8 @@ import jh.naverwebtoon.db.repository.MemberRepository;
 import jh.naverwebtoon.db.repository.RoundRepository;
 import jh.naverwebtoon.dto.request.CreateCommentReq;
 import jh.naverwebtoon.dto.request.CreateReplyReq;
-import jh.naverwebtoon.dto.response.FindComment;
+import jh.naverwebtoon.dto.response.CommentDto;
+import jh.naverwebtoon.dto.response.FindCommentRes;
 import jh.naverwebtoon.dto.response.FindReply;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -71,8 +72,10 @@ public class CommentService {
     /**
      * 댓글 조회
      */
-    public List<FindComment> findAllWithPaging(Long memberId, Long roundId, int offset, int limit) {
-        return commentRepository.findAllByRoundIdWithPaging(memberId, roundId, offset, limit);
+    public FindCommentRes findAllWithPaging(Long memberId, Long roundId, int offset, int limit) {
+        List<CommentDto> comments = commentRepository.findAllByRoundIdWithPaging(memberId, roundId, offset, limit);
+        Long totalCommentCount = commentRepository.findTotalCommentCount(roundId);
+        return new FindCommentRes(totalCommentCount, comments);
     }
 
     /**
