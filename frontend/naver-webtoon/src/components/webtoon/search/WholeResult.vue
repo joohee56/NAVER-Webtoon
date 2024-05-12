@@ -51,11 +51,13 @@ export default {
   methods: {
     async fetchSearchResult() {
       const response = await getSearch(this.keyword, this.offset, this.limit);
-      this.challenges = response.data.challenges;
-      this.officials = response.data.officials;
-      this.totalChallengeCount = response.data.totalChallengeCount;
-      this.totalOfficialCount = response.data.totalOfficialCount;
       console.log(response);
+      if (response.status === 200) {
+        this.challenges = response.data.challenges;
+        this.officials = response.data.officials;
+        this.totalChallengeCount = response.data.totalChallengeCount;
+        this.totalOfficialCount = response.data.totalOfficialCount;
+      }
     },
   },
 };
