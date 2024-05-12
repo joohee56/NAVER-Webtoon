@@ -1,6 +1,6 @@
 <template lang="ko">
   <div class="container">
-    <button class="category-nav" v-for="(category, index) in categorys" :class="{active:selectedIndex_category === index}" @click="handleRouterClick(category, index)">{{category.title}}</button>
+    <button class="category-nav" v-for="(category, index) in categorys" :class="{active:selectedIndex_category === index && index != 2}" @click="handleRouterClick(category, index)">{{category.title}}</button>
     <router-link :to="{name: 'creatorDashboard'}" class="creator-btn">CREATOR'S</router-link>
   </div>  
 </template>
@@ -30,7 +30,7 @@ export default {
 }
 
 .category-nav {
-  padding: 20px 20px;
+  padding: 20px;
   box-sizing: border-box;
   display: inline-block;
   border: none;

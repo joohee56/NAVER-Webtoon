@@ -67,10 +67,6 @@ export default {
         alert("검색어를 입력해 주십시오");
         return;
       }
-      if (this.searchContent === this.$router.history.current.params.keyword) {
-        location.reload();
-        return;
-      }
       this.$router
         .push({
           name: "wholeResult",
