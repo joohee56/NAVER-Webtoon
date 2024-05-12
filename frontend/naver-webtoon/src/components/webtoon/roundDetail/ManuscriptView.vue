@@ -4,8 +4,8 @@
 		<!-- 상단 메뉴바 -->
     <div class="menubar-wrap">
       <div class="menu-bar">
-        <router-link :to="{name: webtoonType+'RoundList', params: {webtoonId : `${this.$route.params.webtoonId}`}}"><i class="fa-solid fa-angle-left"></i></router-link>
-        <router-link :to="{name: webtoonType+'RoundList', params: {webtoonId : `${this.$route.params.webtoonId}`}}">{{roundDetail.webtoonName}}</router-link>
+        <router-link :to="{name: webtoonType+'RoundList', params: {webtoonId : this.webtoonId}}"><i class="fa-solid fa-angle-left"></i></router-link>
+        <router-link :to="{name: webtoonType+'RoundList', params: {webtoonId : this.webtoonId}}">{{roundDetail.webtoonName}}</router-link>
         <span class="separator"></span>
         <span>{{roundDetail.roundNumber}}화 {{roundDetail.roundTitle}}</span>
         <span @click="moveBeforeRound" class="before-round">
@@ -13,7 +13,7 @@
           <span> 이전화</span>
         </span>
         <span class="separator"></span>
-        <router-link :to="{name: webtoonType+'RoundList', params: {webtoonId : `${this.$route.params.webtoonId}`}}">
+        <router-link :to="{name: webtoonType+'RoundList', params: {webtoonId : this.webtoonId}}">
           <i class="fa-solid fa-list-ul"></i>
           <span> 목록</span>
         </router-link>
@@ -26,22 +26,24 @@
     </div>
 
 		<!-- 원고 -->
-		<div class="manusript-wrap">
+		<div class="manusript-wrap" ref="manuscript">
 			<img v-if="roundDetail.mergeManuscript !== ''" class="manuscript" :src="require(`@/assets/image/${roundDetail.mergeManuscript}`)">
 		</div>
 
-    <!-- 좋아요 -->
+    <!-- 반응 버튼 -->
     <div class="reaction-btn-wrap">
+      <!-- 관심웹툰 -->
       <div @click="clickWebtoonOfInterest">
         <div class="icon circle-check"><i class="fa-solid fa-circle-check"></i></div>
         <div class="title">관심웹툰</div>
         <div class="count">0</div>
       </div>
+      <!-- 좋아요 -->
       <div @click="clickRoundLike">
         <div class="icon" style="color: #ff5151;" v-if="this.roundDetail.isUserLike">
           <i class="fa-solid fa-heart"></i>
         </div>
-        <div class="icon" v-else >
+        <div class="icon" v-else>
           <i class="fa-regular fa-heart"></i>
         </div>
         <div class="title">좋아요</div>
@@ -52,14 +54,14 @@
     <!-- 목록 -->
     <div class="round-list">
       <button @click="lessRange" :disabled="isPreviewLeftBtnDisabled"><i class="fa-solid fa-angle-left"></i></button>
-        <div class="preview-round-wrap">
-          <div v-for="round in previewRounds" class="preview-round-item">
-            <router-link :to="{name: webtoonType+'RoundDetail', params: {weboonId: `${roundDetail.weboonId}`, roundId: `${round.roundId}`}}" :class={active:isNowRound(round.roundNumber)}>
-              <img class="round-thumbnail" :src="require(`@/assets/image/${round.thumbnail}`)">
-              <p class="round-title overflow-hidden">{{round.roundNumber}}화 {{round.title}}</p>
-            </router-link>
-          </div>
+      <div class="preview-round-wrap">
+        <div v-for="round in previewRounds" class="preview-round-item">
+          <router-link :to="{name: webtoonType+'RoundDetail', params: {weboonId: `${roundDetail.weboonId}`, roundId: `${round.roundId}`}}" :class={active:isNowRound(round.roundNumber)}>
+            <img class="round-thumbnail" :src="require(`@/assets/image/${round.thumbnail}`)">
+            <p class="round-title overflow-hidden">{{round.roundNumber}}화 {{round.title}}</p>
+          </router-link>
         </div>
+      </div>
       <button class="right-btn" @click="rightRange" :disabled="isPreviewRightBtnDisabled"><i class="fa-solid fa-angle-right"></i></button>
     </div>
 
@@ -91,6 +93,8 @@ import { mapMutations } from "vuex";
 export default {
   data() {
     return {
+      webtoonId: this.$route.params.webtoonId,
+      roundId: this.$route.params.roundId,
       roundDetail: {
         webtoonId: "",
         webtoonName: "",
@@ -103,8 +107,9 @@ export default {
         totalLikeCnt: "",
         isUserLike: "",
       },
-      rounds: [],
-      previewRounds: [],
+      rounds: [], //전체 회차
+      previewRounds: [], //미리보기 회차
+      previewCount: 7,
       previewRangeStart: "",
       isPreviewLeftBtnDisabled: "false",
       isPreviewRightBtnDisabled: "false",
@@ -120,10 +125,10 @@ export default {
       this.previewRounds = [];
 
       const previewRangeEnd = Math.min(
-        this.rounds.length - 1,
-        this.previewRangeStart + 6
+        this.rounds.length,
+        this.previewRangeStart + this.previewCount
       );
-      for (let i = this.previewRangeStart; i <= previewRangeEnd; i++) {
+      for (let i = this.previewRangeStart; i < previewRangeEnd; i++) {
         this.previewRounds.push(this.rounds[i]);
       }
 
@@ -144,33 +149,24 @@ export default {
   },
   methods: {
     ...mapMutations("navStore", ["SET_CATEGORY_ACTIVE"]),
-    setPreviewBtnDisable() {
-      if (this.previewRangeStart === 0) {
-        this.isPreviewLeftBtnDisabled = true;
-      } else {
-        this.isPreviewLeftBtnDisabled = false;
-      }
-
-      if (this.previewRangeStart + 7 >= this.rounds.length) {
-        this.isPreviewRightBtnDisabled = true;
-      } else {
-        this.isPreviewRightBtnDisabled = false;
-      }
-    },
     async fetchRoundDetail() {
       try {
-        const response = await getRoundDetail(this.$route.params.roundId);
-        console.log(response.data);
-        this.roundDetail = response.data;
+        const response = await getRoundDetail(this.roundId);
+        console.log(response);
+        if (response.status === 200) {
+          this.roundDetail = response.data;
+        }
       } catch (error) {
         console.log(error);
       }
     },
     async fetchRounds() {
       try {
-        const response = await getRounds(this.$route.params.webtoonId);
-        this.rounds = response.data;
-        this.setPreviewRange();
+        const response = await getRounds(this.webtoonId);
+        if (response.status === 200) {
+          this.rounds = response.data;
+          this.setPreviewRange();
+        }
       } catch (error) {
         console.log(error);
       }
@@ -180,23 +176,41 @@ export default {
       let start = Math.max(0, now - 3);
       this.previewRangeStart = start;
     },
+    setPreviewBtnDisable() {
+      if (this.previewRangeStart === 0) {
+        this.isPreviewLeftBtnDisabled = true;
+      } else {
+        this.isPreviewLeftBtnDisabled = false;
+      }
+
+      if (this.previewRangeStart + this.previewCount >= this.rounds.length) {
+        this.isPreviewRightBtnDisabled = true;
+      } else {
+        this.isPreviewRightBtnDisabled = false;
+      }
+    },
     isNowRound(roundNumber) {
       return this.roundDetail.roundNumber == roundNumber;
     },
     lessRange() {
-      this.previewRangeStart = Math.max(0, this.previewRangeStart - 7);
+      this.previewRangeStart = Math.max(
+        0,
+        this.previewRangeStart - this.previewCount
+      );
     },
     rightRange() {
       this.previewRangeStart = Math.min(
         this.rounds.length - 1,
-        this.previewRangeStart + 7
+        this.previewRangeStart + this.previewCount
       );
     },
     async clickRoundLike() {
       try {
-        const response = await postRoundLike(this.$route.params.roundId);
-        this.roundDetail.totalLikeCnt = response.data.totalLikeCnt;
-        this.roundDetail.isUserLike = response.data.isUserLike;
+        const response = await postRoundLike(this.roundId);
+        if (response.status === 200) {
+          this.roundDetail.totalLikeCnt = response.data.totalLikeCnt;
+          this.roundDetail.isUserLike = response.data.isUserLike;
+        }
       } catch (error) {
         console.log(error);
       }
@@ -212,7 +226,7 @@ export default {
           name: this.webtoonType + "RoundDetail",
           params: {
             webtoonId: this.roundDetail.webtoonId,
-            roundId: this.$route.params.roundId - 1,
+            roundId: this.roundId - 1,
           },
         });
       }
@@ -225,7 +239,7 @@ export default {
           name: this.webtoonType + "RoundDetail",
           params: {
             webtoonId: this.roundDetail.webtoonId,
-            roundId: parseInt(this.$route.params.roundId, 10) + 1,
+            roundId: parseInt(this.roundId, 10) + 1,
           },
         });
       }
@@ -245,7 +259,6 @@ export default {
     },
     moveToBottom() {
       window.scrollTo({
-        // top: document.body.scrollHeight,
         top: this.$refs.manuscript.scrollHeight,
         behavior: "smooth", // 부드럽게 스크롤되도록 설정
       });
@@ -274,6 +287,7 @@ export default {
       const menubar = document.querySelector(".menubar-wrap");
       const manuscript = document.querySelector(".manusript-wrap");
       const scollY = window.scrollY;
+
       if (menubar && manuscript) {
         if (
           this.showMenuBar &&
