@@ -76,9 +76,12 @@ export default {
         offset,
         this.paging.webtoonLimit
       );
-      this.webtoons = response.data;
-      this.setTotalPageCount();
       console.log(response);
+
+      if (response.status === 200) {
+        this.webtoons = response.data;
+        this.setTotalPageCount();
+      }
     },
     reload() {
       this.webtoonType = this.$route.params.webtoonType;
