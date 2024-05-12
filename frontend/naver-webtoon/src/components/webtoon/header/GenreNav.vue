@@ -35,6 +35,11 @@ export default {
 </script>
 
 <style scoped>
+nav {
+  width: 85rem;
+  display: flex;
+  margin: 0 auto;
+}
 nav button {
   margin: 20px 20px 0 0;
   padding-bottom: 0.5rem;
