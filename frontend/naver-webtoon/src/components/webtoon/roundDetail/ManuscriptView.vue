@@ -120,6 +120,7 @@ export default {
   watch: {
     "$route.params.roundId": function () {
       location.reload();
+      this.moveToTop();
     },
     previewRangeStart() {
       this.previewRounds = [];
@@ -140,7 +141,6 @@ export default {
     await this.fetchRounds();
     this.setNavActive();
     this.setEventLister();
-    this.moveToTop();
   },
   beforeDestroy() {
     // 컴포넌트가 파괴될 때 이벤트 리스너를 제거
@@ -254,13 +254,11 @@ export default {
     moveToTop() {
       window.scrollTo({
         top: 0,
-        behavior: "smooth", // 부드럽게 스크롤되도록 설정
       });
     },
     moveToBottom() {
       window.scrollTo({
         top: this.$refs.manuscript.scrollHeight,
-        behavior: "smooth", // 부드럽게 스크롤되도록 설정
       });
     },
     setEventLister() {
