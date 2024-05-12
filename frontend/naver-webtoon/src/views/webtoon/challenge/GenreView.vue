@@ -1,6 +1,7 @@
 <template lang="ko">
 	<div class="container">
 
+    <!-- 타이틀 -->
 		<div class="subject-wrap">
 			<div class="title">전체 {{subjectTitle}} 웹툰</div>
 			<div class="filter-wrap">
@@ -47,12 +48,14 @@ export default {
       },
     };
   },
+  components: {
+    WebtoonContainer,
+  },
   watch: {
     "$route.params.genre"() {
       location.reload();
       window.scrollTo({
         top: 0,
-        left: 0,
       });
     },
     "paging.startPage"() {
@@ -86,8 +89,10 @@ export default {
           this.paging.webtoonLimit
         );
         console.log(response);
-        this.webtoons = response.data.webtoons;
-        this.paging.totalPageCount = response.data.totalPageCount;
+        if (response.status === 200) {
+          this.webtoons = response.data.webtoons;
+          this.paging.totalPageCount = response.data.totalPageCount;
+        }
       } catch (error) {
         console.log(error);
       }
@@ -150,9 +155,6 @@ export default {
       }
       return "오류";
     },
-  },
-  components: {
-    WebtoonContainer,
   },
 };
 </script>
