@@ -25,7 +25,7 @@ export default {
     ]),
     navActive() {
       this.SET_CATEGORY_ACTIVE(0);
-      this.SET_DAY_OF_WEEK_ACTIVE(0);
+      this.SET_DAY_OF_WEEK_ACTIVE("ALL");
     },
   },
 };

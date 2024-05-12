@@ -1,14 +1,17 @@
 <template lang="ko">
 	<div class="container">
+    <!-- 썸네일 -->
     <div class="webtoon-thumbnail">
       <img :src="require(`@/assets/image/${webtoonInfo.posterStoreFileName}`)">
     </div>
+    <!-- 웹툰 정보 -->
     <div class="webtoon-info">
       <div class="webtoon-name">{{webtoonInfo.webtoonName}}</div>
       <div class="detail-line">
         <img :src="require(`@/assets/image/${webtoonInfo.profileStoreFileName}`)" class="profile-image">
         <div class="author-name">{{webtoonInfo.memberName}}</div><div>· 글/그림</div>
-        <div v-if="webtoonInfo.dayOfWeek" class="day-of-week"> | {{webtoonInfo.dayOfWeek | dayOfWeekTitle}}웹툰 </div> <div>· {{webtoonInfo.ageLimit}}세 이용가</div>
+        <div v-if="webtoonInfo.dayOfWeek" class="day-of-week"> | {{webtoonInfo.dayOfWeek | dayOfWeekTitle}}웹툰 </div>
+        <div>· {{webtoonInfo.ageLimit}}세 이용가</div>
         <div v-if="!webtoonInfo.dayOfWeek"> | 도전만화 ·</div>
         <div class="genre-wrap">
           <div v-if="!webtoonInfo.dayOfWeek" v-for="genre in webtoonInfo.genres">{{genre.title}}</div>
@@ -81,52 +84,23 @@ export default {
     }
   },
   methods: {
+    ...mapMutations("navStore", ["SET_DAY_OF_WEEK_ACTIVE", "SET_GENRE_ACTIVE"]),
     async fetchWebtoonInfo() {
-      try {
-        const response = await getWebtoonDetail(this.$route.params.webtoonId);
-        console.log(response.data);
+      const response = await getWebtoonDetail(this.$route.params.webtoonId);
+      console.log(response);
+      if (response.status === 200) {
         this.webtoonInfo = response.data;
         this.webtoonInfo.summary = this.webtoonInfo.summary.replaceAll(
           "\n",
           "<br />"
         );
-      } catch (error) {
-        console.log(error);
       }
     },
-    ...mapMutations("navStore", ["SET_DAY_OF_WEEK_ACTIVE", "SET_GENRE_ACTIVE"]),
     setDayOfWeekNavActive() {
-      this.SET_DAY_OF_WEEK_ACTIVE(
-        this.getDayOfWeekIndex(this.webtoonInfo.dayOfWeek)
-      );
+      this.SET_DAY_OF_WEEK_ACTIVE(this.webtoonInfo.dayOfWeek);
     },
     setGenreNavActive() {
       this.SET_GENRE_ACTIVE(this.webtoonInfo.genres[0].name);
-    },
-    getDayOfWeekIndex(value) {
-      switch (value) {
-        case "MONDAY": {
-          return 1;
-        }
-        case "TUESDAY": {
-          return 2;
-        }
-        case "WEDNESDAY": {
-          return 3;
-        }
-        case "THURSDAY": {
-          return 4;
-        }
-        case "FRIDAY": {
-          return 5;
-        }
-        case "SATURDAY": {
-          return 6;
-        }
-        case "SUNDAY": {
-          return 7;
-        }
-      }
     },
   },
 };
