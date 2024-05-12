@@ -1,5 +1,5 @@
 <template lang="ko">
-	<div class="container">
+	<div>
 		<ManuscriptView webtoonType="challenge"></ManuscriptView>
 		<CommentView></CommentView>
 	</div>
@@ -14,13 +14,7 @@ export default {
     ManuscriptView,
     CommentView,
   },
-  created() {},
 };
 </script>
 
-<style scoped>
-.container {
-  width: 85rem;
-  margin: 0 auto;
-}
-</style>
+<style scoped></style>
