@@ -1,7 +1,7 @@
 <template lang="ko">
 	<div class="container">
 
-    <!-- 타이틀, 정렬 -->
+    <!-- 타이틀 -->
 		<div class="subject-container">
 			<p class="title">장르별 전체 웹툰</p>
 			<div class="filter">
@@ -103,8 +103,10 @@ export default {
           this.selectedSorting
         );
         console.log(response);
-        this.setWebtoons(response.data.webtoonMap);
-        this.paging.totalPageCount = response.data.totalPageCount;
+        if (response.status === 200) {
+          this.setWebtoons(response.data.webtoonMap);
+          this.paging.totalPageCount = response.data.totalPageCount;
+        }
       } catch (error) {
         console.log(error);
       }
