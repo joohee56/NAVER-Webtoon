@@ -268,8 +268,14 @@ export default {
     handleClickShowMenubar(e) {
       const menubar = document.querySelector(".menubar-wrap");
       const manuscript = document.querySelector(".manusript-wrap");
+      const scollY = window.scrollY;
 
-      if (menubar && manuscript && e.target.contains(manuscript)) {
+      if (
+        menubar &&
+        manuscript &&
+        scollY >= manuscript.offsetTop &&
+        e.target.contains(manuscript)
+      ) {
         if (this.showMenuBar) {
           menubar.style.transition = "opacity 0.5s ease";
           menubar.style.opacity = 0;
