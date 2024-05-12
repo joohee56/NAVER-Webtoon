@@ -3,14 +3,13 @@
 
 		<!-- 댓글 입력란-->
 		<div>
-			<div class="title">의견쓰기 1,385</div>
-
+			<div class="title">의견쓰기 {{totalCommentCount}}</div>
 			<div class="comment-input-box">
 				<div class="loginUser-info" v-if="loginUser.loginId">
 					<img
           :src="require(`@/assets/image/${loginUser.profileImage}`)"
           class="profile-image" />
-				<div class="login-user-name">{{loginUser.userName}}</div>
+          <div class="login-user-name">{{loginUser.userName}}</div>
 				</div>
         <div v-if="loginUser.loginId">
           <textarea v-model="content" placeholder="주제와 무관한 댓글이나 스포일러, 악풀은 경고조치 없이 삭제되며 징계 대상이 될 수 있습니다." class="editable-textarea" :class="{violation: content.length>inputContentLimit}"></textarea>
@@ -18,19 +17,17 @@
         </div>
         <div @click="moveToLogin" class="uneditable-textarea" v-else>
           <textarea ></textarea>
-          <label>댓글을 작성하려면 <router-link :to="{ name: 'login', params: { redirectUrl: this.$route.path } }">로그인</router-link> 해주세요.</label>
+          <label>댓글을 작성하려면 <router-link :to="{ name: 'login', params: { redirectUrl: this.$route.path }}">로그인</router-link> 해주세요.</label>
         </div>
 			</div>
 			<div>
 				<button class="submit-btn" @click="saveComment">등록</button>
 			</div>
-
 		</div>
 
 		<!-- 댓글 -->
 		<div class="comment-list-wrap"> 
 			<div class="comment-item" v-for="(comment, index) in comments">
-				
         <div class="user-info-btn-wrap">
 					<div class="user-id">{{comment.userName}}({{comment.userId}})</div>
 					<div class="update-date">{{comment.updateAt}}</div>
@@ -89,7 +86,7 @@
         </div>
       </div>
 
-			</div>
+    </div>
 		<button @click="moreComments" class="more-comment-btn">더보기 <i class="fa-solid fa-chevron-down"></i></button>
 	</div>
 </template>
@@ -117,6 +114,8 @@ export default {
         replyContent: "답글",
       },
       comments: [], //commentId, userId, userName, content, updateAt, likeTotalCnt, isUserLike, dislikeTotalCnt, isUserDislike, replyCnt
+      totalCommentCount: 0,
+      bestCommentCount: 4,
       replys: [],
       showMenuIndex: "",
       replyShowMenuIndex: "",
@@ -144,7 +143,10 @@ export default {
           this.limit
         );
         console.log(response);
-        this.comments = response.data;
+        if (response.status === 200) {
+          this.comments = response.data.comments;
+          this.totalCommentCount = response.data.totalCommentCount;
+        }
       } catch (error) {
         console.log(error);
       }
@@ -153,7 +155,9 @@ export default {
       try {
         const response = await getReply(commentId);
         console.log(response);
-        this.replys = response.data;
+        if (response.status === 200) {
+          this.replys = response.data;
+        }
       } catch (error) {
         console.log(error);
       }
@@ -163,7 +167,9 @@ export default {
       this.showReplyIndex = index;
     },
     isBestComment(index) {
-      return index < 4 && this.comments[index].likeTotalCnt > 0;
+      return (
+        index < this.bestCommentCount && this.comments[index].likeTotalCnt > 0
+      );
     },
     async saveComment() {
       const comment = {
@@ -256,12 +262,14 @@ export default {
       try {
         const response = await postCommentLike(commentId);
         console.log(response.data);
-        if (isReply) {
-          this.replys[index].isUserLike = response.data.isUserLike;
-          this.replys[index].likeTotalCnt = response.data.likeTotalCnt;
-        } else {
-          this.comments[index].isUserLike = response.data.isUserLike;
-          this.comments[index].likeTotalCnt = response.data.likeTotalCnt;
+        if (response.status === 200) {
+          if (isReply) {
+            this.replys[index].isUserLike = response.data.isUserLike;
+            this.replys[index].likeTotalCnt = response.data.likeTotalCnt;
+          } else {
+            this.comments[index].isUserLike = response.data.isUserLike;
+            this.comments[index].likeTotalCnt = response.data.likeTotalCnt;
+          }
         }
       } catch (error) {
         console.log(error);
@@ -271,12 +279,15 @@ export default {
       try {
         const response = await postCommentDislike(commentId);
         console.log(response.data);
-        if (isReply) {
-          this.replys[index].isUserDislike = response.data.isUserDislike;
-          this.replys[index].dislikeTotalCnt = response.data.dislikeTotalCnt;
-        } else {
-          this.comments[index].isUserDislike = response.data.isUserDislike;
-          this.comments[index].dislikeTotalCnt = response.data.dislikeTotalCnt;
+        if (response.status === 200) {
+          if (isReply) {
+            this.replys[index].isUserDislike = response.data.isUserDislike;
+            this.replys[index].dislikeTotalCnt = response.data.dislikeTotalCnt;
+          } else {
+            this.comments[index].isUserDislike = response.data.isUserDislike;
+            this.comments[index].dislikeTotalCnt =
+              response.data.dislikeTotalCnt;
+          }
         }
       } catch (error) {
         console.log(error);
@@ -298,13 +309,15 @@ export default {
           this.limit
         );
         console.log(response);
-        if (response.data.length > 0) {
-          for (const comment of response.data) {
-            this.comments.push(comment);
+        if (response.status === 200) {
+          if (response.data.comments.length > 0) {
+            for (const comment of response.data.comments) {
+              this.comments.push(comment);
+            }
+            this.offset = nextOffset;
+          } else {
+            alert("더 이상 조회할 댓글이 없습니다.");
           }
-          this.offset = nextOffset;
-        } else {
-          alert("더 이상 조회할 댓글이 없습니다.");
         }
       } catch (error) {
         console.log(error);
