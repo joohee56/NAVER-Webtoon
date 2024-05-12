@@ -67,13 +67,17 @@ export default {
   },
   methods: {
     async fetchWebtoons() {
-      const response = await getOfficialWebtoonAllByDayOfWeek(
-        this.dayOfWeek,
-        this.selectedSorting
-      );
-      console.log(response);
-      if (response.status === 200) {
-        this.webtoons = response.data;
+      try {
+        const response = await getOfficialWebtoonAllByDayOfWeek(
+          this.dayOfWeek,
+          this.selectedSorting
+        );
+        console.log(response);
+        if (response.status === 200) {
+          this.webtoons = response.data;
+        }
+      } catch (error) {
+        console.log(error);
       }
     },
     moveToTop() {

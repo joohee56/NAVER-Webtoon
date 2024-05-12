@@ -13,10 +13,11 @@ const navStore = {
       },
       {}, //네비게이션 비활성화 용도
     ],
-    selectedIndex_dayOfWeek: 0,
+    selected_dayOfWeek: "ALL",
     dayOfWeeks: [
       {
         title: "요일전체",
+        value: "ALL",
       },
       {
         title: "월",
@@ -104,8 +105,8 @@ const navStore = {
     SET_CATEGORY_ACTIVE(state, index) {
       state.selectedIndex_category = index;
     },
-    SET_DAY_OF_WEEK_ACTIVE(state, index) {
-      state.selectedIndex_dayOfWeek = index;
+    SET_DAY_OF_WEEK_ACTIVE(state, dayOfWeek) {
+      state.selected_dayOfWeek = dayOfWeek;
     },
     SET_GENRE_ACTIVE(state, genre) {
       state.selected_genre = genre;

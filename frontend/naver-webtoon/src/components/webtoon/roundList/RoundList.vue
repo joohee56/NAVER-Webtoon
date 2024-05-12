@@ -25,7 +25,7 @@
 			</div>
 		</div>
 
-		<!-- 페이지 -->
+		<!-- 페이징 -->
     <div class="paging-btn-wrap">
       <button :disabled="paging.isBeforePageBtnDisabled" @click="clickBeforePage"><i class="fa-solid fa-angle-left before-page-btn"></i></button>
       <div class="paging-btn">
@@ -81,19 +81,17 @@ export default {
   },
   methods: {
     async fetchRounds(offset) {
-      try {
-        const response = await getRoundsWithPaging(
-          this.$route.params.webtoonId,
-          offset,
-          this.paging.roundLimit,
-          this.selectDesc
-        );
-        console.log(response.data);
+      const response = await getRoundsWithPaging(
+        this.$route.params.webtoonId,
+        offset,
+        this.paging.roundLimit,
+        this.selectDesc
+      );
+      console.log(response.data);
+      if (response.status === 200) {
         this.rounds = response.data.rounds;
         this.paging.totalPageCount = response.data.pageCount;
         this.paging.totalRoundCount = response.data.totalRoundCount;
-      } catch (error) {
-        console.log(error);
       }
     },
     sortToDesc(isDesc) {
@@ -110,7 +108,7 @@ export default {
       }
 
       if (
-        this.paging.startPage + this.paging.pageLimit >
+        this.paging.startPage + this.paging.pageLimit >=
         this.paging.totalPageCount
       ) {
         this.paging.isNextPageBtnDisabled = true;
