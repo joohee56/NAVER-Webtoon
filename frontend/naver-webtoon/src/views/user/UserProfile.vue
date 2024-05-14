@@ -4,20 +4,19 @@
 
       <!-- 사이드바 -->
 			<div class="side-bar">
-
         <!-- 헤더 -->
 				<div class="header-logo">
           <router-link to="/">N</router-link>
 					<span class="title">네이버ID</span>
 				</div>
 
-        <!-- 사용자 정보 -->
+        <!-- 프로필이미지 및 사용자 이름 -->
 				<div class="user-info">
 					<div class="profile-image">
-            <div :class={hidden:!isProfileImagePreviewHidden}>
+            <div v-if="previewProfileImage===null">
               <img :src="require(`@/assets/image/${loginUser.profileImage}`)">
             </div>
-            <div :class={hidden:isProfileImagePreviewHidden}>
+            <div v-if="previewProfileImage!==null">
               <img :src="previewProfileImage">
             </div>
 					</div>
@@ -30,11 +29,10 @@
 					<div class="profile-image-btn-wrap">
 						<input type="file" id="profile-image" @change="changeProfileImage" ref="image" hidden/>
             <label for="profile-image">사진 변경</label>
-            <label @click="deleteProfileImage" id="delete-profile-btn" v-if="loginUser.isProfileImageNull=='false'">삭제</label>
-            <label id="submit-btn" @click="submitProfileImage" :class={hidden:isProfileImagePreviewHidden}>적용</label>
+            <label @click="deleteProfileImage" id="delete-profile-btn" v-if="loginUser.isProfileImageNull===false">삭제</label>
+            <label id="submit-btn" @click="submitProfileImage" v-if="previewProfileImage!==null">적용</label>
 					</div>
 				</div>
-
         <!-- 메뉴 -->
 				<div class="menu-footer-wrap">
 					<div class="menu">
@@ -44,7 +42,6 @@
 							</li>
 						</ul>
 					</div>
-
           <!-- 푸터 -->
 					<footer>
 						<div>
@@ -57,7 +54,7 @@
 				</div>
 			</div>
 
-      <!-- 메인 화면 -->
+      <!-- 메인 -->
 			<div class="main-content">
         <div class="account-box">
           <div class="title">          
@@ -66,29 +63,29 @@
           <ul class="account-row">
             <li>
               <i class="fa-regular fa-user"></i>
-              <input type="text" :placeholder="userInfo.userName" :class="{hidden: isInfoHidden}" v-model="userInfo.userName">
-              <span :class="{hidden: !isInfoHidden}">
+              <input type="text" :placeholder="userInfo.userName" v-model="userInfo.userName" v-if="editUser">
+              <span v-if="!editUser">
                 {{userInfo.userName}}
               </span>
             </li>
             <li>
               <i class="fa-solid fa-lock"></i>
-              <input type="password" :placeholder="userInfo.password" :class="{hidden: isInfoHidden}" v-model="userInfo.password">
-              <span :class="{hidden: !isInfoHidden}">
+              <input type="text" :placeholder="userInfo.password" v-model="userInfo.password" v-if="editUser">
+              <span v-if="!editUser">
               {{userInfo.password}}
               </span>
             </li>
             <li>
               <i class="fa-regular fa-envelope"></i>
-              <input type="email" :placeholder="userInfo.emailAddress" :class="{hidden: isInfoHidden}" v-model="userInfo.emailAddress">
-              <span :class="{hidden: !isInfoHidden}">
+              <input type="email" :placeholder="userInfo.emailAddress" v-model="userInfo.emailAddress" v-if="editUser">
+              <span v-if="!editUser">
               {{userInfo.emailAddress}}
               </span>
             </li>
             <li>
               <i class="fa-solid fa-cake-candles"></i>
-              <input type="text" :placeholder="userInfo.birthDate" :class="{hidden: isInfoHidden}" v-model="userInfo.birthDate">
-              <span :class="{hidden: !isInfoHidden}">
+              <input type="text" :placeholder="userInfo.birthDate" v-model="userInfo.birthDate" v-if="editUser">
+              <span v-if="!editUser">
               {{userInfo.birthDate}}
               </span>
             </li>
@@ -102,18 +99,18 @@
             </li>
             <li>
               <i class="fa-solid fa-mobile-screen"></i>
-              <input type="tel" :placeholder="userInfo.phoneNumber" :class="{hidden: isInfoHidden}" v-model="userInfo.phoneNumber">
-              <span :class="{hidden: !isInfoHidden}">
+              <input type="tel" :placeholder="userInfo.phoneNumber" v-model="userInfo.phoneNumber" v-if="editUser">
+              <span v-if="!editUser">
               {{userInfo.phoneNumber}}
               </span>
             </li>
           </ul>
         </div>
         <div class="profile-detail-btn">
-          <div :class="{hidden:!isInfoHidden}">
-            <button @click="editUserInfo">수정</button>
+          <div v-if="!editUser">
+            <button @click="editUser=true">수정</button>
           </div>
-          <div :class="{hidden:isInfoHidden}">
+          <div v-if="editUser">
             <button @click="submitEditUser">완료</button>
             <button @click="cancelEditUser" id="cancel-edit-user-btn">취소</button>
           </div>
@@ -150,8 +147,7 @@ export default {
       originUser: {},
       uploadProfileImage: null,
       previewProfileImage: null,
-      isProfileImagePreviewHidden: true,
-      isInfoHidden: true,
+      editUser: false,
     };
   },
   computed: {
@@ -159,40 +155,57 @@ export default {
   },
   watch: {
     previewProfileImage: function (val) {
-      console.log(val);
       this.isProfileImagePreviewHidden = val !== null ? false : true;
     },
   },
-  async mounted() {
-    try {
-      const response = await getUserInfo();
-      this.userInfo = response.data;
-      this.originUser = { ...this.userInfo };
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    }
+  mounted() {
+    this.fetchUserInfo();
   },
   methods: {
-    ...mapMutations("memberStoreCookie", [
-      "SET_PROFILE_IMAGE",
-      "SET_USER_NAME",
-    ]),
+    ...mapMutations("memberStore", ["SET_PROFILE_IMAGE", "SET_USER_NAME"]),
+    async fetchUserInfo() {
+      try {
+        const response = await getUserInfo();
+        console.log(response);
+        if (response.status === 200) {
+          this.userInfo = response.data;
+          this.originUser = { ...this.userInfo };
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async submitEditUser() {
+      try {
+        const response = await putUserInfo(this.userInfo);
+        console.log(response.data);
+
+        if (response.status === 200) {
+          this.userInfo = response.data;
+          this.originUser = { ...this.userInfo };
+          this.SET_USER_NAME(response.data.userName);
+          this.editUser = false;
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    cancelEditUser() {
+      this.userInfo = { ...this.originUser }; //원상복구
+      this.editUser = false;
+    },
     changeProfileImage() {
-      console.log("change event 발생");
       this.uploadProfileImage = this.$refs.image.files[0];
       this.previewProfileImage = URL.createObjectURL(this.uploadProfileImage);
     },
     async submitProfileImage() {
-      console.log("submit event 발생");
-
       const formData = new FormData();
       formData.append("profileImage", this.uploadProfileImage);
 
       try {
         const response = await postProfileImage(formData);
+        console.log(response);
         if (response.status === 200) {
-          console.log(response.data);
           this.SET_PROFILE_IMAGE(response.data);
           this.previewProfileImage = null;
         }
@@ -215,40 +228,15 @@ export default {
         }
       }
     },
-    editUserInfo() {
-      console.log("change click");
-      this.isInfoHidden = false;
-    },
-    async submitEditUser() {
-      console.log("submit edit user");
-      try {
-        const response = await putUserInfo(this.userInfo);
-        console.log(response.data);
 
-        if (response.status === 200) {
-          this.userInfo = response.data;
-          this.originUser = { ...this.userInfo };
-          this.SET_USER_NAME(response.data.userName);
-          this.isInfoHidden = true;
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    cancelEditUser() {
-      console.log("cancel click");
-      this.userInfo = { ...this.originUser };
-      this.isInfoHidden = true;
-    },
     async logout() {
-      console.log("logtout click");
       try {
         const response = await postLogout();
+        console.log(response);
         if (response.status === 200) {
           Cookies.remove("loginUser");
           location.href = "http://localhost:8080/main";
         }
-        console.log(response);
       } catch (error) {
         console.log(error);
       }
@@ -341,6 +329,7 @@ export default {
   border: solid gray 0.5px;
   background-color: #f9fbfc;
   color: gray;
+  cursor: pointer;
 }
 #delete-profile-btn {
   background-color: #ff2d53d2;
@@ -461,6 +450,7 @@ h4 {
   border-radius: 7px;
   font-size: 1rem;
   box-shadow: 1px 1px 10px 0 rgba(72, 75, 108, 0.08);
+  cursor: pointer;
 }
 #cancel-edit-user-btn {
   margin-left: 20px;
