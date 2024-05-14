@@ -22,13 +22,9 @@
 export default {
   data() {
     return {
-      loginId: "",
-      userName: "",
+      loginId: this.$route.params.loginId,
+      userName: this.$route.params.name,
     };
-  },
-  created() {
-    this.loginId = this.$route.params.loginId;
-    this.userName = this.$route.params.name;
   },
 };
 </script>

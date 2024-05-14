@@ -149,7 +149,6 @@ const routes = [
   {
     path: "/join/success/:loginId/:name",
     name: "joinSuccess",
-    beforeEnter: checkLogin,
     component: JoinSuccess,
   },
   {
