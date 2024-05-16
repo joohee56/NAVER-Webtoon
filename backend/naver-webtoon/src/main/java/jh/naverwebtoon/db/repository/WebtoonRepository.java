@@ -52,7 +52,6 @@ public class WebtoonRepository {
     public Webtoon findOneByIdWithMemberAndThumbnail(Long webtoonId) {
         return em.createQuery("select w from Webtoon w"
                         + " join fetch w.member m "
-                        + " join fetch m.profileImage"
                         + " join fetch w.webtoonThumbnail wt"
                         + " join fetch w.genres g"
                         + " where w.id = :webtoonId", Webtoon.class)

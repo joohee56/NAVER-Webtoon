@@ -18,7 +18,6 @@ public class FindWebtoonDetailRes {
     private String profileStoreFileName;
     private DayOfWeek dayOfWeek;
     private Integer ageLimit;
-    private String oneLineSummary;
     private String summary;
     private List<GenreRes> genres;
 
@@ -27,9 +26,10 @@ public class FindWebtoonDetailRes {
         res.webtoonName = webtoon.getName();
         res.posterStoreFileName = webtoon.getWebtoonThumbnail().getPosterImage().getStoreFileName();
         res.memberName = webtoon.getMember().getName();
-        res.profileStoreFileName = webtoon.getMember().getProfileImage().getUploadImage().getStoreFileName();
+        if(webtoon.getMember().getProfileImage() != null) {
+            res.profileStoreFileName = webtoon.getMember().getProfileImage().getUploadImage().getStoreFileName();
+        }
         res.ageLimit = webtoon.getAgeLimit();
-        res.oneLineSummary = webtoon.getOneLineSummary();
         res.summary = webtoon.getSummary();
         res.genres = webtoon.getGenres().stream()
                 .map(webtoonGenre -> new GenreRes(webtoonGenre.getGenre().name(), webtoonGenre.getGenre().getTitle()))

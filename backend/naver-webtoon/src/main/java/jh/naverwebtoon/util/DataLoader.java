@@ -6,7 +6,6 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import jh.naverwebtoon.db.domain.comment.Comment;
 import jh.naverwebtoon.db.domain.Member;
 import jh.naverwebtoon.db.domain.MergeManuscript;
 import jh.naverwebtoon.db.domain.ProfileImage;
@@ -15,6 +14,7 @@ import jh.naverwebtoon.db.domain.RoundLike;
 import jh.naverwebtoon.db.domain.RoundThumbnail;
 import jh.naverwebtoon.db.domain.UploadImage;
 import jh.naverwebtoon.db.domain.WebtoonThumbnail;
+import jh.naverwebtoon.db.domain.comment.Comment;
 import jh.naverwebtoon.db.domain.comment.CommentDislike;
 import jh.naverwebtoon.db.domain.comment.CommentLike;
 import jh.naverwebtoon.db.domain.enums.CountryResidence;
@@ -33,11 +33,9 @@ import jh.naverwebtoon.dto.request.JoinMemberReq;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
-@Component
-@Transactional
+//@Component
+//@Transactional
 @RequiredArgsConstructor
 public class DataLoader implements ApplicationRunner {
     @PersistenceContext
