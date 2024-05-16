@@ -29,6 +29,7 @@ import jh.naverwebtoon.db.domain.WebtoonThumbnail;
 import jh.naverwebtoon.db.domain.enums.GenreEnum;
 import jh.naverwebtoon.db.domain.enums.WebtoonCategory;
 import jh.naverwebtoon.db.domain.enums.WebtoonType;
+import jh.naverwebtoon.dto.request.CreateOfficialWebtoonReq;
 import jh.naverwebtoon.dto.request.CreateWebtoonReq;
 import jh.naverwebtoon.dto.request.EditWebtoonReq;
 import lombok.AccessLevel;
@@ -94,19 +95,19 @@ public class Webtoon extends BaseEntity {
         genre.setWebtoon(this);
     }
 
-    protected Webtoon(Member member, CreateWebtoonReq createWebtoonReq, WebtoonThumbnail webtoonThumbnail, WebtoonType webtoonType) {
-        this.name = createWebtoonReq.getName();
-        this.webtoonCategory = createWebtoonReq.getWebtoonCategory();
-        for (String tagName : createWebtoonReq.getTags()) {
+    protected Webtoon(Member member, CreateOfficialWebtoonReq createOfficialWebtoonReq, WebtoonThumbnail webtoonThumbnail) {
+        this.name = createOfficialWebtoonReq.getName();
+        this.webtoonCategory = createOfficialWebtoonReq.getWebtoonCategory();
+        for (String tagName : createOfficialWebtoonReq.getTags()) {
             this.addTag(Tag.create(tagName));
         }
-        for (GenreEnum genreEnum : createWebtoonReq.getGenres()) {
+        for (GenreEnum genreEnum : createOfficialWebtoonReq.getGenres()) {
             addGenre(WebtoonGenre.create(genreEnum));
         }
-        this.oneLineSummary = createWebtoonReq.getOneLineSummary();
-        this.summary = createWebtoonReq.getSummary();
+        this.oneLineSummary = createOfficialWebtoonReq.getOneLineSummary();
+        this.summary = createOfficialWebtoonReq.getSummary();
         this.ageLimit = 0;
-        this.webtoonType = webtoonType;
+        this.webtoonType = WebtoonType.OFFICIAL;
         this.member = member;
         this.webtoonThumbnail = webtoonThumbnail;
     }

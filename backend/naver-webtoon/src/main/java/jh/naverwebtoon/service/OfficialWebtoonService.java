@@ -1,15 +1,13 @@
 package jh.naverwebtoon.service;
 
-import java.time.DayOfWeek;
 import java.util.List;
 import jh.naverwebtoon.db.domain.Member;
-import jh.naverwebtoon.db.domain.UploadImage;
 import jh.naverwebtoon.db.domain.WebtoonThumbnail;
 import jh.naverwebtoon.db.domain.enums.SortingEnum;
 import jh.naverwebtoon.db.domain.webtoon.OfficialWebtoon;
 import jh.naverwebtoon.db.repository.MemberRepository;
 import jh.naverwebtoon.db.repository.OfficialWebtoonRepository;
-import jh.naverwebtoon.dto.request.CreateWebtoonReq;
+import jh.naverwebtoon.dto.request.CreateOfficialWebtoonReq;
 import jh.naverwebtoon.dto.response.FindOfficialWebtoonsRes;
 import jh.naverwebtoon.util.FileStore;
 import lombok.RequiredArgsConstructor;
@@ -25,14 +23,12 @@ public class OfficialWebtoonService {
     private final FileStore fileStore;
 
     @Transactional
-    public void createOfficialWebtoon(Long memberId, CreateWebtoonReq createWebtoonReq, DayOfWeek dayOfWeek) {
+    public Long createOfficialWebtoon(Long memberId, CreateOfficialWebtoonReq createOfficialWebtoonReq) {
         Member member = memberRepository.findOne(memberId);
-        UploadImage posterImage = fileStore.storeFile(createWebtoonReq.getPosterImage());
-        UploadImage horizontalImage = fileStore.storeFile(createWebtoonReq.getHorizontalImage());
-        WebtoonThumbnail webtoonThumbnail = WebtoonThumbnail.create(posterImage, horizontalImage);
-
-        OfficialWebtoon officialWebtoon = new OfficialWebtoon(member, createWebtoonReq, webtoonThumbnail, dayOfWeek);
-        officialWebtoonRepository.save(officialWebtoon);
+        WebtoonThumbnail webtoonThumbnail = fileStore.createWebtoonThumbnail(createOfficialWebtoonReq.getPosterImage(),
+                createOfficialWebtoonReq.getHorizontalImage());
+        OfficialWebtoon officialWebtoon = new OfficialWebtoon(member, createOfficialWebtoonReq, webtoonThumbnail);
+        return officialWebtoonRepository.save(officialWebtoon);
     }
 
     /**

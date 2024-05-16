@@ -17,8 +17,9 @@ import org.springframework.stereotype.Repository;
 public class OfficialWebtoonRepository {
     private final EntityManager em;
 
-    public void save(OfficialWebtoon officialWebtoon) {
+    public Long save(OfficialWebtoon officialWebtoon) {
         em.persist(officialWebtoon);
+        return officialWebtoon.getId();
     }
 
     public OfficialWebtoon findOne(Long id) {

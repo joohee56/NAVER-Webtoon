@@ -2,7 +2,6 @@ package jh.naverwebtoon.util;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +20,6 @@ import jh.naverwebtoon.db.domain.enums.CountryResidence;
 import jh.naverwebtoon.db.domain.enums.Gender;
 import jh.naverwebtoon.db.domain.enums.GenreEnum;
 import jh.naverwebtoon.db.domain.enums.WebtoonCategory;
-import jh.naverwebtoon.db.domain.webtoon.OfficialWebtoon;
 import jh.naverwebtoon.db.domain.webtoon.Webtoon;
 import jh.naverwebtoon.db.repository.CommentRepository;
 import jh.naverwebtoon.db.repository.MemberRepository;
@@ -80,6 +78,8 @@ public class DataLoader implements ApplicationRunner {
 
 //        Webtoon
         List<GenreEnum> genreEnums = new ArrayList<>();
+
+        /*
         genreEnums.add(GenreEnum.ROMANCE);
         genreEnums.add(GenreEnum.EMOTION);
 
@@ -269,6 +269,7 @@ public class DataLoader implements ApplicationRunner {
         initOfficialWebtoon(Long.valueOf(17), "절대 검감", WebtoonCategory.STORY, genreEnums, "", "단전이 부숴졌다는 이유로 집에서는 내놓은 자식 취급을 받던 소운휘는 혈교에 납치되어서도 삼류 첩자로 살아왔다.\n"
                 + "어느 날, 전설로만 알려진 검선비록을 찾는데 이용당하다 죽은 운휘는 10년 전, 혈교에 납치되던 그 날로 돌아가게 되고 검의 목소리를 듣는 신비한 능력을 얻는다.","절대검감_커버.png", DayOfWeek.MONDAY);
 
+        */
 
 
         //Challenge Webtoon
@@ -655,13 +656,13 @@ public class DataLoader implements ApplicationRunner {
         em.persist(member);
     }
 
-    public void initOfficialWebtoon(Long memberId, String name, WebtoonCategory webtoonCategory, List<GenreEnum> genreEnums, String oneLineSummary, String summary, String storeFileName, DayOfWeek dayOfWeek) {
-        Member member = memberRepository.findOne(memberId);
-        CreateWebtoonReq createWebtoonReq = new CreateWebtoonReq(name, webtoonCategory, genreEnums, new ArrayList<>(), oneLineSummary, summary, null, null);
-        WebtoonThumbnail webtoonThumbnail = WebtoonThumbnail.create(new UploadImage(storeFileName, storeFileName), new UploadImage(storeFileName, storeFileName));
-        OfficialWebtoon officialWebtoon = new OfficialWebtoon(member, createWebtoonReq, webtoonThumbnail, dayOfWeek);
-        em.persist(officialWebtoon);
-    }
+//    public void initOfficialWebtoon(Long memberId, String name, WebtoonCategory webtoonCategory, List<GenreEnum> genreEnums, String oneLineSummary, String summary, String storeFileName, DayOfWeek dayOfWeek) {
+//        Member member = memberRepository.findOne(memberId);
+//        CreateWebtoonReq createWebtoonReq = new CreateWebtoonReq(name, webtoonCategory, genreEnums, new ArrayList<>(), oneLineSummary, summary, null, null);
+//        WebtoonThumbnail webtoonThumbnail = WebtoonThumbnail.create(new UploadImage(storeFileName, storeFileName), new UploadImage(storeFileName, storeFileName));
+//        OfficialWebtoon officialWebtoon = new OfficialWebtoon(member, createWebtoonReq, webtoonThumbnail, dayOfWeek);
+//        em.persist(officialWebtoon);
+//    }
 
     public void initWebtoon(Long memberId, String name, WebtoonCategory webtoonCategory, List<GenreEnum> genreEnums, String oneLineSummary, String summary, String storeFileName) {
         Member member = memberRepository.findOne(memberId);

@@ -7,8 +7,7 @@ import jakarta.persistence.Enumerated;
 import java.time.DayOfWeek;
 import jh.naverwebtoon.db.domain.Member;
 import jh.naverwebtoon.db.domain.WebtoonThumbnail;
-import jh.naverwebtoon.db.domain.enums.WebtoonType;
-import jh.naverwebtoon.dto.request.CreateWebtoonReq;
+import jh.naverwebtoon.dto.request.CreateOfficialWebtoonReq;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,11 +20,10 @@ public class OfficialWebtoon extends Webtoon {
 
     @Enumerated(EnumType.STRING)
     private DayOfWeek dayOfWeek;
-
     private boolean isComplete;
 
-    public OfficialWebtoon(Member member, CreateWebtoonReq createWebtoonReq, WebtoonThumbnail webtoonThumbnail, DayOfWeek dayOfWeek) {
-        super(member, createWebtoonReq, webtoonThumbnail, WebtoonType.OFFICIAL);
-        this.dayOfWeek = dayOfWeek;
+    public OfficialWebtoon(Member member, CreateOfficialWebtoonReq createOfficialWebtoonReq, WebtoonThumbnail webtoonThumbnail) {
+        super(member, createOfficialWebtoonReq, webtoonThumbnail);
+        this.dayOfWeek = createOfficialWebtoonReq.getDayOfWeek();
     }
 }
