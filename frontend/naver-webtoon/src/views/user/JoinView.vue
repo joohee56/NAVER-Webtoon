@@ -230,6 +230,7 @@ export default {
         return false;
       }
 
+      // 공백 체크
       let errorMessage = "";
       for (let i = 2; i < this.user.length; i++) {
         if (this.user[i] === "") {
@@ -237,8 +238,12 @@ export default {
             "<li>" + this.title[i] + " : " + "필수정보입니다.</li>";
         }
       }
-      this.section2ErrorMessage = errorMessage;
       if (errorMessage !== "") {
+        this.section2ErrorMessage = errorMessage;
+      }
+
+      // 에러메시지가 있다면 통과 x
+      if (this.section2ErrorMessage !== "") {
         return false;
       } else {
         return true;
