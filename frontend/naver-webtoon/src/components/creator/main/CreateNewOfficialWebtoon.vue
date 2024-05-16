@@ -216,6 +216,11 @@
 					<div class="input-text-wrap">
             <input type="text" placeholder="시청 연령을 입력해 주세요." v-model="webtoon.ageLimit" :class="{violation: webtoon.ageLimit.length>inputLimit.ageLimit}">
             <span class="input-letter-count">{{webtoon.ageLimit.length}} / {{inputLimit.ageLimit}}</span>
+						<ul class="sub-description">
+							<li>
+								0 입력 시 전체 연령가로 등록됩니다.
+							</li>
+						</ul>
           </div>
 				</li>
 				<li class="item-row">
