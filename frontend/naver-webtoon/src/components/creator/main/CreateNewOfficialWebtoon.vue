@@ -205,6 +205,20 @@
 		<div class="item-box input-form">
 			<ul>
 				<li class="item-row">
+					<p>작가 아이디</p>
+					<div class="input-text-wrap">
+            <input type="text" placeholder="작가 아이디를 입력해 주세요." v-model="webtoon.authorId" :class="{violation: webtoon.authorId.length>inputLimit.authorId}">
+            <span class="input-letter-count">{{webtoon.authorId.length}} / {{inputLimit.authorId}}</span>
+          </div>
+				</li>
+				<li class="item-row">
+					<p>시청 연령</p>
+					<div class="input-text-wrap">
+            <input type="text" placeholder="시청 연령을 입력해 주세요." v-model="webtoon.ageLimit" :class="{violation: webtoon.ageLimit.length>inputLimit.ageLimit}">
+            <span class="input-letter-count">{{webtoon.ageLimit.length}} / {{inputLimit.ageLimit}}</span>
+          </div>
+				</li>
+				<li class="item-row">
 					<p>연재 요일</p>
 					<div>
 						<select class="day-of-week-select" v-model="webtoon.dayOfWeek">
@@ -240,12 +254,16 @@ export default {
         summary: "",
         posterImage: null,
         horizontalImage: null,
+        authorId: 0,
+        ageLimit: 0,
         dayOfWeek: null,
       },
       inputLimit: {
         name: 30,
         oneLineSummary: 10,
         summary: 400,
+        authorId: 1000,
+        ageLimit: 3,
       },
       title: {
         name: "작품명",
@@ -256,6 +274,9 @@ export default {
         summary: "줄거리",
         posterImage: "포스터형 대표이미지",
         horizontalImage: "가로형 대표이미지",
+        authorId: "작가 아이디",
+        ageLimit: "시청 연령",
+        dayOfWeek: "연재 요일",
       },
       dayOfWeeks: [
         {
@@ -368,6 +389,10 @@ export default {
       }
       if (this.isHorizontalSelect === false) {
         alert("대표이미지 가로형을 선택해 주세요.");
+        return false;
+      }
+      if (this.webtoon.authorId === 0) {
+        alert("작가 아이디를 입력해 주세요.");
         return false;
       }
       if (this.webtoon.dayOfWeek === null) {
