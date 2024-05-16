@@ -367,13 +367,12 @@ button {
   cursor: pointer;
 }
 
-/* gender, foreigner */
+/* 성별, 내국인/외국인 */
 ul {
   list-style: none;
   margin: 0;
   padding: 0;
 }
-
 .gender,
 .foreigner {
   width: 50%;
@@ -385,32 +384,36 @@ ul {
   border-spacing: 0;
   display: flex;
 }
-.gender-inner li,
-.foreigner-inner li {
-  width: 50%;
-  padding: 6px 0;
+.gender-inner label {
+  padding: 6px 44px;
   text-align: center;
   font-size: 13px;
   border: solid #dbdbdb 0.5px;
+  cursor: pointer;
 }
-
-.gender-inner li:first-child,
-.foreigner-inner li:first-child {
+.foreigner-inner label {
+  padding: 6px 35px;
+  text-align: center;
+  font-size: 13px;
+  border: solid #dbdbdb 0.5px;
+  cursor: pointer;
+}
+.gender-inner li:first-child label,
+.foreigner-inner li:first-child label {
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
 }
-
-.gender-inner li:last-child,
-.foreigner-inner li:last-child {
+.gender-inner li:last-child label,
+.foreigner-inner li:last-child label {
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
 }
-
-.gender-inner li:has(input:checked),
-.foreigner-inner li:has(input:checked) {
+.gender-inner li:has(input:checked) label,
+.foreigner-inner li:has(input:checked) label {
   border-color: #03c75a;
 }
 
+/* 가입하기 버튼 */
 .btn-join {
   display: block;
   background-color: #03c75a;
