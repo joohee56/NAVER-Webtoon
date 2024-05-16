@@ -76,13 +76,19 @@ export default {
   async mounted() {
     await this.fetchWebtoonInfo();
     if (this.webtoonInfo.dayOfWeek) {
-      this.setDayOfWeekNavActive();
+      this.SET_CATEGORY_ACTIVE(0);
+      this.SET_DAY_OF_WEEK_ACTIVE(this.webtoonInfo.dayOfWeek);
     } else {
-      this.setGenreNavActive();
+      this.SET_CATEGORY_ACTIVE(1);
+      this.SET_GENRE_ACTIVE(this.webtoonInfo.genres[0].name);
     }
   },
   methods: {
-    ...mapMutations("navStore", ["SET_DAY_OF_WEEK_ACTIVE", "SET_GENRE_ACTIVE"]),
+    ...mapMutations("navStore", [
+      "SET_DAY_OF_WEEK_ACTIVE",
+      "SET_GENRE_ACTIVE",
+      "SET_CATEGORY_ACTIVE",
+    ]),
     async fetchWebtoonInfo() {
       const response = await getWebtoonDetail(this.$route.params.webtoonId);
       console.log(response);
@@ -93,12 +99,6 @@ export default {
           "<br />"
         );
       }
-    },
-    setDayOfWeekNavActive() {
-      this.SET_DAY_OF_WEEK_ACTIVE(this.webtoonInfo.dayOfWeek);
-    },
-    setGenreNavActive() {
-      this.SET_GENRE_ACTIVE(this.webtoonInfo.genres[0].name);
     },
   },
 };
