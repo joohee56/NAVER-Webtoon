@@ -24,7 +24,10 @@ public class OfficialWebtoonService {
 
     @Transactional
     public Long createOfficialWebtoon(Long memberId, CreateOfficialWebtoonReq createOfficialWebtoonReq) {
-        Member member = memberRepository.findOne(memberId);
+        Member member = memberRepository.findOne(createOfficialWebtoonReq.getAuthorId());
+        if(member == null) {
+            throw new IllegalStateException("작가 아이디를 찾을 수 없습니다.");
+        }
         WebtoonThumbnail webtoonThumbnail = fileStore.createWebtoonThumbnail(createOfficialWebtoonReq.getPosterImage(),
                 createOfficialWebtoonReq.getHorizontalImage());
         OfficialWebtoon officialWebtoon = new OfficialWebtoon(member, createOfficialWebtoonReq, webtoonThumbnail);

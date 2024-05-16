@@ -106,7 +106,7 @@ public class Webtoon extends BaseEntity {
         }
         this.oneLineSummary = createOfficialWebtoonReq.getOneLineSummary();
         this.summary = createOfficialWebtoonReq.getSummary();
-        this.ageLimit = 0;
+        this.ageLimit = createOfficialWebtoonReq.getAgeLimit();
         this.webtoonType = WebtoonType.OFFICIAL;
         this.member = member;
         this.webtoonThumbnail = webtoonThumbnail;
