@@ -20,8 +20,8 @@
       <div class="summary">
         <div class="overflow-hidden" v-html="webtoonInfo.summary"></div>
       </div>
-      <div class="genre-wrap">
-        <span v-for="genre in webtoonInfo.genres" class="genre">#{{genre.title}}</span>
+      <div class="tag-wrap">
+        <span v-for="genre in webtoonInfo.genres" class="tag">#{{genre.title}}</span>
       </div>
     </div>
 	</div>
@@ -146,6 +146,7 @@ export default {
 .day-of-week {
   margin-top: 3px;
 }
+/* 장르 */
 .genre-wrap {
   display: flex;
   line-height: 31px;
@@ -163,10 +164,14 @@ export default {
   overflow: hidden; /* 넘치는 부분 숨김 */
   text-overflow: ellipsis; /* 넘치는 부분에 ... 추가 */
 }
-/* 장르 */
-.genre-wrap .genre {
+.tag-wrap {
+  margin-top: 10px;
+}
+.tag-wrap .tag {
   background-color: #f6f6f6;
   padding: 0 10px;
+  line-height: 31px;
+  display: inline-block;
   border-radius: 4px;
   font-size: 15px;
   margin: 0 5px 5px 0;
