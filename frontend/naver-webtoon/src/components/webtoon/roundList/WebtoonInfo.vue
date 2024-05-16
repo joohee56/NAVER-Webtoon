@@ -8,7 +8,7 @@
     <div class="webtoon-info">
       <div class="webtoon-name">{{webtoonInfo.webtoonName}}</div>
       <div class="detail-line">
-        <img :src="require(`@/assets/image/${webtoonInfo.profileStoreFileName}`)" class="profile-image">
+        <img :src="require(`@/assets/image/${webtoonInfo.profileStoreFileName}`)" class="profile-image" v-if="webtoonInfo.profileStoreFileName !== null">
         <div class="author-name">{{webtoonInfo.memberName}}</div><div>· 글/그림</div>
         <div v-if="webtoonInfo.dayOfWeek" class="day-of-week"> | {{webtoonInfo.dayOfWeek | dayOfWeekTitle}}웹툰 </div>
         <div>· {{webtoonInfo.ageLimit}}세 이용가</div>
@@ -18,8 +18,7 @@
         </div>
       </div>
       <div class="summary">
-        <div class="overflow-hidden">{{webtoonInfo.oneLineSummary}}</div>
-        <div v-html="webtoonInfo.summary"></div>
+        <div class="overflow-hidden" v-html="webtoonInfo.summary"></div>
       </div>
       <div class="genre-wrap">
         <span v-for="genre in webtoonInfo.genres" class="genre">#{{genre.title}}</span>
@@ -42,7 +41,6 @@ export default {
         memberName: "",
         dayOfWeek: "",
         ageLimit: "",
-        oneLineSummary: "",
         summary: "",
         genres: [],
       },

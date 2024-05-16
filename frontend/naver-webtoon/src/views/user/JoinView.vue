@@ -165,43 +165,56 @@ export default {
     idCheck() {
       if (this.user.loginId === "") {
         this.idErrorMessage = "아이디: 필수 정보입니다.";
+        return false;
       } else {
-        this.checkDuplicatedLoginId();
+        return this.checkDuplicatedLoginId();
       }
     },
     pwCheck() {
       if (this.user.password === "") {
         this.pwErrorMessage = "비밀번호: 필수 정보입니다.";
+        return false;
       } else {
         this.pwErrorMessage = "";
+        return true;
       }
     },
     birthDateCheck() {
       if (this.user.birthDate === "") {
         this.section2ErrorMessage = "생년월일: 필수 정보입니다.";
-      } else if (!/^\d{8}$/.test(this.user.birthDate)) {
+        return false;
+      } else if (
+        !/^(19|20)\d{2}-?(0[1-9]|1[0-2])-?(0[1-9]|[12]\d|3[01])$/.test(
+          this.user.birthDate
+        )
+      ) {
         this.section2ErrorMessage =
           "생년월일: 생년월일은 8자리 숫자로 입력해 주세요.";
+        return false;
       } else {
         this.user.birthDate = this.user.birthDate.replace(
           /^(\d{4})(\d{2})(\d{2})$/,
           "$1-$2-$3"
         );
         this.section2ErrorMessage = "";
+        return true;
       }
     },
     phoneNumberCheck() {
       if (this.user.phoneNumber === "") {
         this.section2ErrorMessage = "휴대전화번호: 필수 정보입니다.";
-      } else if (!/^[0-9]{11}$/.test(this.user.phoneNumber)) {
+        return false;
+      } else if (!/^01[016789]-?\d{4}-?\d{4}$/.test(this.user.phoneNumber)) {
         this.section2ErrorMessage =
           "휴대전화번호: 휴대전화번호가 정확한지 확인해 주세요.";
+        return false;
       } else {
         this.user.phoneNumber = this.user.phoneNumber.replace(
-          /^(\d{3})(\d{3,4})(\d{4})/g,
+          /^(\d{3})(\d{4})(\d{4})/g,
           "$1-$2-$3"
         );
         this.section2ErrorMessage = "";
+        return true;
       }
     },
     async checkDuplicatedLoginId() {
@@ -211,26 +224,26 @@ export default {
         if (result.data === true) {
           this.idErrorMessage =
             "아이디: 사용할 수 없는 아이디입니다. 다른 아이디를 입력해 주세요.";
-          this.isPassedLoginId = false;
+          return false;
         } else {
           this.idErrorMessage = "";
-          this.isPassedLoginId = true;
+          return true;
         }
       } catch (error) {
         console.log(error);
       }
     },
     validateInput() {
-      if (this.user.loginId == "") {
-        this.idCheck();
-        return false;
-      }
-      if (this.user.password == "") {
-        this.pwCheck();
+      if (
+        !this.idCheck() ||
+        !this.pwCheck() ||
+        !this.birthDateCheck() ||
+        !this.phoneNumberCheck()
+      ) {
         return false;
       }
 
-      // 공백 체크
+      // 나머지 항목 공백 체크
       let errorMessage = "";
       for (let i = 2; i < this.user.length; i++) {
         if (this.user[i] === "") {
@@ -238,9 +251,7 @@ export default {
             "<li>" + this.title[i] + " : " + "필수정보입니다.</li>";
         }
       }
-      if (errorMessage !== "") {
-        this.section2ErrorMessage = errorMessage;
-      }
+      this.section2ErrorMessage = errorMessage;
 
       // 에러메시지가 있다면 통과 x
       if (this.section2ErrorMessage !== "") {
