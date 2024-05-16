@@ -248,7 +248,7 @@ export default {
       mergeImagePreview: "",
       showUploadProgress: false,
       showUploadDone: false,
-      height: 0,
+      canvasHeight: 0,
       showUploadRoundModal: false,
       isCheckCreateRound: true,
       isUploadingRound: false,
@@ -275,8 +275,10 @@ export default {
       try {
         const response = await getCreateRoundInfo();
         console.log(response.data);
-        this.webtoons = response.data;
-        this.roundNumber = this.webtoons[0].roundNumber;
+        if(response.status === 200) {
+          this.webtoons = response.data;
+          this.roundNumber = this.webtoons[0].roundNumber;
+        }
       } catch (error) {
         console.log(error);
       }
@@ -372,18 +374,11 @@ export default {
       this.showUploadProgress = false;
       this.showUploadDone = true;
     },
-    async calculateHeight() {
-      this.height = 0;
-      for(const file of this.round.manuscripts) {
-        const image = await this.changeToImage(file);
-        this.height += image.height;
-      }
-    },
     async mergeImages() {
       var canvas = document.createElement("canvas");
       canvas.width = 690; //가로 690px 고정
       await this.calculateHeight();
-      canvas.height = this.height;
+      canvas.height = this.canvasHeight;
 
       var context = canvas.getContext("2d");
       context.globalCompositeOperation = "source-over";
@@ -398,6 +393,13 @@ export default {
       // 합쳐진 이미지 보여주기
       const dataURI = canvas.toDataURL("image/jpeg");
       this.mergeImagePreview = dataURI;
+    },
+    async calculateHeight() {
+      this.canvasHeight = 0;
+      for(const file of this.round.manuscripts) {
+        const image = await this.changeToImage(file);
+        this.canvasHeight += image.height;
+      }
     },
     async changeToImage(file) {
       //읽기
