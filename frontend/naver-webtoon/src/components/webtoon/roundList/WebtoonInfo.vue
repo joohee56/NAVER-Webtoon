@@ -164,9 +164,6 @@ export default {
   text-overflow: ellipsis; /* 넘치는 부분에 ... 추가 */
 }
 /* 장르 */
-.genre-wrap {
-  margin-top: 10px;
-}
 .genre-wrap .genre {
   background-color: #f6f6f6;
   padding: 0 10px;
