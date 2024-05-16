@@ -385,7 +385,7 @@ ul {
   display: flex;
 }
 .gender-inner label {
-  padding: 6px 44px;
+  padding: 6px 43px;
   text-align: center;
   font-size: 13px;
   border: solid #dbdbdb 0.5px;
