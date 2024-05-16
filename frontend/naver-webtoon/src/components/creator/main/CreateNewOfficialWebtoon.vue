@@ -1,7 +1,7 @@
 <template lang="ko">
 	<div class="create-new-webtoon-container">
 		<div class="subject">
-			신규 작품 등록
+			신규 정식 연재 작품 등록
 		</div>
 
     <!-- 운영원칙 -->
@@ -202,32 +202,30 @@
 			</ul>
 		</div>
 
-    <!-- 버튼 -->
-		<div class="btn-wrap">
-			<button class="cancel" @click="showCancleConfirmModal = true">취소</button>
-			<button class="submit" @click="createWebtoon('manage')">등록</button>
-			<button class="submit" @click="createWebtoon('createNewRound')">등록 후 1화 올리기</button>
+		<div class="item-box input-form">
+			<ul>
+				<li class="item-row">
+					<p>연재 요일</p>
+					<div>
+						<select class="day-of-week-select" v-model="webtoon.dayOfWeek">
+							<option v-for="(dayOfWeek) in dayOfWeeks" :value="dayOfWeek.value">{{dayOfWeek.title}}</option>
+						</select>
+					</div>
+				</li>
+			</ul>
 		</div>
 
-    <!-- 작품 등록 취소 모달 -->
-    <CancleConfirm :show="showCancleConfirmModal" @close="showCancleConfirmModal = false">
-      <template #header>
-        <div>작품 등록을 취소하시겠습니까?</div>
-      </template>
-      <template #body>
-        <div class="modal-btn">
-          <button @click="showCancleConfirmModal = false">취소</button>
-          <button class="submit" @click="cancleCreateWebtoon">확인</button>
-        </div>
-      </template>
-    </CancleConfirm>
+    <!-- 버튼 -->
+		<div class="btn-wrap">
+			<button class="cancel" @click="cancleCreateWebtoon">취소</button>
+			<button class="submit" @click="createWebtoon('manage')">등록</button>
+		</div>
 
 	</div>
 </template>
 
 <script>
-import { postCreateWebtoon } from "@/api/webtoon";
-import CancleConfirm from "../modal/CancleConfirm.vue";
+import { postCreateOfficialWebtoon } from "@/api/webtoon";
 
 export default {
   data() {
@@ -242,6 +240,7 @@ export default {
         summary: "",
         posterImage: null,
         horizontalImage: null,
+        dayOfWeek: null,
       },
       inputLimit: {
         name: 30,
@@ -258,13 +257,44 @@ export default {
         posterImage: "포스터형 대표이미지",
         horizontalImage: "가로형 대표이미지",
       },
+      dayOfWeeks: [
+        {
+          title: "요일선택",
+          value: null,
+        },
+        {
+          title: "월요일",
+          value: "MONDAY",
+        },
+        {
+          title: "화요일",
+          value: "TUESDAY",
+        },
+        {
+          title: "수요일",
+          value: "WEDNESDAY",
+        },
+        {
+          title: "목요일",
+          value: "THURSDAY",
+        },
+        {
+          title: "금요일",
+          value: "FRIDAY",
+        },
+        {
+          title: "토요일",
+          value: "SATURDAY",
+        },
+        {
+          title: "일요일",
+          value: "SUNDAY",
+        },
+      ],
       previewPoster: null,
       previewHorizontal: null,
       showCancleConfirmModal: false,
     };
-  },
-  components: {
-    CancleConfirm,
   },
   methods: {
     async createWebtoon(routerName) {
@@ -278,23 +308,23 @@ export default {
         formData.append(key, this.webtoon[key]);
       }
 
-      const response = await postCreateWebtoon(formData);
+      const response = await postCreateOfficialWebtoon(formData);
       console.log(response);
 
       if (response.status === 200) {
-        alert("작품 등록이 완료되었습니다. 도전만화에 노출됩니다.");
+        alert("작품 등록이 완료되었습니다. 정식 연재 웹툰에 노출됩니다.");
         this.$router.push({ name: routerName });
       } else if (response.status === 400) {
         let data = response.data;
         if (data.code === "VALIDATION") {
           let errorMessage = "";
           for (const key in data.message) {
-            errorMessage = this.title[key] + data.message[key] + "\n" + errorMessage;
+            errorMessage =
+              this.title[key] + data.message[key] + "\n" + errorMessage;
           }
           alert(errorMessage);
-        } 
+        }
       }
-      
     },
     validateInput() {
       if (this.operatingPrinciple === "") {
@@ -338,6 +368,10 @@ export default {
       }
       if (this.isHorizontalSelect === false) {
         alert("대표이미지 가로형을 선택해 주세요.");
+        return false;
+      }
+      if (this.webtoon.dayOfWeek === null) {
+        alert("연재 요일을 선택해 주세요.");
         return false;
       }
 
@@ -634,6 +668,17 @@ input[type="radio"]:checked + label::before {
   display: none;
 }
 
+/* 연재요일 선택 */
+.item-row .day-of-week-select {
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  width: 150px;
+  font-size: 15px;
+  font-family: AppleSDGothicNeoR;
+  height: 50px;
+  padding-left: 10px;
+}
+
 /* button */
 .btn-wrap {
   margin-top: 10px;
@@ -647,28 +692,13 @@ input[type="radio"]:checked + label::before {
   align-items: center;
   border: 1px solid rgba(0, 0, 0, 0.06);
   margin-left: 8px;
+  cursor: pointer;
 }
 .btn-wrap .cancel {
   margin-left: auto;
   background-color: #e0e0e0;
 }
 .btn-wrap .submit {
-  color: white;
-  background-color: #00dc64;
-}
-
-/* 회차 업로드 모달 */
-.modal-btn button {
-  font-family: AppleSDGothicNeoM;
-  border-radius: 4px;
-  padding: 13px 30px 10px;
-  font-size: 16px;
-  align-items: center;
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  margin-left: 8px;
-  cursor: pointer;
-}
-.modal-btn .submit {
   color: white;
   background-color: #00dc64;
 }

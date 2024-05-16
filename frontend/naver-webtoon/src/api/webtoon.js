@@ -12,6 +12,18 @@ async function postCreateWebtoon(webtoon) {
   }
 }
 
+async function postCreateOfficialWebtoon(officialWebtoon) {
+  try {
+    const response = await fileApi.post(
+      "/webtoon/official/new",
+      officialWebtoon
+    );
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+}
+
 async function putWebtoon(webtoon) {
   try {
     const response = await fileApi.post("/webtoon/edit", webtoon);
@@ -175,6 +187,7 @@ async function getEditWebtoon(webtoonId) {
 
 export {
   postCreateWebtoon,
+  postCreateOfficialWebtoon,
   getWebtoonAllByMember,
   getOfficialWebtoonAll,
   getWebtoonDetail,

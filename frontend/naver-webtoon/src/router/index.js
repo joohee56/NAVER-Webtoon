@@ -9,6 +9,7 @@ import ManageRound from "@/components/creator/main/ManageRound";
 import ManageComment from "@/components/creator/main/ManageComment";
 import ManageAlarm from "@/components/creator/main/ManageAlarm";
 import CreateNewWebtoon from "@/components/creator/main/CreateNewWebtoon";
+import CreateNewOfficialWebtoon from "@/components/creator/main/CreateNewOfficialWebtoon";
 import CreateNewRound from "@/components/creator/main/CreateNewRound";
 import EditWebtoon from "@/components/creator/main/EditWebtoon.vue";
 // user
@@ -50,7 +51,6 @@ const checkLogin = (to, from, next) => {
     next();
   }
 };
-
 const checkUndeveloped = (to, from, next) => {
   alert("개발 진행 중인 기능입니다.");
   next(false);
@@ -192,6 +192,12 @@ const routes = [
         name: "createNewWebtoon",
         beforeEnter: checkLogin,
         component: CreateNewWebtoon,
+      },
+      {
+        path: "/creators/manage/new/webtoon/official",
+        name: "createNewOfficialWebtoon",
+        beforeEnter: checkLogin,
+        component: CreateNewOfficialWebtoon,
       },
       {
         path: "/creators/manage/new/round",
