@@ -99,48 +99,52 @@ export default {
   },
   methods: {
     async fetchOfficialWebtoons() {
-      const response = await getOfficialWebtoonAll(
-        this.selectedGenres,
-        this.selectedSorting
-      );
+      try {
+        const response = await getOfficialWebtoonAll(
+          this.selectedGenres,
+          this.selectedSorting
+        );
 
-      if (response.status === 200) {
-        this.webtoons = {
-          monday: [],
-          tuesday: [],
-          wednesday: [],
-          thursday: [],
-          friday: [],
-          saturday: [],
-          sunday: [],
-        };
+        if (response.status === 200) {
+          this.webtoons = {
+            monday: [],
+            tuesday: [],
+            wednesday: [],
+            thursday: [],
+            friday: [],
+            saturday: [],
+            sunday: [],
+          };
 
-        for (const webtoon of response.data) {
-          switch (webtoon.dayOfWeek) {
-            case "MONDAY":
-              this.webtoons.monday.push(webtoon);
-              break;
-            case "TUESDAY":
-              this.webtoons.tuesday.push(webtoon);
-              break;
-            case "WEDNESDAY":
-              this.webtoons.wednesday.push(webtoon);
-              break;
-            case "THURSDAY":
-              this.webtoons.thursday.push(webtoon);
-              break;
-            case "FRIDAY":
-              this.webtoons.friday.push(webtoon);
-              break;
-            case "SATURDAY":
-              this.webtoons.saturday.push(webtoon);
-              break;
-            case "SUNDAY":
-              this.webtoons.sunday.push(webtoon);
-              break;
+          for (const webtoon of response.data) {
+            switch (webtoon.dayOfWeek) {
+              case "MONDAY":
+                this.webtoons.monday.push(webtoon);
+                break;
+              case "TUESDAY":
+                this.webtoons.tuesday.push(webtoon);
+                break;
+              case "WEDNESDAY":
+                this.webtoons.wednesday.push(webtoon);
+                break;
+              case "THURSDAY":
+                this.webtoons.thursday.push(webtoon);
+                break;
+              case "FRIDAY":
+                this.webtoons.friday.push(webtoon);
+                break;
+              case "SATURDAY":
+                this.webtoons.saturday.push(webtoon);
+                break;
+              case "SUNDAY":
+                this.webtoons.sunday.push(webtoon);
+                break;
+            }
           }
+          console.log(this.webtoons);
         }
-        console.log(this.webtoons);
+      } catch (error) {
+        console.log(error);
       }
     },
     fetchSelectedGenres() {

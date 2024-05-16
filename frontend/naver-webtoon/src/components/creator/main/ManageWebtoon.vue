@@ -4,11 +4,12 @@
 		<div class="content-wrap">
 
       <div v-for="(webtoon, index) in webtoons" class="webtoon-list">
-        <div class="thumbnail-wrap" @mouseover="mouseoverOnThumbnail(index)" @mouseleave="mouseleaveOnThumbnail(index)">
+        <div class="thumbnail-wrap" @mouseover="showLink(index)" @mouseleave="hideLink">
 					<img :src="require(`@/assets/image/${webtoon.posterStoreName}`)" class="cover-image">
-          <div class="cover-image-wrap" :class="{isBlind:!webtoon.showLinkToWebtoon}">
-          </div>
-          <router-link :to="{name: webtoon.serialType.toLowerCase()+'RoundList', params: {webtoonId: webtoon.webtoonId}}" class="link-to-webtoon-detail" :class="{isBlind:!webtoon.showLinkToWebtoon}">웹툰에서 보기 ↗</router-link>
+          <div class="cover-image-wrap" v-if='showLinkWebtoonIndex===index'></div>
+          <router-link :to="{name: webtoon.serialType.toLowerCase()+'RoundList', params: {webtoonId: webtoon.webtoonId}}" class="link-to-webtoon-detail" v-if='showLinkWebtoonIndex===index'>
+            웹툰에서 보기 ↗
+          </router-link>
 				</div>
 				<div class="webtoon-info">
 					<div>
@@ -43,6 +44,7 @@
 				</div>
       </div>
 
+      <!-- 새작품 등록 버튼 -->
 			<router-link :to="{name: 'createNewWebtoon'}">
 				<div class="create-new-webtoon-btn">
 					<div>
@@ -64,9 +66,8 @@ import { getWebtoonAllByMember } from "@/api/webtoon";
 export default {
   data() {
     return {
-      webtoons: [], //webtoonId, webtoonName, serialType, posterStoreName, totalCommentCount, showLinkToWebtoon, createdAt
-      showLinkToWebtoon: [],
-      test: true,
+      webtoons: [], //webtoonId, webtoonName, serialType, posterStoreName, totalCommentCount, createdAt
+      showLinkWebtoonIndex: "",
     };
   },
   mounted() {
@@ -76,24 +77,19 @@ export default {
     async fetchWebtoon() {
       try {
         const response = await getWebtoonAllByMember();
-        console.log(response.data);
-        this.setWebtoons(response.data);
+        console.log(response);
+        if (response.status === 200) {
+          this.webtoons = response.data;
+        }
       } catch (error) {
         console.log(error);
       }
     },
-    setWebtoons(responseData) {
-      for (let i = 0; i < responseData.length; i++) {
-        const webtoon = { ...responseData[i] };
-        webtoon.showLinkToWebtoon = false;
-        this.webtoons.push(webtoon);
-      }
+    showLink(index) {
+      this.showLinkWebtoonIndex = index;
     },
-    mouseoverOnThumbnail(index) {
-      this.webtoons[index].showLinkToWebtoon = true;
-    },
-    mouseleaveOnThumbnail(index) {
-      this.webtoons[index].showLinkToWebtoon = false;
+    hideLink() {
+      this.showLinkWebtoonIndex = "";
     },
   },
   filters: {
