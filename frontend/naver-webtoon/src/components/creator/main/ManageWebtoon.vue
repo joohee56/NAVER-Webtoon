@@ -45,7 +45,18 @@
       </div>
 
       <!-- 새작품 등록 버튼 -->
-			<router-link :to="{name: 'createNewWebtoon'}">
+			<router-link :to="{name: 'createNewOfficialWebtoon'}" v-if="loginUser.loginId=='joohee56'">
+				<div class="create-new-webtoon-btn">
+					<div>
+						<div class="icon-wrap">
+							<i class="fa-regular fa-pen-to-square"></i>
+						</div>
+						<p class="title">새 작품 등록</p>
+						<p>새로운 작품을 등록해보세요</p>
+					</div>
+				</div>
+			</router-link>
+      <router-link :to="{name: 'createNewWebtoon'}" v-else>
 				<div class="create-new-webtoon-btn">
 					<div>
 						<div class="icon-wrap">
@@ -62,6 +73,7 @@
 
 <script>
 import { getWebtoonAllByMember } from "@/api/webtoon";
+import { mapState } from "vuex";
 
 export default {
   data() {
@@ -72,6 +84,9 @@ export default {
   },
   mounted() {
     this.fetchWebtoon();
+  },
+  computed: {
+    ...mapState("memberStore", ["loginUser"]),
   },
   methods: {
     async fetchWebtoon() {
