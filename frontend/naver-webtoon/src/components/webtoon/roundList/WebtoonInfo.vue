@@ -11,14 +11,15 @@
         <img :src="require(`@/assets/image/${webtoonInfo.profileStoreFileName}`)" class="profile-image" v-if="webtoonInfo.profileStoreFileName !== null">
         <div class="author-name">{{webtoonInfo.memberName}}</div><div>· 글/그림</div>
         <div v-if="webtoonInfo.dayOfWeek" class="day-of-week"> | {{webtoonInfo.dayOfWeek | dayOfWeekTitle}}웹툰 </div>
-        <div>· {{webtoonInfo.ageLimit}}세 이용가</div>
+        <div v-if="webtoonInfo.ageLimit > 0">· {{webtoonInfo.ageLimit}}세 이용가</div>
+        <div v-else>· 전체연령가</div>
         <div v-if="!webtoonInfo.dayOfWeek"> | 도전만화 ·</div>
         <div class="genre-wrap">
           <div v-if="!webtoonInfo.dayOfWeek" v-for="genre in webtoonInfo.genres">{{genre.title}}</div>
         </div>
       </div>
       <div class="summary">
-        <div class="overflow-hidden" v-html="webtoonInfo.summary"></div>
+        <div v-html="webtoonInfo.summary"></div>
       </div>
       <div class="tag-wrap">
         <span v-for="genre in webtoonInfo.genres" class="tag">#{{genre.title}}</span>
@@ -75,6 +76,7 @@ export default {
   },
   async mounted() {
     await this.fetchWebtoonInfo();
+    this.moveToTop();
     if (this.webtoonInfo.dayOfWeek) {
       this.SET_CATEGORY_ACTIVE(0);
       this.SET_DAY_OF_WEEK_ACTIVE(this.webtoonInfo.dayOfWeek);
@@ -100,6 +102,11 @@ export default {
         );
       }
     },
+    moveToTop() {
+      window.scrollTo({
+        top: 0,
+      });
+    },
   },
 };
 </script>
@@ -119,6 +126,7 @@ export default {
 .webtoon-info {
   margin-left: 20px;
   font-family: AppleSDGothicNeoM;
+  width: 70rem;
 }
 .webtoon-name {
   font-family: AppleSDGothicNeoB;
@@ -156,7 +164,7 @@ export default {
 }
 /* 줄거리 */
 .summary {
-  font-size: 18px;
+  font-size: 20px;
   margin-top: 15px;
 }
 .overflow-hidden {
@@ -173,7 +181,7 @@ export default {
   line-height: 31px;
   display: inline-block;
   border-radius: 4px;
-  font-size: 15px;
+  font-size: 18px;
   margin: 0 5px 5px 0;
   color: #666;
   font-family: AppleSDGothicNeoSB;
