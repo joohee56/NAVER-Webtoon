@@ -109,7 +109,7 @@ export default {
 .title {
   margin: 0;
   font-family: AppleSDGothicNeoB;
-  font-size: 23px;
+  font-size: 25px;
 }
 .filter-wrap {
   margin-left: 20px;

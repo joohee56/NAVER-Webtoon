@@ -27,9 +27,9 @@ export default {
 <style scoped>
 .webtoon-wrap {
   display: grid;
-  grid-template-columns: repeat(7, minmax(150px, 1fr));
-  column-gap: 15px;
-  row-gap: 20px;
+  grid-template-columns: repeat(6, minmax(130px, 1fr));
+  column-gap: 30px;
+  row-gap: 30px;
   width: 100%;
   margin-bottom: 180px;
 }
@@ -40,6 +40,7 @@ export default {
 }
 .webtoon-name-wrap {
   display: block;
+  margin-top: 8px;
 }
 .webtoon .up {
   color: #ff4d56;
@@ -53,8 +54,8 @@ export default {
   margin-bottom: 5px;
 }
 .webtoon .title {
-  font-family: AppleSDGothicNeoM;
-  font-size: 15px;
+  font-family: AppleSDGothicNeoB;
+  font-size: 18px;
   margin-left: 5px;
 }
 .webtoon .title:hover {
