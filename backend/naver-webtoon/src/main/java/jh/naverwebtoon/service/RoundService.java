@@ -1,8 +1,8 @@
 package jh.naverwebtoon.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import jh.naverwebtoon.db.domain.Manuscript;
 import jh.naverwebtoon.db.domain.MergeManuscript;
 import jh.naverwebtoon.db.domain.Round;
 import jh.naverwebtoon.db.domain.RoundThumbnail;
@@ -19,12 +19,14 @@ import jh.naverwebtoon.dto.response.FindRoundsManageRes;
 import jh.naverwebtoon.dto.response.RoundListDto;
 import jh.naverwebtoon.util.FileStore;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
+@Slf4j
 public class RoundService {
     private final RoundRepository roundRepository;
     private final RoundLikeRepository roundLikeRepository;
@@ -70,17 +72,21 @@ public class RoundService {
     @Transactional
     public Long save(Long memberId, CreateRoundReq createRoundReq) {
         //웹툰에 관한 memberId 권한 체크
-        if (webtoonRepository.findOneWithMember(createRoundReq.getWebtoonId()).getMember().getId() != memberId) {
+        Long authorMemberId = webtoonRepository.findOneWithMember(createRoundReq.getWebtoonId()).getMember().getId();
+        if (!authorMemberId.equals(memberId)) {
+            log.info("reqMemberId = {}, authorMemberId = {}", memberId, authorMemberId);
             throw new IllegalStateException("잘못된 접근입니다.");
         }
 
         Webtoon webtoon = webtoonRepository.findOneWithMember(createRoundReq.getWebtoonId());
         RoundThumbnail roundThumbnail = RoundThumbnail.create(fileStore.storeFile(createRoundReq.getThumbnail()));
+        /* 파일이 너무 많이 생성되는 것을 방지하기 위해 보류
         List<Manuscript> manuscripts = createRoundReq.getManuscripts().stream()
                 .map(multipartFile -> Manuscript.create(fileStore.storeFile(multipartFile)))
                 .collect(Collectors.toList());
+         */
         MergeManuscript mergeManuscript = MergeManuscript.create(fileStore.storeFile(createRoundReq.getMergeManuscript()));
-        Round round = Round.create(createRoundReq, webtoon, roundThumbnail, manuscripts, mergeManuscript);
+        Round round = Round.create(createRoundReq, webtoon, roundThumbnail, new ArrayList<>(), mergeManuscript);
         return roundRepository.save(round);
     }
 
