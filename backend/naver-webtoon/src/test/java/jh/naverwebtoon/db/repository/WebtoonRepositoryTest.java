@@ -3,6 +3,7 @@ package jh.naverwebtoon.db.repository;
 import java.util.List;
 import jh.naverwebtoon.db.domain.enums.WebtoonType;
 import jh.naverwebtoon.db.domain.webtoon.Webtoon;
+import jh.naverwebtoon.dto.response.FindCreateRoundInfoRes;
 import jh.naverwebtoon.dto.response.FindWebtoonDetailRes;
 import jh.naverwebtoon.dto.response.FindWebtoonsByMemberRes;
 import jh.naverwebtoon.dto.response.SearchWebtoonDto;
@@ -55,6 +56,14 @@ class WebtoonRepositoryTest {
     void 검색_결과_횟수_조회() {
         Long count = webtoonRepository.findSearchCount("세레나", WebtoonType.OFFICIAL);
         System.out.println(count);
+    }
+
+    @Test
+    void 회차_등록시_회원별_웹툰_정보_조회() {
+        List<FindCreateRoundInfoRes> webtoons = webtoonRepository.findAllByMemberWithMaxRoundNumber(Long.valueOf(329));
+        for(FindCreateRoundInfoRes webtoon : webtoons) {
+            System.out.println(webtoon.toString());
+        }
     }
 
 

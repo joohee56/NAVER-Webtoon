@@ -5,6 +5,7 @@ import jakarta.persistence.PersistenceContext;
 import java.util.List;
 import jh.naverwebtoon.db.domain.enums.WebtoonType;
 import jh.naverwebtoon.db.domain.webtoon.Webtoon;
+import jh.naverwebtoon.dto.response.FindCreateRoundInfoRes;
 import jh.naverwebtoon.dto.response.FindWebtoonsByMemberRes;
 import jh.naverwebtoon.dto.response.SearchWebtoonDto;
 import lombok.RequiredArgsConstructor;
@@ -70,14 +71,13 @@ public class WebtoonRepository {
     }
 
     /**
-     * 회차 등록 시 전체 웹툰 조회
+     * 회차 등록 시 회원별 웹툰 정보 조회
      */
-    public List<Object[]> findAllByMemberWithMaxRoundNumber(Long memberId) {
+    public List<FindCreateRoundInfoRes> findAllByMemberWithMaxRoundNumber(Long memberId) {
         return em.createQuery(
-                        "select distinct w.id, w.name, (select max(r.roundNumber) from Round r where r.webtoon = w)"
+                        "select new jh.naverwebtoon.dto.response.FindCreateRoundInfoRes(w.id, w.name, (select max(r.roundNumber) from Round r where r.webtoon = w))"
                                 + " from Webtoon w"
-                                + " cross join Round r"
-                                + " where w.member.id = :memberId")
+                                + " where w.member.id = :memberId", FindCreateRoundInfoRes.class)
                 .setParameter("memberId", memberId)
                 .getResultList();
     }

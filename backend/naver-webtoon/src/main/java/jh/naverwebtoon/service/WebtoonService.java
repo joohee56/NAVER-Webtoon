@@ -1,6 +1,5 @@
 package jh.naverwebtoon.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import jh.naverwebtoon.db.domain.Member;
 import jh.naverwebtoon.db.domain.WebtoonThumbnail;
@@ -61,12 +60,7 @@ public class WebtoonService {
     }
 
     public List<FindCreateRoundInfoRes> findCreateRoundInfo(Long memberId) {
-        List<FindCreateRoundInfoRes> res = new ArrayList<>();
-        List<Object[]> webtoons = webtoonRepository.findAllByMemberWithMaxRoundNumber(memberId);
-        for (Object[] webtoon : webtoons) {
-            res.add(FindCreateRoundInfoRes.create((Long) webtoon[0], (String) webtoon[1], webtoon[2]));
-        }
-        return res;
+        return webtoonRepository.findAllByMemberWithMaxRoundNumber(memberId);
     }
 
     public FindWebtoonDetailRes findWebtoonDetail(Long webtoonId) {

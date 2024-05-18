@@ -8,11 +8,9 @@ public class FindCreateRoundInfoRes {
     private String webtoonName;
     private Long roundNumber;
 
-    public static FindCreateRoundInfoRes create(Long webtoonId, String webtoonName, Object roundNumber) {
-        FindCreateRoundInfoRes res = new FindCreateRoundInfoRes();
-        res.webtoonId = webtoonId;
-        res.webtoonName = webtoonName;
-        res.roundNumber = roundNumber == null ? 1 : (Long) roundNumber + 1;
-        return res;
+    public FindCreateRoundInfoRes(Long webtoonId, String webtoonName, Long roundNumber) {
+        this.webtoonId = webtoonId;
+        this.webtoonName = webtoonName;
+        this.roundNumber = roundNumber == null ? 1 : roundNumber + 1;
     }
 }
