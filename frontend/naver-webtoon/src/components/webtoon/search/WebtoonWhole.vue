@@ -92,7 +92,7 @@ export default {
       this.paging.totalPageCount =
         this.webtoons.length == 0
           ? 1
-          : Math.ceil(this.webtoons.length / this.paging.pageLimit);
+          : Math.ceil(this.webtoons.length / this.paging.webtoonLimit);
     },
     setPageBtnDisabled() {
       if (this.paging.startPage === 1) {
