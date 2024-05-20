@@ -97,7 +97,7 @@ public class RoundService {
         Webtoon webtoon = webtoonRepository.findOneWithThumbnail(webtoonId);
         List<FindRoundsManageRes> rounds = roundRepository.findAllByWebtoonWithManage(webtoonId, offset, limit);
 
-        Long totalRoundCount = roundRepository.findMaxRoundNumberByWebtoonId(webtoonId);  //총 회차 갯수
+        Long totalRoundCount = roundRepository.findTotalCountByWebtoon(webtoonId);  //총 회차 갯수
         int pageCount = totalRoundCount==0 ? 1 : (int) Math.ceil((double)totalRoundCount / limit);  //총 페이지 갯수
 
         return FindRoundManageInfoRes.create(webtoon, rounds, pageCount);
