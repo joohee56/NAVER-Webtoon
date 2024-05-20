@@ -238,7 +238,7 @@ export default {
         mergeManuscript: "원고",
         authorNote: "작가의 말",
       }, 
-      webtoons: [], //roundNumber, webtoonId, webtoonName
+      webtoons: [], //roundNumber, webtoonId, webtoonName, webtoonType
       selectedWebtoonIndex: "0",
       roundNumber: "",
       thumbnailPreview: "",
@@ -522,7 +522,7 @@ export default {
     },
     moveToManageRoundView() {
       this.showUploadRoundModal = false;
-      this.$router.push({name: 'manageRound', params: {webtoonId: this.webtoons[this.selectedWebtoonIndex].webtoonId}});
+      this.$router.push({name: 'manageRound', params: {webtoonId: this.webtoons[this.selectedWebtoonIndex].webtoonId, webtoonType: this.webtoons[this.selectedWebtoonIndex].webtoonType}});
     },
     changeManuscriptPreviewToFile() {
       var blobBin = atob(this.mergeImagePreview.split(",")[1]); // base64 데이터 디코딩
