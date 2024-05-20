@@ -75,7 +75,7 @@ public class WebtoonRepository {
      */
     public List<FindCreateRoundInfoRes> findAllByMemberWithMaxRoundNumber(Long memberId) {
         return em.createQuery(
-                        "select new jh.naverwebtoon.dto.response.FindCreateRoundInfoRes(w.id, w.name, (select max(r.roundNumber) from Round r where r.webtoon = w))"
+                        "select new jh.naverwebtoon.dto.response.FindCreateRoundInfoRes(w.id, w.name, w.webtoonType, (select max(r.roundNumber) from Round r where r.webtoon = w))"
                                 + " from Webtoon w"
                                 + " where w.member.id = :memberId", FindCreateRoundInfoRes.class)
                 .setParameter("memberId", memberId)
