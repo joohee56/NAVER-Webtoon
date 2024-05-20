@@ -60,12 +60,12 @@ public class MemberService {
     @Transactional
     public String changeProfileImage(Long id, MultipartFile profileImage) {
         Member member = memberRepository.findOne(id);
-        if (member.getProfileImage() != null) {
+        if (member.getProfileImage() != null && !member.getProfileImage().getIsDefaultProfileImage()) { //프로필이미지가 있고, 기본 이미지가 아니라면
             String storeFileName = member.getProfileImage().getUploadImage().getStoreFileName();
             fileStore.deleteFile(storeFileName);  //기존의 프로필 이미지 삭제
         }
         UploadImage uploadImage = fileStore.storeFile(profileImage);
-        member.changeProfileImage(ProfileImage.createProfileImage(uploadImage));
+        member.changeProfileImage(ProfileImage.createProfileImage(uploadImage, false));
         return member.getProfileImage().getUploadImage().getStoreFileName();
     }
 
@@ -75,7 +75,7 @@ public class MemberService {
     @Transactional
     public void deleteProfileImage(Long id) {
         Member member = memberRepository.findOne(id);
-        if (member.getProfileImage() != null) {
+        if (member.getProfileImage() != null && !member.getProfileImage().getIsDefaultProfileImage()) {
             String storeFileName = member.getProfileImage().getUploadImage().getStoreFileName();
             fileStore.deleteFile(storeFileName);  //기존의 프로필 이미지 삭제
         }

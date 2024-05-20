@@ -103,6 +103,9 @@ public class MemberController {
         return storeFileName;
     }
 
+    /**
+     * 프로필 이미지 삭제
+     */
     @Auth
     @DeleteMapping("/profileImage")
     public void deleteProfileImage(@Login Long id) {

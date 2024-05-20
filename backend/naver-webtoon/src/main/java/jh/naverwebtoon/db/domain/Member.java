@@ -18,6 +18,7 @@ import jh.naverwebtoon.db.domain.enums.CountryResidence;
 import jh.naverwebtoon.db.domain.enums.Gender;
 import jh.naverwebtoon.dto.request.EditMemberReq;
 import jh.naverwebtoon.dto.request.JoinMemberReq;
+import jh.naverwebtoon.web.MemberConst;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -64,6 +65,7 @@ public class Member extends BaseEntity {
         member.gender = joinMemberReq.getGender();
         member.countryResidence = joinMemberReq.getCountryResidence();
         member.phoneNumber = joinMemberReq.getPhoneNumber();
+        member.profileImage = ProfileImage.createProfileImage(new UploadImage(MemberConst.DEFAULT_PROFILE_IMAGE_FILE_NAME, MemberConst.DEFAULT_PROFILE_IMAGE_FILE_NAME), true);
         return member;
     }
 

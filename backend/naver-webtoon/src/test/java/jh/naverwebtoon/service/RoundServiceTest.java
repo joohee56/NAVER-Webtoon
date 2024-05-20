@@ -1,6 +1,7 @@
 package jh.naverwebtoon.service;
 
 import jh.naverwebtoon.dto.request.CreateRoundReq;
+import jh.naverwebtoon.dto.response.FindRoundDetailRes;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,5 +21,11 @@ class RoundServiceTest {
         Assertions.assertThatThrownBy(()->roundService.save(memberId, createRoundReq))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("잘못된 접근입니다.");
+    }
+
+    @Test
+    void 회차_디테일_정보_조회() {
+        FindRoundDetailRes roundDetail = roundService.findOneDetail(null, Long.valueOf(52));
+        System.out.println(roundDetail.toString());
     }
 }

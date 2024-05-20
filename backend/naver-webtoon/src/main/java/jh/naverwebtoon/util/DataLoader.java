@@ -651,7 +651,7 @@ public class DataLoader implements ApplicationRunner {
         joinMemberReq.setPhoneNumber(phoneNumber);
         Member member = Member.createMember(joinMemberReq);
 
-        ProfileImage profileImage = ProfileImage.createProfileImage(new UploadImage(storeFileName, storeFileName));
+        ProfileImage profileImage = ProfileImage.createProfileImage(new UploadImage(storeFileName, storeFileName), false);
         member.changeProfileImage(profileImage);
         em.persist(member);
     }

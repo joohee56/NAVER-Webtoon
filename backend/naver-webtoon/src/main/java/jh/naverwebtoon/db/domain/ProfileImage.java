@@ -19,10 +19,12 @@ public class ProfileImage extends BaseEntity {
     @Embedded
     private UploadImage uploadImage;
 
-    public static ProfileImage createProfileImage(UploadImage uploadImage) {
+    private Boolean isDefaultProfileImage;
+
+    public static ProfileImage createProfileImage(UploadImage uploadImage, Boolean isDefaultProfileImage) {
         ProfileImage profileImage = new ProfileImage();
         profileImage.uploadImage = uploadImage;
+        profileImage.isDefaultProfileImage = isDefaultProfileImage;
         return profileImage;
     }
-
 }
