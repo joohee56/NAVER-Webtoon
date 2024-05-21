@@ -14,7 +14,11 @@ const memberStoreCookie = {
       state.loginUser.userName = res.userName;
     },
     SET_PROFILE_IMAGE(state, profileImage) {
-      state.loginUser.profileImage = profileImage;
+      if (profileImage === null) {
+        state.loginUser.profileImage = "default-profile-image.png";
+      } else {
+        state.loginUser.profileImage = profileImage;
+      }
       if (profileImage === "default-profile-image.png") {
         state.isProfileImageNull = true;
       } else {

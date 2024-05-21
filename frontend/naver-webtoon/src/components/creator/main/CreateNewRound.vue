@@ -377,7 +377,7 @@ export default {
     async mergeImages() {
       var canvas = document.createElement("canvas");
       canvas.width = 690; //가로 690px 고정
-      await this.calculateHeight();
+      await this.calculateHeight();  //원고 전체 높이 계산
       canvas.height = this.canvasHeight;
 
       var context = canvas.getContext("2d");
@@ -387,11 +387,11 @@ export default {
       for(const file of this.round.manuscripts) {
         const image = await this.changeToImage(file);
         context.drawImage(image, 0, offsetY);
-        offsetY += image.height
+        offsetY += image.height-2;
       }
 
       // 합쳐진 이미지 보여주기
-      const dataURI = canvas.toDataURL("image/jpeg");
+      const dataURI = canvas.toDataURL("image/png");
       this.mergeImagePreview = dataURI;
     },
     async calculateHeight() {
@@ -402,8 +402,7 @@ export default {
       }
     },
     async changeToImage(file) {
-      //읽기
-      var reader = new FileReader();
+      var reader = new FileReader();  //읽기
       await new Promise((resolve) => {
         reader.readAsDataURL(file); //DataUrl 타입으로 읽기
         reader.addEventListener('load', ()=>{
@@ -801,6 +800,7 @@ ul {
   background-color: #00dc64;
   border: none;
   margin-left: auto;
+  cursor: pointer;
 }
 .mergeFile-priview-btn {
   font-family: AppleSDGothicNeoSB;
@@ -813,6 +813,7 @@ ul {
   margin-top: 10px;
   margin-left: auto;
   display: block;
+  cursor: pointer;
 }
 
 .preview-img {
