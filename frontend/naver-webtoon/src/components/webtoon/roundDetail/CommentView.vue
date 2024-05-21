@@ -423,6 +423,7 @@ export default {
   font-size: 17px;
   margin-top: 15px;
   margin-right: 20px;
+  cursor: pointer;
 }
 
 /* 댓글 리스트  */
