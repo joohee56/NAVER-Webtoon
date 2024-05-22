@@ -8,7 +8,7 @@
 			<ul>
 				<li class="item-row">
 					<p>작품명</p>
-					<select class="webtoon-name-select" @change="changeWebtoon" v-model="selectedWebtoonIndex">
+					<select class="webtoon-name-select" @change="setSelectedWebtoonRoundNumber" v-model="selectedWebtoonIndex">
 						<option v-for="(webtoon, index) in webtoons" :value="index">{{webtoon.webtoonName}}</option>
 					</select>
 				</li>
@@ -265,6 +265,7 @@ export default {
   async mounted() {
     await this.fetchWebtoonInfo();
     this.setSelectedWebtoonIndex();
+    this.setSelectedWebtoonRoundNumber();
   },
   watch: {
     thumbnailPreview: function (val) {
@@ -293,7 +294,7 @@ export default {
         }
       }
     },
-    changeWebtoon() {
+    setSelectedWebtoonRoundNumber() {
       this.roundNumber = this.webtoons[this.selectedWebtoonIndex].roundNumber;
     },
     changeThumbnail() {
