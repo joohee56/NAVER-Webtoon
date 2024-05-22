@@ -239,7 +239,7 @@ export default {
         authorNote: "작가의 말",
       }, 
       webtoons: [], //roundNumber, webtoonId, webtoonName, webtoonType
-      selectedWebtoonIndex: "0",
+      selectedWebtoonIndex: 0,
       roundNumber: "",
       thumbnailPreview: "",
       isThumbnailSelect: false,
@@ -262,8 +262,9 @@ export default {
     UploadDone,
     CancleConfirm
   },
-  mounted() {
-    this.fetchWebtoonInfo();
+  async mounted() {
+    await this.fetchWebtoonInfo();
+    this.setSelectedWebtoonIndex();
   },
   watch: {
     thumbnailPreview: function (val) {
@@ -281,6 +282,15 @@ export default {
         }
       } catch (error) {
         console.log(error);
+      }
+    },
+    setSelectedWebtoonIndex() {
+      const webtoonId = this.$route.params.webtoonId;
+      for(let i=0; i<this.webtoons.length; i++) {
+        if(this.webtoons[i].webtoonId == webtoonId) {
+          this.selectedWebtoonIndex = i;
+          break;
+        }
       }
     },
     changeWebtoon() {

@@ -200,7 +200,7 @@ const routes = [
         component: CreateNewOfficialWebtoon,
       },
       {
-        path: "/creators/manage/new/round",
+        path: "/creators/manage/new/round/:webtoonId",
         name: "createNewRound",
         beforeEnter: checkLogin,
         component: CreateNewRound,
