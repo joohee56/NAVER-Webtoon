@@ -15,7 +15,7 @@
 				<router-link :to="{name: webtoonType+'RoundDetail', params: {webtoonId: `${$route.params.webtoonId}`, roundId: round.roundId}}">
 					<img class="thumbnail" :src="require(`@/assets/image/${round.thumbnail}`)">
 					<div class="detail-wrap">
-						<div class="webtoon-title">{{round.roundNumber}}화 {{round.title}}</div>
+						<div class="webtoon-title">{{round.title}}</div>
 						<div class="etc">
 							<div><i class="fa-solid fa-heart"></i> {{round.totalLikeCount}}</div>
 							<div> {{round.createdAt}}</div>

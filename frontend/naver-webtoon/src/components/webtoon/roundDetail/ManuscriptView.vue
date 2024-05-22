@@ -7,7 +7,7 @@
         <router-link :to="{name: webtoonType+'RoundList', params: {webtoonId : this.webtoonId}}"><i class="fa-solid fa-angle-left"></i></router-link>
         <router-link :to="{name: webtoonType+'RoundList', params: {webtoonId : this.webtoonId}}">{{roundDetail.webtoonName}}</router-link>
         <span class="separator"></span>
-        <span>{{roundDetail.roundNumber}}화 {{roundDetail.roundTitle}}</span>
+        <span>{{roundDetail.roundTitle}}</span>
         <span @click="moveBeforeRound" class="before-round">
           <i class="fa-solid fa-caret-left"></i>
           <span> 이전화</span>
@@ -58,7 +58,7 @@
         <div v-for="round in previewRounds" class="preview-round-item">
           <router-link :to="{name: webtoonType+'RoundDetail', params: {weboonId: `${roundDetail.weboonId}`, roundId: `${round.roundId}`}}" :class={active:isNowRound(round.roundNumber)}>
             <img class="round-thumbnail" :src="require(`@/assets/image/${round.thumbnail}`)">
-            <p class="round-title overflow-hidden">{{round.roundNumber}}화 {{round.title}}</p>
+            <p class="round-title overflow-hidden">{{round.title}}</p>
           </router-link>
         </div>
       </div>
