@@ -26,7 +26,7 @@
 				<li class="item-row">
 					<p>회차명</p>
 					<div class="input-text-wrap roundTitle">
-						<input type="text" placeholder="회차명을 입력해 주세요." size="30" v-model="round.roundTitle" :class="{violation: round.roundTitle.length>inputLimit.roundTitle}">
+						<input type="text" placeholder="회차명을 입력해 주세요." size="35" v-model="round.roundTitle" :class="{violation: round.roundTitle.length>inputLimit.roundTitle}">
             <span class="input-letter-count">{{round.roundTitle.length}} / {{inputLimit.roundTitle}}</span>
 					</div>				
 				</li>
@@ -35,7 +35,6 @@
 
 		<div class="item-box section2">
 			<ul>
-
 				<li class="item-row">
 					<p>대표 이미지</p>
 					<div>
@@ -59,7 +58,6 @@
 									<input type="file" id="thumbnail" ref="thumbnail" @change="changeThumbnail" hidden>
 								</div>
 							</div>
-
 						</div>
 					</div>
 				</li>
@@ -106,13 +104,11 @@
               <button class="mergeFile-priview-btn" @click="showMergeManuscript">전체 미리보기</button>
 						</div>
 					</div>
-
 				</li>
-
 				<li class="item-row">
 					<p>작가의 말</p>
 					<div class="input-text-wrap author-note">
-						<input type="text" placeholder="작가의 말을 입력해 주세요." v-model="round.authorNote" :class="{violation: round.authorNote.length>inputLimit.authorNote}"></input>
+						<textarea placeholder="작가의 말을 입력해 주세요." v-model="round.authorNote" :class="{violation: round.authorNote.length>inputLimit.authorNote}"></textarea>
             <span class="input-letter-count">{{round.authorNote.length}} / {{inputLimit.authorNote}}</span>
 					</div>
 				</li>
@@ -605,17 +601,17 @@ ul {
   display: inline-block;
   padding: 10px 35px;
 }
-
-.item-row input[type="text"] {
+.item-row input[type="text"], .item-row textarea {
   padding: 13px 15px;
   border: 1px solid #e0e0e0;
   border-radius: 3px;
+  font-family: AppleSDGothicNeoR;
 }
 .author-note {
   height: 70px;
   width: 100%;
 }
-.author-note input {
+.author-note textarea {
   width: 88%;
   height: 25px;
 }
@@ -633,7 +629,7 @@ ul {
   position: relative;
 }
 .input-text-wrap.roundTitle {
-  width: 330px;
+  width: 21rem;
 }
 .roundTitle .input-letter-count {
   position: absolute;
@@ -884,6 +880,7 @@ ul {
   align-items: center;
   border: 1px solid rgba(0, 0, 0, 0.06);
   margin-left: 8px;
+  cursor: pointer;
 }
 .btn-wrap .cancel {
   margin-left: auto;
@@ -925,6 +922,7 @@ ul {
   align-items: center;
   border: 1px solid rgba(0, 0, 0, 0.06);
   margin-left: 8px;
+  cursor: pointer;
 }
 .modal-btn .submit {
   color: white;

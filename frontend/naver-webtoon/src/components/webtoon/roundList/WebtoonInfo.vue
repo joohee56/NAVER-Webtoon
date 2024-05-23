@@ -98,7 +98,7 @@ export default {
         this.webtoonInfo = response.data;
         this.webtoonInfo.summary = this.webtoonInfo.summary.replaceAll(
           "\n",
-          "<br />"
+          "<br/>"
         );
       }
     },

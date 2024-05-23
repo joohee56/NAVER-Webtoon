@@ -73,7 +73,7 @@
         <span style="color: #999">· 글/그림</span>
       </div>
       <div class="author-note">
-        {{roundDetail.authorNote}}
+        <div v-html="roundDetail.authorNote"></div>
       </div>
     </div>
 
@@ -155,6 +155,10 @@ export default {
         console.log(response);
         if (response.status === 200) {
           this.roundDetail = response.data;
+          this.roundDetail.authorNote = this.roundDetail.authorNote.replaceAll(
+            "\n",
+            "<br/>"
+          );
         }
       } catch (error) {
         console.log(error);
