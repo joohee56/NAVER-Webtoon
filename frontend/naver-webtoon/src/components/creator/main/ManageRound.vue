@@ -190,6 +190,7 @@ export default {
   padding: 5px 15px;
   font-family: AppleSDGothicNeoM;
   line-height: 25px;
+  width: 37rem;
 }
 .webtoon-desription .title {
   font-family: AppleSDGothicNeoB;
