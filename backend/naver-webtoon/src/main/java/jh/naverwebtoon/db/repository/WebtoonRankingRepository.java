@@ -34,10 +34,9 @@ public class WebtoonRankingRepository {
     }
 
     /**
-     * 웹툰들의 최근 10회차 중 좋아요 누적 수가 가장 높은 10개의 웹툰 리스트 조회
+     * 웹툰들의 최근 10회차 중 좋아요 누적 수가 가장 높은 14개의 웹툰 리스트 조회
      */
     public List<FindNewRanking> findRankingsByRecentRounds(int offset, int limit, WebtoonType webtoonType) {
-
         return em.createQuery("select distinct new jh.naverwebtoon.dto.response.FindNewRanking(w.id"
                         + ", (select count(rl) as likeCount from RoundLike rl where rl.round.id in (select roundId from (select r.id as roundId from Round r where r.webtoon=w order by r.createdAt desc limit 14) as sub)) as TotalLikeCount"
                         + ") from Webtoon w"

@@ -1,7 +1,7 @@
 package jh.naverwebtoon.db.domain.enums;
 
 public enum RankingEnum {
-    FIRST, SECOND, THIRD, FOURTH, FIFTH, SIXTH, SEVENTH, EIGHTH, NINTH, TENTH, NONE;
+    FIRST, SECOND, THIRD, FOURTH, FIFTH, SIXTH, SEVENTH, EIGHTH, NINTH, TENTH, ELEVENTH, TWELFTH, THIRTEENTH, FOURTEENTH, NONE;
 
     public static RankingEnum create(int ranking) {
         switch(ranking) {
@@ -25,6 +25,14 @@ public enum RankingEnum {
                 return RankingEnum.NINTH;
             } case 10: {
                 return RankingEnum.TENTH;
+            } case 11: {
+                return RankingEnum.ELEVENTH;
+            } case 12: {
+                return RankingEnum.TWELFTH;
+            } case 13: {
+                return RankingEnum.THIRTEENTH;
+            } case 14: {
+                return RankingEnum.FOURTEENTH;
             }
         }
 
