@@ -108,7 +108,7 @@ export default {
       }
 
       if (
-        this.paging.startPage + this.paging.pageLimit >=
+        this.paging.startPage + this.paging.pageLimit >
         this.paging.totalPageCount
       ) {
         this.paging.isNextPageBtnDisabled = true;

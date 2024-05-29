@@ -119,7 +119,6 @@ export default {
 .manage-webtoon-container {
   padding: 30px 30px;
   min-height: 100vh;
-  min-width: 100vh;
 }
 .subject {
   font-family: AppleSDGothicNeoSB;
