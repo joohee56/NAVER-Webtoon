@@ -1,9 +1,9 @@
 <template lang="ko">
-	<div class="container">
+	<div>
 		<ToolBar></ToolBar>
 		<div class="main-content">
 			<NavBar></NavBar>
-			<router-view></router-view>
+			<router-view class="content"></router-view>
 		</div>
 	</div>
 </template>
@@ -21,10 +21,11 @@ export default {
 </script>
 
 <style scoped>
-.container {
-  background-color: #f6f6f6;
-}
 .main-content {
   display: flex;
+  height: 100%;
+}
+.content {
+  background-color: #f6f6f6;
 }
 </style>

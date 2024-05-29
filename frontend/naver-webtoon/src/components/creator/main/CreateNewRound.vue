@@ -549,6 +549,8 @@ export default {
 .container {
   padding: 30px 30px;
   width: 60rem;
+  background-color: #f6f6f6;
+  min-height: 100vh;
 }
 .subject {
   font-family: AppleSDGothicNeoSB;
