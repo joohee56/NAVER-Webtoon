@@ -1,6 +1,5 @@
-# Naver-Webtoon
-<img src="https://github.com/joohee56/Naver-Webtoon/assets/83942393/1e8027e1-2b5e-4673-9577-4bcb98c89622" width="70px"></br>
-네이버 웹툰 리메이크   
+# Naver-Webtoon <img src="https://github.com/joohee56/Naver-Webtoon/assets/83942393/1e8027e1-2b5e-4673-9577-4bcb98c89622" width="60px"></br>
+네이버 웹툰   
 </br>
 
 ## 제작 목적
