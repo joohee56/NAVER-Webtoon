@@ -14,4 +14,5 @@
 </br>
 
 2. 작가의 웹툰 등록
-![image](https://github.com/joohee56/Naver-Webtoon/assets/83942393/90ecb613-cbee-479b-a958-3c72b167edf8)
+![image](https://github.com/joohee56/Naver-Webtoon/assets/83942393/f1ad6e8c-fa62-46d8-b139-1fb9d3e97670)
+
