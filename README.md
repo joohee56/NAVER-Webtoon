@@ -10,7 +10,7 @@
 
 ## 사용자 주요 유스케이스
 1. 일반 유저의 웹툰 관람
-![image](https://github.com/joohee56/Naver-Webtoon/assets/83942393/31bbcfd3-c9ac-43e9-b01c-2c37936a2b69)
+![image](https://github.com/joohee56/Naver-Webtoon/assets/83942393/8bcb518e-7e38-4ec9-889a-992a53403381)
 </br>
 
 2. 작가의 웹툰 등록
