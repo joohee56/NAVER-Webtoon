@@ -151,6 +151,10 @@ export default {
         console.log(error);
       }
     },
+    initCommentOffset() {
+      this.offset = 0;
+      this.limit = 6;
+    },
     async fetchReply(commentId) {
       try {
         const response = await getReply(commentId);
@@ -180,6 +184,7 @@ export default {
         const response = await postComment(comment);
         console.log(response);
         if (response.status === 200) {
+          this.initCommentOffset();
           this.fetchComments();
           this.content = "";
         } else if (response.status === 400) {

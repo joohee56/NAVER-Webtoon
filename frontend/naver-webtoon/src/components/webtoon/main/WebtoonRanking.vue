@@ -33,7 +33,7 @@
                   <i class="fa-solid fa-play down" v-if="ranking.rankingStatus==='down'"></i>
                   <i class="fa-solid fa-minus" v-if="ranking.rankingStatus==='unchanging'"></i>
                 </div>
-                <div class="ranking-num">{{ranking.rankingNum}}</div>
+                <div class="ranking-num">{{ranking.rankingNo}}</div>
               </div>
             </div>
             
@@ -70,7 +70,7 @@ import { getWebtoonRanking } from "@/api/webtoon";
 export default {
   data() {
     return {
-      rankings: [], //webtoonId, webtoonName, thumbnail, webtoonType, totalLikeCount, rankingStatus, genres, rankingNum
+      rankings: [], //webtoonId, webtoonName, thumbnail, webtoonType, totalLikeCount, rankingStatus, genres, rankingNo
       updatedAt: "",
       rankingStartIndex: "",
       rankingLimit: 7,

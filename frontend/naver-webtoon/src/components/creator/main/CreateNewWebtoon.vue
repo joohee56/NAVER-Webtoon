@@ -162,7 +162,8 @@
 									<div :class="{blind:this.previewPoster!==null}">
 										<em>480 x 623</em>
 										<label class="image-select-btn" for="poster">파일 선택</label>
-										<input type="file" id="poster" ref="poster" accept=".jpg, .jpeg" @change="selectPosterImg" hidden>
+										<!-- <input type="file" id="poster" ref="poster" accept=".jpg, .jpeg" @change="selectPosterImg" hidden> -->
+                    <input type="file" id="poster" ref="poster" @change="selectPosterImg" hidden></input>
 									</div>
 								</div>
 							</div>
