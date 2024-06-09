@@ -26,7 +26,13 @@
 
 |웹툰 랭킹|
 |:----:|
-|<img src="https://github.com/joohee56/Naver-Webtoon/assets/83942393/64cef909-ee59-467e-b6d3-949157465180" width="70%">|
+|<img src="https://github.com/joohee56/Naver-Webtoon/assets/83942393/64cef909-ee59-467e-b6d3-949157465180" width="90%">|
 - 정해진 시간에 별도의 새로고침 없이 자동으로 업데이트됩니다.
 - 순위는 가장 최근에 등록한 10개의 회차에 등록된 좋아요 수를 합한 값으로 매겨집니다.
+</br>
+</br>
 
+|웹툰 랭킹 표시|
+|:----:|
+|<img src="https://github.com/joohee56/Naver-Webtoon/assets/83942393/2ff2a08d-6c38-44ac-9790-7097d2ebc0e2" width="70%">|
+- 랭킹이 변동될 경우, 상승/하강한 작품에는 각각 빨간색/파란색 삼각형이 표시됩니다.
