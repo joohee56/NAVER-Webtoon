@@ -21,4 +21,12 @@
 |로그인|회원가입|
 |:----:|:----:|
 |![로그인](https://github.com/joohee56/Naver-Webtoon/assets/83942393/0c5d274b-1f8f-462d-83ed-c99c95f50dca)|![회원가입](https://github.com/joohee56/Naver-Webtoon/assets/83942393/fefb085d-3c4d-4b68-8a12-5e3afec33120)|
+</br>
+</br>
+
+|웹툰 랭킹|
+|:----:|
+|<img src="https://github.com/joohee56/Naver-Webtoon/assets/83942393/64cef909-ee59-467e-b6d3-949157465180" width="70%">|
+- 정해진 시간에 별도의 새로고침 없이 자동으로 업데이트됩니다.
+- 순위는 가장 최근에 등록한 10개의 회차에 등록된 좋아요 수를 합한 값으로 매겨집니다.
 
