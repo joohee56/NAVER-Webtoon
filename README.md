@@ -18,5 +18,7 @@
 </br>
 
 ## 기능
+|로그인|회원가입|
+|:----:|:----:|
+|![로그인](https://github.com/joohee56/Naver-Webtoon/assets/83942393/0c5d274b-1f8f-462d-83ed-c99c95f50dca)|![회원가입](https://github.com/joohee56/Naver-Webtoon/assets/83942393/fefb085d-3c4d-4b68-8a12-5e3afec33120)|
 
-![작가-이름으로-검색](https://github.com/joohee56/Naver-Webtoon/assets/83942393/65907bc4-4911-44c9-90d5-dbf1c0fde83b)
