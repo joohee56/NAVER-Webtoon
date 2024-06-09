@@ -36,3 +36,14 @@
 |:----:|
 |<img src="https://github.com/joohee56/Naver-Webtoon/assets/83942393/2ff2a08d-6c38-44ac-9790-7097d2ebc0e2" width="70%">|
 - 랭킹이 변동될 경우, 상승/하강한 작품에는 각각 빨간색/파란색 삼각형이 표시됩니다.
+</br>
+</br>
+
+|장르별 웹툰|
+|:----:|
+|<img src="https://github.com/joohee56/Naver-Webtoon/assets/83942393/e6738934-4678-4faf-b9e4-52dbf1e4cbde" width="90%">|
+- 원하는 장르를 선택할 수 있는 기능입니다.
+- `[사용자 스토리] 로맨스 웹툰을 좋아하고, 스릴러 웹툰을 무서워하는 독자로서, 로맨스 관련 웹툰만 한 눈에 들어왔으면 좋겠다.`
+
+
+
