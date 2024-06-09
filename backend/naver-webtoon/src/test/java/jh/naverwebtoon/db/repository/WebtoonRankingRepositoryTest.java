@@ -1,8 +1,6 @@
 package jh.naverwebtoon.db.repository;
 
 import java.util.List;
-import jh.naverwebtoon.db.domain.WebtoonGenre;
-import jh.naverwebtoon.db.domain.WebtoonRanking;
 import jh.naverwebtoon.db.domain.enums.WebtoonType;
 import jh.naverwebtoon.dto.response.FindNewRanking;
 import jh.naverwebtoon.web.controller.SocketController;
@@ -19,18 +17,18 @@ class WebtoonRankingRepositoryTest {
     @Autowired
     private SocketController socketController;
 
-    @Test
-    void 이전_랭킹_조회() {
-        int offset = 0, limit = 10;
-        WebtoonType webtoonType = WebtoonType.OFFICIAL;
-        List<WebtoonRanking> rankings = repository.findLatestOne(offset, limit, webtoonType);
-        for (WebtoonRanking ranking : rankings) {
-            System.out.println(ranking.getWebtoon().getId() + ", " + ranking.getWebtoon().getName() + ", " + ranking.getWebtoon().getWebtoonThumbnail().getPosterImage().getStoreFileName() + ", " + ranking.getTotalLikeCount() + ", " + ranking.getRanking());
-            for (WebtoonGenre webtoonGenre : ranking.getWebtoon().getGenres()) {
-                System.out.println(webtoonGenre.getGenre().getTitle());
-            }
-        }
-    }
+//    @Test
+//    void 이전_랭킹_조회() {
+//        int offset = 0, limit = 10;
+//        WebtoonType webtoonType = WebtoonType.OFFICIAL;
+//        List<WebtoonRanking> rankings = repository.findLatestRankings(offset, limit, webtoonType);
+//        for (WebtoonRanking ranking : rankings) {
+//            System.out.println(ranking.getWebtoon().getId() + ", " + ranking.getWebtoon().getName() + ", " + ranking.getWebtoon().getWebtoonThumbnail().getPosterImage().getStoreFileName() + ", " + ranking.getTotalLikeCount() + ", " + ranking.getRanking());
+//            for (WebtoonGenre webtoonGenre : ranking.getWebtoon().getGenres()) {
+//                System.out.println(webtoonGenre.getGenre().getTitle());
+//            }
+//        }
+//    }
 
     @Test
     void 새_랭킹_조회() {

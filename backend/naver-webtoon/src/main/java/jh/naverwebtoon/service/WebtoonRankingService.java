@@ -1,13 +1,14 @@
 package jh.naverwebtoon.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import jh.naverwebtoon.db.domain.WebtoonRanking;
+import jh.naverwebtoon.db.domain.WebtoonRankingSet;
 import jh.naverwebtoon.db.domain.enums.RankingStatus;
 import jh.naverwebtoon.db.domain.enums.WebtoonType;
 import jh.naverwebtoon.db.domain.webtoon.Webtoon;
 import jh.naverwebtoon.db.repository.WebtoonRankingRepository;
+import jh.naverwebtoon.db.repository.WebtoonRankingSetRepository;
 import jh.naverwebtoon.db.repository.WebtoonRepository;
 import jh.naverwebtoon.dto.response.FindNewRanking;
 import jh.naverwebtoon.dto.response.WebtoonRankingDto;
@@ -21,12 +22,14 @@ import org.springframework.transaction.annotation.Transactional;
 public class WebtoonRankingService {
     private final WebtoonRankingRepository webtoonRankingRepository;
     private final WebtoonRepository webtoonRepository;
+    private final WebtoonRankingSetRepository webtoonRankingSetRepository;
 
     /**
-     * 가장 최근 웹툰 랭킹 조회
+     * 최근 웹툰 랭킹 조회
      */
     public List<WebtoonRankingDto> findRanking(int offset, int limit, WebtoonType webtoonType) {
-        return  webtoonRankingRepository.findLatestOne(offset, limit, webtoonType).stream()
+        Long rankingSetId = webtoonRankingSetRepository.findLatestOne(webtoonType);
+        return  webtoonRankingRepository.findLatestRankings(offset, limit, rankingSetId, webtoonType).stream()
                 .map(webtoonRanking -> WebtoonRankingDto.create(webtoonRanking))
                 .collect(Collectors.toList());
     }
@@ -38,52 +41,47 @@ public class WebtoonRankingService {
      */
     @Transactional
     public List<WebtoonRankingDto> updateRanking(int offset, int limit, WebtoonType webtoonType) {
-        //1. 웹툰들의 최근 10회차 중 좋아요 누적 수가 가장 높은 14개의 웹툰 리스트 조회
+        //1. 새로운 랭킹 조회
         List<FindNewRanking> findNewRankings = webtoonRankingRepository.findRankingsByRecentRounds(offset, limit, webtoonType);
 
-        //2. 상승, 하강, 변화없음 비교를 위해 이전 웹툰 랭킹 조회
-        List<WebtoonRanking> latestRankings = webtoonRankingRepository.findLatestOne(offset, limit, webtoonType);
+        //2. 이전 랭킹 조회 (상승, 하강, 변동없음 비교)
+        Long rankingSetId = webtoonRankingSetRepository.findLatestOne(webtoonType);  //최신 랭킹 집합 아이디
+        List<WebtoonRanking> latestRankings = webtoonRankingRepository.findLatestRankings(offset, limit, rankingSetId, webtoonType);
 
-        //3. 새 랭킹 저장
-        List<WebtoonRanking> newRankings = new ArrayList<>();
-        int ranking = 1, idx = 0;
-        while(idx < findNewRankings.size()) {
-            //전의 랭킹과 동점이라면 같은 랭킹, 아니라면 랭킹 증가 (낮은 랭킹)
+        //3. 새 랭킹 db 저장
+        int rankingNo = 1, idx = 0;
+        WebtoonRankingSet webtoonRankingSet = webtoonRankingSetRepository.save(webtoonType);  //새 랭킹 집합 아이디 생성
+        while(idx < limit) {
+            //전의 랭킹과 동점이라면 같은 랭킹번호, 아니라면 랭킹번호 증가
             if (idx>=1 && findNewRankings.get(idx-1).getTotalLikeCount() != findNewRankings.get(idx).getTotalLikeCount()) {
-                ranking++;
+                rankingNo = idx+1;
             }
 
             Long webtoonId = findNewRankings.get(idx).getWebtoonId();
             Long totalLikeCount = findNewRankings.get(idx).getTotalLikeCount();
-
-            //랭킹 상승, 하강, 변함없음 계산
-            RankingStatus status = calculateStatus(webtoonId, ranking-1, latestRankings);
+            RankingStatus status = calculateStatus(webtoonId, rankingNo, latestRankings);
             Webtoon webtoon = webtoonRepository.findOneWithMember(webtoonId);
-            newRankings.add(WebtoonRanking.create(webtoon, ranking, status, totalLikeCount));
-
+            webtoonRankingRepository.save(WebtoonRanking.create(webtoon, rankingNo, status, totalLikeCount, webtoonRankingSet));
             idx++;
         }
 
-        //웹툰 랭킹이 낮은 순서대로 정렬 (랭킹이 낮은 순서 먼저 저장 -> 조회시 랭킹이 높은 순서대로 조회)
-        newRankings.sort((w1, w2) -> Integer.compare(w2.getRanking().ordinal(), w1.getRanking().ordinal()));
-        for (WebtoonRanking newRanking : newRankings) {
-            webtoonRankingRepository.save(newRanking);
-        }
-
-        //4. 최신 랭킹 조회
-        return findRanking(0, 7, webtoonType);
+        //3. 최신 랭킹 조회
+        return findRanking(offset, limit/2, webtoonType);
     }
 
-    public RankingStatus calculateStatus(Long webtoonId, int ranking, List<WebtoonRanking> latestRankings) {
+    /**
+     * 웹툰 랭킹의 상승, 하강, 변함없음 계산
+     */
+    public RankingStatus calculateStatus(Long webtoonId, int rankingNo, List<WebtoonRanking> latestRankings) {
         if (latestRankings.isEmpty()) {
             return RankingStatus.UP;
         }
 
         for(WebtoonRanking latestRanking : latestRankings) {
-            if (latestRanking.getWebtoon().getId() == webtoonId) {
-                if(latestRanking.getRanking().ordinal() < ranking) {
+            if (latestRanking.getWebtoon().getId().equals(webtoonId)) {
+                if (latestRanking.getRankingNo() < rankingNo) {  //이전의 숫자보다 크다면 -> 하강 (ex) 1->3)
                     return RankingStatus.DOWN;
-                } else if(latestRanking.getRanking().ordinal() > ranking) {
+                } else if (latestRanking.getRankingNo() > rankingNo) {  //이전의 숫자보다 작다면 -> 상승 (ex) 4->1)
                     return RankingStatus.UP;
                 } else {
                     return RankingStatus.UNCHANGING;

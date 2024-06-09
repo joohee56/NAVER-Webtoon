@@ -1,6 +1,7 @@
 package jh.naverwebtoon.db.repository;
 
 import jakarta.persistence.EntityManager;
+import java.util.ArrayList;
 import java.util.List;
 import jh.naverwebtoon.db.domain.WebtoonRanking;
 import jh.naverwebtoon.db.domain.enums.WebtoonType;
@@ -21,13 +22,18 @@ public class WebtoonRankingRepository {
     /**
      * 가장 최근에 등록한 랭킹 조회
      */
-    public List<WebtoonRanking> findLatestOne(int offset, int limit, WebtoonType webtoonType) {
+    public List<WebtoonRanking> findLatestRankings(int offset, int limit, Long rankingSetId, WebtoonType webtoonType) {
+        if(rankingSetId == null) {
+            return new ArrayList<>();
+        }
         return em.createQuery("select distinct wr from WebtoonRanking wr"
                         + " join fetch wr.webtoon w"
                         + " join fetch w.webtoonThumbnail wt"
                         + " where wr.webtoon.webtoonType=:webtoonType"
-                        + " order by wr.createdAt desc, wr.ranking asc", WebtoonRanking.class)
+                        + " and wr.webtoonRankingSet.id=:rankingSetId"
+                        + " order by wr.rankingNo asc ", WebtoonRanking.class)
                 .setParameter("webtoonType", webtoonType)
+                .setParameter("rankingSetId", rankingSetId)
                 .setFirstResult(offset)
                 .setMaxResults(limit)
                 .getResultList();

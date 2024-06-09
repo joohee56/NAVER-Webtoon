@@ -17,7 +17,7 @@ public class WebtoonRankingDto {
     private List<String> genres = new ArrayList<>();
     private Long totalLikeCount;
     private String rankingStatus;
-    private int rankingNum;
+    private int rankingNo;
 
     public static WebtoonRankingDto create(WebtoonRanking webtoonRanking) {
         WebtoonRankingDto res = new WebtoonRankingDto();
@@ -30,7 +30,7 @@ public class WebtoonRankingDto {
         res.webtoonType = webtoonRanking.getWebtoon().getWebtoonType().name();
         res.totalLikeCount = webtoonRanking.getTotalLikeCount();
         res.rankingStatus = webtoonRanking.getStatus().getName();
-        res.rankingNum = webtoonRanking.getRanking().ordinal()+1;
+        res.rankingNo = webtoonRanking.getRankingNo();
         return res;
     }
 }

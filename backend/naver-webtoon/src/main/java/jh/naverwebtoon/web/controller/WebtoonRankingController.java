@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class WebtoonRankingController {
     private final WebtoonRankingService webtoonRankingService;
 
+    /**
+     * 웹툰 랭킹 조회
+     */
     @GetMapping("/{offset}/{limit}/{webtoonType}")
     public FindWebtoonRankingsRes findWebtoonRanking(@PathVariable("offset") int offset, @PathVariable("limit") int limit, @PathVariable("webtoonType") WebtoonType webtoonType) {
         return FindWebtoonRankingsRes.create(webtoonRankingService.findRanking(offset, limit, webtoonType));
