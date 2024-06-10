@@ -93,7 +93,7 @@
 
 |댓글 등록|
 |:----:|
-|![댓글 등록](https://github.com/joohee56/Naver-Webtoon/assets/83942393/4b9e0ad4-fcf9-4c27-93f0-3e14ed17139e)|
+|![댓글 등록](https://github.com/joohee56/Naver-Webtoon/assets/83942393/835b32b4-92a5-4fd9-bd23-f5dfa4d9aa76)|
 - 로그인 후 댓글을 등록할 수 있습니다.
 - 가장 많은 '좋아요'와 적은 '싫어요'를 받은 상위 4개의 댓글은 BEST 댓글로 등록됩니다.
 </br>
@@ -101,7 +101,7 @@
 
 |댓글 삭제|
 |:----:|
-|![댓글 삭제](https://github.com/joohee56/Naver-Webtoon/assets/83942393/f47e9188-c4bb-4ca9-b480-c3baeb7abce4)|
+|![댓글 삭제](https://github.com/joohee56/Naver-Webtoon/assets/83942393/2a93571c-d7d5-43d8-9036-e6344d30918e)|
 - 본인이 등록된 댓글에 한해서 메뉴 버튼이 활성화됩니다.
 - 삭제 버튼을 통해 삭제할 수 있습니다.
 </br>
