@@ -1,4 +1,4 @@
-![요일별 웹툰](https://github.com/joohee56/Naver-Webtoon/assets/83942393/279b4f8d-dedd-4304-b53d-099c89753ce6)![요일별 웹툰](https://github.com/joohee56/Naver-Webtoon/assets/83942393/279b4f8d-dedd-4304-b53d-099c89753ce6)# Naver-Webtoon<img src="https://github.com/joohee56/Naver-Webtoon/assets/83942393/1e8027e1-2b5e-4673-9577-4bcb98c89622" width="60px">
+# Naver-Webtoon<img src="https://github.com/joohee56/Naver-Webtoon/assets/83942393/1e8027e1-2b5e-4673-9577-4bcb98c89622" width="60px">
 네이버 웹툰</br>
 </br>
 
@@ -116,13 +116,19 @@
 |:----:|
 |![요일별 웹툰](https://github.com/joohee56/Naver-Webtoon/assets/83942393/82652d05-3a40-4cb3-9331-7263478b7317)|
 </br>
+</br>
 
-|장르별 웹툰(도전만화)
+|장르별 웹툰(도전만화)|
 |:----:|
 |![장르별 (도전만화)](https://github.com/joohee56/Naver-Webtoon/assets/83942393/a03f38fa-e089-4d34-b574-d995bc759691)|
 </br>
 </br>
 
-
+|검색|
+|:----:|
+|![작가 이름으로 검색](https://github.com/joohee56/Naver-Webtoon/assets/83942393/bd62351e-e8ea-4542-9034-7f0f429b1191)|
+- 작가 이름 또는 작품 이름으로 검색할 수 있습니다. 
+</br>
+</br>
 
 
