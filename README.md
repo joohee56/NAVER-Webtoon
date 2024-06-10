@@ -192,5 +192,9 @@
 * Github
 * Figma
 * erdcloud
+</br>
+
+## ERD
+![image](https://github.com/joohee56/Naver-Webtoon/assets/83942393/d5233bea-8f6c-424b-a945-075d13b0028c)
 
 
