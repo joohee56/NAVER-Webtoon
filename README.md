@@ -1,4 +1,4 @@
-# Naver-Webtoon<img src="https://github.com/joohee56/Naver-Webtoon/assets/83942393/1e8027e1-2b5e-4673-9577-4bcb98c89622" width="60px">
+![요일별 웹툰](https://github.com/joohee56/Naver-Webtoon/assets/83942393/279b4f8d-dedd-4304-b53d-099c89753ce6)![요일별 웹툰](https://github.com/joohee56/Naver-Webtoon/assets/83942393/279b4f8d-dedd-4304-b53d-099c89753ce6)# Naver-Webtoon<img src="https://github.com/joohee56/Naver-Webtoon/assets/83942393/1e8027e1-2b5e-4673-9577-4bcb98c89622" width="60px">
 네이버 웹툰</br>
 </br>
 
@@ -109,6 +109,17 @@
 |대댓글 등록|대댓글 삭제|
 |:----:|:----:|
 |![대댓글 등록](https://github.com/joohee56/Naver-Webtoon/assets/83942393/025f84df-1530-42ff-8f74-2184754128bd)|![대댓글 삭제](https://github.com/joohee56/Naver-Webtoon/assets/83942393/0e0bc80f-4a4c-4818-acdd-859e7501c6b7)|
+</br>
+</br>
+
+|요일별 웹툰|
+|:----:|
+|![요일별 웹툰](https://github.com/joohee56/Naver-Webtoon/assets/83942393/82652d05-3a40-4cb3-9331-7263478b7317)|
+</br>
+
+|장르별 웹툰(도전만화)
+|:----:|
+|![장르별 (도전만화)](https://github.com/joohee56/Naver-Webtoon/assets/83942393/a03f38fa-e089-4d34-b574-d995bc759691)|
 </br>
 </br>
 
