@@ -52,8 +52,7 @@
 
 |신규 작품 등록|
 |:----:|
-|![신규 작품 등록](https://github.com/joohee56/Naver-Webtoon/assets/83942393/8d79a354-8fb1-487f-81a3-c05b8f9509dd)
-|
+|![신규 작품 등록](https://github.com/joohee56/Naver-Webtoon/assets/83942393/3356b047-a35e-4150-bff6-c841cb5f9a18)|
 - 입력 양식의 값을 채운 후 등록 버튼을 클릭합니다.
 - 등록된 웹툰은 도전만화에 노출됩니다.
 </br>
