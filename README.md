@@ -165,5 +165,32 @@
 </br>
 </br>
 
+## 기술 스택
+### Frontend
+* HTML5, CSS3, ES6
+* Vue `2.6.14`
+* Vuex `3.6.2`
+* Vue-router `3.5.1`
+* axios `1.6.7`
+* eslint `7.32.0`, prettier `2.4.1`
+* sockjs `1.6.1`
+
+### Backend
+* Java `17`
+* SpringBoot `3.2.3`
+* Hibernate
+* Gradle
+
+### DB
+* MySQL `8.0.36`
+
+### IDE
+* IntelliJ
+* VSCode
+
+### Etc
+* Github
+* Figma
+* erdcloud
 
 
