@@ -91,6 +91,16 @@
 </br>
 </br>
 
+|웹툰 관람 관련 기능|
+|:----:|
+|![웹툰 관람](https://github.com/joohee56/Naver-Webtoon/assets/83942393/3e52eb30-a563-47f3-a5cb-3230fb9a5d3f)|
+- 목차 미리보기
+- 맨 위로, 맨 아래로 이동
+- 메뉴바 트랜지션
+- 좋아요
+</br>
+</br>
+
 |댓글 등록|
 |:----:|
 |![댓글 등록](https://github.com/joohee56/Naver-Webtoon/assets/83942393/835b32b4-92a5-4fd9-bd23-f5dfa4d9aa76)|
@@ -103,6 +113,13 @@
 |:----:|
 |![댓글 삭제](https://github.com/joohee56/Naver-Webtoon/assets/83942393/2a93571c-d7d5-43d8-9036-e6344d30918e)|
 - 본인이 작성한 댓글의 한해서 삭제 메뉴 버튼이 활성화됩니다.
+</br>
+</br>
+
+|댓글 좋아요, 싫어요|
+|:----:|
+|![댓글 좋아요, 싫어요](https://github.com/joohee56/Naver-Webtoon/assets/83942393/dead8de1-ed27-4377-b069-5ef5a778b1de)|
+- 댓글에 '좋아요' 또는 '싫어요'를 통해 반응을 남길 수 있습니다. 
 </br>
 </br>
 
