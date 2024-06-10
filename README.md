@@ -23,13 +23,13 @@
 
 |로그인|회원가입|
 |:----:|:----:|
-|![로그인](https://github.com/joohee56/Naver-Webtoon/assets/83942393/0c5d274b-1f8f-462d-83ed-c99c95f50dca)|![회원가입](https://github.com/joohee56/Naver-Webtoon/assets/83942393/fefb085d-3c4d-4b68-8a12-5e3afec33120)|
+|![로그인](https://github.com/joohee56/Naver-Webtoon/assets/83942393/0a4757d4-8ea2-4012-a6dc-21b5ba7bf1e0)|![회원가입](https://github.com/joohee56/Naver-Webtoon/assets/83942393/80a3aa77-103a-4466-be24-e16762c86f81)|
 </br>
 </br>
 
 |웹툰 랭킹|
 |:----:|
-|<img src="https://github.com/joohee56/Naver-Webtoon/assets/83942393/64cef909-ee59-467e-b6d3-949157465180" width="90%">|
+|![웹툰 랭킹](https://github.com/joohee56/Naver-Webtoon/assets/83942393/f3ce4394-0170-40e8-861d-6f05ea3c51b0)|
 - 정해진 시간에 별도의 새로고침 없이 자동으로 업데이트됩니다.
 - 순위 측정은 가장 최근에 등록된 총 10개의 회차에 받은 '좋아요' 수를 누적한 값을 통해 매겨집니다. 
 </br>
@@ -37,14 +37,14 @@
 
 |웹툰 랭킹 표시|
 |:----:|
-|<img src="https://github.com/joohee56/Naver-Webtoon/assets/83942393/2ff2a08d-6c38-44ac-9790-7097d2ebc0e2" width="70%">|
+|![웹툰 랭킹 표시](https://github.com/joohee56/Naver-Webtoon/assets/83942393/a18c9cb5-1919-4932-b269-2b4036780819)|
 - 랭킹이 변동될 경우, 상승/하강한 작품에는 각각 빨간색/파란색 삼각형으로 상승, 하강이 표시됩니다.
 </br>
 </br>
 
 |장르별 웹툰|
 |:----:|
-|<img src="https://github.com/joohee56/Naver-Webtoon/assets/83942393/e6738934-4678-4faf-b9e4-52dbf1e4cbde" width="90%">|
+|![장르별 웹툰](https://github.com/joohee56/Naver-Webtoon/assets/83942393/fdc0e595-6449-4c9e-87d9-55a6f806cc72)|
 - 홈화면에서 원하는 장르의 웹툰을 고를 수 있습니다. 
 - `[사용자 스토리] 로맨스 웹툰을 좋아하고, 스릴러 웹툰을 무서워하는 독자로서, 로맨스 관련 웹툰만 필터링하고 싶다.`
 </br>
@@ -52,21 +52,19 @@
 
 |신규 작품 등록|
 |:----:|
-|![신규-작품-등록](https://github.com/joohee56/Naver-Webtoon/assets/83942393/a3627922-d859-4634-871c-2ed9efb283aa)|
+||
 - 입력 양식의 값을 채운 후 등록 버튼을 클릭합니다.
 - 등록된 웹툰은 도전만화에 노출됩니다.
 </br>
 </br>
 
-
 |신규 회차 등록 (1)|
 |:----:|
-|![신규-회차-등록-1-1 3배속](https://github.com/joohee56/Naver-Webtoon/assets/83942393/dd04043f-8699-4197-b0e8-fda4d58da047)|
+||
 - 등록할 작품을 선택하면, 회차 번호는 자동으로 입력됩니다.
 - 회차명, 대표 이미지, 원고로 사용될 이미지들을 선택하여 업로드합니다.
 </br>
 </br>
-
 
 |신규 회차 등록 (2)|
 |:----:|
@@ -80,7 +78,7 @@
 
 |페이징|
 |:----:|
-|![페이징-회차-목록](https://github.com/joohee56/Naver-Webtoon/assets/83942393/c15ef301-f61d-4e89-8df9-ffe09043b1bb)|
+||
 </br>
 </br>
 
