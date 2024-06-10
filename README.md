@@ -86,7 +86,7 @@
 
 |메뉴바 트랜지션|
 |:----:|
-|![상단바 트랜지션](https://github.com/joohee56/Naver-Webtoon/assets/83942393/e0466d6e-72f6-49cc-b0fb-9319b9e109cb)|
+|![메뉴바 트랜지션](https://github.com/joohee56/Naver-Webtoon/assets/83942393/fe07cd45-0fe7-4d54-ab4e-c45dc0abe009)|
 - 사용자의 스크롤이 원고 내부에 위치할 시 메뉴바가 사라집니다.
 - 화면을 클릭하면 메뉴바가 나타나거나, 사라집니다.
 - 사용자의 스크롤이 원고 끝에 도달할 시 메뉴바가 나타납니다.
