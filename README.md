@@ -91,7 +91,7 @@
 </br>
 </br>
 
-|웹툰 관람 관련 기능|
+|웹툰 관람|
 |:----:|
 |![웹툰 관람](https://github.com/joohee56/Naver-Webtoon/assets/83942393/3e52eb30-a563-47f3-a5cb-3230fb9a5d3f)|
 - 목차 미리보기
