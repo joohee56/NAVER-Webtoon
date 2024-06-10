@@ -196,7 +196,7 @@
 * IntelliJ
 * VSCode
 
-### Etc
+### Tool
 * Github
 * Figma
 * erdcloud
