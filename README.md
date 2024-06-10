@@ -127,6 +127,8 @@
 |대댓글 등록|대댓글 삭제|
 |:----:|:----:|
 |![대댓글 등록](https://github.com/joohee56/Naver-Webtoon/assets/83942393/025f84df-1530-42ff-8f74-2184754128bd)|![대댓글 삭제](https://github.com/joohee56/Naver-Webtoon/assets/83942393/0e0bc80f-4a4c-4818-acdd-859e7501c6b7)|
+- 댓글의 댓글을 등록 및 삭제할 수 있습니다. 
+- 대댓글 또한 '좋아요', '싫어요'을 통해 반응을 남길 수 있습니다. 
 </br>
 </br>
 
