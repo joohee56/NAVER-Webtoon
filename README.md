@@ -126,7 +126,7 @@
 
 |검색|
 |:----:|
-|![작가 이름으로 검색](https://github.com/joohee56/Naver-Webtoon/assets/83942393/bd62351e-e8ea-4542-9034-7f0f429b1191)|
+|![작품 이름으로 검색](https://github.com/joohee56/Naver-Webtoon/assets/83942393/b0702321-95cf-4c2c-90b4-8374f47d2bac)|
 - 작가 이름 또는 작품 이름으로 검색할 수 있습니다. 
 </br>
 </br>
