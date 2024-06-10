@@ -22,7 +22,7 @@
 </br>
 
 ### 2. 작가의 웹툰 등록
-<img src="https://github.com/joohee56/Naver-Webtoon/assets/83942393/f1ad6e8c-fa62-46d8-b139-1fb9d3e97670" width="80%">
+<img src="https://github.com/joohee56/Naver-Webtoon/assets/83942393/f1ad6e8c-fa62-46d8-b139-1fb9d3e97670" width="85%">
 </br>
 
 ## 기능
