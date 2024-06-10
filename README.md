@@ -78,6 +78,10 @@
 </br>
 </br>
 
+|페이징|
+|:----:|
+|![페이징-회차-목록](https://github.com/joohee56/Naver-Webtoon/assets/83942393/c15ef301-f61d-4e89-8df9-ffe09043b1bb)|
+
 
 
 
