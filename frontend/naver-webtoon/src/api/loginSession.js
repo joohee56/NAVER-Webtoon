@@ -23,6 +23,7 @@ const checkSessionExpired = function () {
 
   let isExpired = localTime > sessionExpiry ? true : false;
   if (isExpired === true) {
+    clearInterval(checkSessionExpired);
     Cookies.remove("loginUser");
     Cookies.remove("clientTimeOffset");
     location.reload();
