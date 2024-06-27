@@ -23,13 +23,9 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
             log.info("axios preflight에 관한 인증 체크 패스");
             return true;
         }
-        if(requestURI.equals("/websocket/info")) {
-            log.info("sockjs 요청에 대한 인증 체크 패스");
-            return true;
-        }
-        
-        HandlerMethod method = (HandlerMethod) handler;
+
         //메소드 권한 체크
+        HandlerMethod method = (HandlerMethod) handler;
         Auth auth = method.getMethodAnnotation(Auth.class);
         if (auth == null) {
             log.info("인증이 필요없는 요청이므로 인증 체크 패스");

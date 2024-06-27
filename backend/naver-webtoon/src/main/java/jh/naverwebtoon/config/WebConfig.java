@@ -46,7 +46,8 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LoginCheckInterceptor())  //로그인 인증 인터셉터
-                .order(1);
+                .order(1)
+                .excludePathPatterns("/swagger-ui/**", "/websocket/info");
     }
 
     /**
