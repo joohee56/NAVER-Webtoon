@@ -87,8 +87,6 @@ public class MemberController {
     @Auth
     @GetMapping()
     public MemberInfoRes MemberInfo(@Login Long id) {
-        System.out.println("memberInfo 호출");
-        System.out.println("id = " + id);
         Member findMember = memberRepository.findOne(id);
         return MemberInfoRes.create(findMember);
     }
