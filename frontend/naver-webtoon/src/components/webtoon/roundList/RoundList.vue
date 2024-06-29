@@ -91,7 +91,7 @@ export default {
       if (response.status === 200) {
         this.rounds = response.data.rounds;
         this.paging.totalPageCount = response.data.pageCount;
-        this.paging.totalRoundCount = response.data.totalRoundCount;
+        this.totalRoundCount = response.data.totalRoundCount;
       }
     },
     sortToDesc(isDesc) {
