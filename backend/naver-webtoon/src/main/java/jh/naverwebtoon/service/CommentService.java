@@ -58,7 +58,6 @@ public class CommentService {
     public int delete(Long memberId, Long commentId) {
         //댓글 작성자 본인 확인
         Comment comment = commentRepository.findWithMember(commentId);
-        System.out.println(comment.getMember().getId() + ", " + memberId);
         if (!comment.getMember().getId().equals(memberId)) {
             throw new IllegalStateException("잘못된 접근입니다.");
         }
