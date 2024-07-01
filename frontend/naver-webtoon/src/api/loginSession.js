@@ -27,7 +27,6 @@ const checkSessionExpired = function () {
     Cookies.remove("loginUser");
     Cookies.remove("clientTimeOffset");
     location.reload();
-    alert("유효시간이 초과되었습니다. 다시 시도해주세요.");
   }
 };
 
