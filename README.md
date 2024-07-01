@@ -47,8 +47,7 @@
 
 |웹툰 랭킹 표시| 업로드 표시 |
 |:----:|:-----:
-|![웹툰 랭킹 표시](https://github.com/joohee56/Naver-Webtoon/assets/83942393/a18c9cb5-1919-4932-b269-2b4036780819)| ![스크린샷 2024-07-02 033546](https://github.com/joohee56/Naver-Webtoon/assets/83942393/33e429b7-cb66-45a2-878c-826506848be4)
-|
+|![웹툰 랭킹 표시](https://github.com/joohee56/Naver-Webtoon/assets/83942393/a18c9cb5-1919-4932-b269-2b4036780819)| ![스크린샷 2024-07-02 033546](https://github.com/joohee56/Naver-Webtoon/assets/83942393/33e429b7-cb66-45a2-878c-826506848be4) |
 - 상승 또는 하강한 작품에는 각각 빨간색 ▲, 파란색 ▼ 표시됩니다.
 - 회차가 업로드될 경우 UP 글자로 표시됩니다.
 </br>
