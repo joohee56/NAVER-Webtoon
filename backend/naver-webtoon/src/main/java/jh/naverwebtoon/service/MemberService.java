@@ -31,7 +31,7 @@ public class MemberService {
             throw new IllegalArgumentException("이미 가입된 아이디입니다.");
         }
 
-        Member member = Member.createMember(joinMemberReq);
+        Member member = Member.create(joinMemberReq);
         return memberRepository.save(member);
     }
 
@@ -65,7 +65,7 @@ public class MemberService {
             fileStore.deleteFile(storeFileName);  //기존의 프로필 이미지 삭제
         }
         UploadImage uploadImage = fileStore.storeFile(profileImage);
-        member.changeProfileImage(ProfileImage.createProfileImage(uploadImage, false));
+        member.changeProfileImage(ProfileImage.create(uploadImage, false));
         return member.getProfileImage().getUploadImage().getStoreFileName();
     }
 

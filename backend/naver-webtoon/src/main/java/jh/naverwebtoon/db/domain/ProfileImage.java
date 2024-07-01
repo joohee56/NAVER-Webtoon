@@ -21,7 +21,7 @@ public class ProfileImage extends BaseEntity {
 
     private Boolean isDefaultProfileImage;
 
-    public static ProfileImage createProfileImage(UploadImage uploadImage, Boolean isDefaultProfileImage) {
+    public static ProfileImage create(UploadImage uploadImage, Boolean isDefaultProfileImage) {
         ProfileImage profileImage = new ProfileImage();
         profileImage.uploadImage = uploadImage;
         profileImage.isDefaultProfileImage = isDefaultProfileImage;

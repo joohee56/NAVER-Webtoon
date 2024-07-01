@@ -55,7 +55,7 @@ public class Member extends BaseEntity {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private ProfileImage profileImage;
 
-    public static Member createMember(JoinMemberReq joinMemberReq) {
+    public static Member create(JoinMemberReq joinMemberReq) {
         Member member = new Member();
         member.loginId = joinMemberReq.getLoginId();
         member.password = joinMemberReq.getPassword();
@@ -65,7 +65,7 @@ public class Member extends BaseEntity {
         member.gender = joinMemberReq.getGender();
         member.countryResidence = joinMemberReq.getCountryResidence();
         member.phoneNumber = joinMemberReq.getPhoneNumber();
-        member.profileImage = ProfileImage.createProfileImage(new UploadImage(MemberConst.DEFAULT_PROFILE_IMAGE_FILE_NAME, MemberConst.DEFAULT_PROFILE_IMAGE_FILE_NAME), true);
+        member.profileImage = ProfileImage.create(new UploadImage(MemberConst.DEFAULT_PROFILE_IMAGE_FILE_NAME, MemberConst.DEFAULT_PROFILE_IMAGE_FILE_NAME), true);
         return member;
     }
 
