@@ -4,11 +4,8 @@ import jakarta.persistence.PrePersist;
 import jh.naverwebtoon.db.domain.Round;
 import jh.naverwebtoon.db.domain.webtoon.Webtoon;
 import jh.naverwebtoon.db.repository.RoundRepository;
-import org.springframework.stereotype.Component;
 
-@Component
 public class RoundEntityListener {
-
 
     /**
      * 회차 persist 전 호출
