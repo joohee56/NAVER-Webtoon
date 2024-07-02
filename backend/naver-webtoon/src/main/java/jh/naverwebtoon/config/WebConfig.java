@@ -2,7 +2,7 @@ package jh.naverwebtoon.config;
 
 import jakarta.servlet.Filter;
 import java.util.List;
-import jh.naverwebtoon.web.LoginMemberArgumentResolver;
+import jh.naverwebtoon.web.LoginArgumentResolver;
 import jh.naverwebtoon.web.filter.SessionExpireFilter;
 import jh.naverwebtoon.web.interceptor.LoginCheckInterceptor;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -55,7 +55,7 @@ public class WebConfig implements WebMvcConfigurer {
      */
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-        resolvers.add(new LoginMemberArgumentResolver());
+        resolvers.add(new LoginArgumentResolver());
     }
 
 }
