@@ -39,10 +39,21 @@ import WebtoonWhole from "@/components/webtoon/search/WebtoonWhole";
 Vue.use(VueRouter);
 
 const checkLogin = (to, from, next) => {
-  const loginUser = JSON.parse(Cookies.get("loginUser"));
-  const loginId = loginUser.memberStore.loginUser.loginId;
+  let redirectToLogin = false;
+  if (Cookies.get("loginUser") === undefined) {
+    redirectToLogin = true;
+  }
 
-  if (loginUser === undefined || loginId === "") {
+  if (!redirectToLogin) {
+    const loginId = JSON.parse(Cookies.get("loginUser")).memberStore.loginUser
+      .loginId;
+    if (loginId === "") {
+      redirectToLogin = true;
+    }
+  }
+
+  if (redirectToLogin) {
+    console.log("HERE");
     next({
       name: "login",
       params: { redirectUrl: from.path },
