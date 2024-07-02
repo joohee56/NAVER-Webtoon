@@ -8,6 +8,7 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class SessionExpireFilter implements Filter {
@@ -17,18 +18,15 @@ public class SessionExpireFilter implements Filter {
             throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
+        HttpSession httpSession = httpServletRequest.getSession(false);
 
-        long serverTime = System.currentTimeMillis();
+        if (httpSession != null) {
+            long sessionExpiryTime = httpSession.getLastAccessedTime() + httpSession.getMaxInactiveInterval()*1000;
+            Cookie cookie = new Cookie("sessionExpiry", String.valueOf(sessionExpiryTime));
+            cookie.setPath("/");
+            httpServletResponse.addCookie(cookie);
+        }
 
-        Cookie cookie = new Cookie("latestAccess", String.valueOf(serverTime));
-        cookie.setPath("/");
-        httpServletResponse.addCookie(cookie);
-
-        long sessionExpiryTime = serverTime + httpServletRequest.getSession().getMaxInactiveInterval()*1000;
-//        long sessionExpiryTime = serverTime + 30*1000; //테스트를 위해 30초로 지정
-        cookie = new Cookie("sessionExpiry", String.valueOf(sessionExpiryTime));
-        cookie.setPath("/");
-        httpServletResponse.addCookie(cookie);
         chain.doFilter(request, response);
     }
 }
