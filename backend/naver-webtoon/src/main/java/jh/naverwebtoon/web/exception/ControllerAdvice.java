@@ -34,6 +34,9 @@ public class ControllerAdvice {
         private Object message;
     }
 
+    /**
+     * 비지니스 로직 상 예외 처리
+     */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({IllegalArgumentException.class, IllegalStateException.class})
     public ErrorResult illegalxxxExHandle(Exception e){
