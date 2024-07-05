@@ -18,8 +18,6 @@ import jh.naverwebtoon.db.domain.webtoon.Webtoon;
 import jh.naverwebtoon.dto.request.CreateRoundReq;
 import jh.naverwebtoon.util.RoundEntityListener;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -30,7 +28,7 @@ import lombok.NoArgsConstructor;
 public class Round extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -10,7 +10,7 @@ import lombok.Getter;
 @Entity
 @Getter
 public class MergeManuscript {
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Embedded
     private UploadImage file;

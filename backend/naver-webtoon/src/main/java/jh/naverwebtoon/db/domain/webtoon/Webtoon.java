@@ -47,7 +47,7 @@ import org.hibernate.annotations.BatchSize;
 public class Webtoon extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "webtoon_name", nullable = false)
