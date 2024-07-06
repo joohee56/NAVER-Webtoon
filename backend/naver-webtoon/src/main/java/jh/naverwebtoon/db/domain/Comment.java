@@ -1,4 +1,4 @@
-package jh.naverwebtoon.db.domain.comment;
+package jh.naverwebtoon.db.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,9 +10,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jh.naverwebtoon.db.domain.BaseEntity;
-import jh.naverwebtoon.db.domain.Member;
-import jh.naverwebtoon.db.domain.Round;
 import jh.naverwebtoon.db.domain.enums.CommentType;
 import lombok.AccessLevel;
 import lombok.Getter;

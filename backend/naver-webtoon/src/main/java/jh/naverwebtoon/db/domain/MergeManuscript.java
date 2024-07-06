@@ -12,6 +12,7 @@ import lombok.Getter;
 public class MergeManuscript {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Embedded
     private UploadImage file;
 

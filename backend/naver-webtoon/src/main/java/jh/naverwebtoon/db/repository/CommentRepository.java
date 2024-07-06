@@ -3,7 +3,7 @@ package jh.naverwebtoon.db.repository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import java.util.List;
-import jh.naverwebtoon.db.domain.comment.Comment;
+import jh.naverwebtoon.db.domain.Comment;
 import jh.naverwebtoon.db.domain.enums.CommentType;
 import jh.naverwebtoon.dto.response.CommentDto;
 import jh.naverwebtoon.dto.response.FindReply;

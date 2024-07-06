@@ -30,6 +30,7 @@ public class Tag {
         tag.name = name;
         return tag;
     }
+
     public void setWebtoon(Webtoon webtoon) {
         this.webtoon = webtoon;
     }

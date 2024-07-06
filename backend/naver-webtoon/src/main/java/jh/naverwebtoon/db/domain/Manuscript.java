@@ -14,16 +14,17 @@ public class Manuscript {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Embedded
-    private UploadImage file;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "round_id")
     private Round round;
 
+    @Embedded
+    private UploadImage file;
+
     public void setRound(Round round) {
         this.round = round;
     }
+
     public static Manuscript create(UploadImage file) {
         Manuscript manuscript = new Manuscript();
         manuscript.file = file;

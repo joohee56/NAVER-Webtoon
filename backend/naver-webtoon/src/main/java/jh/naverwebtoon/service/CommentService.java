@@ -3,7 +3,7 @@ package jh.naverwebtoon.service;
 import java.util.List;
 import jh.naverwebtoon.db.domain.Member;
 import jh.naverwebtoon.db.domain.Round;
-import jh.naverwebtoon.db.domain.comment.Comment;
+import jh.naverwebtoon.db.domain.Comment;
 import jh.naverwebtoon.db.repository.CommentDislikeRepository;
 import jh.naverwebtoon.db.repository.CommentLikeRepository;
 import jh.naverwebtoon.db.repository.CommentRepository;

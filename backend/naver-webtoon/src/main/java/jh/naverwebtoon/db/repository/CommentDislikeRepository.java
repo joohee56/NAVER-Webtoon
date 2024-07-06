@@ -2,7 +2,7 @@ package jh.naverwebtoon.db.repository;
 
 import jakarta.persistence.EntityManager;
 import java.util.List;
-import jh.naverwebtoon.db.domain.comment.CommentDislike;
+import jh.naverwebtoon.db.domain.commentReaction.CommentDislike;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

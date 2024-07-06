@@ -47,7 +47,7 @@ public class FileStore {
             //새 이미지 저장
             newHorizontalImage = storeFile(horizontal);
         }
-        findWebtoon.getWebtoonThumbnail().changeThumbnail(newPosterImage, newHorizontalImage);
+        findWebtoon.getWebtoonThumbnail().setThumbnail(newPosterImage, newHorizontalImage);
     }
 
 

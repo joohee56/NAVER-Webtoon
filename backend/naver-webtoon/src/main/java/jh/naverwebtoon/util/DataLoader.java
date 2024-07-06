@@ -13,7 +13,7 @@
 //import jh.naverwebtoon.db.domain.RoundThumbnail;
 //import jh.naverwebtoon.db.domain.UploadImage;
 //import jh.naverwebtoon.db.domain.WebtoonThumbnail;
-//import jh.naverwebtoon.db.domain.comment.Comment;
+//import jh.naverwebtoon.db.domain.Comment;
 //import jh.naverwebtoon.db.domain.comment.CommentDislike;
 //import jh.naverwebtoon.db.domain.comment.CommentLike;
 //import jh.naverwebtoon.db.domain.enums.CountryResidence;
