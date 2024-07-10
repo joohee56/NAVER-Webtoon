@@ -56,11 +56,11 @@ public class Webtoon extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private WebtoonCategory webtoonCategory;
 
-    @OneToMany(mappedBy = "webtoon",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "webtoon",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Tag> tags = new ArrayList<>();
 
     @BatchSize(size = 5)
-    @OneToMany(mappedBy = "webtoon", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "webtoon", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<WebtoonGenre> genres = new ArrayList<>();
 
     @Column(length = 30)
