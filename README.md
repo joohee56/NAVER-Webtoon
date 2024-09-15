@@ -2,7 +2,6 @@
 네이버 웹툰</br>
 </br>
 
-
 ## INDEX
 * [소개](#소개)
 * [사용자 주요 유스케이스](#사용자-주요-유스케이스)
@@ -24,6 +23,10 @@
 
 ### 2. 작가의 웹툰 등록
 <img src="https://github.com/joohee56/Naver-Webtoon/assets/83942393/f1ad6e8c-fa62-46d8-b139-1fb9d3e97670" width="85%">
+</br>
+
+## ERD
+![image](https://github.com/joohee56/Naver-Webtoon/assets/83942393/d5233bea-8f6c-424b-a945-075d13b0028c)</br>
 </br>
 
 ## 기능
@@ -206,8 +209,5 @@
 * Figma
 * erdcloud
 </br>
-
-## ERD
-![image](https://github.com/joohee56/Naver-Webtoon/assets/83942393/d5233bea-8f6c-424b-a945-075d13b0028c)
 
 
