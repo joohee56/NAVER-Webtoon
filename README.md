@@ -1,5 +1,5 @@
-# Naver-Webtoon<img src="https://github.com/joohee56/Naver-Webtoon/assets/83942393/1e8027e1-2b5e-4673-9577-4bcb98c89622" width="60px">
-네이버 웹툰</br>
+# Naver-Webtoon
+네이버 웹툰<img src="https://github.com/joohee56/Naver-Webtoon/assets/83942393/1e8027e1-2b5e-4673-9577-4bcb98c89622" width="30px"></br>
 </br>
 
 ## INDEX
