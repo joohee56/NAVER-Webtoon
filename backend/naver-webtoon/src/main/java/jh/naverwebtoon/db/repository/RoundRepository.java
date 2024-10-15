@@ -1,7 +1,6 @@
 package jh.naverwebtoon.db.repository;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import java.util.List;
 import jh.naverwebtoon.db.domain.Round;
 import jh.naverwebtoon.dto.response.FindRoundsManageRes;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 @RequiredArgsConstructor
 public class RoundRepository {
-    @PersistenceContext
     private EntityManager em;
 
     public Long save(Round round) {

@@ -23,9 +23,6 @@ public class WebtoonRankingRepository {
      * 가장 최근에 등록한 랭킹 조회
      */
     public List<WebtoonRanking> findLatestRankings(int offset, int limit, Long rankingSetId, WebtoonType webtoonType) {
-        if(rankingSetId == null) {
-            return new ArrayList<>();
-        }
         return em.createQuery("select distinct wr from WebtoonRanking wr"
                         + " join fetch wr.webtoon w"
                         + " join fetch w.webtoonThumbnail wt"

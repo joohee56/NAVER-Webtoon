@@ -13,7 +13,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 @RequiredArgsConstructor
 public class CommentRepository {
-    @PersistenceContext
     private EntityManager em;
 
     /**

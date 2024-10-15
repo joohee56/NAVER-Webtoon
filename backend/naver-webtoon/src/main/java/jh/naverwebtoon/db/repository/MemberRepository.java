@@ -1,14 +1,14 @@
 package jh.naverwebtoon.db.repository;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import java.util.List;
 import jh.naverwebtoon.db.domain.Member;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 @Repository
+@RequiredArgsConstructor
 public class MemberRepository {
-    @PersistenceContext
     EntityManager em;
 
     public Long save(Member m) {

@@ -14,7 +14,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 @RequiredArgsConstructor
 public class WebtoonRepository {
-    @PersistenceContext
     private EntityManager em;
 
     public Long save(Webtoon webtoon) {
