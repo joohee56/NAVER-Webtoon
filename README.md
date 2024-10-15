@@ -43,7 +43,7 @@
 |신규 회차 등록 (1)|
 |:----:|
 |![신규 회차 등록 -1 ](https://github.com/joohee56/Naver-Webtoon/assets/83942393/f9fbf9eb-e13e-4906-8cb8-681a8a41b04a)|
-- `회차 번호` : 등록할 작품 선택 시 회차 번호 자동 부여
+- `회차 번호` : 등록할 작품 선택 시 회차 번호 자동 부여 (EntityListener, @Prepost 사용)
 - `회차명`, `대표 이미지`, `원고로 사용될 이미지` 업로드
 </br>
 </br>
@@ -52,64 +52,23 @@
 |:----:|
 |![신규 회차 등록 2 - 보완](https://github.com/joohee56/Naver-Webtoon/assets/83942393/e30475df-0e20-4ce0-a847-048c32a0b63f)|
 - `미리보기` : 업로드한 이미지 확인
+- `원고` : 이미지 이어붙이기 (canvas 사용)
 - `이미지 이동 버튼` : 이미지를 선택한 후 4가지 이동 버튼(`맨위`, `위`, `아래`, `맨아래`)을 통해 이미지의 순서 변경
-- `전체 미리보기` : 이미지들을 하나로 이어붙인 최종 원고 확인
-- `회차 업로드` : 확인 버튼을 통해 최종 업로드
+- `원고 전체 미리보기` : 최종 원고 확인
+- `회차 업로드` : 이미지를 axios로 전송하기 위한 형태로 변환
+- `진행중`, `완료` 모달 구현
 </br>
 </br>
 
-|페이징|
+|목차 페이징|
 |:----:|
 |![페이징](https://github.com/joohee56/Naver-Webtoon/assets/83942393/6b0ceb70-2607-47fc-9103-c80865435bb5)|
 </br>
 </br>
 
-|메뉴바 트랜지션|
+|스크롤 감지 메뉴바 트랜지션|
 |:----:|
 |![메뉴바 트랜지션](https://github.com/joohee56/Naver-Webtoon/assets/83942393/fe07cd45-0fe7-4d54-ab4e-c45dc0abe009)|
-</br>
-</br>
-
-|웹툰 관람|
-|:----:|
-|![웹툰 관람](https://github.com/joohee56/Naver-Webtoon/assets/83942393/3e52eb30-a563-47f3-a5cb-3230fb9a5d3f)|
-- `목차 미리보기`
-- `좋아요`
-</br>
-</br>
-
-|웹툰 랭킹|
-|:----:|
-|![웹툰 랭킹](https://github.com/joohee56/Naver-Webtoon/assets/83942393/f3ce4394-0170-40e8-861d-6f05ea3c51b0)|
-- `순위 기준` : 가장 최근에 등록한 총 10개의 회차의 누적된 좋아요 수를 합산하여 랭킹 순위 선정
-- `랭킹 업데이트` : sock.js와 @Scheduled 사용하여 별도의 새로고침 없이 정해진 시간에 랭킹 업데이트
-</br>
-</br>
-
-|웹툰 랭킹 표시| 업로드 표시 |
-|:----:|:-----:
-|![웹툰 랭킹 표시](https://github.com/joohee56/Naver-Webtoon/assets/83942393/a18c9cb5-1919-4932-b269-2b4036780819)| ![스크린샷 2024-07-02 033546](https://github.com/joohee56/Naver-Webtoon/assets/83942393/33e429b7-cb66-45a2-878c-826506848be4) |
-- 랭킹 상승 또는 하강한 작품에 각각 `빨간색 ▲`, `파란색 ▼` 표시
-- 회차가 업로드될 경우 `UP` 글자 표시
-</br>
-</br>
-
-|사용자 맟줌 웹툰 필터|
-|:----:|
-|![장르별 웹툰](https://github.com/joohee56/Naver-Webtoon/assets/83942393/fdc0e595-6449-4c9e-87d9-55a6f806cc72)|
-- 사용자가 선호하는 장르의 웹툰이 `인기순` 또는 `업데이트` 순으로 한 눈에 보이도록 추가 기획하여 `웹툰 필터` 구현
-</br>
-</br>
-
-|요일별 웹툰|
-|:----:|
-|![요일별 웹툰](https://github.com/joohee56/Naver-Webtoon/assets/83942393/82652d05-3a40-4cb3-9331-7263478b7317)|
-</br>
-</br>
-
-|장르별 웹툰(도전만화)|
-|:----:|
-|![장르별 (도전만화)](https://github.com/joohee56/Naver-Webtoon/assets/83942393/a03f38fa-e089-4d34-b574-d995bc759691)|
 </br>
 </br>
 
@@ -137,6 +96,49 @@
 |대댓글 등록|대댓글 삭제|
 |:----:|:----:|
 |![대댓글 등록](https://github.com/joohee56/Naver-Webtoon/assets/83942393/025f84df-1530-42ff-8f74-2184754128bd)|![대댓글 삭제](https://github.com/joohee56/Naver-Webtoon/assets/83942393/0e0bc80f-4a4c-4818-acdd-859e7501c6b7)|
+</br>
+</br>
+
+|웹툰 관람|
+|:----:|
+|![웹툰 관람](https://github.com/joohee56/Naver-Webtoon/assets/83942393/3e52eb30-a563-47f3-a5cb-3230fb9a5d3f)|
+- `회차 좋아요(랭킹 반영)`
+- `전후 회차 목차`
+</br>
+</br>
+
+|웹툰 랭킹|
+|:----:|
+|![웹툰 랭킹](https://github.com/joohee56/Naver-Webtoon/assets/83942393/f3ce4394-0170-40e8-861d-6f05ea3c51b0)|
+- `순위 기준` : 가장 최근에 등록한 총 10개의 회차의 누적된 좋아요 수를 합산하여 랭킹 순위 선정
+- `랭킹 업데이트` : Websocket과 @Scheduled 사용하여 별도의 새로고침 없이 정해진 시간에 랭킹 업데이트
+</br>
+</br>
+
+|웹툰 랭킹 표시| 업로드 표시 |
+|:----:|:-----:
+|![웹툰 랭킹 표시](https://github.com/joohee56/Naver-Webtoon/assets/83942393/a18c9cb5-1919-4932-b269-2b4036780819)| ![스크린샷 2024-07-02 033546](https://github.com/joohee56/Naver-Webtoon/assets/83942393/33e429b7-cb66-45a2-878c-826506848be4) |
+- 랭킹 상승 또는 하강한 작품에 각각 `빨간색 ▲`, `파란색 ▼` 표시
+- 회차가 업로드될 경우 `UP` 글자 표시
+</br>
+</br>
+
+|사용자 맟줌 웹툰 필터|
+|:----:|
+|![장르별 웹툰](https://github.com/joohee56/Naver-Webtoon/assets/83942393/fdc0e595-6449-4c9e-87d9-55a6f806cc72)|
+- 사용자가 선호하는 장르의 웹툰이 `인기순` 또는 `업데이트` 순으로 한 눈에 보이도록 추가 기획하여 `웹툰 필터` 구현
+</br>
+</br>
+
+|요일별 웹툰|
+|:----:|
+|![요일별 웹툰](https://github.com/joohee56/Naver-Webtoon/assets/83942393/82652d05-3a40-4cb3-9331-7263478b7317)|
+</br>
+</br>
+
+|장르별 웹툰(도전만화)|
+|:----:|
+|![장르별 (도전만화)](https://github.com/joohee56/Naver-Webtoon/assets/83942393/a03f38fa-e089-4d34-b574-d995bc759691)|
 </br>
 </br>
 
