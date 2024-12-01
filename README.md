@@ -82,7 +82,8 @@
 * Vuex 
 * Vue-router 
 * axios 
-* sockjs 
+* sockjs
+* stomp
 
 ### Backend
 * Java 
